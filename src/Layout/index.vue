@@ -10,7 +10,7 @@
           <el-row :gutter="20">
             <el-icon
               class="expand-fold-icon"
-              style=" margin-right: 15px;font-size: 26px;"
+              style="margin-right: 15px; font-size: 26px"
               @click="() => (collapsed = !collapsed)"
             >
               <component :is="collapsed ? Expand : Fold" />

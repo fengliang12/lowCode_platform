@@ -39,6 +39,24 @@ const editableTabsValue = ref('')
 const editableTabs = computed(() => tagsStore.list)
 
 /**
+ * tab刷新缓存数据
+ */
+const refresh = () => {
+  window.addEventListener('beforeunload', function () {
+    sessionStorage.setItem('TABS_ROUTES', JSON.stringify(editableTabs.value))
+  })
+  let sessionJson = sessionStorage.getItem('TABS_ROUTES')
+  if (sessionJson) {
+    let list = JSON.parse(sessionJson)
+    list.map((item: listType) => {
+      tagsStore.addTagItem(item)
+    })
+  }
+}
+
+refresh()
+
+/**
  * 添加tab
  */
 const addTab = () => {
@@ -95,26 +113,6 @@ const removeTab = (targetName: string) => {
 }
 
 /**
- * tab刷新缓存数据
- */
-const refresh = () => {
-  window.addEventListener('beforeunload', function () {
-    sessionStorage.setItem('TABS_ROUTES', JSON.stringify(editableTabs.value))
-  })
-  let sessionJson = sessionStorage.getItem('TABS_ROUTES')
-  if (sessionJson) {
-    let list = JSON.parse(sessionJson)
-    list.map((item: listType) => {
-      tagsStore.addTagItem(item)
-    })
-  }
-}
-
-onMounted(() => {
-  refresh()
-})
-
-/**
  *  tab右键菜单关闭列表
  */
 const contextMenuVisible: Ref<boolean> = ref(false)
@@ -147,7 +145,7 @@ const closeOtherTabs = (type: string) => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .demo-tabs > .el-tabs__content {
   display: none;
 }

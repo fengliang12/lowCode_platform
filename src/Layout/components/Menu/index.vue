@@ -42,7 +42,7 @@ watch(
 )
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .el-menu {
   background-color: $menuBg;
   border: 0 !important;
