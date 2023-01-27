@@ -1,0 +1,57 @@
+<template>
+  <template v-for="menu in menus" :key="menu.path">
+    <el-sub-menu
+      v-if="menu.children && menu.children.length > 1"
+      :index="`${parents ? `${parents}/` : ''}${menu.path}`"
+    >
+      <template #title>
+        <el-icon v-if="menu.meta.icon"
+          ><component :is="menu.meta.icon"></component
+        ></el-icon>
+        <span>{{ menu.meta.title }}</span>
+      </template>
+      <MenuItem
+        :parents="`${parents ? `${parents}/` : ''}${menu.path}`"
+        :menus="menu.children"
+      ></MenuItem>
+    </el-sub-menu>
+
+    <el-menu-item
+      :index="`${parents ? `${parents}/` : ''}${menu.path}`"
+      @click="toPath(menu.name)"
+      v-else
+    >
+      <el-icon v-if="menu?.meta?.icon"
+        ><component :is="menu?.meta?.icon"></component
+      ></el-icon>
+      <template #title>{{ menu?.meta?.title || '' }}</template>
+    </el-menu-item>
+  </template>
+</template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import MenuItem from './MenuItem.vue'
+defineProps({
+  menus: {
+    type: Array<any>,
+    default: () => [],
+  },
+  parents: {
+    type: String,
+    default: '',
+  },
+})
+
+/**
+ * 处理点击事件
+ */
+const router = useRouter()
+const toPath = (name: string) => {
+  router.push({
+    name,
+  })
+}
+</script>
+
+<style lang="scss" scoped></style>
