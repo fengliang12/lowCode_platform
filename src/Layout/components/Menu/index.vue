@@ -45,24 +45,24 @@ watch(
 <style lang="scss" scoped>
 .el-menu {
   background-color: $menuBg;
-  border: 0 !important;
+  border: 0;
   // 菜单触碰高亮背景色
   .el-sub-menu {
     background-color: $menuBg;
   }
   .el-menu-item:hover {
-    background: #112e42 !important;
+    background: #112e42;
   }
   // 多级菜单触碰高亮背景色
-  .el-sub-menu__title:hover {
-    background-color: rgb(3, 19, 33) !important;
+  :deep(.el-sub-menu__title):hover {
+    background-color: rgb(3, 19, 33);
   }
-  .el-menu-item {
+  :deep(.el-menu-item) {
     background-color: $subMenuBg;
   }
-  .el-menu-item:hover {
-    background: #112e42 !important;
-    color: #fff !important;
+  :deep(.el-menu-item):hover {
+    background: #112e42;
+    color: #fff;
   }
 }
 </style>

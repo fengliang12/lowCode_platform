@@ -11,7 +11,7 @@
     <el-tab-pane
       v-for="item in editableTabs"
       :key="item.path"
-      :label="item.name"
+      :label="$t(item.name)"
       :name="item.path"
     >
     </el-tab-pane>

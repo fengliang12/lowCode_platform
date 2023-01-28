@@ -1,5 +1,23 @@
 import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/Layout/index.vue'
+import { useUserStore } from '@/store/useUserStore'
+import i18n from '@/i18n'
+//导入进度lib
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+NProgress.configure({
+  // 动画方式
+  easing: 'ease',
+  // 递增进度条的速度
+  speed: 500,
+  // 是否显示加载ico
+  showSpinner: false,
+  // 自动递增间隔
+  trickleSpeed: 200,
+  // 初始化时的最小百分比
+  minimum: 0.3,
+}) //progress配置
 
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
@@ -9,7 +27,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/',
     redirect: '/home',
     component: Layout,
-    meta: { title: '首页', icon: 'house' },
+    meta: { title: 'menus.wIndex', icon: 'house' },
     name: 'Home',
     children: [
       {
@@ -17,28 +35,46 @@ export const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: () => import('@/views/Home/index.vue'),
         meta: {
-          title: '首页',
+          title: 'menus.wIndex',
         },
       },
     ],
   },
   {
     path: '/user',
-    redirect: 'index',
     component: Layout,
-    meta: { title: '用户管理', icon: 'UserFilled' },
+    meta: { title: 'menus.wGoodsManger', icon: 'UserFilled' },
     children: [
       {
         path: 'index',
         name: 'UserIndex',
         component: () => import('@/views/User/index.vue'),
-        meta: { title: '用户列表' },
+        meta: { title: 'menus.wUserList' },
       },
       {
         path: 'edit',
         name: 'UserEdit',
         component: () => import('@/views/User/edit.vue'),
-        meta: { title: '用户编辑' },
+        meta: { title: 'menus.wUserEdit' },
+      },
+    ],
+  },
+  {
+    path: '/system',
+    component: Layout,
+    meta: { title: 'menus.wSystemManger', icon: 'UserFilled' },
+    children: [
+      {
+        path: 'menu',
+        name: 'SystemMenu',
+        component: () => import('@/views/System/Menu.vue'),
+        meta: { title: 'menus.wSystemMenu' },
+      },
+      {
+        path: 'group',
+        name: 'SystemGroup',
+        component: () => import('@/views/System/Group.vue'),
+        meta: { title: 'menus.wSystemRole' },
       },
     ],
   },
@@ -60,4 +96,36 @@ const router = createRouter({
   ], // `routes: routes` 的缩写
 })
 
+router.beforeEach((to, from, next) => {
+  console.log(router.getRoutes())
+  const token = localStorage.getItem('token')
+  const userStore = useUserStore()
+  NProgress.start()
+  if (!userStore.token && !token) {
+    if (to.path.startsWith('/login')) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else if (!userStore.token && token) {
+    userStore
+      .loginByToken(token)
+      .then(() => {
+        if (to.path.startsWith('/login')) {
+          next({ path: '/home' })
+        } else {
+          next()
+        }
+      })
+      .catch(() => {
+        next('/login')
+      })
+  } else {
+    next()
+  }
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
 export default router

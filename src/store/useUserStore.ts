@@ -1,14 +1,52 @@
+import { login, loginByToken } from '@/api/Auth'
+import { ElMessage } from 'element-plus'
 import { defineStore } from 'pinia'
-interface userStoreType {
-  name: string
+import router from '@/router'
+
+export interface userStoreType {
+  token: string
+  userInfo: Api.Auth.login.IResponse | null
+  roles: number[]
 }
-const useUserStore = defineStore<string, userStoreType>('userStore', {
-  state: () => {
+
+export const useUserStore = defineStore('userStore', {
+  state: (): userStoreType => {
     return {
-      name: '1111',
+      token: '',
+      userInfo: null,
+      roles: [],
     }
   },
-  actions: {},
+  actions: {
+    login(data: Api.Auth.login.IRequest) {
+      login(data).then((res) => {
+        const result = res.data
+        if (result.data.status) {
+          ElMessage({
+            message: '登录成功',
+            type: 'success',
+          })
+          this.userInfo = result.data
+          this.roles.push(result.data.roleId)
+          this.token = result.data.token
+          localStorage.setItem('token', result.data.token)
+          router.push({ path: '/home' })
+        }
+      })
+    },
+    loginByToken(token: string) {
+      this.token = token
+      return loginByToken(token)
+        .then((res) => {
+          const result = res.data
+          this.userInfo = result.data
+          localStorage.setItem('token', result.data.token)
+          return result
+        })
+        .catch((error) => {
+          localStorage.removeItem('token')
+          return Promise.reject(error)
+        })
+    },
+  },
 })
-
-export default useUserStore

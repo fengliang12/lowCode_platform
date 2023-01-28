@@ -1,21 +1,28 @@
 <template>
   <div class="layout">
     <el-container>
-      <el-aside class="left-aside" width="auto"
+      <el-aside class="left-aside" :style="'width:' + autoWidth"
         ><LogoBar :is-collapse="collapsed"></LogoBar>
         <Menu :is-collapse="collapsed"></Menu
       ></el-aside>
       <el-container>
         <el-header class="top-header v-center">
-          <el-row :gutter="20">
-            <el-icon
-              class="expand-fold-icon"
-              style="margin-right: 15px; font-size: 26px"
-              @click="() => (collapsed = !collapsed)"
-            >
-              <component :is="collapsed ? Expand : Fold" />
-            </el-icon>
-            <HeaderBar></HeaderBar>
+          <el-row
+            :gutter="0"
+            style="width: 100%; display: flex; align-items: center"
+          >
+            <el-col :xs="4" :sm="4" :md="1" :lg="1" :xl="1">
+              <el-icon
+                class="expand-fold-icon"
+                style="margin-right: 15px; font-size: 26px"
+                @click="() => (collapsed = !collapsed)"
+              >
+                <component :is="collapsed ? Expand : Fold" />
+              </el-icon>
+            </el-col>
+            <el-col :xs="20" :sm="20" :md="23" :lg="23" :xl="23">
+              <HeaderBar></HeaderBar>
+            </el-col>
           </el-row>
         </el-header>
         <TabBar></TabBar>
@@ -34,9 +41,19 @@ import HeaderBar from './components/HeaderBar/index.vue'
 import AppMain from './components/AppMain/index.vue'
 import TabBar from './components/TabBar/index.vue'
 import { Expand, Fold } from '@element-plus/icons-vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { isMobile } from '@/utils/isMobile'
 const collapsed = ref<boolean>(false)
+
+const autoWidth = computed(() => {
+  if (collapsed.value && isMobile()) {
+    return '0px'
+  } else if (collapsed.value) {
+    return '64px'
+  } else {
+    return '200px'
+  }
+})
 
 if (isMobile()) {
   collapsed.value = true
@@ -48,6 +65,7 @@ if (isMobile()) {
   display: flex;
   background-color: #fff;
   height: 100vh;
+
   .left-aside {
     background-color: $menuBg;
     scrollbar-width: none; /* firefox */
@@ -57,7 +75,7 @@ if (isMobile()) {
   }
 
   .top-header {
-    background-color: $lightGray;
+    background-color: #f7f4f4;
   }
 
   .expand-fold-icon {
@@ -71,6 +89,10 @@ if (isMobile()) {
       margin-bottom: 50px;
     }
   }
+}
+
+:deep(.el-main) {
+  padding: 0px 10px;
 }
 
 ::-webkit-scrollbar {

@@ -5,16 +5,19 @@
       v-for="(item, index) in breakCrumb"
       :to="item.path"
       :key="index"
-      >{{ item.meta.title }}</el-breadcrumb-item
+      >{{ $t(item.meta.title as string) }}</el-breadcrumb-item
     >
   </el-breadcrumb>
 </template>
 
 <script setup lang="ts">
 import { Ref, ref, watch } from 'vue'
-import { RouteLocationMatched, useRoute, useRouter } from 'vue-router'
+import { RouteLocationMatched, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
+const { t } = useI18n()
+
 const breakCrumb: Ref<RouteLocationMatched[]> = ref([])
 
 const getBreakCrumb = () => {
@@ -25,9 +28,9 @@ const getBreakCrumb = () => {
   const first = matched[0]
 
   if (first.path !== '/home') {
-    matched = [{ path: '/home', meta: { title: '首页' } } as any].concat(
-      matched,
-    )
+    matched = [
+      { path: '/home', meta: { title: 'menus.wIndex' } } as any,
+    ].concat(matched)
   }
   breakCrumb.value = matched
 }

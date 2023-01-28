@@ -8,7 +8,7 @@
         <el-icon v-if="menu.meta.icon"
           ><component :is="menu.meta.icon"></component
         ></el-icon>
-        <span>{{ menu.meta.title }}</span>
+        <span>{{ $t(menu.meta.title as string) }}</span>
       </template>
       <MenuItem
         :parents="`${parents ? `${parents}/` : ''}${menu.path}`"
@@ -24,7 +24,7 @@
       <el-icon v-if="menu?.meta?.icon"
         ><component :is="menu?.meta?.icon"></component
       ></el-icon>
-      <template #title>{{ menu?.meta?.title || '' }}</template>
+      <template #title>{{ $t(menu.meta.title as string) }}</template>
     </el-menu-item>
   </template>
 </template>
