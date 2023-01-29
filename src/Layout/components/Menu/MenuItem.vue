@@ -2,7 +2,7 @@
   <template v-for="menu in menus" :key="menu.path">
     <el-sub-menu
       v-if="menu.children && menu.children.length > 1"
-      :index="`${parents ? `${parents}/` : ''}${menu.path}`"
+      :index="menu.path"
     >
       <template #title>
         <el-icon v-if="menu.meta.icon"
@@ -10,17 +10,10 @@
         ></el-icon>
         <span>{{ $t(menu.meta.title as string) }}</span>
       </template>
-      <MenuItem
-        :parents="`${parents ? `${parents}/` : ''}${menu.path}`"
-        :menus="menu.children"
-      ></MenuItem>
+      <MenuItem :menus="menu.children"></MenuItem>
     </el-sub-menu>
 
-    <el-menu-item
-      :index="`${parents ? `${parents}/` : ''}${menu.path}`"
-      @click="toPath(menu.name)"
-      v-else
-    >
+    <el-menu-item :index="menu.path" @click="toPath(menu.name)" v-else>
       <el-icon v-if="menu?.meta?.icon"
         ><component :is="menu?.meta?.icon"></component
       ></el-icon>
@@ -36,10 +29,6 @@ defineProps({
   menus: {
     type: Array<any>,
     default: () => [],
-  },
-  parents: {
-    type: String,
-    default: '',
   },
 })
 

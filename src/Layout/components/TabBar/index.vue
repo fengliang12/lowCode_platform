@@ -29,7 +29,7 @@
 </template>
 <script lang="ts" setup>
 import { listType, useTagsStore } from '@/store/useTagsStore'
-import { computed, onMounted, Ref, ref, watch } from 'vue'
+import { computed, Ref, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()

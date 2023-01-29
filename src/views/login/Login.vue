@@ -32,12 +32,13 @@
 
         <el-form-item prop="verifyCode">
           <el-input
-            placeholder="验证码"
             v-model="loginForm.verifyCode"
+            placeholder="验证码"
             type="text"
-            style="width: 40%; display: inline-block"
+            style="display: inline-block; width: 40%;"
+            @keyup.enter="handleLogin"
           ></el-input>
-          <div style="margin-left: 15px; display: inline-block; height: 40px">
+          <div style="display: inline-block; margin-left: 15px; height: 40px;">
             <img
               :src="codeUrl"
               @click="getValidCode"
@@ -47,10 +48,10 @@
           </div>
         </el-form-item>
 
-        <el-form-item style="border: none; background: none">
+        <el-form-item style="background: none; border: none;">
           <el-button
             type="primary"
-            style="width: 100%; margin-bottom: 30px"
+            style="margin-bottom: 30px; width: 100%;"
             @click="handleLogin"
             >{{ $t('button.wLogin') }}</el-button
           >
@@ -61,8 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCode, login } from '@/api/Auth'
-import { User, Lock } from '@element-plus/icons-vue'
+import { getCode } from '@/api/Auth'
 import { ref, reactive, onMounted } from 'vue'
 import { useUserStore } from '@/store/useUserStore'
 import { FormInstance } from 'element-plus'

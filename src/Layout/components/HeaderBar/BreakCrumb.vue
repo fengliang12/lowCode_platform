@@ -27,9 +27,9 @@ const getBreakCrumb = () => {
   )
   const first = matched[0]
 
-  if (first.path !== '/home') {
+  if (first.path !== '/index') {
     matched = [
-      { path: '/home', meta: { title: 'menus.wIndex' } } as any,
+      { path: '/index', meta: { title: 'menus.wIndex' } } as any,
     ].concat(matched)
   }
   breakCrumb.value = matched

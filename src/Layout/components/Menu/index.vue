@@ -7,15 +7,16 @@
     :hide-timeout="0"
     :collapse="isCollapse"
   >
-    <MenuItem :menus="routes"></MenuItem>
+    <MenuItem :menus="menus"></MenuItem>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
 import MenuItem from './MenuItem.vue'
-import { routes } from '@/router'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useMenuStore } from '@/store/useMenuStore'
 defineProps({
   isCollapse: {
     type: Boolean,
@@ -24,17 +25,15 @@ defineProps({
 })
 
 const route = useRoute()
+const menuStore = useMenuStore()
+//路由
+const menus = computed(() => menuStore.menuList)
 const defaultActive = ref<string>('')
 
 watch(
   () => route.path,
   () => {
-    console.log(route.path)
-    if (route.path === '/home') {
-      defaultActive.value = '/'
-    } else {
-      defaultActive.value = route.path
-    }
+    defaultActive.value = route.path
   },
   {
     immediate: true,
