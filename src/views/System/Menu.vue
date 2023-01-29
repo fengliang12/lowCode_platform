@@ -19,7 +19,7 @@
     <el-table
       v-if="refreshTable"
       :data="tableData"
-      style="margin-bottom: 20px; width: 100%;"
+      style="margin-bottom: 20px; width: 100%"
       row-key="router"
       :default-expand-all="isExpandAll"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
@@ -28,7 +28,7 @@
       <el-table-column prop="permission" label="权限名称" sortable />
       <el-table-column label="icon图标">
         <template #default="scope">
-          <component style="width: 20px;" :is="scope.row.icon"></component>
+          <component style="width: 20px" :is="scope.row.icon"></component>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -139,12 +139,12 @@
                   >
                     <template #prefix>
                       <el-icon
-                        style="width: 16px; height: 32px;"
+                        style="width: 16px; height: 32px"
                         v-if="state.formData.icon"
                       >
                         <component :is="state.formData.icon" />
                       </el-icon>
-                      <el-icon v-else style="width: 16px; height: 32px;">
+                      <el-icon v-else style="width: 16px; height: 32px">
                         <search />
                       </el-icon>
                     </template>

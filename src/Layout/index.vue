@@ -9,12 +9,12 @@
         <el-header class="top-header v-center">
           <el-row
             :gutter="0"
-            style="display: flex; align-items: center; width: 100%;"
+            style="display: flex; align-items: center; width: 100%"
           >
             <el-col :xs="4" :sm="4" :md="1" :lg="1" :xl="1">
               <el-icon
                 class="expand-fold-icon"
-                style="margin-right: 15px; font-size: 26px;"
+                style="margin-right: 15px; font-size: 26px"
                 @click="() => (collapsed = !collapsed)"
               >
                 <component :is="collapsed ? Expand : Fold" />

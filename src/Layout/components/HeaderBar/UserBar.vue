@@ -10,7 +10,7 @@
       <div>
         <img
           v-if="userInfo?.avatar"
-          style="width: 35px; height: 35px; border-radius: 50%;"
+          style="width: 35px; height: 35px; border-radius: 50%"
           :src="userInfo.avatar"
           alt="img"
         />
@@ -23,12 +23,12 @@
     </el-dropdown>
     <el-row>
       <el-col>
-        <span style="margin-left: 10px; font-size: 15px; color: #212121;"
+        <span style="margin-left: 10px; font-size: 15px; color: #212121"
           >{{ userInfo?.username ? userInfo.username : '' }}
         </span>
       </el-col>
       <el-col>
-        <span style="margin-left: 10px; font-size: 8px; color: gray;">
+        <span style="margin-left: 10px; font-size: 8px; color: gray">
           [{{ userInfo?.roleName }}]
         </span>
       </el-col>
