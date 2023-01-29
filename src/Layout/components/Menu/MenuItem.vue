@@ -13,7 +13,12 @@
       <MenuItem :menus="menu.children"></MenuItem>
     </el-sub-menu>
 
-    <el-menu-item :index="menu.path" @click="toPath(menu.name)" v-else>
+    <el-menu-item
+      v-show="menu.meta.isShow == 0"
+      :index="menu.path"
+      @click="toPath(menu.name)"
+      v-else
+    >
       <el-icon v-if="menu?.meta?.icon"
         ><component :is="menu?.meta?.icon"></component
       ></el-icon>

@@ -230,6 +230,7 @@
 <script setup lang="ts">
 import {
   addMenu,
+  deleteMenu,
   getAllMenus,
   getLevelMenus,
   updateMenu,
@@ -364,7 +365,11 @@ const handleDelete = (row: Api.Menu.Public.IResponse) => {
   ElMessageBox.confirm(
     '确实删除菜单(或者权限)名为' + row.menuName + '的数据项以及子项吗?',
   ).then(() => {
-    console.log('删除')
+    if (!row?.menuId) return
+    deleteMenu([row.menuId]).then(() => {
+      ElMessage.success('删除成功')
+      _getAllMenus()
+    })
   })
 }
 
@@ -417,7 +422,7 @@ const submitForm = () => {
  */
 const cancel = () => {
   reset()
-  state.showChooseIcon = false
+  state.dialogVisible = false
 }
 
 /**

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vh-center">
     <el-dropdown
       :show-timeout="10"
       :hide-timeout="10"

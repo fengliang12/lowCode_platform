@@ -32,6 +32,7 @@ export const useMenuStore = defineStore('menuStore', {
         router.addRoute(route)
       })
       this.menuList = routers
+      console.log('menuList', routers)
       router.replace(router.currentRoute.value.fullPath)
     },
   },

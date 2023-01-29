@@ -4,7 +4,7 @@
     type="card"
     closable
     class="demo-tabs"
-    @tab-click="clickHande"
+    @tab-click="clickHandle"
     @tab-remove="removeTab"
     @contextmenu.prevent="openContextMenu($event)"
   >
@@ -82,7 +82,7 @@ watch(
  * 点击切换tab
  * @param event
  */
-const clickHande = (event: any) => {
+const clickHandle = (event: any) => {
   router.push({ path: event.props.name })
 }
 

@@ -2,6 +2,7 @@ import { login, loginByToken } from '@/api/Auth'
 import { ElMessage } from 'element-plus'
 import { defineStore } from 'pinia'
 import { useMenuStore } from './useMenuStore'
+import { useButtonStore } from './useButtonStore'
 import router from '@/router'
 
 export interface userStoreType {
@@ -33,6 +34,8 @@ export const useUserStore = defineStore('userStore', {
           localStorage.setItem('token', result.data.token)
           const menuStore = useMenuStore()
           menuStore.generateSystemMenus(result.data.roleId)
+          const buttonStore = useButtonStore()
+          buttonStore.generateButtons(result.data.permissions)
           router.push({ path: '/index' })
         }
       })
@@ -46,6 +49,8 @@ export const useUserStore = defineStore('userStore', {
           localStorage.setItem('token', result.data.token)
           const menuStore = useMenuStore()
           menuStore.generateSystemMenus(result.data.roleId)
+          const buttonStore = useButtonStore()
+          buttonStore.generateButtons(result.data.permissions)
           return result
         })
         .catch((error) => {

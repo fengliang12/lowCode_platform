@@ -1,5 +1,5 @@
 <template>
-  <div @click="onToggle">
+  <div class="vh-center" @click="onToggle">
     <img
       v-if="isFullscreen"
       src="../../../assets/images/notFull.png"
