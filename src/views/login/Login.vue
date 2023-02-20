@@ -38,14 +38,11 @@
             style="display: inline-block; width: 40%"
             @keyup.enter="handleLogin"
           ></el-input>
-          <div style="display: inline-block; margin-left: 15px; height: 40px">
-            <img
-              :src="codeUrl"
-              @click="getValidCode"
-              class="code-img"
-              style=""
-            />
-          </div>
+          <div
+            v-html="codeUrl"
+            class="login_item_img"
+            @click="getValidCode"
+          ></div>
         </el-form-item>
 
         <el-form-item style="background: none; border: none">
@@ -65,12 +62,11 @@
 import { getCode } from '@/api/Auth'
 import { ref, reactive, onMounted } from 'vue'
 import { useUserStore } from '@/store/useUserStore'
-import { FormInstance } from 'element-plus'
+import { ElMessage, FormInstance } from 'element-plus'
 
 const loginForm = reactive({
-  username: '',
-  password: '',
-  uuid: '',
+  username: 'admin',
+  password: '123456',
   verifyCode: '',
 })
 // rules表单校验
@@ -118,28 +114,37 @@ const loginRules = reactive({
     },
   ],
 })
-
-/**
- * 验证码
- */
+// 验证码
 const codeUrl = ref<string>()
-// 获取验证码
-const getValidCode = async () => {
-  let res = await getCode()
-  codeUrl.value = res.data.data.image
-  loginForm.uuid = res.data.data.uuid
-}
+const codeText = ref<string>()
+
 onMounted(() => {
   getValidCode()
   handleToken()
 })
 
-//登录事件
+/**
+ * 获取验证码
+ */
+const getValidCode = async () => {
+  let res = await getCode()
+  codeUrl.value = res.data.data.svg
+  codeText.value = res.data.data.text
+  loginForm.verifyCode = res.data.data.text
+}
+
+/**
+ * 登录事件
+ */
 const userStore = useUserStore()
 const loginFormRef = ref<FormInstance>()
 const handleLogin = () => {
   loginFormRef.value &&
     loginFormRef.value.validate((valid: boolean) => {
+      if (loginForm.verifyCode !== codeText.value) {
+        ElMessage.error('验证码输入错误')
+        return false
+      }
       if (valid) {
         userStore.login(loginForm)
       } else {
@@ -243,12 +248,16 @@ const handleToken = () => {
       border-radius: 5px;
       color: #454545;
     }
-
-    .code-img {
-      margin-bottom: -12px;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .login_item_img {
+      display: inline-block;
+      margin-left: 15px;
+      height: 40px;
+      svg {
+        margin-bottom: -12px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 }

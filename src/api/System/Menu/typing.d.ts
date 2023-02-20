@@ -60,7 +60,7 @@ declare namespace Api {
       type Func = (data: Public.IRequest) => MRP<object>
     }
     namespace deleteMenu {
-      type Func = (data: Array<number>) => MRP<object>
+      type Func = (data: object) => MRP<object>
     }
     namespace selectUserMenu {
       type Func = (roleId: number) => MRP<Public.IResponse[]>

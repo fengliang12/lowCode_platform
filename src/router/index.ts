@@ -51,18 +51,19 @@ router.beforeEach((to, from, next) => {
       next('/login')
     }
   } else if (!userStore.token && token) {
-    userStore
-      .loginByToken(token)
-      .then(() => {
-        if (to.path.startsWith('/login')) {
-          next({ path: '/index' })
-        } else {
-          next()
-        }
-      })
-      .catch(() => {
-        next('/login')
-      })
+    // userStore
+    //   .loginByToken(token)
+    //   .then(() => {
+    //     if (to.path.startsWith('/login')) {
+    //       next({ path: '/index' })
+    //     } else {
+    //       next()
+    //     }
+    //   })
+    //   .catch(() => {
+    //     next('/login')
+    //   })
+    next()
   } else {
     next()
   }

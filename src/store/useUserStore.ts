@@ -21,23 +21,21 @@ export const useUserStore = defineStore('userStore', {
   },
   actions: {
     login(data: Api.Auth.login.IRequest) {
-      login(data).then((res) => {
+      login(data).then(async (res) => {
         const result = res.data
-        if (result.data.status) {
-          ElMessage({
-            message: '登录成功',
-            type: 'success',
-          })
-          this.userInfo = result.data
-          this.roles.push(result.data.roleId)
-          this.token = result.data.token
-          localStorage.setItem('token', result.data.token)
-          const menuStore = useMenuStore()
-          menuStore.generateSystemMenus(result.data.roleId)
-          const buttonStore = useButtonStore()
-          buttonStore.generateButtons(result.data.permissions)
-          router.push({ path: '/index' })
-        }
+        ElMessage({
+          message: '登录成功',
+          type: 'success',
+        })
+        this.userInfo = result.data
+        this.roles.push(result.data.roleId)
+        this.token = result.data.token
+        localStorage.setItem('token', result.data.token)
+        const menuStore = useMenuStore()
+        await menuStore.generateSystemMenus(result.data.roleId)
+        const buttonStore = useButtonStore()
+        await buttonStore.generateButtons(result.data.permissions)
+        router.push({ path: '/index' })
       })
     },
     loginByToken(token: string) {

@@ -4,6 +4,7 @@ interface UserInfo {
   username: string
 }
 
+// 获取所有管理员
 export function getAllSysUsers() {
   return instance({
     url: '/sysUser/list',
@@ -30,11 +31,11 @@ export function updateSysUser(user: UserInfo) {
 }
 
 // 删除管理员
-export function deleteSysUsers(sysUserIds: number) {
+export function deleteSysUsers(sysUser: object) {
   return instance({
     url: '/sysUser/batch',
     method: 'delete',
-    data: sysUserIds,
+    data: sysUser,
   })
 }
 

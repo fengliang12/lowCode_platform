@@ -7,8 +7,8 @@ declare namespace Api {
     namespace getCode {
       type Func = () => MRP<IResponse>
       interface IResponse {
-        image: string
-        uuid: string
+        svg: string
+        text: string
       }
     }
     namespace login {
@@ -16,7 +16,6 @@ declare namespace Api {
       interface IRequest {
         username: string
         password: string
-        uuid: string
         verifyCode: string
       }
       interface IResponse {
