@@ -19,6 +19,7 @@
           v-if="state.formTitle !== '修改用户'"
           label="密码"
           prop="password"
+          show-password
         >
           <el-input
             v-model="state.userFormData.password"

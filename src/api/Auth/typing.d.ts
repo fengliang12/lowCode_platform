@@ -27,7 +27,7 @@ declare namespace Api {
         roleId: number
         roleName: string
         status: boolean
-        token: string
+        authorization: string
         username: string
       }
     }
@@ -44,6 +44,7 @@ declare namespace Api {
         status: boolean
         token: string
         username: string
+        authorization: string
       }
     }
   }

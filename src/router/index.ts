@@ -22,7 +22,7 @@ NProgress.configure({
  */
 const routes: Array<RouteRecordRaw> = [
   // 首页重定向
-  { path: '/', redirect: '/index' },
+  { path: '/', redirect: '/login' },
   {
     path: '/login',
     component: () => import('@/views/login/Login.vue'),
@@ -41,28 +41,28 @@ const router = createRouter({
  * 路由全局前置守卫
  */
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('authorization')
   const userStore = useUserStore()
   NProgress.start()
-  if (!userStore.token && !token) {
+  if (!userStore.authorization && !token) {
     if (to.path.startsWith('/login')) {
       next()
     } else {
       next('/login')
     }
-  } else if (!userStore.token && token) {
-    // userStore
-    //   .loginByToken(token)
-    //   .then(() => {
-    //     if (to.path.startsWith('/login')) {
-    //       next({ path: '/index' })
-    //     } else {
-    //       next()
-    //     }
-    //   })
-    //   .catch(() => {
-    //     next('/login')
-    //   })
+  } else if (!userStore.authorization && token) {
+    userStore
+      .loginByToken(token)
+      .then(() => {
+        if (to.path.startsWith('/login')) {
+          next({ path: '/index' })
+        } else {
+          next()
+        }
+      })
+      .catch(() => {
+        next('/login')
+      })
     next()
   } else {
     next()

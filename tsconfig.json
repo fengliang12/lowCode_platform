@@ -15,7 +15,8 @@
     "baseUrl": "./", // 这里需要配置
     "paths": {
       "@/*": ["./src/*"] // 这里需要配置
-    }
+    },
+    "suppressImplicitAnyIndexErrors": true
   },
 
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
