@@ -67,6 +67,17 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
+          <!-- 节点的id -->
+          <el-col :span="24">
+            <el-form-item label="节点ID:" prop="menuId">
+              <el-input-number
+                v-model="state.formData.menuId"
+                controls-position="right"
+                :disabled="state.formTitle === '修改菜单'"
+                :min="0"
+              />
+            </el-form-item>
+          </el-col>
           <!-- 节点名称 -->
           <el-col :span="24">
             <el-form-item label="节点名称:" prop="menuName">
@@ -366,7 +377,7 @@ const handleDelete = (row: Api.Menu.Public.IResponse) => {
     '确实删除菜单(或者权限)名为' + row.menuName + '的数据项以及子项吗?',
   ).then(() => {
     if (!row?.menuId) return
-    deleteMenu([row.menuId]).then(() => {
+    deleteMenu({ menuId: row.menuId }).then(() => {
       ElMessage.success('删除成功')
       _getAllMenus()
     })

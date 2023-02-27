@@ -1818,6 +1818,11 @@ indent-string@^4.0.0:
   resolved "https://registry.npmjs.org/indent-string/-/indent-string-4.0.0.tgz"
   integrity sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==
 
+indexdbwrapper@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/indexdbwrapper/-/indexdbwrapper-1.0.4.tgz#a2dce8f7e67d89331e87726636fa67fb472f0b3e"
+  integrity sha512-/Dy1roYWB5lP5ggf3JBA5YTZzt+uO6pk9m9rDDmbUPF9WVTVjedZqrJMkmPSpJx+29DEQ4bfiyf49rcdVwjPxg==
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz"

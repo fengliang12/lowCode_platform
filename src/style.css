@@ -17,3 +17,7 @@
 .pointer {
   cursor: pointer;
 }
+
+.mr-10 {
+  margin-right: 10px;
+}

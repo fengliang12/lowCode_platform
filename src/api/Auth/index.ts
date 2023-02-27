@@ -21,6 +21,6 @@ export const login: Api.Auth.login.Func = (data) => {
 export const loginByToken: Api.Auth.loginByToken.Func = (token: string) => {
   return instance({
     url: '/auth/loginByToken?token=' + token,
-    method: 'post',
+    method: 'get',
   })
 }

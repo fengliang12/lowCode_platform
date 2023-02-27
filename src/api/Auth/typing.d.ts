@@ -7,8 +7,8 @@ declare namespace Api {
     namespace getCode {
       type Func = () => MRP<IResponse>
       interface IResponse {
-        image: string
-        uuid: string
+        svg: string
+        text: string
       }
     }
     namespace login {
@@ -16,7 +16,6 @@ declare namespace Api {
       interface IRequest {
         username: string
         password: string
-        uuid: string
         verifyCode: string
       }
       interface IResponse {
@@ -28,7 +27,7 @@ declare namespace Api {
         roleId: number
         roleName: string
         status: boolean
-        token: string
+        authorization: string
         username: string
       }
     }
@@ -45,6 +44,7 @@ declare namespace Api {
         status: boolean
         token: string
         username: string
+        authorization: string
       }
     }
   }

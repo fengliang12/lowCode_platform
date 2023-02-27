@@ -6,7 +6,7 @@ import { useButtonStore } from './useButtonStore'
 import router from '@/router'
 
 export interface userStoreType {
-  token: string
+  authorization: string
   userInfo: Api.Auth.login.IResponse | null
   roles: number[]
 }
@@ -14,39 +14,39 @@ export interface userStoreType {
 export const useUserStore = defineStore('userStore', {
   state: (): userStoreType => {
     return {
-      token: '',
+      authorization: '',
       userInfo: null,
       roles: [],
     }
   },
   actions: {
     login(data: Api.Auth.login.IRequest) {
-      login(data).then((res) => {
+      login(data).then(async (res) => {
+        console.log('login', res)
+
         const result = res.data
-        if (result.data.status) {
-          ElMessage({
-            message: '登录成功',
-            type: 'success',
-          })
-          this.userInfo = result.data
-          this.roles.push(result.data.roleId)
-          this.token = result.data.token
-          localStorage.setItem('token', result.data.token)
-          const menuStore = useMenuStore()
-          menuStore.generateSystemMenus(result.data.roleId)
-          const buttonStore = useButtonStore()
-          buttonStore.generateButtons(result.data.permissions)
-          router.push({ path: '/index' })
-        }
+        ElMessage({
+          message: '登录成功',
+          type: 'success',
+        })
+        this.userInfo = result.data
+        this.roles.push(result.data.roleId)
+        this.authorization = result.data.authorization
+        localStorage.setItem('authorization', result.data.authorization)
+        const menuStore = useMenuStore()
+        await menuStore.generateSystemMenus(result.data.roleId)
+        const buttonStore = useButtonStore()
+        await buttonStore.generateButtons(result.data.permissions)
+        router.push({ path: '/index' })
       })
     },
-    loginByToken(token: string) {
-      this.token = token
-      return loginByToken(token)
+    loginByToken(authorization: string) {
+      this.authorization = authorization
+      return loginByToken(authorization)
         .then((res) => {
           const result = res.data
           this.userInfo = result.data
-          localStorage.setItem('token', result.data.token)
+          localStorage.setItem('authorization', result.data.authorization)
           const menuStore = useMenuStore()
           menuStore.generateSystemMenus(result.data.roleId)
           const buttonStore = useButtonStore()
@@ -54,7 +54,7 @@ export const useUserStore = defineStore('userStore', {
           return result
         })
         .catch((error) => {
-          localStorage.removeItem('token')
+          localStorage.removeItem('authorization')
           return Promise.reject(error)
         })
     },

@@ -34,11 +34,11 @@ export function updateRole(role: object) {
 }
 
 // 批量删除角色
-export function deleteRoles(roleIds: number[]) {
+export function deleteRoles(roleId: object) {
   return instance({
     url: '/role/batch',
     method: 'delete',
-    data: roleIds,
+    data: roleId,
   })
 }
 

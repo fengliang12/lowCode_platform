@@ -1,0 +1,451 @@
+import { ImageSettingData } from '../fissionImage/data'
+export class EventList extends Array {
+  constructor(list = []) {
+    super()
+    return [
+      {
+        value: 'pop_ups',
+        label: '弹窗',
+        disabled: false
+      },
+      {
+        value: 'custom_event',
+        label: '自定义事件',
+        disabled: false
+      },
+      {
+        value: 'jump',
+        label: '跳转事件',
+        disabled: false,
+        children: [
+          {
+            value: 'page_jump',
+            label: '小程序页面',
+            disabled: false
+          },
+          {
+            value: 'page_setting',
+            label: '配置页面',
+            disabled: false
+          },
+          {
+            value: 'jump_relevance_mini',
+            label: '其他小程序',
+            disabled: false
+          },
+          {
+            value: 'jump_h5',
+            label: '跳转h5页面',
+            disabled: false
+          }
+        ]
+      },
+      {
+        value: 'subscribe_notice',
+        label: '订阅消息',
+        disabled: false
+      },
+      {
+        value: 'api',
+        label: 'api请求事件',
+        disabled: false
+      },
+      {
+        value: 'associated_module',
+        label: '操作组件',
+        disabled: false
+      },
+      {
+        value: 'auth',
+        label: '授权',
+        disabled: false
+      },
+      {
+        value: 'set_params',
+        label: '页面数据赋值'
+      },
+      ...list
+    ]
+  }
+}
+
+export class PageHotOperation {
+  constructor({ operationType = '', params = null } = {}) {
+    // 操作类型
+    this.operationType = operationType
+    // 关联小程序的appID
+    this.linkMiniAppId = ''
+    // 可以放置 弹窗的url 小程序的url 页面配置编号
+    this.operationUrl = ''
+    //内容
+    this.content = ''
+    // 微信订阅消息列表
+    this.subscribeNotices = []
+    // 弹窗配置
+    this.imageSetting =
+      operationType === 'pop_ups' ? new ImageSettingData({ width: 680 }) : null
+    // 执行条件
+    this.conditionsForExecution = null
+    // 组件
+    this.moduleOperation = ''
+    // api请求
+    this.apiInfo = null
+    // 携带参数
+    this.params = params
+    // 取值
+    this.pageValue = null
+  }
+}
+
+/**
+ * 赋值操作
+ */
+export const assignmentOption = [
+  {
+    value: 'equal',
+    label: '等于'
+  },
+  {
+    value: 'push',
+    label: '数组添加'
+  },
+  {
+    value: 'splice',
+    label: '数组删除'
+  },
+  {
+    value: 'countDown',
+    label: '倒计时',
+    params: [
+      {
+        key: 'delay',
+        pageValue: {
+          value: '1000',
+          valueType: 'custom'
+        }
+      }
+    ]
+  }
+]
+
+/**
+ * 自定义事件
+ */
+export const customEventList = [
+  {
+    value: 'register',
+    label: '注册'
+  },
+  {
+    value: 'tips',
+    label: '提示',
+    showContent: true
+  },
+  {
+    value: 'backPage',
+    label: '返回上一页'
+  },
+  {
+    value: 'makePhoneCall',
+    label: '调用电话',
+    showContent: true
+  },
+  {
+    value: 'closPop',
+    label: '关闭弹窗'
+  },
+  {
+    value: 'showLoading',
+    label: '加载中'
+  },
+  {
+    value: 'hideLoading',
+    label: '隐藏加载中'
+  },
+  {
+    value: 'initRefresh',
+    label: '刷新用户注册'
+  },
+  {
+    value: 'openLocation',
+    label: '微信内置地图查看位置'
+  },
+  {
+    value: 'exitMiniProgram',
+    label: '退出小程序'
+  }
+]
+
+/**
+ * 授权接口
+ */
+export const authEventList = [
+  {
+    value: 'getLocation',
+    label: '授权地址',
+    params: [
+      {
+        key: 'type',
+        pageValue: {
+          valueType: 'custom',
+          value: 'wgs84'
+        }
+      }
+    ]
+  },
+  {
+    value: 'chooseAddress',
+    label: '选择收货地址'
+  },
+  {
+    value: 'chooseInvoiceTitle',
+    label: '发票抬头'
+  },
+  {
+    value: 'getWeRunData',
+    label: '微信步数'
+  },
+  {
+    value: 'chooseInvoice',
+    label: '用户发票'
+  },
+  {
+    value: 'saveImageToPhotosAlbum',
+    label: '保存图片',
+    params: [
+      {
+        key: 'filePath',
+        pageValue: {
+          valueType: 'custom'
+        }
+      }
+    ]
+  },
+  {
+    value: 'saveVideoToPhotosAlbum',
+    label: '保存视频',
+    params: [
+      {
+        key: 'filePath',
+        pageValue: {
+          valueType: 'custom'
+        }
+      }
+    ]
+  },
+  {
+    value: 'startLocationUpdate',
+    label: '前台接收位置消息'
+  },
+  {
+    value: 'chooseLocation',
+    label: '地图选择位置'
+  },
+  {
+    value: 'startLocationUpdateBackground',
+    label: '前后后接收位置消息'
+  },
+  {
+    value: 'startRecord',
+    label: '录音'
+  },
+  {
+    value: 'joinVoIPChat',
+    label: '实时语音'
+  },
+  {
+    value: 'camera',
+    label: '摄像头'
+  },
+  {
+    value: 'openBluetoothAdapter',
+    label: '蓝牙初始化'
+  },
+  {
+    value: 'createBLEPeripheralServer',
+    label: '本地蓝牙'
+  },
+  {
+    value: 'addPhoneContact',
+    label: '添加联系人'
+  },
+  {
+    value: 'addPhoneCalendar',
+    label: '日历添加事件'
+  },
+  {
+    value: 'addPhoneRepeatCalendar',
+    label: '日历添加重复事件'
+  },
+  {
+    value: 'RecorderManager',
+    label: '录音管理器'
+  }
+]
+
+/**
+ * 公共组件动作列表
+ */
+export const moduleOperationList = [
+  {
+    label: '滚动到该组件',
+    value: 'scroll',
+    props: {
+      placeholder: '滚动时长 单位毫秒（默认300毫秒）',
+      min: 0
+    }
+  },
+  {
+    label: '显示',
+    value: 'show'
+  },
+  {
+    label: '隐藏',
+    value: 'hide'
+  },
+  {
+    label: '显示/隐藏',
+    value: 'show_hide'
+  },
+  {
+    label: '动画效果',
+    children: [
+      {
+        label: '动画',
+        value: 'animate'
+      },
+      {
+        label: '过渡',
+        value: 'transition'
+      }
+    ]
+  }
+]
+
+/**
+ * 轮播组件动作列表
+ */
+export const moduleCarouselOperationList = [
+  {
+    label: '滚动到指定轮播',
+    value: 'carousel_current',
+    props: {
+      placeholder: '0为第一张轮播以此类推',
+      min: 0
+    }
+  },
+  {
+    label: '向前',
+    value: 'carousel_pre'
+  },
+  {
+    label: '向后',
+    value: 'carousel_next'
+  }
+]
+
+/**
+ * 视频组件动作列表
+ */
+export const moduleVideoOperationList = [
+  {
+    value: 'handle_video',
+    label: '操作视频',
+    children: [
+      {
+        value: 'open_muted',
+        label: '开启静音'
+      },
+      {
+        value: 'close_muted',
+        label: '关闭静音'
+      },
+      {
+        value: 'video_muted',
+        label: '开启/关闭静音'
+      },
+      {
+        value: 'open_loop',
+        label: '开启循环播放'
+      },
+      {
+        value: 'close_loop',
+        label: '关闭循环播放'
+      },
+      {
+        value: 'video_loop',
+        label: '开启/关闭循环播放'
+      },
+      {
+        value: 'video_play',
+        label: '播放视频'
+      },
+      {
+        value: 'video_pause',
+        label: '暂停视频'
+      },
+      {
+        value: 'request_full_screen',
+        label: '全屏播放'
+      },
+      {
+        value: 'exit_full_screen',
+        label: '退出全屏'
+      }
+    ]
+  }
+]
+
+/**
+ * 抽奖组件的操作列表
+ */
+export const gridLotteryOperationList = [
+  {
+    value: 'lottery_start',
+    label: '开始抽奖'
+  },
+  {
+    value: 'lottery_stop',
+    label: '结束抽奖'
+  },
+  {
+    value: 'lottery_toggle',
+    label: '开始/结束抽奖'
+  }
+]
+
+/**
+ * 需要额外的输入框的事件
+ */
+export const moduleOperationListKey = Object.fromEntries(
+  [...moduleOperationList, ...moduleCarouselOperationList].map((elem) => {
+    return [elem.value, elem]
+  })
+)
+
+/**
+ * 小程序跳转方式
+ */
+const jumpTypeList = [
+  {
+    value: 'navigateTo',
+    label: 'navigateTo(保留当前页面)'
+  },
+  {
+    value: 'redirectTo',
+    label: 'redirectTo(关闭当前页面)'
+  },
+  {
+    value: 'reLaunch',
+    label: 'reLaunch(关闭所有页面)'
+  }
+]
+
+/**
+ * 跳转事件的列表
+ */
+export const moduleOperationListSelect = {
+  page_jump: jumpTypeList,
+  page_setting: jumpTypeList,
+  jump_h5: jumpTypeList
+}

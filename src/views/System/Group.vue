@@ -204,7 +204,7 @@ const edit = (row: any) => {
  */
 const delRoles = (id: number) => {
   ElMessageBox.confirm('确认要删除角色吗?').then(() => {
-    deleteRoles([id]).then(() => {
+    deleteRoles({ roleId: id }).then(() => {
       ElMessage.success('删除成功')
       _getAllRoles()
     })

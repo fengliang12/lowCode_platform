@@ -9,9 +9,10 @@ export default defineConfig({
     port: 3050,
     proxy: {
       '/api': {
-        target: 'http://106.52.235.252:8101/',
+        // target: 'http://106.52.235.252:8101/',
+        target: 'http://127.0.0.1:8101/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        // rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

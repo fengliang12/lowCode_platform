@@ -12,6 +12,7 @@ export const useButtonStore = defineStore('buttonStore', {
   },
   actions: {
     generateButtons(buttons: string[]) {
+      if (!buttons) return
       const bList: string[] = []
       buttons.forEach((button) => {
         bList.push(button)

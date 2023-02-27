@@ -1,0 +1,211 @@
+import { defineStore } from 'pinia'
+import api from '@/api/index.js'
+import getters from './getters'
+import { useRouter } from 'vue-router'
+import bus from '@/utils/bus'
+import PageModuleLimitData from '@/components/PageSetting/Common/pageModuleLimit/data'
+import { isEmpty } from 'lodash'
+
+const router = useRouter()
+
+export const usePageSetupStore = defineStore('pageSetupStore', {
+  // 开启数据持久化
+  persist: true,
+  state: () => {
+    return {
+      id: '',
+      changeInfo: false, //信息是否被修改
+      pageList: [], //配置列表
+      pageNewParams: [], //页面新增参数
+      PageSetupApiList: [], //api接口管理
+
+      tagList: [], // 等级状态
+      crowdList: [], // 人群
+      pageSettingConstant: {
+        pageSettingType: [],
+      }, //页面配置
+      childPageIds: [], //子页面配置主键集合
+      jumpPageSetting: false, //限制点击跳转自定义页面
+      items: null, //正在配置的组件
+      itemsMap: new Map(), //页面对应map
+      showHotBox: true, //显示热区边框
+      AloneApiList: [], // 单独页面api管理
+      usePageLimit: false,
+      pageLimit: {},
+      pageLimitInclude: false,
+      brandList: [], //品牌列表
+    }
+  },
+  getters,
+  actions: {
+    /**
+     * 设置页面id
+     * @param {*} id
+     */
+    setPageId(id: string) {
+      this.id = id
+    },
+
+    /**
+     * 更新数据
+     */
+    updatePageData() {},
+
+    /**
+     * 获取总的api管理
+     */
+    async getPageSetupApi() {
+      const res = await api.pageSetupApi.getPageSetupApi()
+      this.PageSetupApiList = res
+    },
+
+    /**
+     * 获取标签
+     */
+    async getTagList() {
+      const res = await api.pageSetupApi.getMemberTagAll()
+      this.tagList = res
+    },
+
+    /**
+     * 获取人群
+     */
+    async getCrowdList() {
+      const res = await api.pageSetupApi.getCrowdAll()
+      this.crowdList = res
+    },
+
+    /**
+     * 获取页面类型
+     */
+    async getPageSettingConstant() {
+      const res = await api.pageSetupApi.getPageSettingConstant()
+      const data = Object.fromEntries(
+        res.map((item) => {
+          return [item.value, item.result]
+        }),
+      )
+      this.pageSettingConstant = data
+    },
+
+    /**
+     * 清除items
+     */
+    clearItems() {
+      this.items = null
+    },
+
+    /**
+     * 设置页面参数
+     * @param {} data
+     */
+    setPageNewParams(data) {
+      const set = new Set()
+      this.pageNewParams =
+        data.filter((item) => {
+          if (set.has(item)) return false
+          set.add(item)
+          return true
+        }) || []
+    },
+
+    /**
+     * 管理api数组及参数
+     */
+    async changeAloneAPIList() {
+      const res = await api.pageSetupApi.getOperationApi({
+        pageSetupId: this.id,
+      })
+      const data = res.filter((item) => item.pageSetupId === this.id)
+      this.AloneApiList = data
+    },
+
+    /**
+     * 获取配置页面列表
+     */
+    async getPageList() {
+      if (this.pageList.length) return
+      const res = await api.pageSetupApi.getAllPage()
+      this.pageList = res.map((item) => {
+        return {
+          id: item.id,
+          title: item.title,
+          customHeader: item.customHeader,
+        }
+      })
+    },
+
+    /**
+     * 设置页面items
+     */
+    setItems(value) {
+      this.items = value
+    },
+
+    /**!
+     * 设置组件集合
+     */
+    setPageItemsMap({ itemsMap, items, opt = 'set' }) {
+      if (isEmpty(this.itemsMap)) {
+        this.itemsMap = new Map()
+      }
+      if (itemsMap) {
+        this.itemsMap = itemsMap
+      }
+      if (items) {
+        if (opt === 'delete') {
+          this.itemsMap.delete(items.code)
+        } else {
+          this.itemsMap.set(items.code, items)
+        }
+      }
+    },
+
+    /**
+     * 设置等级
+     */
+    setTagList(list) {
+      this.tagList = list
+    },
+
+    /**
+     * 设置页面能否跳转到自定义页面
+     */
+    setJumpPageSetting(bol) {
+      this.jumpPageSetting = bol
+    },
+
+    /**
+     *设置是否显示热区边框
+     */
+    setShowHotBox(bol) {
+      this.showHotBox = bol
+    },
+
+    /**
+     * 设置页面子页面
+     */
+    setChildPageIds(val) {
+      this.childPageIds = val
+    },
+
+    /**
+     * 数据如果发生变化先保存当前页面，然后跳转到对应的页面
+     */
+    toPage(id) {
+      if (this.changeInfo) {
+        bus.emit('savePageSetting')
+        return
+      }
+      router.replace({ name: 'pageSetupEdit', query: { id, child: true } })
+    },
+
+    /**
+     * 设置页面限制
+     * @param {*} limit
+     */
+    setPageLimit(limit = new PageModuleLimitData()) {
+      this.pageLimit = limit
+    },
+  },
+})

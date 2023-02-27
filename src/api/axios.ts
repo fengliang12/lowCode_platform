@@ -9,9 +9,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('authorization')
     if (token) {
-      config.headers['token'] = token
+      config.headers['authorization'] = token
     }
     return config
   },
@@ -22,17 +22,8 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (res: any) => {
-    console.log('res', res)
-
     if (res.data.code === 200) {
       return res
-    } else if (res.data.code === 10001) {
-      ElMessage({
-        message: '未登录或者登录过期,请登录',
-        type: 'warning',
-      })
-      localStorage.removeItem('token')
-      router.replace({ path: '/login' })
     } else if (res.data.code === 10002) {
       ElMessage({
         message: '权限不足',
@@ -46,6 +37,15 @@ instance.interceptors.response.use(
     }
   },
   (error) => {
+    console.log('network error', error)
+    if (error.response.status === 401) {
+      localStorage.removeItem('token')
+      ElMessage({
+        message: '登录过期,请登录',
+        type: 'warning',
+      })
+      router.replace({ path: '/login' })
+    }
     return Promise.reject(error)
   },
 )

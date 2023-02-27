@@ -15,6 +15,18 @@
             placeholder="请输入用户名"
           ></el-input>
         </el-form-item>
+        <el-form-item
+          v-if="state.formTitle !== '修改用户'"
+          label="密码"
+          prop="password"
+          show-password
+        >
+          <el-input
+            v-model="state.userFormData.password"
+            type="password"
+            placeholder="请输入用户名"
+          ></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button @click="resetForm"> 重置</el-button>
           <el-button type="primary" @click="handelConfirm"> 确定</el-button>
@@ -37,21 +49,7 @@
     <!-- 系统用户表格 -->
     <div style="margin: 0 10px; text-align: left">
       <el-row>
-        <el-col :span="4" :xs="24">
-          <div>
-            <p>部门管理</p>
-            <el-tree
-              :data="deptOptions"
-              :props="{ label: 'name', children: 'children' }"
-              :expand-on-click-node="false"
-              ref="deptTreeRef"
-              highlight-current
-              default-expand-all
-              @node-click="handleNodeClick"
-            />
-          </div>
-        </el-col>
-        <el-col :span="20" :xs="24">
+        <el-col :span="24" :xs="24">
           <div style="margin: 5px 10px; text-align: left">
             <el-button type="primary" @click="toAddUser">{{
               $t('button.wadd')
@@ -59,17 +57,13 @@
           </div>
           <el-table :data="tableData">
             <el-table-column prop="username" label="用户名"> </el-table-column>
-            <el-table-column prop="roleName" label="角色"></el-table-column>
-            <el-table-column label="状态">
-              <template #default="scope">
-                <el-switch
-                  id="switch"
-                  v-model="scope.row.status"
-                  active-color="green"
-                  inactive-color="red"
-                  @change="(value: boolean) => commitStatusChange(value, scope.row)"
-                >
-                </el-switch>
+            <el-table-column label="角色">
+              <template v-slot="scope">
+                <div v-for="item in roles" :key="item.id">
+                  <span v-if="item.id == scope.row.roleId">{{
+                    item.name
+                  }}</span>
+                </div>
               </template>
             </el-table-column>
             <el-table-column label="操作" width="300px">
@@ -131,13 +125,10 @@ export default {
 import {
   addSysUser,
   deleteSysUsers,
-  getAllSysUsers,
-  updateStatus,
   updateSysUser,
   resetPassword,
   setRole,
-  getDepartment,
-  getDepUsers,
+  getAllSysUsers,
 } from '@/api/system/User'
 import { getAllRoles } from '@/api/system/role'
 import 'element-plus/es/components/message-box/style/css'
@@ -151,17 +142,8 @@ import {
   ref,
   Ref,
 } from 'vue'
-import type Node from 'element-plus/es/components/tree/src/model/node'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { isEmpty } from 'lodash-es'
-
-const { proxy } = getCurrentInstance() as ComponentInternalInstance
-
-// 部门数据
-const deptOptions = ref(undefined)
-const queryParams = reactive({
-  id: 2,
-})
 
 // 系统用户表单
 const state = reactive({
@@ -171,6 +153,7 @@ const state = reactive({
   userFormDialogVisible: false,
   userFormData: {
     username: '',
+    password: '',
   },
   rules: {
     username: [
@@ -192,33 +175,26 @@ interface Role {
 }
 
 const tableData = computed(() => state.users)
-const roles: Ref<Array<Role> | null> = ref(null)
 
 // 初始化
 onMounted(() => {
-  getTreeselect()
   getUsers()
+  initAllRoles()
 })
 // 获取系统用户
 const getUsers = () => {
-  getDepUsers(queryParams.id).then((result: any) => {
+  getAllSysUsers().then((result: any) => {
     state.users = result.data.data
   })
 }
-// 获取部门数据
 
-const getTreeselect = () => {
-  getDepartment().then((response: any) => {
-    deptOptions.value = response.data.data
+const roles: Ref<Array<Role> | null> = ref(null)
+const initAllRoles = () => {
+  getAllRoles().then((result) => {
+    roles.value = result.data.data
   })
 }
-/** 节点单击事件 */
-const handleNodeClick = (data: Node) => {
-  queryParams.id = data.id
-  getDepUsers(queryParams.id).then((result: any) => {
-    state.users = result.data.data
-  })
-}
+
 // 改变页
 const handelCurrentChange = (val: number) => {
   state.currentPage = val
@@ -266,6 +242,7 @@ const handelConfirm = () => {
 const resetForm = () => {
   state.userFormData = {
     username: '',
+    password: '',
   }
 }
 
@@ -273,7 +250,7 @@ const resetForm = () => {
 const deleteUser = (id: number) => {
   ElMessageBox.confirm('确认要删除当前用户吗?')
     .then(() => {
-      deleteSysUsers(id).then(() => {
+      deleteSysUsers({ userId: id }).then(() => {
         ElMessage.success('删除成功')
         getUsers()
       })
@@ -294,20 +271,6 @@ interface User {
   status: boolean
 }
 
-// 更新用户状态
-
-const commitStatusChange = (value: boolean, user: User) => {
-  ElMessageBox.confirm(value === false ? '冻结用户?' : '激活用户?')
-    .then(() => {
-      updateStatus(user.id, user.status).then(() => {
-        ElMessage.success(value === false ? '已冻结' : '已激活')
-      })
-    })
-    .catch(() => {
-      getUsers()
-    })
-}
-
 // 重设密码
 const resetPw = (userId: number) => {
   ElMessageBox.confirm('重置该用户密码,请谨慎操作!').then(() => {
@@ -319,11 +282,8 @@ const resetPw = (userId: number) => {
 
 // 设置角色按钮
 const toSetRole = (userId: number) => {
-  getAllRoles().then((result) => {
-    roles.value = result.data.data
-    state.currentUserId = userId
-    state.showSetRoleDialog = true
-  })
+  state.currentUserId = userId
+  state.showSetRoleDialog = true
 }
 
 /**
