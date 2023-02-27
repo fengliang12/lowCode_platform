@@ -59,7 +59,7 @@
 import { nextTick, ref } from 'vue'
 import componentsMapping from '../../CommonData/componentsMapping'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { usePageSetupStore } from '../../../../store'
+import { usePageSetupStore } from '@/store'
 import setItemsMap from '../../Handle/setItemsMap'
 import { cloneDeep } from 'lodash'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
@@ -74,7 +74,7 @@ defineProps(['formData'])
 const nodeClick = (data, node) => {
   pageSetupStore.setItems({
     value: data,
-    parents: node?.parent?.data ? node.parent.data : null
+    parents: node?.parent?.data ? node.parent.data : null,
   })
 }
 
@@ -131,7 +131,7 @@ const paste = (data) => {
     }
     ElMessageBox.confirm(`确认粘贴吗到${data.title}`, '提示', {
       confirmButtonText: '确定',
-      cancelButtonText: '取消'
+      cancelButtonText: '取消',
     }).then(() => {
       const pageSetting = cloneDeep(copyData)
       if (!data.moduleSettings) {
@@ -153,7 +153,7 @@ const del = (data, node) => {
   ElMessageBox.confirm('确认删除', '提示', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
-    type: 'warning'
+    type: 'warning',
   }).then(() => {
     const parent = node.parent
     const siblings = parent.data.moduleSettings || parent.data
@@ -161,12 +161,12 @@ const del = (data, node) => {
     siblings.splice(index, 1)
 
     pageSetupStore.setPageItemsMap({
-      itemsMap: setItemsMap(data, pageSetupStore.itemsMap, 'delete')
+      itemsMap: setItemsMap(data, pageSetupStore.itemsMap, 'delete'),
     })
 
     if (pageSetupStore.items.value.code === data.code) {
       pageSetupStore.setItems({
-        value: null
+        value: null,
       })
     }
   })

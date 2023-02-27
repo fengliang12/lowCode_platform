@@ -21,7 +21,7 @@ import { ref, unref, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePageSetupStore } from '@/store'
 import { ElMessage } from 'element-plus'
-import pageSetupApi from '@/api/pageSetupApi'
+import pageSetupApi from '@/api/pageSetup'
 import updateApiList from '../../Handle/updateApiList'
 import { cloneDeep } from 'lodash'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
@@ -97,7 +97,7 @@ const createPageSetting = async () => {
     },
     () => {
       ElMessage.error('导入失败')
-    }
+    },
   )
 }
 

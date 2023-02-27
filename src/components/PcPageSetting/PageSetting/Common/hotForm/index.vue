@@ -1,5 +1,5 @@
 <template>
-  <FormCreate v-model="modelValue" :formItemList="formItemList"></FormCreate>
+  <FormCreate v-model="valueData" :formList="formItemList"></FormCreate>
 </template>
 
 <script setup>
@@ -8,11 +8,21 @@ import FormCreate from '@/components/FormCreate/index.vue'
 import { onMounted, reactive } from 'vue'
 import {
   formTypeKeyMapClass,
-  formTypeList
+  formTypeList,
 } from '../hotView/common/formTypeList'
 import { pageValueData } from '../setData/data'
 
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])
+
+const valueData = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+})
 
 /**
  * 公共的组件
@@ -22,12 +32,12 @@ const commonFormItem = [
   {
     field: 'placeholder',
     type: 'el-input',
-    title: '输入提示'
+    title: '输入提示',
   },
   {
     field: 'placeholderStyle',
     type: 'el-input',
-    title: '输入提示样式'
+    title: '输入提示样式',
   },
   {
     field: 'disabled',
@@ -35,9 +45,9 @@ const commonFormItem = [
     title: '是否禁用',
     props: {
       activeText: '是',
-      inactiveText: '否'
-    }
-  }
+      inactiveText: '否',
+    },
+  },
 ]
 
 /**
@@ -47,21 +57,21 @@ const formItemList = reactive([
   {
     field: 'key',
     title: 'key值',
-    type: 'SelectKey'
+    type: 'SelectKey',
   },
   {
     field: 'type',
     title: '表单类型',
     type: 'el-select',
     props: {
-      placeholder: '请选择类型'
+      placeholder: '请选择类型',
     },
     option: formTypeList,
     on: {
       change: (e) => {
         props.modelValue.attribute = new formTypeKeyMapClass[e].class()
         props.modelValue.key = formTypeKeyMapClass[e].defaultKey
-      }
+      },
     },
     control: [
       {
@@ -80,8 +90,8 @@ const formItemList = reactive([
                 type: 'setData',
                 props: {
                   usValue: true,
-                  span: 24
-                }
+                  span: 24,
+                },
               },
               {
                 field: 'type',
@@ -90,25 +100,25 @@ const formItemList = reactive([
                 options: [
                   {
                     label: '文本(text)',
-                    value: 'text'
+                    value: 'text',
                   },
                   {
                     label: '数字(number)',
-                    value: 'number'
+                    value: 'number',
                   },
                   {
                     label: '身份证(idcard)',
-                    value: 'idcard'
+                    value: 'idcard',
                   },
                   {
                     label: '带小数点(digit)',
-                    value: 'digit'
+                    value: 'digit',
                   },
                   {
                     label: '昵称(nickname)',
-                    value: 'nickname'
-                  }
-                ]
+                    value: 'nickname',
+                  },
+                ],
               },
               {
                 field: 'password',
@@ -116,14 +126,14 @@ const formItemList = reactive([
                 title: '是否为密码',
                 props: {
                   activeText: '是',
-                  inactiveText: '否'
-                }
+                  inactiveText: '否',
+                },
               },
               {
                 field: 'maxlength',
                 type: 'el-input-number',
                 title: '最大长度',
-                tips: '输入的最大长度-1为不限制长度'
+                tips: '输入的最大长度-1为不限制长度',
               },
               {
                 field: 'focus',
@@ -131,8 +141,8 @@ const formItemList = reactive([
                 title: '自动获取焦点',
                 props: {
                   activeText: '是',
-                  inactiveText: '否'
-                }
+                  inactiveText: '否',
+                },
               },
               {
                 field: 'confirmType',
@@ -141,29 +151,29 @@ const formItemList = reactive([
                 options: [
                   {
                     label: '发送',
-                    value: 'send'
+                    value: 'send',
                   },
                   {
                     label: '搜索',
-                    value: 'search'
+                    value: 'search',
                   },
                   {
                     label: '下一个',
-                    value: 'next'
+                    value: 'next',
                   },
                   {
                     label: '前往',
-                    value: 'go'
+                    value: 'go',
                   },
                   {
                     label: '完成',
-                    value: 'done'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+                    value: 'done',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
         handle(type) {
@@ -178,20 +188,20 @@ const formItemList = reactive([
             title: '默认值',
             props: {
               usValue: true,
-              span: 24
-            }
+              span: 24,
+            },
           },
           {
             field: 'start',
             type: 'a-date',
-            title: '开始时间'
+            title: '开始时间',
           },
           {
             field: 'end',
             type: 'a-date',
-            title: '结束时间'
-          }
-        ]
+            title: '结束时间',
+          },
+        ],
       },
       {
         handle(type) {
@@ -212,14 +222,14 @@ const formItemList = reactive([
                     province: '省份',
                     city: '城市',
                     district: '地区',
-                    postcode: '地区code'
-                  }
-                }
+                    postcode: '地区code',
+                  },
+                },
               },
-              ...commonFormItem
-            ]
-          }
-        ]
+              ...commonFormItem,
+            ],
+          },
+        ],
       },
       {
         handle(type) {
@@ -237,19 +247,19 @@ const formItemList = reactive([
                 options: [
                   {
                     label: '自定义(custom)',
-                    value: 'custom'
+                    value: 'custom',
                   },
                   {
                     label: '动态数据(pageData)',
-                    value: 'pageData'
-                  }
+                    value: 'pageData',
+                  },
                 ],
                 on: {
                   change: (v) => {
                     props.modelValue.attribute = new formTypeKeyMapClass[
                       props.value.type
                     ].class(v)
-                  }
+                  },
                 },
                 default: 'custom',
                 control: [
@@ -261,15 +271,15 @@ const formItemList = reactive([
                       {
                         type: 'CascaderTable',
                         field: 'cascaderList',
-                        title: '设置选项'
+                        title: '设置选项',
                       },
                       {
                         type: 'CascaderDefault',
                         field: 'valueList',
                         title: '多组默认数据配置',
-                        props: {}
-                      }
-                    ]
+                        props: {},
+                      },
+                    ],
                   },
                   {
                     handle: (type) => {
@@ -279,7 +289,7 @@ const formItemList = reactive([
                       {
                         type: 'setData',
                         field: 'cascaderList',
-                        title: '设置选项'
+                        title: '设置选项',
                       },
                       {
                         field: 'dataType',
@@ -288,26 +298,26 @@ const formItemList = reactive([
                         options: [
                           {
                             label: '树形结构(treeData)',
-                            value: 'treeData'
+                            value: 'treeData',
                           },
                           {
                             label: '对象结构(objectData)',
-                            value: 'objectData'
-                          }
-                        ]
+                            value: 'objectData',
+                          },
+                        ],
                       },
                       {
                         field: 'props',
                         type: 'el-input',
                         title: '数据格式化方法',
-                        tips: '树形结构 默认 (展示,值,子选项)label,value,children\n对象结构(一级,二级,三级)value1,value2,value3'
+                        tips: '树形结构 默认 (展示,值,子选项)label,value,children\n对象结构(一级,二级,三级)value1,value2,value3',
                       },
                       {
                         field: 'maxlength',
                         type: 'el-input-number',
                         title: '层级数',
                         props: {
-                          min: 0
+                          min: 0,
                         },
                         on: {
                           change: (value) => {
@@ -316,21 +326,21 @@ const formItemList = reactive([
                               .map((i, index) => ({
                                 key: `value${index}`,
                                 pageValue: new pageValueData({
-                                  valueType: 'pageData'
-                                })
+                                  valueType: 'pageData',
+                                }),
                               }))
-                          }
-                        }
+                          },
+                        },
                       },
                       {
                         type: 'CascaderDefault',
                         field: 'valueList',
                         title: '多组默认数据配置',
-                        props: {}
-                      }
-                    ]
-                  }
-                ]
+                        props: {},
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 field: 'showSelectedValue',
@@ -338,16 +348,16 @@ const formItemList = reactive([
                 title: '是否回显值',
                 props: {
                   activeText: '是',
-                  inactiveText: '否'
-                }
+                  inactiveText: '否',
+                },
               },
-              ...commonFormItem
-            ]
-          }
-        ]
-      }
-    ]
-  }
+              ...commonFormItem,
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ])
 
 /**
@@ -397,18 +407,18 @@ watch(cascadeLevel, (v, o) => {
         .fill(null)
         .map((i, index) => ({
           key: `value${index}`,
-          pageValue: new pageValueData({ valueType: 'pageData' })
+          pageValue: new pageValueData({ valueType: 'pageData' }),
         }))
     } else if (v > o && o == props.modelValue.attribute.valueList.length) {
       const key = `value${props.modelValue.attribute?.valueList?.length}`
       props.modelValue.attribute.valueList.push({
         key,
-        pageValue: new pageValueData({ valueType: 'pageData' })
+        pageValue: new pageValueData({ valueType: 'pageData' }),
       })
     } else if (v < o && o == props.modelValue.attribute.valueList.length) {
       props.modelValue.attribute.valueList.splice(
         props.modelValue.attribute.valueList.length - 1,
-        1
+        1,
       )
     }
   }

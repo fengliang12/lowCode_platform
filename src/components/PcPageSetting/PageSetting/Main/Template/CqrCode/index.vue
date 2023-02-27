@@ -12,15 +12,15 @@
 
 <script setup>
 import QrcodeVue from 'qrcode.vue'
-import handlePageValue from '@/components/PageSetting/Handle/handlePageValue.js'
+import handlePageValue from '../../../Handle/handlePageValue.js'
 import { watch } from 'vue'
 const props = defineProps(['data'])
 watch(
   () => props.data.pageStyle.width,
   (val) => (props.data.pageStyle.height = val),
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
 </script>
 

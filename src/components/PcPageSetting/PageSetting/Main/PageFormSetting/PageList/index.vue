@@ -45,14 +45,14 @@
     <el-row>
       <el-button type="primary" @click="handleExport">JSON格式化预览</el-button>
     </el-row>
-    <JsonEditor ref="jsonEditorRef"></JsonEditor>
+    <!-- <JsonEditor ref="jsonEditorRef"></JsonEditor> -->
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
 import { usePageSetupStore } from '@/store'
-import JsonEditor from '../../../Common/jsonEditor/index.vue'
+// import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
 
 const props = defineProps(['value'])
@@ -62,7 +62,7 @@ const pageKey = computed(() => {
   return Object.fromEntries(
     pageSetupStore.pageList.map((item) => {
       return [item.id, item.title]
-    })
+    }),
   )
 })
 
@@ -73,7 +73,7 @@ const selectId = ref('')
 const add = () => {
   pageSetupStore.changeInfo = true
   pageSetupStore.setChildPageIds(
-    uniq([...pageSetupStore.childPageIds, selectId.value])
+    uniq([...pageSetupStore.childPageIds, selectId.value]),
   )
   console.log(pageSetupStore.childPageIds)
   selectId.value = ''

@@ -221,8 +221,8 @@
                 </span>
               </template>
               <el-radio-group v-model="state.formData.isShow">
-                <el-radio :label="0">正常</el-radio>
-                <el-radio :label="1">停用</el-radio>
+                <el-radio :label="0">显示</el-radio>
+                <el-radio :label="1">隐藏</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>

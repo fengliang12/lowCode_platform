@@ -68,7 +68,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { usePageSetupStore } from '../../../../store'
+import { usePageSetupStore } from '@/store'
 import { dPageShowDataValue } from '../../Handle/filters'
 import PageDataHandle from './pageDataHandle.vue'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
@@ -78,24 +78,24 @@ const switchCustom = ref(false)
 const props = defineProps({
   modelValue: {
     type: String,
-    default: ''
+    default: '',
   },
   handle: {
     type: Array,
-    default: null
+    default: null,
   },
   inputType: {
     type: String,
-    default: 'text '
+    default: 'text ',
   },
   showHandle: {
     type: Boolean,
-    default: true
+    default: true,
   },
   disabled: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue', 'update:handle'])
@@ -109,7 +109,7 @@ const valueData = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**
@@ -121,7 +121,7 @@ const handleData = computed({
   },
   set(val) {
     emit('update:handle', val)
-  }
+  },
 })
 
 /**
@@ -153,8 +153,8 @@ watch(
     handleSwitchCustom()
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
 /**
  * 多级菜单选择

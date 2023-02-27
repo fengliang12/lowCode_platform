@@ -39,7 +39,7 @@ import ShowFile from '../../../Common/showFile/index.vue'
 import { setModule } from '../../../data'
 import ModuleSetting from '../index.vue'
 import { usePageSetupStore } from '@/store'
-import setItemsMap from '@/components/PageSetting/Handle/setItemsMap.js'
+import setItemsMap from '../../../Handle/setItemsMap.js'
 import bus from '@/utils/bus'
 
 const props = defineProps(['modelValue', 'parents'])
@@ -73,8 +73,8 @@ const delChild = (index) => {
     itemsMap: setItemsMap(
       props.modelValue[index],
       pageSetupStore.itemsMap,
-      'delete'
-    )
+      'delete',
+    ),
   })
   props.modelValue.splice(index, 1)
 }

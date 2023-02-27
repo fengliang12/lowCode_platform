@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-model="visible"
+    v-show="visible"
     title="热区"
     @close="close"
     append-to-body
@@ -240,8 +240,8 @@ const imageLoaded = () => {
           width,
           height,
           left,
-          top
-        }
+          top,
+        },
       }
     }
     return false //解除在划动过程中鼠标样式改变的BUG
@@ -278,7 +278,7 @@ const imageLoaded = () => {
 const getScroll = () => {
   return {
     scrollLeft: hotViewImgBoxRef.value?.scrollLeft,
-    scrollTop: hotViewImgBoxRef.value?.scrollTop
+    scrollTop: hotViewImgBoxRef.value?.scrollTop,
   }
 }
 
@@ -289,7 +289,7 @@ const hotViewElDialogRef = ref(null)
 const getScrollElDialog = () => {
   return {
     scrollLeft: hotViewElDialogRef.value?.scrollLeft || 0,
-    scrollTop: hotViewElDialogRef.value?.scrollTop || 0
+    scrollTop: hotViewElDialogRef.value?.scrollTop || 0,
   }
 }
 
@@ -313,7 +313,7 @@ const mouseUp = () => {
 const mouseDown = (e, index) => {
   const down = {
     clientX: e.clientX,
-    clientY: e.clientY
+    clientY: e.clientY,
   }
   const { type } = e.srcElement.dataset
   let oldInfo = cloneDeep(hotView.value[index].pageStyle)
@@ -350,7 +350,7 @@ const operationHotFunc = {
           ? 0
           : setY + oldInfo.height > domRect.height
           ? domRect.height - oldInfo.height
-          : setY
+          : setY,
     }
   },
   top(e, down, oldInFo) {
@@ -358,14 +358,14 @@ const operationHotFunc = {
     return {
       ...oldInFo,
       height: oldInFo.height - top,
-      top: top + oldInFo.top
+      top: top + oldInFo.top,
     }
   },
   bottom(e, down, oldInFo) {
     const top = e.clientY - down.clientY
     return {
       ...oldInFo,
-      height: oldInFo.height + top
+      height: oldInFo.height + top,
     }
   },
   left(e, down, oldInFo) {
@@ -375,7 +375,7 @@ const operationHotFunc = {
     return {
       ...oldInFo,
       width,
-      left: setX
+      left: setX,
     }
   },
   right(e, down, oldInFo) {
@@ -383,9 +383,9 @@ const operationHotFunc = {
     const width = oldInFo.width + left
     return {
       ...oldInFo,
-      width
+      width,
     }
-  }
+  },
 }
 
 /**
@@ -421,7 +421,7 @@ const hotTypeChange = (e) => {
     hotView.value[currentIndex.value].formData = {
       type: formTypeList[0].value, //下拉选择框，输入框，城市，日期
       key: '', //输入表单值对应的key
-      attribute: new formTypeList[0].class() //属性
+      attribute: new formTypeList[0].class(), //属性
     }
   } else {
     hotView.value[currentIndex.value].formData = null

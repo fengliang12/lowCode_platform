@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import pagePathList from '@/components/constant/pagePath'
+import pagePathList from '@/components/Constant/pagePath'
 import { computed, ref } from 'vue'
 
 const props = defineProps(['modelValue'])
@@ -26,7 +26,7 @@ const operationUrl = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**

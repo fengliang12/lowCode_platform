@@ -60,8 +60,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { usePageSetupStore } from '@/store'
-import EditParameters from '@/components/PageSetting/Common/editParameters/index.vue'
-import api from '@/api/index'
+import EditParameters from '../../../Common/editParameters/index.vue'
+import api from '@/api/axios.ts'
 
 const pageSetupStore = usePageSetupStore()
 const formData = ref({})
@@ -121,8 +121,8 @@ const clickWriteApi = (row, type) => {
     type: 'multiLevel',
     apiInfo: {
       apiUrl: newOnce.url,
-      apiKey: newOnce.apiKey
-    }
+      apiKey: newOnce.apiKey,
+    },
   })
 }
 
@@ -150,13 +150,13 @@ const changeDataAndAdd = async () => {
     await api.pageSetupApi.setupOperationApi({
       ...formData.value,
       pageSetupId: pageSetupId.value,
-      apiInfoId: formData.value.id
+      apiInfoId: formData.value.id,
     })
   } else if (addOrChange.value === 'change') {
     await api.pageSetupApi.changeOperationApiMes({
       ...formData.value,
       pageSetupId: pageSetupId.value,
-      apiInfoId: formData.value.id
+      apiInfoId: formData.value.id,
     })
   }
   pageSetupStore.changeAloneAPIList()

@@ -100,7 +100,7 @@ import { usePageSetupStore } from '@/store'
 import Common from './index.vue'
 import { computed, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
-import setItemsMap from '@/components/PageSetting/Handle/setItemsMap.js'
+import setItemsMap from '../../../Handle/setItemsMap.js'
 import { cloneDeep } from 'lodash'
 
 const props = defineProps(['data', 'showHotBox', 'parents'])
@@ -124,7 +124,7 @@ const style = computed(() => {
       left,
       right,
       bottom,
-      position
+      position,
     })
   }
   return handleStyle(props.data.pageStyle)
@@ -141,7 +141,7 @@ const click = (e) => {
   if (!self.value) {
     pageSetupStore.setItems({
       value: props.data,
-      parents: props.parents?.pageStyle ? props.parents : null
+      parents: props.parents?.pageStyle ? props.parents : null,
     })
     e.stopPropagation()
   }
@@ -164,18 +164,18 @@ const deleteItem = () => {
   ElMessageBox.confirm('确认删除', '提示', {
     confirmButtonText: '确定',
     cancelButtonClass: '取消',
-    type: 'warning'
+    type: 'warning',
   }).then(() => {
     const index = props.parents.moduleSettings.findIndex(
-      (item) => item.code === props.data
+      (item) => item.code === props.data,
     )
     props.parents.moduleSettings.splice(index, 1)
     pageSetupStore.setPageItemsMap({
-      itemsMap: setItemsMap(props?.data, pageSetupStore.itemsMap, 'delete')
+      itemsMap: setItemsMap(props?.data, pageSetupStore.itemsMap, 'delete'),
     })
     if (self.value) {
       pageSetupStore.setItems({
-        value: null
+        value: null,
       })
     }
   })

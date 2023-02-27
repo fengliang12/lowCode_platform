@@ -18,12 +18,12 @@
 
 <script setup>
 import { onMounted, computed, ref } from 'vue'
-import api from '@/api/index.js'
+import api from '@/api/axios.ts'
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -36,7 +36,7 @@ const subscribeNotices = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 onMounted(() => {
@@ -52,7 +52,7 @@ const getTemplateList = async () => {
     page: 0,
     size: 1000,
     expression: '',
-    expArr: []
+    expArr: [],
   })
   messageTemplateList.value = result.map((elem) => {
     elem.templateCode = elem.id

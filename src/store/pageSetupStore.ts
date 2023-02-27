@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import api from '@/api/index.js'
+import api from '@/api/axios.js'
 import getters from './getters'
 import { useRouter } from 'vue-router'
 import bus from '@/utils/bus'
-import PageModuleLimitData from '@/components/PageSetting/Common/pageModuleLimit/data'
+import PageModuleLimitData from '@/components/PcPageSetting/PageSetting/Common/pageModuleLimit/data'
 import { isEmpty } from 'lodash'
 
 const router = useRouter()
@@ -55,37 +55,39 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 获取总的api管理
      */
     async getPageSetupApi() {
-      const res = await api.pageSetupApi.getPageSetupApi()
-      this.PageSetupApiList = res
+      // const res = await api.pageSetupApi.getPageSetupApi()
+      this.PageSetupApiList = []
     },
 
     /**
      * 获取标签
      */
     async getTagList() {
-      const res = await api.pageSetupApi.getMemberTagAll()
-      this.tagList = res
+      // const res = await api.pageSetupApi.getMemberTagAll()
+      this.tagList = []
     },
 
     /**
      * 获取人群
      */
     async getCrowdList() {
-      const res = await api.pageSetupApi.getCrowdAll()
-      this.crowdList = res
+      // const res = await api.pageSetupApi.getCrowdAll()
+      this.crowdList = []
     },
 
     /**
      * 获取页面类型
      */
     async getPageSettingConstant() {
-      const res = await api.pageSetupApi.getPageSettingConstant()
-      const data = Object.fromEntries(
-        res.map((item) => {
-          return [item.value, item.result]
-        }),
-      )
-      this.pageSettingConstant = data
+      // const res = await api.pageSetupApi.getPageSettingConstant()
+      // const data = Object.fromEntries(
+      //   res.map((item) => {
+      //     return [item.value, item.result]
+      //   }),
+      // )
+      this.pageSettingConstant = {
+        pageSettingType: [],
+      }
     },
 
     /**
@@ -99,10 +101,10 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 设置页面参数
      * @param {} data
      */
-    setPageNewParams(data) {
+    setPageNewParams(data: any) {
       const set = new Set()
       this.pageNewParams =
-        data.filter((item) => {
+        data.filter((item: any) => {
           if (set.has(item)) return false
           set.add(item)
           return true
@@ -113,11 +115,11 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 管理api数组及参数
      */
     async changeAloneAPIList() {
-      const res = await api.pageSetupApi.getOperationApi({
-        pageSetupId: this.id,
-      })
-      const data = res.filter((item) => item.pageSetupId === this.id)
-      this.AloneApiList = data
+      // const res = await api.pageSetupApi.getOperationApi({
+      //   pageSetupId: this.id,
+      // })
+      // const data = res.filter((item) => item.pageSetupId === this.id)
+      this.AloneApiList = []
     },
 
     /**
@@ -138,7 +140,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     /**
      * 设置页面items
      */
-    setItems(value) {
+    setItems(value: any) {
       this.items = value
     },
 
@@ -164,40 +166,40 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     /**
      * 设置等级
      */
-    setTagList(list) {
+    setTagList(list: any) {
       this.tagList = list
     },
 
     /**
      * 设置页面能否跳转到自定义页面
      */
-    setJumpPageSetting(bol) {
+    setJumpPageSetting(bol: boolean) {
       this.jumpPageSetting = bol
     },
 
     /**
      *设置是否显示热区边框
      */
-    setShowHotBox(bol) {
+    setShowHotBox(bol: boolean) {
       this.showHotBox = bol
     },
 
     /**
      * 设置页面子页面
      */
-    setChildPageIds(val) {
+    setChildPageIds(val: any) {
       this.childPageIds = val
     },
 
     /**
      * 数据如果发生变化先保存当前页面，然后跳转到对应的页面
      */
-    toPage(id) {
+    toPage(id: string) {
       if (this.changeInfo) {
         bus.emit('savePageSetting')
         return
       }
-      router.replace({ name: 'pageSetupEdit', query: { id, child: true } })
+      router.replace({ name: 'pageSetupEdit', query: { id, child: 'true' } })
     },
 
     /**

@@ -8,7 +8,7 @@
         label="组件标题："
         prop="title"
         :rules="[
-          { required: true, message: '请输入组件标题', trigger: 'blur' }
+          { required: true, message: '请输入组件标题', trigger: 'blur' },
         ]"
       >
         <el-input v-model="modelValue.title" placeholder="请输入活动名称" />
@@ -43,7 +43,7 @@
           label="页面类型"
           prop="type"
           :rules="[
-            { required: true, message: '请输入页面类型', trigger: 'blur' }
+            { required: true, message: '请输入页面类型', trigger: 'blur' },
           ]"
         >
           <el-select
@@ -134,7 +134,7 @@
 
 <script setup>
 import { ref, computed, provide, watch } from 'vue'
-import { usePageSetupStore } from '@/store/index.js'
+import { usePageSetupStore } from '@/store/index.ts'
 import EditParameters from '../../../Common/editParameters/index.vue'
 
 const pageSetupStore = usePageSetupStore()
@@ -159,7 +159,7 @@ watch(
   () => props.modelValue.form,
   () => {
     activeTime.value = [props.modelValue.form, props.modelValue.to]
-  }
+  },
 )
 /**
  * 时间事件选择
@@ -180,7 +180,7 @@ const showEditParameters = (type) => {
   paramsType.value = type
   editParameters.value.show({
     params: pageSetupStore?.pageNewParams || [],
-    type: 'multiLevel'
+    type: 'multiLevel',
   })
 }
 

@@ -1,9 +1,9 @@
 <template>
   <el-form>
     <div class="mb10 code">
-      code : <span>{{ modelValue?.code }}</span>
+      code : <span>{{ valueData?.code }}</span>
     </div>
-    <FormCreate v-model="modelValue" :formItemList="formItemList"></FormCreate>
+    <FormCreate v-model="valueData" :formItemList="formItemList"></FormCreate>
     <el-form-item label="组件参数">
       <!--编辑api参数,有icon,#016ef8,#bfbfbf-->
       <el-icon
@@ -22,7 +22,7 @@
         end-placeholder="结束时间"
       ></el-date-picker>
     </el-form-item>
-    <PageModuleLimit v-model="modelValue.moduleLimit"></PageModuleLimit>
+    <PageModuleLimit v-model="valueData.moduleLimit"></PageModuleLimit>
     <el-button @click="showConditionsForExecution">其他条件判断</el-button>
   </el-form>
   <!-- 编辑条件 -->
@@ -43,10 +43,20 @@ import FormCreate from '@/components/FormCreate/index.vue'
 import EditParameters from '../../../Common/editParameters/index.vue'
 import PageModuleLimit from '../../../Common/pageModuleLimit/index.vue'
 import { reactive, ref } from 'vue'
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 import ConditionsForExecution from '../../../Common/conditionsForExecution/index.vue'
 
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])
+
+const valueData = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+})
 
 /**
  * 属性
@@ -55,7 +65,7 @@ const formItemList = reactive([
   {
     field: 'title',
     title: '标题',
-    type: 'el-input'
+    type: 'el-input',
   },
   {
     field: 'initModuleViewHide',
@@ -65,14 +75,14 @@ const formItemList = reactive([
     options: [
       {
         label: '开启',
-        value: true
+        value: true,
       },
       {
         label: '关闭',
-        value: false
-      }
-    ]
-  }
+        value: false,
+      },
+    ],
+  },
 ])
 
 /**
@@ -90,7 +100,7 @@ const termOfValidity = computed({
   set(value) {
     props.modelValue.from = value?.[0]
     props.modelValue.to = value?.[1]
-  }
+  },
 })
 
 /**
@@ -100,7 +110,7 @@ const editParameters = ref(null)
 const showEditParameters = () => {
   editParameters.value.show({
     params: props.modelValue?.params || [],
-    type: 'multiLevel'
+    type: 'multiLevel',
   })
 }
 

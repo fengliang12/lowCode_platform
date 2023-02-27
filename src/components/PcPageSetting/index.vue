@@ -10,11 +10,11 @@
 import { onUnmounted, ref, watch, provide } from 'vue'
 import PageSetting from './PageSetting/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import pageSetupApi from '@/api/pageSetupApi'
-import { usePageSetupStore } from '../../store'
+// import pageSetupApi from '@/api/pageSetup'
+import { usePageSetupStore } from '@/store'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import bus from '@/utils/bus'
-import indexedDB, { storeName } from '@/utils/indexedDB'
+import indexedDB, { storeName } from './utils/indexedDB'
 
 //公共数据
 const pageSetupStore = usePageSetupStore()
@@ -40,8 +40,8 @@ watch(
 watch(
   () => route,
   () => {
-    initPageSetupApi()
-    getPageDetail()
+    // initPageSetupApi()
+    // getPageDetail()
     bus.on('savePageSetting', () => {
       savePageSetting()
     })
@@ -70,8 +70,8 @@ const initPageSetupApi = async () => {
  */
 const getPageDetail = async () => {
   if (!route.query?.id) return false
-  const res = await pageSetupApi.getPageDetail(route.query?.id)
-  detail.value = res
+  // const res = await pageSetupApi.getPageDetail(route.query?.id)
+  // detail.value = res
 }
 
 provide('getPageDetail', getPageDetail)

@@ -29,7 +29,7 @@
       </el-col>
       <el-col>
         <span style="margin-left: 10px; font-size: 8px; color: gray">
-          [{{ userInfo?.roleName }}]
+          {{ userInfo?.roleId }}
         </span>
       </el-col>
     </el-row>

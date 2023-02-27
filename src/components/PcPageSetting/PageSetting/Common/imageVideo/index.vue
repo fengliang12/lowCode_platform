@@ -42,7 +42,7 @@ const loaded = (e) => {
   emit('load', e)
 }
 defineExpose({
-  fileRef
+  fileRef,
 })
 </script>
 <style lang="scss" scoped>

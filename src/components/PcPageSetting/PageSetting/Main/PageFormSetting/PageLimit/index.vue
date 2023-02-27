@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { usePageSetupStore } from '../../../../../store'
+import { usePageSetupStore } from '@/store'
 import { computed, ref } from 'vue'
 import PageModuleLimit from '../../../Common/pageModuleLimit/index.vue'
 const pageSetupStore = usePageSetupStore()
@@ -48,7 +48,7 @@ const usePageLimit = computed({
   },
   set(val) {
     pageSetupStore.usePageLimit = val
-  }
+  },
 })
 
 const pageLimitInclude = computed({
@@ -57,7 +57,7 @@ const pageLimitInclude = computed({
   },
   set(val) {
     pageSetupStore.pageLimitInclude = val
-  }
+  },
 })
 
 const pageLimit = computed({
@@ -66,7 +66,7 @@ const pageLimit = computed({
   },
   set(val) {
     pageSetupStore.setPageLimit(val)
-  }
+  },
 })
 </script>
 

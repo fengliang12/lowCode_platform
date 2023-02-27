@@ -46,7 +46,7 @@
             <Common
               :data="element"
               :parents="{
-                moduleSettings: formData
+                moduleSettings: formData,
               }"
             ></Common>
             <img class="handle pointer" src="@/assets/draggable_box.png" />
@@ -65,13 +65,13 @@
         >页面编辑</el-button
       >
       <ModuleSetting
-        v-show="tabBoxSetting === 'mode'"
+        v-if="tabBoxSetting === 'mode'"
         v-model="pageSetupStore.items.value"
         :parents="pageSetupStore.items.parents"
       ></ModuleSetting>
 
       <PageFormSetting
-        v-show="tabBoxSetting === 'page'"
+        v-if="tabBoxSetting === 'page'"
         ref="pageFormSettingRef"
         :detail="detail"
       ></PageFormSetting>
@@ -103,8 +103,8 @@ const tabBoxSetting = ref('page')
 const props = defineProps({
   detail: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 })
 
 /**
@@ -117,8 +117,8 @@ const leftList = computed(() => {
       (elem) =>
         new moduleData({
           moduleType: elem,
-          ...(componentsMapping[elem]?.initData ?? {})
-        }) //返回对应的实例
+          ...(componentsMapping[elem]?.initData ?? {}),
+        }), //返回对应的实例
     )
 })
 
@@ -149,9 +149,9 @@ watch(
     val.moduleSetting = formData.value
     //根据已经存在的值,遍历出itemMaps值
     pageSetupStore.setPageItemsMap({
-      itemsMap: setItemsMap(val)
+      itemsMap: setItemsMap(val),
     })
-  }
+  },
 )
 
 /**
@@ -165,7 +165,7 @@ watch(
     } else {
       tabBoxSetting.value = 'page'
     }
-  }
+  },
 )
 
 /**
@@ -173,7 +173,7 @@ watch(
  */
 const addItems = reactive({
   index: 0,
-  data: null
+  data: null,
 })
 watch(
   () => formData,
@@ -190,8 +190,8 @@ watch(
     }
   },
   {
-    deep: true
-  }
+    deep: true,
+  },
 )
 
 /**
@@ -201,7 +201,7 @@ watch(
 const initResData = (data) => {
   data.forEach((elem) => {
     const module = leftList.value.find(
-      (item) => item.moduleType === elem.moduleType
+      (item) => item.moduleType === elem.moduleType,
     )
     if (module) {
       const setKey = (elem, module) => {
@@ -248,7 +248,7 @@ const leftEnd = (e) => {
     moduleSettings: formData.value,
     moduleType: data.moduleType,
     width: data.pageStyle.width,
-    height: data.pageStyle.height
+    height: data.pageStyle.height,
   })
 }
 
@@ -264,7 +264,7 @@ const clickLeft = (moduleType) => {
     setPageData({
       index: formData.value.length,
       moduleSettings: formData.value,
-      moduleType: moduleType
+      moduleType: moduleType,
     })
   } else {
     ElMessageBox.confirm(
@@ -273,8 +273,8 @@ const clickLeft = (moduleType) => {
       {
         confirmButtonText: '确定',
         cancelButtonText: '添加到页面底部',
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
       .then(() => {
         if (!pageSetupStore.items?.value?.moduleSettings) {
@@ -287,14 +287,14 @@ const clickLeft = (moduleType) => {
           moduleType: moduleType,
           width,
           height,
-          parents: pageSetupStore.items.value
+          parents: pageSetupStore.items.value,
         })
       })
       .catch(() => {
         setPageData({
           index: formData.value.length,
           moduleSettings: formData.value,
-          moduleType: moduleType
+          moduleType: moduleType,
         })
       })
   }
@@ -310,23 +310,23 @@ const setPageData = ({
   moduleType,
   width,
   height,
-  parents = null
+  parents = null,
 } = {}) => {
   const tempItem = (moduleSettings[index] = setModule({
     moduleType,
     width,
-    height
+    height,
   }))
 
   tempItem.parentsCode = parents?.code ?? pageSetupStore.id
   pageSetupStore.setItems({
     value: tempItem,
-    parents
+    parents,
   })
 
   pageSetupStore.setPageItemsMap({
     items: tempItem,
-    opt: 'add'
+    opt: 'add',
   })
 
   // 刷新el-tree

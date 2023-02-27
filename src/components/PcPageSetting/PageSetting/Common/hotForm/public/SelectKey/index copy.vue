@@ -17,7 +17,7 @@
 <script setup>
 import { ref } from 'vue'
 import { dPageShowDataValue } from '../../../../Handle/filters'
-import { usePageSetupStore } from '@/store/index.js'
+import { usePageSetupStore } from '@/store/index.ts'
 
 defineProps['modelValue']
 const emit = defineEmits(['update:modelValue'])

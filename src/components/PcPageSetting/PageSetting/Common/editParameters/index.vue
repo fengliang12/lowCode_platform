@@ -27,7 +27,7 @@ import { ref, computed, reactive } from 'vue'
 import SetParams from './setParams.vue'
 import { cloneDeep } from 'lodash'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { usePageSetupStore } from '../../../../store'
+import { usePageSetupStore } from '@/store'
 
 const emit = defineEmits(['confirmParameters'])
 const pageSetupStore = usePageSetupStore()
@@ -40,7 +40,7 @@ const paramsData = reactive({
   type: '',
   paramList: [],
   apiInfo: null,
-  hideRules: true
+  hideRules: true,
 })
 
 /**
@@ -107,7 +107,7 @@ const checkFn = (param) => {
 const cancel = () => {
   ElMessageBox.confirm('取消后参数将恢复默认值，确认取消编辑吗?', '提示', {
     cancelButtonText: '取消',
-    confirmButtonText: '确定'
+    confirmButtonText: '确定',
   }).then(() => {
     if (
       paramsData.apiInfo &&
@@ -117,9 +117,9 @@ const cancel = () => {
         'confirmParameters',
         cloneDeep(
           pageSetupStore.getMinApi.minApiKey?.[paramsData.apiInfo.apiKey]
-            ?.params
+            ?.params,
         ),
-        paramsData.type
+        paramsData.type,
       )
     } else {
       emit('confirmParameters', null, paramsData.type)

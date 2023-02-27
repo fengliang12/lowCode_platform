@@ -98,8 +98,8 @@ watch(
     pageSetupStore.setPageNewParams(val.params)
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
 
 /**
@@ -138,7 +138,7 @@ const beforeLeave = async (activeName) => {
     return refObject[item]
       .next({
         check: true,
-        activeName: checkArr[index + 1]
+        activeName: checkArr[index + 1],
       })
       .catch((err) => {
         activeName.value = item

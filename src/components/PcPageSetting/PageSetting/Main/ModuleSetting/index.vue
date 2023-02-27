@@ -179,7 +179,7 @@ const items = computed({
   },
   set(val) {
     emit('update:modelValue', merge(props.modelValue, val))
-  }
+  },
 })
 
 watch(
@@ -188,8 +188,8 @@ watch(
     activeName.value = 'attribute'
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
 /**
  * 根据不同组件显示不同的tab
@@ -212,7 +212,7 @@ const tabNameList = computed(() => {
     gridLottery: ['childList', 'gridLottery'],
     movableArea: ['movableArea'],
     movableView: ['movableView'],
-    richText: ['richText']
+    richText: ['richText'],
   }
   return [...tabList[items.value.moduleType], ...commonList]
 })
@@ -230,7 +230,7 @@ const styleSettingProps = computed(() => {
       items.value.moduleType !== 'progress' ||
       items.value.moduleType !== 'scrollView',
     flex: items.value.modelValue !== 'progress',
-    ratio: items.value?.imageSetting?.ratio || 0
+    ratio: items.value?.imageSetting?.ratio || 0,
   }
 })
 
@@ -267,7 +267,7 @@ const handleClick = (tab, event) => {
   console.log(tab, event)
 }
 </script>
-<style>
+<style scoped>
 .demo-tabs > .el-tabs__content {
   padding: 32px;
   color: #6b778c;

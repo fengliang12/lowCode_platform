@@ -87,7 +87,7 @@
             filterable
             :show-all-levels="false"
             :props="{
-              emitPath: false
+              emitPath: false,
             }"
           ></el-cascader>
 
@@ -113,7 +113,7 @@
             :options="animateList"
             :props="{
               children: 'child',
-              emitPath: false
+              emitPath: false,
             }"
             clearable
             :show-all-levels="false"
@@ -153,7 +153,7 @@
                 value: 'key',
                 label: 'key',
                 children: 'child',
-                checkStrictly: true
+                checkStrictly: true,
               }"
               clearable
               @change="pageNewParamsCascaderChange(element, $event)"
@@ -287,7 +287,7 @@ import {
   moduleVideoOperationList,
   gridLotteryOperationList,
   moduleOperationListKey,
-  moduleOperationListSelect
+  moduleOperationListSelect,
 } from './data'
 
 import paramsObj from './common/paramsObj'
@@ -301,7 +301,7 @@ import SetData from '../setData/index.vue'
 import EditParameters from '../editParameters/index.vue'
 import ConditionsForExecution from '../conditionsForExecution/index.vue'
 import createForm from '../createForm/index.vue'
-import api from '@/api/index.js'
+import api from '@/api/axios.ts'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -319,7 +319,7 @@ const hotOperations = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**
@@ -338,7 +338,7 @@ watch(
       handleAddEvent()
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 /**
@@ -359,7 +359,7 @@ const eventTypeList = computed(() => {
  */
 const changeEvent = (item) => {
   const data = new PageHotOperation({
-    operationType: item.operationType
+    operationType: item.operationType,
   })
   Object.keys(data).forEach((key) => {
     item[key] = data[key]
@@ -401,19 +401,19 @@ const selectType = computed(() => {
     custom_event: {
       optionList: customEventList,
       label: 'label',
-      value: 'value'
+      value: 'value',
     },
     // 跳转配置页面
     page_setting: {
       optionList: pageSetupStore.pageList,
       label: 'title',
-      value: 'id'
+      value: 'id',
     },
     // api访问
     api: {
       optionList: pageSetupStore.AloneApiList,
       label: 'apiName',
-      value: 'id'
+      value: 'id',
     },
     // 操作组件
     associated_module: {
@@ -423,8 +423,8 @@ const selectType = computed(() => {
           if (value) {
             setAssociatedModule()
           }
-        }
-      }
+        },
+      },
     },
     // 授权
     auth: {
@@ -436,9 +436,9 @@ const selectType = computed(() => {
           element.params = authEventList.find((item) => {
             return item.value === value
           })?.params
-        }
-      }
-    }
+        },
+      },
+    },
   }
 })
 
@@ -473,10 +473,10 @@ const visibleChange = (e, element) => {
 const setAssociatedModule = () => {
   if (!pageSetupStore.itemsMap?.values) return []
   selectType.value.associated_module.optionList = Array.from(
-    pageSetupStore.itemsMap.values()
+    pageSetupStore.itemsMap.values(),
   ).map((elem) => ({
     value: elem.code,
-    label: `${elem.title ?? elem.code}`
+    label: `${elem.title ?? elem.code}`,
   }))
 }
 
@@ -541,7 +541,7 @@ const editParametersShow = (elem) => {
     'set_params',
     'associated_module',
     'pop_ups',
-    'custom_event'
+    'custom_event',
   ]
   return needEditParamsList.includes(elem.operationType)
 }
@@ -576,7 +576,7 @@ const showEditParameters = (element, index) => {
   if (res) return
 
   let ApiObj = pageSetupStore.AloneApiList.filter(
-    (once) => once.id === element.operationUrl
+    (once) => once.id === element.operationUrl,
   )[0]
   writeId.value = element.operationUrl
   currentIndex.value = index
@@ -587,13 +587,13 @@ const showEditParameters = (element, index) => {
       type: 'multiLevel',
       apiInfo: {
         apiUrl: ApiObj.url,
-        apiKey: ApiObj.apiKey
-      }
+        apiKey: ApiObj.apiKey,
+      },
     })
   } else {
     editParametersRef.value.show({
       params: element.params || [],
-      type: 'singleLayerLevel'
+      type: 'singleLayerLevel',
     })
   }
 }
@@ -611,11 +611,11 @@ const editParametersCallback = async (list, type) => {
   if (type === 'multiLevel') {
     if (hotOperations.value[currentIndex.value].operationType == 'api') {
       let ApiObj = AloneApiList.value.filter(
-        (once) => once.id === writeId.value
+        (once) => once.id === writeId.value,
       )[0]
       await api.pageSetupApi.changeOperationApiMes({
         ...ApiObj,
-        params: list
+        params: list,
       })
       pageSetupStore.changeAloneAPIList()
     } else {
@@ -632,7 +632,7 @@ const saveParams = async ({ reset = false }) => {
     await ElMessageBox.confirm('是否恢复默认配置?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
-      type: 'warning'
+      type: 'warning',
     })
     selectItem.value.params = null
     showSetParams.value = false
@@ -682,7 +682,7 @@ const uploadSuccessCallback = (e, element) => {
   if (e.firstFrameVideo && element.imageSetting.firstFrameVideo) {
     ElMessageBox.confirm('是否替换首针图', {
       title: '提示',
-      type: 'warning'
+      type: 'warning',
     }).then(() => {
       element.imageSetting.firstFrameVideo = e.firstFrameVideo
     })
@@ -697,7 +697,7 @@ const uploadSuccessCallback = (e, element) => {
 const UploadSuccessSetBoxInfo = (
   imageSetting,
   e,
-  showPageBoxSetting = null
+  showPageBoxSetting = null,
 ) => {
   const { height, width = 0 } = e.el
   if (width) {
