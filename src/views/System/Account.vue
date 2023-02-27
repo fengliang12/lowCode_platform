@@ -35,7 +35,7 @@
     </el-dialog>
 
     <!-- 系统用户表格 -->
-    <div style="margin: 0px 10px; text-align: left">
+    <div style="margin: 0 10px; text-align: left">
       <el-row>
         <el-col :span="4" :xs="24">
           <div>
@@ -52,7 +52,7 @@
           </div>
         </el-col>
         <el-col :span="20" :xs="24">
-          <div style="text-align: left; margin: 5px 10px">
+          <div style="margin: 5px 10px; text-align: left">
             <el-button type="primary" @click="toAddUser">{{
               $t('button.wadd')
             }}</el-button>
