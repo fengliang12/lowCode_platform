@@ -1,0 +1,27 @@
+.tree_module {
+  width: 100%;
+}
+.el-tree {
+  height: 100%;
+  overflow: scroll;
+}
+
+:deep(.el-tree-node > .el-tree-node__children) {
+  overflow: visible;
+}
+.el-tree::-webkit-scrollbar {
+  display: none;
+}
+
+.tree_content {
+  display: flex;
+  align-items: center;
+  .icon_box {
+    display: flex;
+    align-items: center;
+  }
+  .cat {
+    width: 20px;
+    height: 20px;
+  }
+}

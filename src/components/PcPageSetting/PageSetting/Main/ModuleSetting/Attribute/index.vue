@@ -4,15 +4,6 @@
       code : <span>{{ valueData?.code }}</span>
     </div>
     <FormCreate v-model="valueData" :formItemList="formItemList"></FormCreate>
-    <el-form-item label="组件参数">
-      <!--编辑api参数,有icon,#016ef8,#bfbfbf-->
-      <el-icon
-        :size="30"
-        :color="paramsHasValue ? '#339900' : '#bbbbbb'"
-        @click="showEditParameters()"
-        ><List
-      /></el-icon>
-    </el-form-item>
     <el-divider>限制条件</el-divider>
     <el-form-item label="组件有效期" prop="from">
       <el-date-picker
@@ -24,6 +15,16 @@
     </el-form-item>
     <PageModuleLimit v-model="valueData.moduleLimit"></PageModuleLimit>
     <el-button @click="showConditionsForExecution">其他条件判断</el-button>
+    <el-divider>组件参数</el-divider>
+    <el-form-item label="组件参数">
+      <!--编辑api参数,有icon,#016ef8,#bfbfbf-->
+      <el-icon
+        :size="30"
+        :color="paramsHasValue ? '#339900' : '#bbbbbb'"
+        @click="showEditParameters()"
+        ><List
+      /></el-icon>
+    </el-form-item>
   </el-form>
   <!-- 编辑条件 -->
   <ConditionsForExecution

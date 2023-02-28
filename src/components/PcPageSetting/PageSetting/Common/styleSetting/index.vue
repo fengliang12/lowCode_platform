@@ -3,7 +3,7 @@
     <el-form>
       <slot></slot>
     </el-form>
-    <FormCreate v-model="styleData" :formItemList="formItemList"> </FormCreate>
+    <FormCreate v-model="styleData" :formList="formItemList"> </FormCreate>
   </div>
 </template>
 
@@ -16,32 +16,32 @@ import { isEqual } from 'lodash'
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: null
+    default: null,
   },
   font: {
     type: Boolean,
-    default: true
+    default: true,
   },
   box: {
     type: Boolean,
-    default: true
+    default: true,
   },
   bg: {
     type: Boolean,
-    default: true
+    default: true,
   },
   flex: {
     type: Boolean,
-    default: true
+    default: true,
   },
   custom: {
     type: Boolean,
-    default: true
+    default: true,
   },
   ratio: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -56,18 +56,9 @@ const styleData = computed({
   set(val) {
     console.log(222)
     emit('update:modelValue', val)
-  }
-})
-watch(
-  () => props.modelValue,
-  (val, oldVal) => {
-    console.log('val', val)
-    console.log(isEqual(val, oldVal))
   },
-  {
-    immediate: true
-  }
-)
+})
+
 /**
  * 获取动态表单配置列表
  */
@@ -91,18 +82,7 @@ const formItemList = computed(() => {
   if (props.custom) {
     arr = arr.concat(componentsList.value.customList)
   }
-  let tempArr = arr.map((elem) => {
-    return {
-      field: elem.key,
-      title: elem.label,
-      type: elem.component,
-      ...elem,
-      options: elem?.child?.[0]?.optionList.length
-        ? elem?.child?.[0]?.optionList
-        : []
-    }
-  })
-  return tempArr
+  return arr
 })
 
 /**
@@ -124,37 +104,32 @@ watch(
       }
     })
     const hideAutoRatioIndex = componentsList.value.boxList.findIndex(
-      (elem) => elem.key === 'hideAutoRatio'
+      (elem) => elem.key === 'hideAutoRatio',
     )
     const findIndex = componentsList.value.boxList.findIndex(
-      (elem) => elem.key === 'width'
+      (elem) => elem.key === 'width',
     )
     if (findIndex !== -1 && hideAutoRatioIndex === -1) {
       componentsList.value.boxList.push({
         divider: '自动比例',
-        key: 'hideAutoRatio',
-        component: 'el-select',
-        label: '自动比例',
+        field: 'hideAutoRatio',
+        type: 'el-select',
+        title: '自动比例',
         defaultValue: null,
-        child: [
+        options: [
           {
-            component: 'el-option',
-            optionList: [
-              {
-                label: '开启',
-                value: null
-              },
-              {
-                label: '关闭',
-                value: false
-              }
-            ]
-          }
-        ]
+            label: '开启',
+            value: null,
+          },
+          {
+            label: '关闭',
+            value: false,
+          },
+        ],
       })
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 /**
@@ -174,7 +149,7 @@ watch(
       return item
     })
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>
 <style lang="scss" scoped></style>

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { onUnmounted, ref, watch, provide } from 'vue'
+import { onUnmounted, ref, watch, provide, onMounted } from 'vue'
 import PageSetting from './PageSetting/index.vue'
 import { useRoute, useRouter } from 'vue-router'
 // import pageSetupApi from '@/api/pageSetup'
@@ -26,34 +26,28 @@ pageSetupStore.changeInfo = !route.query?.id
 pageSetupStore.id = route.query?.id || ''
 
 /**
- * 监听detail,如果有变化那就是修改了detail,疑问
+ * 监听detail,如果有变化那就是修改了detail
  */
 const detail = ref({})
 watch(
-  detail,
+  () => detail,
   () => {
     pageSetupStore.changeInfo = true
   },
   { deep: true },
 )
 
-watch(
-  () => route,
-  () => {
-    // initPageSetupApi()
-    // getPageDetail()
-    bus.on('savePageSetting', () => {
-      savePageSetting()
-    })
-    bus.on('getPageDetail', () => {
-      getPageDetail()
-    })
-  },
-  {
-    deep: true,
-    immediate: true,
-  },
-)
+onMounted(() => {
+  initPageSetupApi()
+  getPageDetail()
+  bus.on('savePageSetting', savePageSetting)
+  bus.on('getPageDetail', getPageDetail)
+})
+
+onUnmounted(() => {
+  bus.off('savePageSetting')
+  bus.off('getPageDetail')
+})
 
 /**
  * 获取公共api列表
@@ -73,8 +67,6 @@ const getPageDetail = async () => {
   // const res = await pageSetupApi.getPageDetail(route.query?.id)
   // detail.value = res
 }
-
-provide('getPageDetail', getPageDetail)
 
 /**
  * 点击保存
@@ -174,9 +166,7 @@ const back = () => {
   router.back()
 }
 
-onUnmounted(() => {
-  bus.off('savePageSetting')
-})
+provide('getPageDetail', getPageDetail)
 </script>
 <style lang="scss" scoped>
 .content {

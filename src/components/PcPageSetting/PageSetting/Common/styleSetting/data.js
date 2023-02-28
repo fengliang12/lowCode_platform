@@ -9,7 +9,7 @@ export class styleSettingData {
     background = true,
     front = true,
     flex = true,
-    box = true
+    box = true,
   } = {}) {
     // 背景
     if (background) {
@@ -56,345 +56,313 @@ export class styleSettingData {
  * @returns
  */
 export const formList = ({ ratio = 1, value }) => {
-  console.log('ratio', ratio)
   return {
-    backgroundList: [
-      //背景图片
-      {
-        divider: '背景',
-        key: 'backgroundImage',
-        component: 'upload-file',
-        label: '背景图片'
-      },
-      //背景颜色
-      {
-        key: 'backgroundColor',
-        component: 'el-color-picker',
-        label: '背景颜色',
-        props: {
-          'show-alpha': true
-        }
-      },
-      {
-        key: 'backgroundRepeat',
-        component: 'el-select',
-        label: '背景是否重复',
-        props: {
-          placeholder: '请选择'
-        },
-        child: [
-          {
-            component: 'el-option',
-            optionList: [
-              {
-                label: '不重复(no-repeat)',
-                value: 'no-repeat'
-              },
-              {
-                label: '垂直和水平方向重复(repeat)',
-                value: 'repeat'
-              },
-              {
-                label: '水平重复(repeat-x)',
-                value: 'repeat-x'
-              },
-              {
-                label: '垂直重复(repeat-y)',
-                value: 'repeat-y'
-              },
-              {
-                label: '父元素继承(inherit)',
-                value: 'inherit'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        key: 'backgroundSize',
-        component: 'el-input',
-        label: '背景大小'
-      }
-    ],
-    //文字配置
-    fontList: [
-      {
-        divider: '字体',
-        key: 'color',
-        component: 'el-color-picker',
-        label: '字体颜色',
-        props: {
-          'show-alpha': true
-        }
-      },
-      {
-        key: 'fontSize',
-        component: 'el-input-number',
-        label: '字体大小'
-      },
-      {
-        key: 'fontWeight',
-        component: 'el-select',
-        label: '字体粗细',
-        child: [
-          {
-            component: 'el-option',
-            optionList: [
-              {
-                label: '默认值(normal)',
-                value: 'normal'
-              },
-              {
-                label: '粗体(bold)',
-                value: 'bold'
-              },
-              {
-                label: '更粗(bolder)',
-                value: 'bolder'
-              },
-              {
-                label: '更细(lighter)',
-                value: 'lighter'
-              },
-              {
-                label: '100',
-                value: '100'
-              },
-              {
-                label: '200',
-                value: '200'
-              },
-              {
-                label: '300',
-                value: '300'
-              },
-              {
-                label: '400(同于 normal)',
-                value: '400'
-              },
-              {
-                label: '500',
-                value: '500'
-              },
-              {
-                label: '600',
-                value: '600'
-              },
-              {
-                label: '700( 等同于 bold)',
-                value: '700'
-              },
-              {
-                label: '800',
-                value: '800'
-              },
-              {
-                label: '900',
-                value: '900'
-              }
-            ]
-          }
-        ]
-      }
-    ],
     //位置配置
     boxList: [
       {
         divider: '位置',
-        key: 'position',
-        component: 'el-select',
-        label: '定位',
+        field: 'position',
+        type: 'el-select',
+        title: '定位',
         on: {
           change: (val) => {
             if (val !== 'relative') {
               value.zIndex = 10
             }
-          }
+          },
         },
-        child: [
+        options: [
           {
-            component: 'el-option',
-            optionList: [
-              {
-                //兼容老版本处理 relative 和 static状态交换
-                label: '静态定位(默认)',
-                value: 'relative'
-              },
-              {
-                label: '相对定位',
-                value: 'static'
-              },
-              {
-                label: '绝对定位',
-                value: 'absolute'
-              },
-              {
-                label: '固定定位',
-                value: 'fixed'
-              },
-              {
-                label: '粘性定位',
-                value: 'sticky'
-              }
-            ]
-          }
-        ]
+            //兼容老版本处理 relative 和 static状态交换
+            title: '静态定位(默认)',
+            value: 'relative',
+          },
+          {
+            title: '相对定位',
+            value: 'static',
+          },
+          {
+            title: '绝对定位',
+            value: 'absolute',
+          },
+          {
+            title: '固定定位',
+            value: 'fixed',
+          },
+          {
+            title: '粘性定位',
+            value: 'sticky',
+          },
+        ],
       },
       {
-        key: 'zIndex',
-        component: 'el-input-number',
-        label: '层级'
+        field: 'zIndex',
+        type: 'el-input-number',
+        title: '层级',
       },
       {
-        key: 'left',
-        component: 'el-input',
-        label: '左距',
+        field: 'left',
+        type: 'el-input',
+        title: '左距',
         props: {
           clearable: true,
-          type: 'number'
+          type: 'number',
         },
-        on: {}
+        on: {},
       },
       {
-        key: 'top',
-        component: 'el-input',
-        label: '上距',
+        field: 'top',
+        type: 'el-input',
+        title: '上距',
         props: {
           clearable: true,
-          type: 'number'
+          type: 'number',
         },
-        on: {}
+        on: {},
       },
       {
-        key: 'right',
-        component: 'el-input',
-        label: '右距',
+        field: 'right',
+        type: 'el-input',
+        title: '右距',
         props: {
           clearable: true,
-          type: 'number'
-        }
+          type: 'number',
+        },
       },
       {
-        key: 'bottom',
-        component: 'el-input',
-        label: '底距',
+        field: 'bottom',
+        type: 'el-input',
+        title: '底距',
         props: {
           clearable: true,
-          type: 'number'
-        }
+          type: 'number',
+        },
       },
       {
         divider: '盒子',
-        key: 'width',
-        component: 'el-input-number',
-        label: '宽度',
+        field: 'width',
+        type: 'el-input-number',
+        title: '宽度',
         button: '',
         btnClick: () => {
-          console.log(ratio)
           value.width = floor(Number(value.height) * ratio, 2)
-        }
+        },
       },
       {
-        key: 'height',
-        component: 'el-input-number',
-        label: '高度',
+        field: 'height',
+        type: 'el-input-number',
+        title: '高度',
         button: '',
         btnClick: () => {
-          console.log(ratio)
           value.height = floor(Number(value.width) / ratio, 2)
-        }
+        },
       },
       {
-        key: 'borderRadius',
-        component: 'el-input-number',
-        label: '圆角'
-      }
+        field: 'borderRadius',
+        type: 'el-input-number',
+        title: '圆角',
+      },
+    ],
+    //背景
+    backgroundList: [
+      //背景图片
+      {
+        divider: '背景',
+        field: 'backgroundImage',
+        type: 'upload-file',
+        title: '背景图片',
+      },
+      //背景颜色
+      {
+        field: 'backgroundColor',
+        type: 'el-color-picker',
+        title: '背景颜色',
+        props: {
+          'show-alpha': true,
+        },
+      },
+      {
+        field: 'backgroundRepeat',
+        type: 'el-select',
+        title: '背景是否重复',
+        props: {
+          placeholder: '请选择',
+        },
+        options: [
+          {
+            title: '不重复(no-repeat)',
+            value: 'no-repeat',
+          },
+          {
+            title: '垂直和水平方向重复(repeat)',
+            value: 'repeat',
+          },
+          {
+            title: '水平重复(repeat-x)',
+            value: 'repeat-x',
+          },
+          {
+            title: '垂直重复(repeat-y)',
+            value: 'repeat-y',
+          },
+          {
+            title: '父元素继承(inherit)',
+            value: 'inherit',
+          },
+        ],
+      },
+      {
+        field: 'backgroundSize',
+        type: 'el-input',
+        title: '背景大小',
+      },
+    ],
+    //文字配置
+    fontList: [
+      {
+        divider: '字体',
+        field: 'color',
+        type: 'el-color-picker',
+        title: '字体颜色',
+        props: {
+          'show-alpha': true,
+        },
+      },
+      {
+        field: 'fontSize',
+        type: 'el-input-number',
+        title: '字体大小',
+      },
+      {
+        field: 'fontWeight',
+        type: 'el-select',
+        title: '字体粗细',
+        options: [
+          {
+            title: '默认值(normal)',
+            value: 'normal',
+          },
+          {
+            title: '粗体(bold)',
+            value: 'bold',
+          },
+          {
+            title: '更粗(bolder)',
+            value: 'bolder',
+          },
+          {
+            title: '更细(lighter)',
+            value: 'lighter',
+          },
+          {
+            title: '100',
+            value: '100',
+          },
+          {
+            title: '200',
+            value: '200',
+          },
+          {
+            title: '300',
+            value: '300',
+          },
+          {
+            title: '400(同于 normal)',
+            value: '400',
+          },
+          {
+            title: '500',
+            value: '500',
+          },
+          {
+            title: '600',
+            value: '600',
+          },
+          {
+            title: '700( 等同于 bold)',
+            value: '700',
+          },
+          {
+            title: '800',
+            value: '800',
+          },
+          {
+            title: '900',
+            value: '900',
+          },
+        ],
+      },
     ],
     //内容位置
     flexList: [
       {
         divider: '内容位置',
-        key: 'justifyContent',
-        component: 'el-select',
-        label: '水平方向',
-        child: [
+        field: 'justifyContent',
+        type: 'el-select',
+        title: '水平方向',
+        options: [
           {
-            component: 'el-option',
-            optionList: [
-              {
-                label: '居左',
-                value: 'flex-start'
-              },
-              {
-                label: '居右',
-                value: 'flex-end'
-              },
-              {
-                label: '水平居中',
-                value: 'center'
-              }
-            ]
-          }
-        ]
+            title: '居左',
+            value: 'flex-start',
+          },
+          {
+            title: '居右',
+            value: 'flex-end',
+          },
+          {
+            title: '水平居中',
+            value: 'center',
+          },
+        ],
       },
       {
-        key: 'alignItems',
-        component: 'el-select',
-        label: '竖直方向',
-        child: [
+        field: 'alignItems',
+        type: 'el-select',
+        title: '竖直方向',
+        options: [
           {
-            component: 'el-option',
-            optionList: [
-              {
-                label: '顶部',
-                value: 'flex-start'
-              },
-              {
-                label: '底部',
-                value: 'flex-end'
-              },
-              {
-                label: '垂直居中',
-                value: 'center'
-              }
-            ]
-          }
-        ]
+            title: '顶部',
+            value: 'flex-start',
+          },
+          {
+            title: '底部',
+            value: 'flex-end',
+          },
+          {
+            title: '垂直居中',
+            value: 'center',
+          },
+        ],
       },
       {
-        key: 'flexDirection',
-        component: 'el-select',
-        label: '排列方向',
-        child: [
+        field: 'flexDirection',
+        type: 'el-select',
+        title: '排列方向',
+        options: [
           {
-            component: 'el-option',
-            optionList: [
-              {
-                label: '水平',
-                value: 'row'
-              },
-              {
-                label: '垂直',
-                value: 'column'
-              }
-            ]
-          }
-        ]
-      }
+            title: '水平',
+            value: 'row',
+          },
+          {
+            title: '垂直',
+            value: 'column',
+          },
+        ],
+      },
     ],
     customList: [
       {
         divider: '自定义',
-        key: 'custom',
-        component: 'el-input',
-        label: '自定义',
+        field: 'custom',
+        type: 'el-input',
+        title: '自定义',
         tips: 'HH为顶部Bar高度，可用于计算',
         props: {
           type: 'textarea',
           resize: 'both',
-          rows: 1
-        }
-      }
-    ]
+          rows: 1,
+        },
+      },
+    ],
   }
 }

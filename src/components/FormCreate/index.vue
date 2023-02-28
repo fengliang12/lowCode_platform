@@ -52,7 +52,7 @@ const props = withDefaults(
     modelValue: () => ({}),
     formList: () => [],
     options: () => ({}),
-    formConfig: () => ({ inline: true, gutter: '10', span: '4' }),
+    formConfig: () => ({ inline: false, gutter: '10', span: '4' }),
   },
 )
 

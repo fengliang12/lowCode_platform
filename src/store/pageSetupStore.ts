@@ -127,14 +127,14 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      */
     async getPageList() {
       if (this.pageList.length) return
-      const res = await api.pageSetupApi.getAllPage()
-      this.pageList = res.map((item) => {
-        return {
-          id: item.id,
-          title: item.title,
-          customHeader: item.customHeader,
-        }
-      })
+      // const res = await api.pageSetupApi.getAllPage()
+      // this.pageList = res.map((item) => {
+      //   return {
+      //     id: item.id,
+      //     title: item.title,
+      //     customHeader: item.customHeader,
+      //   }
+      // })
     },
 
     /**

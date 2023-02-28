@@ -25,7 +25,7 @@
         <el-tab-pane label="已选组件">
           <TreeModule ref="treeModuleRef" :formData="formData"></TreeModule>
         </el-tab-pane>
-        <el-tab-pane label="全局组件"> 全局组件 </el-tab-pane>
+        <el-tab-pane label="全局组件"> 暂无数据 </el-tab-pane>
       </el-tabs>
     </div>
 
@@ -384,68 +384,5 @@ defineExpose({ save })
 </script>
 
 <style lang="scss" scoped>
-.draggable {
-  display: flex;
-  height: 100%;
-  margin-top: 20px;
-  .left {
-    margin-right: 20px;
-    min-width: 395px;
-    background-color: #ffffff;
-    padding-right: 10px;
-    .left_draggable {
-      display: flex;
-      width: 280px;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-    }
-
-    .el-tabs {
-      height: 100%;
-    }
-  }
-
-  .right {
-    margin-right: 20px;
-    position: relative;
-    width: 375px;
-    .draggable_right_box {
-      width: 375px;
-      height: 100%;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      background-color: #ffffff;
-      .right_box {
-        position: relative;
-        .handle {
-          position: absolute;
-          right: 10px;
-          top: 10px;
-          z-index: 1000;
-          width: 30px;
-          height: 30px;
-        }
-      }
-    }
-    .draggable_right_box::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .tab_box {
-    flex: 1 1 0%;
-    overflow-y: scroll;
-    background-color: #ffffff;
-    padding: 10px;
-  }
-
-  .tab_box::-webkit-scrollbar {
-    display: none;
-  }
-}
-.showPageSetting {
-  position: absolute;
-  right: 30px;
-  z-index: 30;
-}
+@import './index.scss';
 </style>

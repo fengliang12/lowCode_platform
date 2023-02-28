@@ -17,5 +17,6 @@ defineProps(['title'])
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-size: 14px;
 }
 </style>

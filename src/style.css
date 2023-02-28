@@ -18,6 +18,12 @@
   cursor: pointer;
 }
 
-.mr-10 {
+.ml10 {
   margin-right: 10px;
+}
+
+.vhCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

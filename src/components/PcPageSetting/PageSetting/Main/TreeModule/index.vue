@@ -16,9 +16,9 @@
     >
       <template #default="{ node, data }">
         <div class="tree_content">
-          <div class="m100">{{ node.label }}</div>
-          <div class="ml10 icon_box">
-            <div>
+          <div class="m100 ml10">{{ node.label }}</div>
+          <div class="vhCenter">
+            <div class="ml10 vhCenter">
               <img
                 class="cat"
                 v-show="data.hide"
@@ -33,17 +33,18 @@
                 src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a0c47e0a129b4d89af9e09fb0d4ec2bc.png"
               />
             </div>
-            <div class="ml10">
+            <div class="ml10 vhCenter">
               <el-icon @click="handleCopyEvent(data, node)"
                 ><DocumentCopy
               /></el-icon>
             </div>
-            <div v-if="componentsMapping?.[data.moduleType]?.isParent">
-              <el-icon class="ml10" @click="paste(data, node)"
-                ><CopyDocument
-              /></el-icon>
+            <div
+              v-if="componentsMapping?.[data.moduleType]?.isParent"
+              class="ml10 vhCenter"
+            >
+              <el-icon @click="paste(data, node)"><CopyDocument /></el-icon>
             </div>
-            <div>
+            <div class="ml10 vhCenter">
               <el-icon class="ml10" @click="del(data, node)"
                 ><DeleteFilled
               /></el-icon>
@@ -125,7 +126,6 @@ const paste = (data) => {
   const Promise = navigator.clipboard.readText()
   Promise.then((res) => {
     const copyData = JSON.parse(res)
-    console.log('copyData', copyData)
     if (!copyData.code || !copyData.moduleType) {
       return ElMessage.error('格式化数据失败')
     }
@@ -175,31 +175,5 @@ const del = (data, node) => {
 bus.on('refreshElTree', refreshElTree)
 </script>
 <style lang="scss" scoped>
-.tree_module {
-  width: 100%;
-}
-.el-tree {
-  height: 100%;
-  overflow: scroll;
-}
-
-:deep(.el-tree-node > .el-tree-node__children) {
-  overflow: visible;
-}
-.el-tree::-webkit-scrollbar {
-  display: none;
-}
-
-.tree_content {
-  display: flex;
-  align-items: center;
-  .icon_box {
-    display: flex;
-    align-items: center;
-  }
-  .cat {
-    width: 20px;
-    height: 20px;
-  }
-}
+@import './index.scss';
 </style>

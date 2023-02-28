@@ -4,20 +4,20 @@ import NavigationBar from './NavigationBar/data'
 export const pageHeightList = [
   {
     label: '不设置高度',
-    value: ''
+    value: '',
   },
   {
     label: '最小高度一屏',
-    value: 'min-height:100vh;'
+    value: 'min-height:100vh;',
   },
   {
     label: '最大高度一屏',
-    value: 'max-height:100vh;'
+    value: 'max-height:100vh;',
   },
   {
     label: '一屏',
-    value: 'height:100vh;overflow: hidden;'
-  }
+    value: 'height:100vh;overflow: hidden;',
+  },
 ]
 
 /**
@@ -46,7 +46,7 @@ export const initPageData = () => {
       imageUrl: null, //分享图片
       path: null, //分享路径
       title: null, //分享标题
-      shareParams: null //分享链接后面携带的参数
+      shareParams: null, //分享链接后面携带的参数
     },
     customHeader: false, //是否为自定义顶部导航 ,
     events: [new EventsData({ triggerType: 'onLoad' })], //操作事件
@@ -54,6 +54,6 @@ export const initPageData = () => {
     pageHeight: null, //页面高度
     priority: 0, //页面优先级越大约再上
     navigationBar: new NavigationBar(),
-    params: [] //页面额外参数
+    params: [], //页面额外参数
   }
 }

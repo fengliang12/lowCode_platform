@@ -1,8 +1,7 @@
 <template>
   <div
     v-if="data"
-    class="box"
-    :class="'bg'"
+    class="box bg"
     :style="`${style};display:${data.hide ? 'none' : ''}`"
     ref="buttonRef"
     @click="click"
@@ -12,7 +11,7 @@
     <el-popover
       ref="popoverRef"
       :virtual-ref="buttonRef"
-      trigger="contextmenu"
+      :visible="visible"
       virtual-triggering
       placement="right"
       :width="200"
@@ -102,6 +101,7 @@ import { computed, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import setItemsMap from '../../../Handle/setItemsMap.js'
 import { cloneDeep } from 'lodash'
+import { onMounted } from 'vue'
 
 const props = defineProps(['data', 'showHotBox', 'parents'])
 const pageSetupStore = usePageSetupStore()
@@ -155,7 +155,14 @@ const buttonRef = ref()
 const popoverRef = ref(null)
 const rightClick = (e) => {
   e.stopPropagation()
+  visible.value = true
 }
+
+onMounted(() => {
+  document.addEventListener('click', () => {
+    visible.value = false
+  })
+})
 
 /**
  * 删除当前元素
@@ -183,7 +190,7 @@ const deleteItem = () => {
 }
 
 /**
- * 复制组件
+ * 复制组件,这里不能直接copy
  */
 const copy = () => {
   props.parents.moduleSettings.push(cloneDeep(props.data))
@@ -199,53 +206,5 @@ const hideVisible = () => {
 </script>
 
 <style lang="scss" scoped>
-.box {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  white-space: pre-wrap;
-  flex: 0 0 auto;
-}
-
-.bg {
-  background-color: rgba($color: #000000, $alpha: 0.2);
-}
-
-.c-image {
-  width: 100%;
-}
-
-.scroll {
-  display: block !important;
-}
-
-.selBox {
-  position: absolute;
-  background-color: rgba($color: red, $alpha: 0.5);
-}
-
-.l {
-  height: 100%;
-  width: 2px;
-  left: 0;
-  top: 0;
-}
-.r {
-  width: 2px;
-  height: 100%;
-  right: 0;
-  top: 0;
-}
-.b {
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-}
-.t {
-  width: 100%;
-  height: 2px;
-  top: 0;
-  left: 0;
-}
+@import './index.scss';
 </style>

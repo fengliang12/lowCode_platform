@@ -13,16 +13,14 @@
       ></JudgeType>
     </el-span>
   </el-row>
-  <el-row>
-    <div v-for="(item, index) in formList" :key="index">
-      <JudgeType
-        :formData="formData"
-        :formItem="item"
-        :propKey="propKey"
-        :groupIndex="groupIndex"
-      ></JudgeType>
-    </div>
-  </el-row>
+  <div v-for="(item, index) in formList" :key="index">
+    <JudgeType
+      :formData="formData"
+      :formItem="item"
+      :propKey="propKey"
+      :groupIndex="groupIndex"
+    ></JudgeType>
+  </div>
 </template>
 
 <script setup lang="ts">
