@@ -53,7 +53,7 @@ const confirm = () => {
     ElMessage.error({
       message: '配置条件不符合规范',
       showClose: true,
-      duration: 2000
+      duration: 2000,
     })
     return
   }
@@ -95,7 +95,7 @@ const cancelCondition = () => {
   ElMessageBox.confirm('确认取消条件判断吗', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
-    type: 'warning'
+    type: 'warning',
   }).then(() => {
     conditionsForExecution.value = null
     dialogCondition.value = false

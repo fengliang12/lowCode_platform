@@ -16,9 +16,8 @@
 <script setup>
 import pagePathList from '@/components/Constant/pagePath'
 import { computed, ref } from 'vue'
-
-const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue', 'changeInfo'])
+const props = defineProps(['modelValue'])
 
 const operationUrl = computed({
   get() {

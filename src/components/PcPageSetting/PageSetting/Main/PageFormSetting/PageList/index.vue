@@ -29,7 +29,7 @@
           :value="item.id"
         ></el-option>
       </el-select>
-      <el-button @click="add">确认 添加</el-button>
+      <el-button @click="add">确认添加</el-button>
       <el-button @click="refresh">刷新列表</el-button>
     </el-row>
     <el-tag
@@ -52,7 +52,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { usePageSetupStore } from '@/store'
-// import JsonEditor from '../../../Common/jsonEditor/index.vue'
+import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
 
 const props = defineProps(['value'])

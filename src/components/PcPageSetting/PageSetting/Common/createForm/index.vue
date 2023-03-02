@@ -52,12 +52,12 @@
 defineProps({
   modelValue: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   formComponentsList: {
     type: Array,
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 </script>
 <style lang="scss" scoped>

@@ -4,49 +4,49 @@ import { transitionDefault, transitionComponentsList } from './transition'
 export default {
   animate: {
     value: animationDefault,
-    componentsList: animationComponentsList
+    componentsList: animationComponentsList,
   },
   pop_ups: {
     value: {
-      maskClose: true
+      maskClose: true,
     },
     componentsList: [
       {
         key: 'maskClose',
         component: 'el-switch',
-        label: '点击遮罩层关闭弹窗'
-      }
-    ]
+        label: '点击遮罩层关闭弹窗',
+      },
+    ],
   },
   showLoading: {
     value: {
       title: '加载中',
-      maskClose: false
+      maskClose: false,
     },
     componentsList: [
       {
         key: 'title',
         component: 'el-input',
-        label: '提示文字'
+        label: '提示文字',
       },
       {
         key: 'maskClose',
         component: 'el-switch',
-        label: '防止触摸穿透'
-      }
-    ]
+        label: '防止触摸穿透',
+      },
+    ],
   },
   hideLoading: {
     value: {
-      noConflict: false
+      noConflict: false,
     },
     componentsList: [
       {
         key: 'noConflict',
         component: 'el-switch',
-        label: '只隐藏loading'
-      }
-    ]
+        label: '只隐藏loading',
+      },
+    ],
   },
   openLocation: {
     value: {
@@ -54,18 +54,18 @@ export default {
       longitude: '',
       scale: 18,
       name: '',
-      address: ''
+      address: '',
     },
     componentsList: [
       {
         key: 'latitude',
         component: 'el-input',
-        label: '纬度'
+        label: '纬度',
       },
       {
         key: 'longitude',
         component: 'el-input',
-        label: '经度'
+        label: '经度',
       },
       {
         key: 'scale',
@@ -73,23 +73,23 @@ export default {
         label: '缩放比例',
         props: {
           min: 5,
-          max: 18
-        }
+          max: 18,
+        },
       },
       {
         key: 'name',
         component: 'el-input',
-        label: '位置名'
+        label: '位置名',
       },
       {
         key: 'address',
         component: 'el-input',
-        label: '地址的详细说明'
-      }
-    ]
+        label: '地址的详细说明',
+      },
+    ],
   },
   transition: {
     value: transitionDefault,
-    componentsList: transitionComponentsList
-  }
+    componentsList: transitionComponentsList,
+  },
 }

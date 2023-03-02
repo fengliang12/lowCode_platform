@@ -109,8 +109,6 @@ provide('formValue', valueData)
  */
 const handleData = (value = props.modelValue) => {
   let obj = setMerge(value ?? {}, getFormObject(props.formList))
-  console.log('obj', obj)
-
   valueData.value = obj
   init.value = true
 }

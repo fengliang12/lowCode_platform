@@ -23,3 +23,84 @@ export default class {
     this.backgroundColorOpacityDistance = null
   }
 }
+
+export const componentsList = () => {
+  return [
+    {
+      divider: '自定义导航',
+      filed: 'show',
+      type: 'el-switch',
+      title: '显示标题栏',
+    },
+    {
+      filed: 'back',
+      type: 'el-switch',
+      title: '是否返回',
+    },
+    {
+      filed: 'title',
+      type: 'el-input',
+      title: '标题',
+    },
+    {
+      filed: 'titleColor',
+      type: 'el-color-picker',
+      title: '标题颜色',
+      props: {
+        'show-alpha': true,
+      },
+    },
+    {
+      filed: 'titleImage',
+      type: 'upload-file',
+      title: '标题图片',
+    },
+    {
+      filed: 'backgroundColor',
+      type: 'el-color-picker',
+      title: '导航背景色',
+      props: {
+        'show-alpha': true,
+      },
+    },
+    {
+      filed: 'backgroundImage',
+      type: 'upload-file',
+      title: '导航背景图',
+    },
+    {
+      filed: 'fill',
+      type: 'el-switch',
+      title: '是否填充',
+    },
+    {
+      filed: 'statusBarColor',
+      type: 'el-select',
+      title: '状态栏颜色',
+      props: {
+        clearable: true,
+        placeholder: '请选择',
+      },
+      options: [
+        {
+          value: '#000000',
+          title: '黑色',
+        },
+        {
+          value: '#ffffff',
+          title: '白色',
+        },
+      ],
+    },
+    {
+      filed: 'backgroundColorOpacity',
+      type: 'el-switch',
+      title: '滚动背景渐变',
+    },
+    {
+      filed: 'backgroundColorOpacityDistance',
+      type: 'el-input',
+      title: '滚动渐变距离',
+    },
+  ]
+}

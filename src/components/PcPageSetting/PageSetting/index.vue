@@ -169,32 +169,6 @@ watch(
 )
 
 /**
- * 监听formData
- */
-const addItems = reactive({
-  index: 0,
-  data: null,
-})
-watch(
-  () => formData,
-  (newVal, oldVal) => {
-    if (newVal.length !== oldVal.length) {
-      let a = newVal.map((i) => JSON.stringify(i))
-      let b = oldVal.map((i) => JSON.stringify(i))
-      a.forEach((em, idx) => {
-        if (b.indexOf(em) === -1) {
-          addItems.index = idx
-        }
-      })
-      addItems.data = cloneDeep([newVal[addItems.index]])
-    }
-  },
-  {
-    deep: true,
-  },
-)
-
-/**
  * 数据初始化，如果数据是为null则赋初始数据，如果数据是object进行递归
  * @param {*} data
  */

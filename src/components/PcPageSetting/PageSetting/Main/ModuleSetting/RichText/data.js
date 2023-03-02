@@ -14,26 +14,26 @@ export const formList = [
     options: [
       {
         label: '中文字符空格一半大小',
-        value: 'ensp'
+        value: 'ensp',
       },
       {
         label: '中文字符空格大小',
-        value: 'emsp'
+        value: 'emsp',
       },
       {
         label: '根据字体设置的空格大小',
-        value: 'nbsp'
-      }
-    ]
+        value: 'nbsp',
+      },
+    ],
   },
   {
     type: 'el-switch',
     field: 'userSelect',
-    title: '文本是否可选'
+    title: '文本是否可选',
   },
   {
     type: 'editor',
     field: 'nodes',
-    title: '富文本内容'
-  }
+    title: '富文本内容',
+  },
 ]

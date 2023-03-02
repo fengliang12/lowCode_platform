@@ -27,61 +27,61 @@ export const formList = [
     field: 'percent',
     title: '进度',
     props: {
-      max: 100
+      max: 100,
     },
-    tips: '填写后填写为准动态数据失效'
+    tips: '填写后填写为准动态数据失效',
   },
   {
     type: 'el-switch',
     field: 'active',
-    title: '动画'
+    title: '动画',
   },
   {
     type: 'el-switch',
     field: 'showInfo',
-    title: '左右文案'
+    title: '左右文案',
   },
   {
     type: 'el-input-number',
     field: 'duration',
-    title: '动画时间'
+    title: '动画时间',
   },
   {
     type: 'el-input-number',
     field: 'duration',
-    title: '动画时间'
+    title: '动画时间',
   },
   {
     type: 'el-input-number',
     field: 'strokeWidth',
     title: '宽度',
     props: {
-      disabled: true
+      disabled: true,
     },
-    tips: '本数据只用于显示,跟随组件样式中高度变化'
+    tips: '本数据只用于显示,跟随组件样式中高度变化',
   },
   {
     type: 'el-input-number',
     field: 'borderRadius',
     title: '圆角',
     props: {
-      disabled: true
+      disabled: true,
     },
-    tips: '本数据只用于显示,跟随组件样式中圆角变化'
+    tips: '本数据只用于显示,跟随组件样式中圆角变化',
   },
   {
     type: 'el-input-number',
     field: 'fontSize',
-    title: '右侧字体大小'
+    title: '右侧字体大小',
   },
   {
     type: 'el-color-picker',
     field: 'activeColor',
-    title: '已选择颜色'
+    title: '已选择颜色',
   },
   {
     type: 'el-color-picker',
     field: 'backgroundColor',
-    title: '未选择颜色'
-  }
+    title: '未选择颜色',
+  },
 ]

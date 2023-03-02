@@ -1,4 +1,22 @@
 import { ImageSettingData } from '../fissionImage/data'
+
+// PageSetupHotOperation {
+//   apiInfo (PageApiInfo, optional): API请求 ,
+//   child (Array[PageSetupHotOperation], optional),
+//   conditionsForExecution (ConditionsForExecution, optional): 执行条件 ,
+//   content (string, optional): 内容 ,
+//   imageSetting (ImageSetting, optional): 图片配置 ,
+//   linkMiniAppId (string, optional): 关联小程序AppId ,
+//   moduleOperation (string, optional): 组件操作 ,
+//   name (string, optional): 名称 ,
+//   operationType (string, optional): 操作类型 ,
+//   operationUrl (string, optional): 可以放 弹窗url、小程序url、页面配置编号 ,
+//   pageValue (PageValue, optional): 页面 key Word ,
+//   params (Array[PageApiInfoParams], optional): 请求数据 ,
+//   subscribeNotices (Array[SubscribeSetting], optional): 微信订阅消息列表 ,
+//   syncEvent (PageSyncEvent, optional)
+// }
+
 export class EventList extends Array {
   constructor(list = []) {
     super()
@@ -6,12 +24,12 @@ export class EventList extends Array {
       {
         value: 'pop_ups',
         label: '弹窗',
-        disabled: false
+        disabled: false,
       },
       {
         value: 'custom_event',
         label: '自定义事件',
-        disabled: false
+        disabled: false,
       },
       {
         value: 'jump',
@@ -21,50 +39,50 @@ export class EventList extends Array {
           {
             value: 'page_jump',
             label: '小程序页面',
-            disabled: false
+            disabled: false,
           },
           {
             value: 'page_setting',
             label: '配置页面',
-            disabled: false
+            disabled: false,
           },
           {
             value: 'jump_relevance_mini',
             label: '其他小程序',
-            disabled: false
+            disabled: false,
           },
           {
             value: 'jump_h5',
             label: '跳转h5页面',
-            disabled: false
-          }
-        ]
+            disabled: false,
+          },
+        ],
       },
       {
         value: 'subscribe_notice',
         label: '订阅消息',
-        disabled: false
+        disabled: false,
       },
       {
         value: 'api',
         label: 'api请求事件',
-        disabled: false
+        disabled: false,
       },
       {
         value: 'associated_module',
         label: '操作组件',
-        disabled: false
+        disabled: false,
       },
       {
         value: 'auth',
         label: '授权',
-        disabled: false
+        disabled: false,
       },
       {
         value: 'set_params',
-        label: '页面数据赋值'
+        label: '页面数据赋值',
       },
-      ...list
+      ...list,
     ]
   }
 }
@@ -103,15 +121,15 @@ export class PageHotOperation {
 export const assignmentOption = [
   {
     value: 'equal',
-    label: '等于'
+    label: '等于',
   },
   {
     value: 'push',
-    label: '数组添加'
+    label: '数组添加',
   },
   {
     value: 'splice',
-    label: '数组删除'
+    label: '数组删除',
   },
   {
     value: 'countDown',
@@ -121,11 +139,11 @@ export const assignmentOption = [
         key: 'delay',
         pageValue: {
           value: '1000',
-          valueType: 'custom'
-        }
-      }
-    ]
-  }
+          valueType: 'custom',
+        },
+      },
+    ],
+  },
 ]
 
 /**
@@ -134,46 +152,46 @@ export const assignmentOption = [
 export const customEventList = [
   {
     value: 'register',
-    label: '注册'
+    label: '注册',
   },
   {
     value: 'tips',
     label: '提示',
-    showContent: true
+    showContent: true,
   },
   {
     value: 'backPage',
-    label: '返回上一页'
+    label: '返回上一页',
   },
   {
     value: 'makePhoneCall',
     label: '调用电话',
-    showContent: true
+    showContent: true,
   },
   {
     value: 'closPop',
-    label: '关闭弹窗'
+    label: '关闭弹窗',
   },
   {
     value: 'showLoading',
-    label: '加载中'
+    label: '加载中',
   },
   {
     value: 'hideLoading',
-    label: '隐藏加载中'
+    label: '隐藏加载中',
   },
   {
     value: 'initRefresh',
-    label: '刷新用户注册'
+    label: '刷新用户注册',
   },
   {
     value: 'openLocation',
-    label: '微信内置地图查看位置'
+    label: '微信内置地图查看位置',
   },
   {
     value: 'exitMiniProgram',
-    label: '退出小程序'
-  }
+    label: '退出小程序',
+  },
 ]
 
 /**
@@ -188,26 +206,26 @@ export const authEventList = [
         key: 'type',
         pageValue: {
           valueType: 'custom',
-          value: 'wgs84'
-        }
-      }
-    ]
+          value: 'wgs84',
+        },
+      },
+    ],
   },
   {
     value: 'chooseAddress',
-    label: '选择收货地址'
+    label: '选择收货地址',
   },
   {
     value: 'chooseInvoiceTitle',
-    label: '发票抬头'
+    label: '发票抬头',
   },
   {
     value: 'getWeRunData',
-    label: '微信步数'
+    label: '微信步数',
   },
   {
     value: 'chooseInvoice',
-    label: '用户发票'
+    label: '用户发票',
   },
   {
     value: 'saveImageToPhotosAlbum',
@@ -216,10 +234,10 @@ export const authEventList = [
       {
         key: 'filePath',
         pageValue: {
-          valueType: 'custom'
-        }
-      }
-    ]
+          valueType: 'custom',
+        },
+      },
+    ],
   },
   {
     value: 'saveVideoToPhotosAlbum',
@@ -228,59 +246,59 @@ export const authEventList = [
       {
         key: 'filePath',
         pageValue: {
-          valueType: 'custom'
-        }
-      }
-    ]
+          valueType: 'custom',
+        },
+      },
+    ],
   },
   {
     value: 'startLocationUpdate',
-    label: '前台接收位置消息'
+    label: '前台接收位置消息',
   },
   {
     value: 'chooseLocation',
-    label: '地图选择位置'
+    label: '地图选择位置',
   },
   {
     value: 'startLocationUpdateBackground',
-    label: '前后后接收位置消息'
+    label: '前后后接收位置消息',
   },
   {
     value: 'startRecord',
-    label: '录音'
+    label: '录音',
   },
   {
     value: 'joinVoIPChat',
-    label: '实时语音'
+    label: '实时语音',
   },
   {
     value: 'camera',
-    label: '摄像头'
+    label: '摄像头',
   },
   {
     value: 'openBluetoothAdapter',
-    label: '蓝牙初始化'
+    label: '蓝牙初始化',
   },
   {
     value: 'createBLEPeripheralServer',
-    label: '本地蓝牙'
+    label: '本地蓝牙',
   },
   {
     value: 'addPhoneContact',
-    label: '添加联系人'
+    label: '添加联系人',
   },
   {
     value: 'addPhoneCalendar',
-    label: '日历添加事件'
+    label: '日历添加事件',
   },
   {
     value: 'addPhoneRepeatCalendar',
-    label: '日历添加重复事件'
+    label: '日历添加重复事件',
   },
   {
     value: 'RecorderManager',
-    label: '录音管理器'
-  }
+    label: '录音管理器',
+  },
 ]
 
 /**
@@ -292,34 +310,34 @@ export const moduleOperationList = [
     value: 'scroll',
     props: {
       placeholder: '滚动时长 单位毫秒（默认300毫秒）',
-      min: 0
-    }
+      min: 0,
+    },
   },
   {
     label: '显示',
-    value: 'show'
+    value: 'show',
   },
   {
     label: '隐藏',
-    value: 'hide'
+    value: 'hide',
   },
   {
     label: '显示/隐藏',
-    value: 'show_hide'
+    value: 'show_hide',
   },
   {
     label: '动画效果',
     children: [
       {
         label: '动画',
-        value: 'animate'
+        value: 'animate',
       },
       {
         label: '过渡',
-        value: 'transition'
-      }
-    ]
-  }
+        value: 'transition',
+      },
+    ],
+  },
 ]
 
 /**
@@ -331,17 +349,17 @@ export const moduleCarouselOperationList = [
     value: 'carousel_current',
     props: {
       placeholder: '0为第一张轮播以此类推',
-      min: 0
-    }
+      min: 0,
+    },
   },
   {
     label: '向前',
-    value: 'carousel_pre'
+    value: 'carousel_pre',
   },
   {
     label: '向后',
-    value: 'carousel_next'
-  }
+    value: 'carousel_next',
+  },
 ]
 
 /**
@@ -354,46 +372,46 @@ export const moduleVideoOperationList = [
     children: [
       {
         value: 'open_muted',
-        label: '开启静音'
+        label: '开启静音',
       },
       {
         value: 'close_muted',
-        label: '关闭静音'
+        label: '关闭静音',
       },
       {
         value: 'video_muted',
-        label: '开启/关闭静音'
+        label: '开启/关闭静音',
       },
       {
         value: 'open_loop',
-        label: '开启循环播放'
+        label: '开启循环播放',
       },
       {
         value: 'close_loop',
-        label: '关闭循环播放'
+        label: '关闭循环播放',
       },
       {
         value: 'video_loop',
-        label: '开启/关闭循环播放'
+        label: '开启/关闭循环播放',
       },
       {
         value: 'video_play',
-        label: '播放视频'
+        label: '播放视频',
       },
       {
         value: 'video_pause',
-        label: '暂停视频'
+        label: '暂停视频',
       },
       {
         value: 'request_full_screen',
-        label: '全屏播放'
+        label: '全屏播放',
       },
       {
         value: 'exit_full_screen',
-        label: '退出全屏'
-      }
-    ]
-  }
+        label: '退出全屏',
+      },
+    ],
+  },
 ]
 
 /**
@@ -402,16 +420,16 @@ export const moduleVideoOperationList = [
 export const gridLotteryOperationList = [
   {
     value: 'lottery_start',
-    label: '开始抽奖'
+    label: '开始抽奖',
   },
   {
     value: 'lottery_stop',
-    label: '结束抽奖'
+    label: '结束抽奖',
   },
   {
     value: 'lottery_toggle',
-    label: '开始/结束抽奖'
-  }
+    label: '开始/结束抽奖',
+  },
 ]
 
 /**
@@ -420,7 +438,7 @@ export const gridLotteryOperationList = [
 export const moduleOperationListKey = Object.fromEntries(
   [...moduleOperationList, ...moduleCarouselOperationList].map((elem) => {
     return [elem.value, elem]
-  })
+  }),
 )
 
 /**
@@ -429,16 +447,16 @@ export const moduleOperationListKey = Object.fromEntries(
 const jumpTypeList = [
   {
     value: 'navigateTo',
-    label: 'navigateTo(保留当前页面)'
+    label: 'navigateTo(保留当前页面)',
   },
   {
     value: 'redirectTo',
-    label: 'redirectTo(关闭当前页面)'
+    label: 'redirectTo(关闭当前页面)',
   },
   {
     value: 'reLaunch',
-    label: 'reLaunch(关闭所有页面)'
-  }
+    label: 'reLaunch(关闭所有页面)',
+  },
 ]
 
 /**
@@ -447,5 +465,5 @@ const jumpTypeList = [
 export const moduleOperationListSelect = {
   page_jump: jumpTypeList,
   page_setting: jumpTypeList,
-  jump_h5: jumpTypeList
+  jump_h5: jumpTypeList,
 }

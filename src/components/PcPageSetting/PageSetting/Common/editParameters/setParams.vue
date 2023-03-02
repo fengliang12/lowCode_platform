@@ -26,7 +26,6 @@
           ></el-input>
         </template>
       </el-table-column>
-
       <!-- 页面值 -->
       <el-table-column
         label="页面值(pageValue)"
@@ -40,7 +39,12 @@
           ></SetData>
         </template>
       </el-table-column>
-
+      <!-- 校验规则 -->
+      <el-table-column label="校验规则" min-width="400px" v-if="hideRules">
+        <template v-slot="scope">
+          <SetRules v-model="scope.row.rules"></SetRules>
+        </template>
+      </el-table-column>
       <!-- 操作 -->
       <el-table-column
         label="操作"
@@ -65,18 +69,17 @@
           </el-button>
         </template>
       </el-table-column>
-
-      <!-- 校验规则 -->
-      <el-table-column label="校验规则" min-width="400px" v-if="hideRules">
-        <template v-slot="scope">
-          <SetRules v-model="scope.row.rules"></SetRules>
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script setup>
+// PageApiInfoParams {
+//   key (string, optional): 接口key ,
+//   pageValue (PageValue, optional): 页面值 ,
+//   rules (Array[PageApiRule], optional): 页面接口路由
+//   child (Array[PageApiInfoParams], optional): 子类
+// }
 import { watch, reactive } from 'vue'
 import SetData from '../setData/index.vue'
 import SetRules from '../setRules/index.vue'
@@ -94,7 +97,7 @@ const idMapParent = reactive({})
 const setIdMapParent = (
   list = props.modelValue,
   parentIndex = 0,
-  parent = props.modelValue
+  parent = props.modelValue,
 ) => {
   list.id = parentIndex
   list.forEach((elem, index) => {
@@ -116,7 +119,7 @@ watch(
   (val) => {
     setIdMapParent(val)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 /**
@@ -130,7 +133,7 @@ const addChild = (type, row) => {
     key: '',
     pageValue: new pageValueData(),
     child: null,
-    rules: []
+    rules: [],
   }
   if (type === 'paramList') {
     row.push(child)
@@ -153,14 +156,13 @@ const deleteChild = (row) => {
   }
 
   if (idMapParent[row.id]?.child?.length) {
-    idMapParent[row.id].child.splice(
-      idMapParent[row.id].child.findIndex((elem) => elem.id === row.id),
-      1
+    let index = idMapParent[row.id].child.findIndex(
+      (elem) => elem.id === row.id,
     )
+    idMapParent[row.id].child.splice(index, 1)
   } else if (props.modelValue.length) {
     props.modelValue.splice(row.id - 1, 1)
   }
-
   delete idMapParent[row.id]
   setIdMapParent()
 }

@@ -59,11 +59,6 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import GetPageData from './getPageData.vue'
-import { pageValueData } from './data'
-import { valueType } from './common/pageData'
-
 // PageValue {
 //   value:string;
 //   defaultValue:string;
@@ -71,24 +66,29 @@ import { valueType } from './common/pageData'
 //   handle:Array[PageValueHandle];
 // }
 
+import { computed, ref } from 'vue'
+import GetPageData from './getPageData.vue'
+import { pageValueData } from './data'
+import { valueType } from './common/pageData'
+
 const switchCustom = ref(false)
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: null
+    default: null,
   },
   update: {
     type: Boolean,
-    default: false
+    default: false,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   wrap: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -104,7 +104,7 @@ const pageValue = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**

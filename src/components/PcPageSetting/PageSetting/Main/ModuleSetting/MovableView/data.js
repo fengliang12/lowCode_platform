@@ -32,7 +32,7 @@ export const formList = (itemsMap) => {
                   if (elem.moduleType === 'carousel') {
                     return {
                       label: elem.title,
-                      value: elem.code
+                      value: elem.code,
                     }
                   }
                 })
@@ -40,8 +40,8 @@ export const formList = (itemsMap) => {
             resolve(tempList)
           })
         },
-        to: 'options'
-      }
+        to: 'options',
+      },
     },
     {
       field: 'direction',
@@ -50,69 +50,69 @@ export const formList = (itemsMap) => {
       options: [
         {
           label: '全部',
-          value: 'all'
+          value: 'all',
         },
         {
           label: '纵向移动',
-          value: 'vertical'
+          value: 'vertical',
         },
         {
           label: '横向移动',
-          value: 'horizontal'
+          value: 'horizontal',
         },
         {
           label: '禁止移动',
-          value: 'none'
-        }
-      ]
+          value: 'none',
+        },
+      ],
     },
     {
       type: 'el-switch',
       field: 'inertia',
-      title: '是否带有惯性'
+      title: '是否带有惯性',
     },
     {
       type: 'el-input-number',
       field: 'x',
-      title: 'x轴方向的偏移'
+      title: 'x轴方向的偏移',
     },
     {
       type: 'el-input-number',
       field: 'y',
-      title: 'y轴方向的偏移'
+      title: 'y轴方向的偏移',
     },
     {
       type: 'el-input-number',
       field: 'damping',
       title: '阻尼系数',
-      tips: '用于控制 x 或y改变时的动画和过界回弹的动画,值越大移动越快'
+      tips: '用于控制 x 或y改变时的动画和过界回弹的动画,值越大移动越快',
     },
     {
       type: 'el-input-number',
       field: 'friction',
       title: '摩擦系数',
-      tips: '用于控制惯性滑动的动画,值越大摩擦力越大,滑动越快停止,必须大于0,否则会被设置成默认值'
+      tips: '用于控制惯性滑动的动画,值越大摩擦力越大,滑动越快停止,必须大于0,否则会被设置成默认值',
     },
     {
       type: 'el-switch',
       field: 'disabled',
-      title: '是否禁用'
+      title: '是否禁用',
     },
     {
       type: 'el-switch',
       field: 'scale',
       title: '是否支持双指缩放',
-      tips: '默认缩放手势生效区域是在 movable-view 内'
+      tips: '默认缩放手势生效区域是在 movable-view 内',
     },
     {
       type: 'el-input-number',
       field: 'scaleMin',
-      title: '缩放倍数最小值'
+      title: '缩放倍数最小值',
     },
     {
       type: 'el-input-number',
       field: 'scaleMax',
-      title: '缩放倍数最大值'
+      title: '缩放倍数最大值',
     },
     {
       type: 'el-input-number',
@@ -120,13 +120,13 @@ export const formList = (itemsMap) => {
       title: '缩放倍数',
       props: {
         max: 10,
-        min: 0.5
-      }
+        min: 0.5,
+      },
     },
     {
       type: 'el-switch',
       field: 'animation',
-      title: '是否使用动画'
-    }
+      title: '是否使用动画',
+    },
   ]
 }

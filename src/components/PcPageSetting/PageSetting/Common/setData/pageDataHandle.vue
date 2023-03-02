@@ -51,6 +51,11 @@
 </template>
 
 <script setup>
+// PageValueHandle {
+//   key (string, optional): key ,
+//   method (string, optional): 方法 ,
+//   pageValue (PageValue, optional): 页面 key Word
+// }
 import { cloneDeep } from 'lodash'
 import { HandleData } from './common/handleData'
 import { methodList } from './common/methodList'
@@ -101,7 +106,7 @@ const cancel = () => {
   ElMessageBox.confirm('确认取消数据处理吗?', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
-    type: 'warning'
+    type: 'warning',
   }).then(() => {
     emit('confirm', null)
     dialogVisible.value = false
@@ -119,7 +124,7 @@ const confirm = () => {
     ElMessage.error({
       message: `配置不符合规范`,
       showClose: true,
-      duration: 2000
+      duration: 2000,
     })
   }
 }

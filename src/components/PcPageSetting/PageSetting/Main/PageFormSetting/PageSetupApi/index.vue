@@ -90,14 +90,14 @@ const cascaderRef = ref(null)
 const pageApiId = ref('')
 const addOrChange = ref('add')
 const addApiToList = () => {
-  // if (!pageSetupId?.value?.id) {
-  //   ElMessage.error('请先保存当前编辑内容')
-  //   return
-  // }
-  // if (!pageApiId.value?.id) {
-  //   ElMessage.error('请先保存当前编辑内容')
-  //   return
-  // }
+  if (!pageSetupId?.value?.id) {
+    ElMessage.error('请先保存当前编辑内容')
+    return
+  }
+  if (!pageApiId.value?.id) {
+    ElMessage.error('请先保存当前编辑内容')
+    return
+  }
   let data = cascaderRef.value.getCheckedNodes(true)[0]
   clickWriteApi(data, 'add')
 }

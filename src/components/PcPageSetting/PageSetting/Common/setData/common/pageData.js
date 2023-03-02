@@ -1,12 +1,12 @@
 export const valueType = [
   {
     value: 'custom',
-    label: '自定义'
+    label: '自定义',
   },
   {
     value: 'pageData',
-    label: '动态数据'
-  }
+    label: '动态数据',
+  },
 ]
 
 //全局数据
@@ -15,23 +15,23 @@ export const appStore = [
     key: 'useCouponNumber',
     label: '可用优惠券数量',
     default: '0',
-    defaultValue: 0
+    defaultValue: 0,
   },
   {
     key: 'InBoxMessageUnreadQuantity',
     label: '未读站内信数量',
     default: '0',
-    defaultValue: 0
+    defaultValue: 0,
   },
   {
     key: 'member',
     label: '是否为会员',
-    defaultValue: false
+    defaultValue: false,
   },
   {
     key: 'customerId',
     label: '会员编号(customerId)',
-    defaultValue: ''
+    defaultValue: '',
   },
   {
     key: 'userInfo',
@@ -42,36 +42,36 @@ export const appStore = [
         label: '用户头像',
         default:
           'https://wechatv2.blob.core.chinacloudapi.cn/ysl/morentouxiang.png',
-        type: 'image'
+        type: 'image',
       },
       {
         key: 'nickName',
-        label: '用户昵称'
+        label: '用户昵称',
       },
       {
         key: 'realName',
-        label: '用户姓名'
+        label: '用户姓名',
       },
       {
         key: 'miniUnionId',
         label: '用户unionId',
         default: '用户unionId',
-        defaultValue: ''
+        defaultValue: '',
       },
       {
         key: 'miniOpenId',
         label: '用户openId',
         default: '用户openId',
-        defaultValue: ''
+        defaultValue: '',
       },
 
       {
         key: 'mobile',
         label: '用户手机（加密）',
         default: '用户手机（加密）',
-        defaultValue: ''
-      }
-    ]
+        defaultValue: '',
+      },
+    ],
   },
   {
     key: 'dataLakeInfo',
@@ -79,35 +79,35 @@ export const appStore = [
     child: [
       {
         key: 'points',
-        label: '用户积分'
+        label: '用户积分',
       },
       {
         key: 'grade',
-        label: '用户等级'
+        label: '用户等级',
       },
       {
         key: 'gradeCode',
-        label: '用户等级Code'
+        label: '用户等级Code',
       },
       {
         key: 'currentAmount',
-        label: '当前消费金额'
+        label: '当前消费金额',
       },
       {
         key: 'requiredAmount',
-        label: '距离下个等级所需金额'
+        label: '距离下个等级所需金额',
       },
       {
         key: 'upGrade',
-        label: '下一等级'
+        label: '下一等级',
       },
       {
         key: 'thirdCode',
-        label: '会员卡号(thirdCode)'
+        label: '会员卡号(thirdCode)',
       },
       {
         key: 'upGradeCode',
-        label: '下一等级code'
+        label: '下一等级code',
       },
       {
         key: 'expirePoint',
@@ -115,15 +115,15 @@ export const appStore = [
         child: [
           {
             key: 'expireDate',
-            label: '到期日期'
+            label: '到期日期',
           },
           {
             key: 'expireNum',
-            label: '到期积分'
-          }
-        ]
-      }
-    ]
+            label: '到期积分',
+          },
+        ],
+      },
+    ],
   },
   {
     key: 'onLaunchOptions',
@@ -131,37 +131,37 @@ export const appStore = [
     child: [
       {
         key: 'path',
-        label: '打开的小程序路径'
+        label: '打开的小程序路径',
       },
       {
         key: 'query',
-        label: '入参'
+        label: '入参',
       },
       {
         key: 'scene',
-        label: '场景值'
+        label: '场景值',
       },
       {
         key: 'shareTicket',
-        label: 'shareTicket'
-      }
-    ]
-  }
+        label: 'shareTicket',
+      },
+    ],
+  },
 ]
 
 // 页面数据
 export const pageInfo = [
   {
     key: 'route',
-    label: '页面路径'
+    label: '页面路径',
   },
   {
     key: 'path',
-    label: '页面路径+参数'
+    label: '页面路径+参数',
   },
   {
     key: 'options',
-    label: '页面入参'
+    label: '页面入参',
   },
   {
     key: 'onLaunchOptions',
@@ -169,30 +169,30 @@ export const pageInfo = [
     child: [
       {
         key: 'path',
-        label: '打开的小程序路径'
+        label: '打开的小程序路径',
       },
       {
         key: 'query',
-        label: '入参'
+        label: '入参',
       },
       {
         key: 'scene',
-        label: '场景值'
+        label: '场景值',
       },
       {
         key: 'shareTicket',
-        label: 'shareTicket'
-      }
-    ]
-  }
+        label: 'shareTicket',
+      },
+    ],
+  },
 ]
 
 // 页面配置数据
 export const appConfig = [
   {
     key: 'appId',
-    label: 'appId'
-  }
+    label: 'appId',
+  },
 ]
 
 //授权数据
@@ -203,25 +203,25 @@ export const authInfo = [
     child: [
       {
         key: 'latitude',
-        label: '纬度'
+        label: '纬度',
       },
       {
         key: 'longitude',
-        label: '经度'
+        label: '经度',
       },
       {
         key: 'speed',
-        label: '速度'
+        label: '速度',
       },
       {
         key: 'accuray',
-        label: '精确度'
+        label: '精确度',
       },
       {
         key: 'altitude',
-        label: '高度'
-      }
-    ]
+        label: '高度',
+      },
+    ],
   },
   {
     key: 'chooseAddress',
@@ -229,49 +229,49 @@ export const authInfo = [
     child: [
       {
         key: 'userName',
-        label: '收货人姓名'
+        label: '收货人姓名',
       },
       {
         key: 'postalCode',
-        label: '邮编'
+        label: '邮编',
       },
       {
         key: 'provinceName',
-        label: '省份'
+        label: '省份',
       },
       {
         key: 'cityName',
-        label: '城市'
+        label: '城市',
       },
       {
         key: 'countyName',
-        label: '县'
+        label: '县',
       },
       {
         key: 'streetName',
-        label: '街道'
+        label: '街道',
       },
       {
         key: 'detailInfo',
-        label: '详细收货地址'
+        label: '详细收货地址',
       },
       {
         key: 'detailInfoNew',
-        label: '新选择器详细收货地址信息'
+        label: '新选择器详细收货地址信息',
       },
       {
         key: 'nationalCode',
-        label: '收货地址国家码'
+        label: '收货地址国家码',
       },
       {
         key: 'telNumber',
-        label: '收货人手机号码'
+        label: '收货人手机号码',
       },
       {
         key: 'errMsg',
-        label: '错误信息'
-      }
-    ]
+        label: '错误信息',
+      },
+    ],
   },
   {
     key: 'chooseInvoiceTitle',
@@ -279,33 +279,33 @@ export const authInfo = [
     child: [
       {
         key: 'type',
-        label: '抬头类型'
+        label: '抬头类型',
       },
       {
         key: 'title',
-        label: '抬头名称'
+        label: '抬头名称',
       },
       {
         key: 'taxNumber',
-        label: '抬头税号'
+        label: '抬头税号',
       },
       {
         key: 'companyAddress',
-        label: '单位地址'
+        label: '单位地址',
       },
       {
         key: 'telephone',
-        label: '手机号码'
+        label: '手机号码',
       },
       {
         key: 'bankName',
-        label: '银行名称'
+        label: '银行名称',
       },
       {
         key: 'bankAccount',
-        label: '银行账号'
-      }
-    ]
+        label: '银行账号',
+      },
+    ],
   },
   {
     key: 'getWeRunData',
@@ -313,33 +313,33 @@ export const authInfo = [
     child: [
       {
         key: 'iv',
-        label: 'iv'
+        label: 'iv',
       },
       {
         key: 'encryptedData',
-        label: 'encryptedData'
+        label: 'encryptedData',
       },
       {
         key: 'cloudID',
-        label: 'cloudID'
-      }
-    ]
+        label: 'cloudID',
+      },
+    ],
   },
   {
     key: 'chooseInvoice',
-    label: '用户发票'
+    label: '用户发票',
   },
   {
     key: 'saveImageToPhotosAlbum',
-    label: '保存图片'
+    label: '保存图片',
   },
   {
     key: 'saveVideoToPhotosAlbum',
-    label: '保存视频'
+    label: '保存视频',
   },
   {
     key: 'startLocationUpdate',
-    label: '前台接收位置消息'
+    label: '前台接收位置消息',
   },
   {
     key: 'chooseLocation',
@@ -347,44 +347,44 @@ export const authInfo = [
     child: [
       {
         key: 'latitude',
-        label: '纬度'
+        label: '纬度',
       },
       {
         key: 'longitude',
-        label: '经度'
+        label: '经度',
       },
       {
         key: 'address',
-        label: '详细地址'
+        label: '详细地址',
       },
       {
         key: 'name',
-        label: '地址名称'
-      }
-    ]
+        label: '地址名称',
+      },
+    ],
   },
   {
     key: 'startLocationUpdateBackground',
-    label: '前后后接收位置消息'
+    label: '前后后接收位置消息',
   },
   {
     key: 'getPhoneNumber',
-    label: '手机号授权成功数据'
+    label: '手机号授权成功数据',
   },
   {
     key: 'subscribeNotice',
-    label: '上次订阅是否成功'
-  }
+    label: '上次订阅是否成功',
+  },
 ]
 
 //显示类型
 export const showTypeList = [
   {
     value: 'text',
-    label: '文本'
+    label: '文本',
   },
   {
     value: 'image',
-    label: '图片'
-  }
+    label: '图片',
+  },
 ]

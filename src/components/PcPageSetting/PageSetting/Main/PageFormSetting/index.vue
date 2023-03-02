@@ -3,6 +3,7 @@
     <el-tab-pane label="基础配置" name="first">
       <BasicConfig
         :ref="(el) => setItemRef(el, 'first')"
+        v-model:active-name="activeName"
         v-model="pageFormData"
       ></BasicConfig>
     </el-tab-pane>
@@ -69,10 +70,6 @@ import PageSetupApi from './PageSetupApi/index.vue'
 
 const props = defineProps(['detail'])
 const pageSetupStore = usePageSetupStore()
-
-/**
- * 监听detail，如果有值,初始化pageFormData
- */
 const pageFormData = ref(initPageData())
 
 /**
@@ -94,11 +91,16 @@ const handlePageData = (data, initData) => {
 watch(
   () => props.detail,
   (val) => {
-    pageFormData.value = handlePageData(val, initPageData())
+    pageFormData.value = handlePageData(cloneDeep(val), initPageData())
     pageSetupStore.setPageNewParams(val.params)
   },
-  {
-    immediate: true,
+)
+
+watch(
+  () => pageFormDat.value.title,
+  (val) => {
+    if (pageFormData.value.customHeader) return
+    pageFormData.value.navigationBar.title = val
   },
 )
 
@@ -121,19 +123,20 @@ const save = async () => {
 const activeName = ref('first')
 const refObject = {}
 const setItemRef = (el, key) => {
-  console.log('el', el)
   if (el) {
     refObject[key] = el
   }
 }
 
+/**
+ * 每个tab栏离开前
+ */
 const beforeLeave = async (activeName) => {
   const arr = ['first', 'end']
   const index = arr.indexOf(activeName)
   const checkArr = arr.slice(0, index)
 
   let promiseList = checkArr.map((item, index) => {
-    console.log(refObject[item])
     // 多个ref操作dom元素
     return refObject[item]
       .next({
