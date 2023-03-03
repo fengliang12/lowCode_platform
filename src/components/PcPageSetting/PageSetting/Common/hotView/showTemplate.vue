@@ -27,13 +27,13 @@ import handlePageValue from '../../Handle/handlePageValue'
 const props = defineProps({
   value: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   //缩小倍数
   narrow: {
     type: Number,
-    default: 1
-  }
+    default: 1,
+  },
 })
 
 /**

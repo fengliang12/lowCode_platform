@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 import { floor, isEmpty } from 'lodash-es'
 import { onMounted, inject } from 'vue'
 import PageBoxSettingData from './data'
@@ -63,29 +63,29 @@ const formLabelWidth = inject('formLabelWidth', 100)
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   range: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   position: {
     type: String,
-    default: 'top'
+    default: 'top',
   },
   ratio: {
     type: Number,
-    default: 0
+    default: 0,
   },
   showSettingList: {
     type: Array,
-    default: () => ['width', 'height', 'top', 'left', 'radius']
-  }
+    default: () => ['width', 'height', 'top', 'left', 'radius'],
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 const positionBox = {
   top: '上距',
-  bottom: '下距'
+  bottom: '下距',
 }
 
 /**
@@ -100,20 +100,20 @@ const borderDistance = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 const updateWH = (type) => {
   if (type === 'width') {
     borderDistance.value.width = floor(
       borderDistance.value.height * props.ratio,
-      2
+      2,
     )
   }
   if (type === 'height') {
     borderDistance.value.height = floor(
       borderDistance.value.width / props.ratio,
-      2
+      2,
     )
   }
 }

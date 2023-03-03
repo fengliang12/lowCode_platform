@@ -55,12 +55,12 @@ const props = defineProps(['modelValue'])
 const dateTypeList = reactive([
   {
     label: '相对当前日期',
-    value: 'relative'
+    value: 'relative',
   },
   {
     label: '固定日期',
-    value: 'fixed'
-  }
+    value: 'fixed',
+  },
 ])
 
 /**

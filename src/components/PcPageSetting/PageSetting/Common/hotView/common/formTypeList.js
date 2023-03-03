@@ -29,12 +29,12 @@ export const M_Date = class extends basicForm {
     this.start = {
       //开始时间
       type: 'fixed', //fixed固定值 relative相对值 以今天为准向前几天或向后几天
-      value: ''
+      value: '',
     }
     this.end = {
       //结束
       type: 'fixed', //fixed固定值 relative相对值 以今天为准向前几天或向后几天
-      value: ''
+      value: '',
     }
     this.fields = 'day' //有效值 year month day，表示选择器的粒度
   }
@@ -46,20 +46,20 @@ export const OmsAddress = class extends basicForm {
     this.valueList = [
       {
         key: 'province', //省份
-        pageValue: new pageValueData({ valueType: 'pageData' })
+        pageValue: new pageValueData({ valueType: 'pageData' }),
       },
       {
         key: 'city', //城市
-        pageValue: new pageValueData({ valueType: 'pageData' })
+        pageValue: new pageValueData({ valueType: 'pageData' }),
       },
       {
         key: 'district', //地区
-        pageValue: new pageValueData({ valueType: 'pageData' })
+        pageValue: new pageValueData({ valueType: 'pageData' }),
       },
       {
         key: 'postcode', //地区code
-        pageValue: new pageValueData({ valueType: 'pageData' })
-      }
+        pageValue: new pageValueData({ valueType: 'pageData' }),
+      },
     ]
   }
 }
@@ -88,28 +88,28 @@ export const formTypeList = [
   {
     value: 'Input',
     label: '输入框',
-    class: Input
+    class: Input,
   },
   {
     value: 'Date',
     label: '日期',
-    class: M_Date
+    class: M_Date,
   },
   {
     value: 'OmsAddress',
     label: 'oms地址',
     class: OmsAddress,
-    defaultKey: 'addressInfo' //默认key值
+    defaultKey: 'addressInfo', //默认key值
   },
   {
     value: 'Cascader',
     label: '级联选择器',
-    class: Cascader
-  }
+    class: Cascader,
+  },
 ]
 //key映射class对象
 export const formTypeKeyMapClass = Object.fromEntries(
-  formTypeList.map((elem) => [elem.value, elem])
+  formTypeList.map((elem) => [elem.value, elem]),
 )
 
 //表单列表顺序
@@ -120,7 +120,7 @@ export const formComponentsList = [
     component: 'setData',
     label: '默认值',
     usValue: true,
-    span: 24
+    span: 24,
   },
   //多组默认值
   {
@@ -129,25 +129,25 @@ export const formComponentsList = [
     province: '省份',
     city: '城市',
     district: '地区',
-    postcode: '地区code'
+    postcode: '地区code',
   },
   //输入提示
   {
     key: 'placeholder',
     component: 'el-input',
-    label: '输入提示'
+    label: '输入提示',
   },
   {
     key: 'placeholderStyle',
     component: 'el-input',
-    label: '输入提示样式'
+    label: '输入提示样式',
   },
   {
     key: 'disabled',
     component: 'el-switch',
     label: '是否禁用',
     activeText: '是',
-    inactiveText: '否'
+    inactiveText: '否',
   },
   {
     key: 'type',
@@ -159,27 +159,27 @@ export const formComponentsList = [
         optionList: [
           {
             label: '文本(text)',
-            value: 'text'
+            value: 'text',
           },
           {
             label: '数字(number)',
-            value: 'number'
+            value: 'number',
           },
           {
             label: '身份证(idcard)',
-            value: 'idcard'
+            value: 'idcard',
           },
           {
             label: '带小数点(digit)',
-            value: 'digit'
+            value: 'digit',
           },
           {
             label: '昵称(nickname)',
-            value: 'nickname'
-          }
-        ]
-      }
-    ]
+            value: 'nickname',
+          },
+        ],
+      },
+    ],
   },
   //是否为密码类型
   {
@@ -187,14 +187,14 @@ export const formComponentsList = [
     component: 'el-switch',
     label: '是否为密码',
     activeText: '是',
-    inactiveText: '否'
+    inactiveText: '否',
   },
   //输入的最大长度-1为不限制长度
   {
     key: 'maxlength',
     component: 'el-input-number',
     label: '最大长度',
-    tips: '输入的最大长度-1为不限制长度'
+    tips: '输入的最大长度-1为不限制长度',
   },
   //自动获取焦点
   {
@@ -202,7 +202,7 @@ export const formComponentsList = [
     component: 'el-switch',
     label: '自动获取焦点',
     activeText: '是',
-    inactiveText: '否'
+    inactiveText: '否',
   },
   {
     key: 'confirmType',
@@ -214,43 +214,43 @@ export const formComponentsList = [
         optionList: [
           {
             label: '发送',
-            value: 'send'
+            value: 'send',
           },
           {
             label: '搜索',
-            value: 'search'
+            value: 'search',
           },
           {
             label: '下一个',
-            value: 'next'
+            value: 'next',
           },
           {
             label: '前往',
-            value: 'go'
+            value: 'go',
           },
           {
             label: '完成',
-            value: 'done'
-          }
-        ]
-      }
-    ]
+            value: 'done',
+          },
+        ],
+      },
+    ],
   },
   {
     key: 'start',
     component: 'a-date',
-    label: '开始时间'
+    label: '开始时间',
   },
   {
     key: 'end',
     component: 'a-date',
-    label: '结束时间'
-  }
+    label: '结束时间',
+  },
 ]
 // 配置表单
 export const formComponents = Object.fromEntries(
   formComponentsList.map((elem, index) => {
     elem.index = index
     return [elem.key, elem]
-  })
+  }),
 )

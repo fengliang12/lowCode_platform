@@ -4,7 +4,7 @@ const mapping = {
   left: 'margin-left',
   top: 'margin-top',
   bottom: 'margin-bottom',
-  right: 'margin-right'
+  right: 'margin-right',
 }
 
 export default (obj, ratio = 0.5) => {
@@ -43,7 +43,7 @@ export default (obj, ratio = 0.5) => {
   const justifyContentMap = {
     'flex-end': 'right',
     'flex-start': 'left',
-    center: 'center'
+    center: 'center',
   }
   if (obj.justifyContent) {
     style = `${style}textAlign:${justifyContentMap[obj.justifyContent]};`

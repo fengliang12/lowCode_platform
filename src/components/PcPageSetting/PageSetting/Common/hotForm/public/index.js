@@ -9,5 +9,5 @@ export default {
       console.log(name, value)
       app.component(name, defineAsyncComponent(value))
     })
-  }
+  },
 }

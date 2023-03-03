@@ -10,7 +10,7 @@
         ? {
             delay: data.carousel.interval,
             stopOnLastSlide: false,
-            disableOnInteraction: false
+            disableOnInteraction: false,
           }
         : false
     "
@@ -23,11 +23,11 @@
         return `<span class=${className} swiper-pagination-bullet-custom>${
           index + 1
         }</span>`
-      }
+      },
     }"
     :navigation="{
       nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
+      prevEl: '.swiper-button-prev',
     }"
     :allow-touch-move="true"
     :auto-height="true"

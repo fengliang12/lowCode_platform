@@ -18,7 +18,7 @@ export class ImageSettingData {
 export const imageConfigData = {
   mode: '',
   lazyLoad: '',
-  showMenuByLongpress: ''
+  showMenuByLongpress: '',
 }
 
 export const playConfigData = {
@@ -30,8 +30,8 @@ export const playConfigData = {
   playbackRate: 1,
   slider: {
     activeColor: 'rgba(110,108,108,1)',
-    backgroundColor: 'rgba(224,224,224,1)'
-  }
+    backgroundColor: 'rgba(224,224,224,1)',
+  },
 }
 
 /**
@@ -45,21 +45,21 @@ export const imageConfigFormList = [
     options: [
       {
         label: '只保证图片的短边能完全显示出来(aspectFill)',
-        value: 'aspectFill'
+        value: 'aspectFill',
       },
       {
         label: '宽度不变，高度自动变化(widthFix)',
-        value: 'widthFix'
+        value: 'widthFix',
       },
       {
         label: '高度不变，宽度自动变化(heightFix)',
-        value: 'heightFix'
+        value: 'heightFix',
       },
       {
         label: '使图片的长边能完全显示出来(aspectFit)',
-        value: 'aspectFit'
-      }
-    ]
+        value: 'aspectFit',
+      },
+    ],
   },
   {
     field: 'lazyLoad',
@@ -69,13 +69,13 @@ export const imageConfigFormList = [
     options: [
       {
         label: '关闭',
-        value: null
+        value: null,
       },
       {
         label: '开启',
-        value: true
-      }
-    ]
+        value: true,
+      },
+    ],
   },
   {
     field: 'showMenuByLongpress',
@@ -85,12 +85,12 @@ export const imageConfigFormList = [
     options: [
       {
         label: '关闭',
-        value: null
+        value: null,
       },
       {
         label: '开启',
-        value: true
-      }
-    ]
-  }
+        value: true,
+      },
+    ],
+  },
 ]

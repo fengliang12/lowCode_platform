@@ -25,7 +25,7 @@ const BLOB_CONTENT_TYPE = {
   mp3: 'audio/mpeg',
   webm: 'audio/webm',
   ogg: 'audio/ogg',
-  wav: 'audio/wav'
+  wav: 'audio/wav',
 }
 
 /**
@@ -47,8 +47,8 @@ const GET_SUFFIX = (str) => {
 const get_options = (siffix) => {
   return {
     blobHTTPHeaders: {
-      blobContentType: BLOB_CONTENT_TYPE[siffix] || 'application/octet-stream'
-    }
+      blobContentType: BLOB_CONTENT_TYPE[siffix] || 'application/octet-stream',
+    },
   }
 }
 

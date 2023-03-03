@@ -67,7 +67,7 @@ const currentEdit = ref(null)
 const dialogVisible = ref(false)
 const dialogInfo = ref({
   label: '',
-  vale: ''
+  vale: '',
 })
 const handleEditRow = (row) => {
   type.value = 'edit'
@@ -124,7 +124,7 @@ const onConfirmDialog = () => {
     const child = {
       ...dialogInfo.value,
       id: getId(),
-      pId: currentEdit.value ? currentEdit.value.id : 0
+      pId: currentEdit.value ? currentEdit.value.id : 0,
     }
 
     if (currentEdit.value) {
@@ -151,7 +151,7 @@ const onConfirmDialog = () => {
 const handleDeleteRow = (row) => {
   ElMessageBox.confirm('确认删除当前选项和子选项吗?', '提示', {
     cancelButtonText: '取消',
-    confirmButtonText: '确定'
+    confirmButtonText: '确定',
   }).then(() => {
     let delIndex = parentsIdMap.value[row.id].findIndex((i) => i.id === row.id)
     parentsIdMap.value[row.id].splice(delIndex, 1)
@@ -170,7 +170,7 @@ const closeDialog = () => {
   currentEdit.value = null
   dialogInfo.value = {
     label: '',
-    value: ''
+    value: '',
   }
 }
 </script>

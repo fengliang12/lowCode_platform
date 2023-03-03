@@ -125,7 +125,7 @@ const props = defineProps(['modelValue'])
 const carouselList = computed(() => {
   return pageSetupStore.itemsMap?.values
     ? Array.from(pageSetupStore.itemsMap.values()).filter(
-        (elem) => elem.moduleType === 'carousel'
+        (elem) => elem.moduleType === 'carousel',
       )
     : []
 })
@@ -144,14 +144,14 @@ const dialog = ref({
   visible: false,
   item: null,
   type: '',
-  index: 0
+  index: 0,
 })
 const editStyle = (item, type, index) => {
   dialog.value = {
     visible: true,
     item: cloneDeep(item),
     type,
-    index
+    index,
   }
 }
 
@@ -175,8 +175,8 @@ const addStyle = (type) => {
       left: 0,
       top: 0,
       front: false,
-      flex: false
-    })
+      flex: false,
+    }),
   )
 }
 
@@ -194,8 +194,8 @@ watch(
     }
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
 </script>
 <style lang="scss" scoped></style>

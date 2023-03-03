@@ -9,7 +9,7 @@ import { ElMessageBox } from 'element-plus'
 export const UploadSuccessSetBoxInfo = (
   imageSetting,
   e,
-  showPageBoxSetting
+  showPageBoxSetting,
 ) => {
   const { height, width = 0 } = e.el
   if (width) {
@@ -31,7 +31,7 @@ export const UploadSuccessSetBoxInfo = (
 export const handleUploadSuccessInfo = (
   imageSetting,
   e,
-  showPageBoxSetting
+  showPageBoxSetting,
 ) => {
   //设置宽高比
   if (e.ratio) {
@@ -42,7 +42,7 @@ export const handleUploadSuccessInfo = (
     ElMessageBox.confirm('是否替换首针图?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
-      type: 'warning'
+      type: 'warning',
     }).then(() => {
       imageSetting.firstFrameVideo = e.firstFrameVideo
     })

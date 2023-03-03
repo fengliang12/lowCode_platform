@@ -21,7 +21,7 @@ export class moduleData {
     title = '',
     moduleType = 'common',
     width = 750,
-    height = 200
+    height = 200,
   } = {}) {
     this.code = code //编号
     this.title = title //标题
@@ -58,7 +58,7 @@ export class moduleData {
     //页面值
     this.pageValue = ['text', 'common', 'slot'].includes(moduleType)
       ? new pageValueData({
-          valueType: moduleType === 'common' ? 'pageData' : 'custom'
+          valueType: moduleType === 'common' ? 'pageData' : 'custom',
         })
       : null
 
@@ -80,7 +80,7 @@ export const setModule = ({ moduleType, width = 750, height = 200 } = {}) => {
     code,
     width,
     height,
-    title: `${componentsMapping[moduleType].name}_${code}`
+    title: `${componentsMapping[moduleType].name}_${code}`,
   })
   return data
 }

@@ -8,14 +8,14 @@ export const checkFile = (fileValue) => {
     return 'video'
   } else if (
     /(.*)\.(jpg|JPG|bmp|BMP|mpg|MPG|tis|TIS|gif|jpeg|png|PNG|GIF|webp)$/.test(
-      fileValueSuffix
+      fileValueSuffix,
     )
   ) {
     //根据后缀，判断是否符合图片格式
     return 'image'
   } else if (
     /(.*)\.(mp3|MP3|ogg|OGG|wav|WAV|midi|MIDI|wma|WMA|mpeg|MPEG)$/.test(
-      fileValueSuffix
+      fileValueSuffix,
     )
   ) {
     //根据后缀，判断是否符合音频格式

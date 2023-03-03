@@ -10,5 +10,5 @@ export default new IndexDBWrapper(dbName, version, {
       // 创建表
       db.createObjectStore(storeName, { keyPath: 'id' })
     }
-  }
+  },
 })

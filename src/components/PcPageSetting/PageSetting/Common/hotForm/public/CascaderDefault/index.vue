@@ -18,12 +18,12 @@ import SetData from '../../../setData/index.vue'
 defineProps({
   modelValue: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   labelMap: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 })
 </script>
 <style lang="scss" scoped></style>

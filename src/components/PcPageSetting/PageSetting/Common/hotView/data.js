@@ -13,7 +13,7 @@ export default class {
     this.sort = 1 // 排序值热区层级
     this.pageShowData = {
       showType: 'text', //文本或图片 text/image
-      pageValue: new pageValueData()
+      pageValue: new pageValueData(),
     }
     this.formData = null
     this.pageStyle = null
@@ -23,10 +23,10 @@ export default class {
 export const hotTypeList = [
   {
     value: 'common',
-    label: '普通'
+    label: '普通',
   },
   {
     value: 'form',
-    label: '表单'
-  }
+    label: '表单',
+  },
 ]
