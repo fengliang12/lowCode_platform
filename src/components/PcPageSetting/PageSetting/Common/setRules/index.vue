@@ -36,7 +36,7 @@
               <i
                 @click="addRule(index + 1)"
                 class="el-icon-circle-plus-outline icon"
-                style="color: #409eff"
+                style="color: #409eff;"
               />
             </el-tooltip>
           </div>
@@ -45,7 +45,7 @@
               <i
                 @click="delRule(index)"
                 class="el-icon-remove-outline icon"
-                style="color: #f56c6c"
+                style="color: #f56c6c;"
               />
             </el-tooltip>
           </div>

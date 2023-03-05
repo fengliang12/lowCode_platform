@@ -28,7 +28,7 @@
     <!-- 相对日期 -->
     <el-input-number
       class="mr10"
-      style="width: 200px"
+      style="width: 200px;"
       v-if="value.type === 'relative'"
       v-model="value.value"
       placeholder="输入自定义内容"

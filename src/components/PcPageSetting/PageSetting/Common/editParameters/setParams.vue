@@ -12,7 +12,7 @@
       row-key="id"
       :tree-props="{ children: 'child', hasChildren: 'hasChildren' }"
       :border="true"
-      style="width: 100%; margin-bottom: 20px"
+      style=" margin-bottom: 20px;width: 100%;"
     >
       <!-- 键值(key) -->
       <el-table-column label="键值(key)" prop="key" min-width="300px">

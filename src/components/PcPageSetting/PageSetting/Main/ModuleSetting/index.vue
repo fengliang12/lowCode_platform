@@ -272,6 +272,7 @@ const handleClick = (tab, event) => {
   overflow-y: scroll;
   height: calc(100vh - 200px);
 }
+
 :deep(.el-tabs__content::-webkit-scrollbar) {
   display: none !important;
 }

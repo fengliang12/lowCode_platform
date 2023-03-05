@@ -4,7 +4,7 @@
       :gutter="10"
       justify="space-between"
       align="middle"
-      style="width: 100%"
+      style="width: 100%;"
     >
       <el-col :xs="0" :sm="16" :md="16" :lg="18" :xl="18">
         <!-- 面包屑 -->

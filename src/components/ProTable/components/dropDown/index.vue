@@ -63,9 +63,9 @@ const click = () => {
 </script>
 <style scoped>
 .example-showcase .el-dropdown-link {
-  cursor: pointer;
-  color: var(--el-color-primary);
   display: flex;
   align-items: center;
+  color: var(--el-color-primary);
+  cursor: pointer;
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="show_file">
     <template v-if="src">
       <video v-if="checkFile(src) === 'video'" :src="src" class="video-box" />
-      <img v-else :src="src" style="width: 100%" alt class="avatar" />
+      <img v-else :src="src" style="width: 100%;" alt class="avatar" />
     </template>
     <div class="el-upload-list__item-actions">
       <!-- 预览 -->

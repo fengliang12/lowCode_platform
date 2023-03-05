@@ -20,10 +20,7 @@ import type { UploadProps } from 'element-plus'
 
 const imageUrl = ref('')
 
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile,
-) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (uploadFile) => {
   imageUrl.value = URL.createObjectURL(uploadFile.raw!)
 }
 
@@ -41,20 +38,20 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
 <style scoped>
 .avatar-uploader .avatar {
+  display: block;
   width: 178px;
   height: 178px;
-  display: block;
 }
 </style>
 
 <style>
 .avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
   transition: var(--el-transition-duration-fast);
+  cursor: pointer;
 }
 
 .avatar-uploader .el-upload:hover {
@@ -62,10 +59,10 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 
 .el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
   width: 178px;
   height: 178px;
+  font-size: 28px;
   text-align: center;
+  color: #8c939d;
 }
 </style>

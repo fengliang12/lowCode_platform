@@ -30,7 +30,7 @@
       <div
         v-for="(item, index) in modelValue.indicatorStyle"
         :key="index"
-        style="width: 100%"
+        style="width: 100%;"
         class="flex alignItems"
       >
         <div v-if="index === 0">指示点默认样式</div>
@@ -70,7 +70,7 @@
       <div
         v-for="(item, index) in modelValue.indicatorActiveStyle"
         :key="index"
-        style="width: 100%"
+        style="width: 100%;"
         class="flex alignItems"
       >
         <div v-if="index === 0">指示点选中样式</div>
@@ -96,7 +96,7 @@
   </el-form>
 
   <el-dialog title="样式" v-model="dialog.visible">
-    <el-form label-width="100px" label-position="right" style="width: 100%">
+    <el-form label-width="100px" label-position="right" style="width: 100%;">
       <StyleSetting
         v-model="dialog.item"
         :font="false"
