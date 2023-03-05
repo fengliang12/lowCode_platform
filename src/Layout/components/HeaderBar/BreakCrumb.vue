@@ -13,10 +13,8 @@
 <script setup lang="ts">
 import { Ref, ref, watch } from 'vue'
 import { RouteLocationMatched, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
-const { t } = useI18n()
 
 const breakCrumb: Ref<RouteLocationMatched[]> = ref([])
 

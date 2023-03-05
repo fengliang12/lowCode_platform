@@ -3,6 +3,7 @@
     <el-tab-pane label="基础配置" name="first">
       <BasicConfig
         :ref="(el) => setItemRef(el, 'first')"
+        v-model:active-name="activeName"
         v-model="pageFormData"
       ></BasicConfig>
     </el-tab-pane>
@@ -85,8 +86,16 @@ const handlePageData = (data, initData) => {
 watch(
   () => props.detail,
   (val) => {
-    pageFormData.value = handlePageData(val, initPageData())
+    pageFormData.value = handlePageData(cloneDeep(val), initPageData())
     pageSetupStore.setPageNewParams(val.params)
+  },
+)
+
+watch(
+  () => pageFormData.value.title,
+  (val) => {
+    if (pageFormData.value.customHeader) return
+    pageFormData.value.navigationBar.title = val
   },
 )
 
@@ -114,13 +123,15 @@ const setItemRef = (el, key) => {
   }
 }
 
+/**
+ * 每个tab栏离开前
+ */
 const beforeLeave = async (activeName) => {
   const arr = ['first', 'end']
   const index = arr.indexOf(activeName)
   const checkArr = arr.slice(0, index)
 
   let promiseList = checkArr.map((item, index) => {
-    console.log(refObject[item])
     // 多个ref操作dom元素
     return refObject[item]
       .next({

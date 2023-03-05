@@ -1,13 +1,12 @@
 <template>
   <div>
-    <el-link disabled type="primary"> 参数以apiPath0示意，可多个 </el-link>
-    <el-button
-      type="warning"
-      style="float: right; margin-bottom: 10px"
-      @click="addChild('paramList', modelValue)"
-    >
-      新增参数
-    </el-button>
+    <div class="box-content">
+      <el-link disabled type="primary"> 参数以apiPath0示意，可多个 </el-link>
+      <el-button class="add-btn" @click="addChild('paramList', modelValue)">
+        新增参数
+      </el-button>
+    </div>
+
     <el-table
       :data="modelValue"
       row-key="id"
@@ -26,7 +25,6 @@
           ></el-input>
         </template>
       </el-table-column>
-
       <!-- 页面值 -->
       <el-table-column
         label="页面值(pageValue)"
@@ -40,7 +38,12 @@
           ></SetData>
         </template>
       </el-table-column>
-
+      <!-- 校验规则 -->
+      <el-table-column label="校验规则" min-width="400px" v-if="hideRules">
+        <template v-slot="scope">
+          <SetRules v-model="scope.row.rules"></SetRules>
+        </template>
+      </el-table-column>
       <!-- 操作 -->
       <el-table-column
         label="操作"
@@ -65,18 +68,17 @@
           </el-button>
         </template>
       </el-table-column>
-
-      <!-- 校验规则 -->
-      <el-table-column label="校验规则" min-width="400px" v-if="hideRules">
-        <template v-slot="scope">
-          <SetRules v-model="scope.row.rules"></SetRules>
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script setup>
+// PageApiInfoParams {
+//   key (string, optional): 接口key ,
+//   pageValue (PageValue, optional): 页面值 ,
+//   rules (Array[PageApiRule], optional): 页面接口路由
+//   child (Array[PageApiInfoParams], optional): 子类
+// }
 import { watch, reactive } from 'vue'
 import SetData from '../setData/index.vue'
 import SetRules from '../setRules/index.vue'
@@ -153,20 +155,29 @@ const deleteChild = (row) => {
   }
 
   if (idMapParent[row.id]?.child?.length) {
-    idMapParent[row.id].child.splice(
-      idMapParent[row.id].child.findIndex((elem) => elem.id === row.id),
-      1,
+    let index = idMapParent[row.id].child.findIndex(
+      (elem) => elem.id === row.id,
     )
+    idMapParent[row.id].child.splice(index, 1)
   } else if (props.modelValue.length) {
     props.modelValue.splice(row.id - 1, 1)
   }
-
   delete idMapParent[row.id]
   setIdMapParent()
 }
 </script>
 
 <style lang="scss" scoped>
+.box-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .add-btn {
+    margin-left: 10px;
+  }
+}
 :deep(.el-table .cell) {
   display: flex;
   align-items: center;

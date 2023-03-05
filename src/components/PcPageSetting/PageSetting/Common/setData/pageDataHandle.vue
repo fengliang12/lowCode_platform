@@ -51,6 +51,11 @@
 </template>
 
 <script setup>
+// PageValueHandle {
+//   key (string, optional): key ,
+//   method (string, optional): 方法 ,
+//   pageValue (PageValue, optional): 页面 key Word
+// }
 import { cloneDeep } from 'lodash'
 import { HandleData } from './common/handleData'
 import { methodList } from './common/methodList'

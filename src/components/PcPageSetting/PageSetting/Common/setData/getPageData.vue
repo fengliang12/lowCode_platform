@@ -39,8 +39,8 @@
         :content="`切换${switchCustom ? '选择' : '手动'}`"
         placement="top-start"
       >
-        <el-icon style="margin-right: 10px">
-          <Switch :size="24" @click="switchCustom = !switchCustom" />
+        <el-icon :size="16" style="margin-right: 10px">
+          <Switch @click="switchCustom = !switchCustom" />
         </el-icon>
       </el-tooltip>
       <el-tooltip
@@ -49,9 +49,8 @@
         content="数据编辑"
         placement="top-start"
       >
-        <el-icon v-if="showHandle"
+        <el-icon :size="16" v-if="showHandle"
           ><EditPen
-            :size="24"
             @click="editHandle"
             :color="handleData && handleData.length ? '#000000' : '#bbbbbb'"
         /></el-icon>

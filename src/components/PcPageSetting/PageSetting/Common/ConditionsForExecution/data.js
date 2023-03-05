@@ -1,4 +1,14 @@
 import { pageValueData } from '../setData/data'
+
+// ConditionsForExecution {
+//   child (Array[ConditionsForExecution], optional): 子集 ,
+//   content (PageValue, optional): 比较值 ,
+//   execution (string, optional): 判断条件 = < > != = ,
+//   interrupt (boolean, optional): 选择 不满足条件时是否中断后面所有事件 ,
+//   trueInterrupt (boolean, optional): 满足条件中断条件 ,
+//   type (string, optional): and or ,
+//   value (PageValue, optional): 取值
+// }
 export class ConditionsData {
   constructor({
     child = [],

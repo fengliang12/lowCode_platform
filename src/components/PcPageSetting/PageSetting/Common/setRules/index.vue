@@ -32,14 +32,22 @@
         </div>
         <div class="icon-box">
           <div class="mb10">
-            <el-button type="primary" @click="addRule(index + 1)"
-              >新增</el-button
-            >
+            <el-tooltip effect="dark" content="新增" placement="top">
+              <i
+                @click="addRule(index + 1)"
+                class="el-icon-circle-plus-outline icon"
+                style="color: #409eff"
+              />
+            </el-tooltip>
           </div>
           <div>
-            <el-button type="success" @click="deleteRule(index)"
-              >删除</el-button
-            >
+            <el-tooltip effect="dark" content="删除" placement="top">
+              <i
+                @click="delRule(index)"
+                class="el-icon-remove-outline icon"
+                style="color: #f56c6c"
+              />
+            </el-tooltip>
           </div>
         </div>
       </div>
@@ -51,10 +59,15 @@
 </template>
 
 <script setup>
+// PageApiRule {
+//   message (string, optional): 消息 ,
+//   required (boolean, optional): 是否请求 ,
+//   type (string, optional): 类型
+// }
 import { computed } from 'vue'
 
-const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
+const props = defineProps(['modelValue'])
 const rules = computed({
   get() {
     if (!props.modelValue) {
@@ -89,46 +102,11 @@ const addRule = (index) => {
  * 删除规则
  * @param {*} index
  */
-const deleteRule = (index) => {
+const delRule = (index) => {
   rules.value.splice(index, 1)
 }
 </script>
 
 <style lang="scss" scoped>
-.rules_content {
-  display: flex;
-  flex-direction: column;
-}
-.w200 {
-  width: 200px;
-}
-.w100 {
-  width: 50px;
-  text-align: right;
-}
-.vhCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mb10 {
-  margin-bottom: 10px;
-}
-
-.item-box {
-  display: flex;
-  align-items: center;
-}
-.item-box + .item-box {
-  padding-top: 10px;
-  border-top: 1px solid #ddd;
-}
-.icon-box {
-  margin-left: 10px;
-  .icon {
-    font-size: 24px;
-    cursor: pointer;
-  }
-}
+@import './index.scss';
 </style>

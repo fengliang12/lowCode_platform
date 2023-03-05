@@ -2,7 +2,7 @@
   <div>
     <FormCreate
       v-model="data.value"
-      :form-config="data.formConfig"
+      :formConfig="data.formConfig"
       :formList="data.formList"
       :options="data.options"
     />

@@ -70,8 +70,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { usePageSetupStore } from '@/store'
 
 defineProps(['modelValue'])

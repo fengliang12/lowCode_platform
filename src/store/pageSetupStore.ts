@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import api from '@/api/axios.js'
 import getters from './getters'
 import { useRouter } from 'vue-router'
 import bus from '@/utils/bus'

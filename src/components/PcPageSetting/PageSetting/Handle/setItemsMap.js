@@ -1,6 +1,7 @@
 import handleModule from './handleModule.js'
 
 //设置itemsMap数据
+//遍历pageSetting的moduleSetting
 const setItemsMap = (pageSetting, set = new Map(), opt = 'set') => {
   handleModule(pageSetting, ({ data, parents }) => {
     const code = data.code || data.id

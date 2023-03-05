@@ -230,6 +230,7 @@ const judge1 = (data) => {
     judgeObj[data.execution] || data.execution
   }${handlePageValue(data.content)}`
 }
+
 /**
  * 根据值生产结果
  */
@@ -248,6 +249,7 @@ const judge = (value) => {
   }
   return ''
 }
+
 /**
  * 条件结果显示
  */

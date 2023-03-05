@@ -3,7 +3,7 @@
     <div class="mb10 code">
       code : <span>{{ valueData?.code }}</span>
     </div>
-    <FormCreate v-model="valueData" :formItemList="formItemList"></FormCreate>
+    <FormCreate v-model="valueData" :form-list="formItemList"></FormCreate>
     <el-divider>限制条件</el-divider>
     <el-form-item label="组件有效期" prop="from">
       <el-date-picker
@@ -138,6 +138,6 @@ const editParametersChange = (paramList) => {
 
 <style lang="scss" scoped>
 .code {
-  font-size: 18px;
+  font-size: 16px;
 }
 </style>

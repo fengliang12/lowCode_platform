@@ -4,7 +4,7 @@
     <div class="flex">
       <FormCreate
         v-model="searchValue"
-        :formItemList="searchCheckedList"
+        :formList="searchCheckedList"
         :options="searchFormOptions"
         :formConfig="{
           inline: true,

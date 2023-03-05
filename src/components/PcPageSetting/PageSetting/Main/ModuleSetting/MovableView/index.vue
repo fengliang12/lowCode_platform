@@ -1,5 +1,5 @@
 <template>
-  <FormCreate v-model="valueData" :formItemList="formItemList"></FormCreate>
+  <FormCreate v-model="valueData" :formList="formItemList"></FormCreate>
 </template>
 
 <script setup>

@@ -43,10 +43,10 @@
           <el-input v-model="dialogInfo.value" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template v-slot:footer>
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="onConfirmDialog">确 定</el-button>
-      </div>
+      </template>
     </el-dialog>
   </el-row>
 </template>

@@ -1,4 +1,22 @@
 import { ImageSettingData } from '../fissionImage/data'
+
+// PageSetupHotOperation {
+//   apiInfo (PageApiInfo, optional): API请求 ,
+//   child (Array[PageSetupHotOperation], optional),
+//   conditionsForExecution (ConditionsForExecution, optional): 执行条件 ,
+//   content (string, optional): 内容 ,
+//   imageSetting (ImageSetting, optional): 图片配置 ,
+//   linkMiniAppId (string, optional): 关联小程序AppId ,
+//   moduleOperation (string, optional): 组件操作 ,
+//   name (string, optional): 名称 ,
+//   operationType (string, optional): 操作类型 ,
+//   operationUrl (string, optional): 可以放 弹窗url、小程序url、页面配置编号 ,
+//   pageValue (PageValue, optional): 页面 key Word ,
+//   params (Array[PageApiInfoParams], optional): 请求数据 ,
+//   subscribeNotices (Array[SubscribeSetting], optional): 微信订阅消息列表 ,
+//   syncEvent (PageSyncEvent, optional)
+// }
+
 export class EventList extends Array {
   constructor(list = []) {
     super()

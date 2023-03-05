@@ -1,8 +1,9 @@
 declare namespace FormCreate {
   interface FormConfigProps {
-    inline: boolean
-    gutter: string
-    span: string
+    inline?: boolean
+    gutter?: string
+    span?: string
+    [e: string]: any
   }
 
   type FormItemListType = Array<FormItemType>

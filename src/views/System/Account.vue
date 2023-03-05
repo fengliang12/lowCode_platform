@@ -133,15 +133,7 @@ import {
 import { getAllRoles } from '@/api/system/role'
 import 'element-plus/es/components/message-box/style/css'
 import 'element-plus/es/components/notification/style/css'
-import {
-  ComponentInternalInstance,
-  computed,
-  getCurrentInstance,
-  onMounted,
-  reactive,
-  ref,
-  Ref,
-} from 'vue'
+import { computed, onMounted, reactive, ref, Ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { isEmpty } from 'lodash-es'
 
@@ -264,11 +256,6 @@ const toEditUser = (selecteUser: object) => {
 
   state.formTitle = '修改用户'
   state.userFormDialogVisible = true
-}
-
-interface User {
-  id: number
-  status: boolean
 }
 
 // 重设密码

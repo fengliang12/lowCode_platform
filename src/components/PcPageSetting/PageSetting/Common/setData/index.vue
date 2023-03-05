@@ -7,7 +7,7 @@
     <slot name="table"></slot>
     <el-select
       v-model="pageValue.valueType"
-      class="m-2"
+      class="mr10"
       placeholder="请选择类型"
       @change="valueTypeChange"
     >
@@ -59,17 +59,17 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import GetPageData from './getPageData.vue'
-import { pageValueData } from './data'
-import { valueType } from './common/pageData'
-
 // PageValue {
 //   value:string;
 //   defaultValue:string;
 //   valueType:string;
 //   handle:Array[PageValueHandle];
 // }
+
+import { computed, ref } from 'vue'
+import GetPageData from './getPageData.vue'
+import { pageValueData } from './data'
+import { valueType } from './common/pageData'
 
 const switchCustom = ref(false)
 const props = defineProps({

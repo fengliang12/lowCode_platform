@@ -18,7 +18,6 @@ import indexedDB, { storeName } from './utils/indexedDB'
 
 //公共数据
 const pageSetupStore = usePageSetupStore()
-//路由信息
 const router = useRouter()
 const route = useRoute()
 
@@ -69,12 +68,28 @@ const getPageDetail = async () => {
 }
 
 /**
+ * 弹窗提示是否需要保存数据
+ */
+const savePageSetting = () => {
+  ElMessageBox.confirm('需要保存当前数据后再跳转吗？', '提示', {
+    confirmButtonText: '保存',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(() => {
+      save()
+    })
+    .catch(() => {
+      ElMessage('已取消')
+    })
+}
+
+/**
  * 点击保存
  */
 const pageSettingRef = ref(null)
 const save = async () => {
   const res = await pageSettingRef.value.save().catch(() => {})
-  console.log(res)
   if (!res) return
 
   //更新还是创建
@@ -140,23 +155,6 @@ const saveIndexedDB = async (pageList) => {
       ],
     })
   }
-}
-
-/**
- * 弹窗提示是否需要保存数据
- */
-const savePageSetting = () => {
-  ElMessageBox.confirm('需要保存当前数据后再跳转吗？', '提示', {
-    confirmButtonText: '保存',
-    cancelButtonText: '取消',
-    type: 'warning',
-  })
-    .then(() => {
-      save()
-    })
-    .catch(() => {
-      ElMessage('已取消')
-    })
 }
 
 /**

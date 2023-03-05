@@ -36,12 +36,13 @@ const map = [
             return data
           }
         })
-      }
-      elem.formatter = (row) => {
-        const data = elem.options.find((child) => {
-          return child.value == row[elem.field]
-        })?.label
-        return data
+      } else {
+        elem.formatter = (row) => {
+          const data = elem.options.find((child) => {
+            return child.value == row[elem.field]
+          })?.label
+          return data
+        }
       }
       return elem
     },

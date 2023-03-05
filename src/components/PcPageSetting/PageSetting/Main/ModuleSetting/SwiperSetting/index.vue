@@ -1,5 +1,5 @@
 <template>
-  <FormCreate v-model="swiperData" :formItemList="formItemList" />
+  <FormCreate v-model="swiperData" :formList="formItemList" />
 </template>
 
 <script setup>

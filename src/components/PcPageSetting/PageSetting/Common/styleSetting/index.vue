@@ -8,10 +8,10 @@
 </template>
 
 <script setup>
-import { watch, computed } from 'vue'
+import { watch, computed, reactive } from 'vue'
 import { formList } from './data'
 import FormCreate from '@/components/FormCreate/index.vue'
-
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -42,7 +42,6 @@ const props = defineProps({
     default: 0,
   },
 })
-const emit = defineEmits(['update:modelValue'])
 
 /**
  * 初始化styleData
@@ -59,25 +58,25 @@ const styleData = computed({
 /**
  * 获取动态表单配置列表
  */
-const componentsList = computed(() => {
-  return formList({ ratio: props.ratio, value: styleData.value })
-})
+const componentsList = reactive(
+  formList({ ratio: props.ratio, value: styleData.value }),
+)
 const formItemList = computed(() => {
   let arr = []
   if (props.box) {
-    arr = arr.concat(componentsList.value.boxList)
+    arr = arr.concat(componentsList.boxList)
   }
   if (props.bg) {
-    arr = arr.concat(componentsList.value.backgroundList)
+    arr = arr.concat(componentsList.backgroundList)
   }
   if (props.font) {
-    arr = arr.concat(componentsList.value.fontList)
+    arr = arr.concat(componentsList.fontList)
   }
   if (props.flex) {
-    arr = arr.concat(componentsList.value.flexList)
+    arr = arr.concat(componentsList.flexList)
   }
   if (props.custom) {
-    arr = arr.concat(componentsList.value.customList)
+    arr = arr.concat(componentsList.customList)
   }
   return arr
 })
@@ -90,7 +89,7 @@ watch(
   () => props.ratio,
   (val) => {
     if (!val) return
-    componentsList.value.boxList.forEach((item) => {
+    componentsList.boxList.forEach((item) => {
       if (item.key === 'width') {
         item.button =
           styleData.value.hideAutoRatio === null ? '根据高度设置' : ''
@@ -100,14 +99,14 @@ watch(
           styleData.value.hideAutoRatio === null ? '根据宽度设置' : ''
       }
     })
-    const hideAutoRatioIndex = componentsList.value.boxList.findIndex(
+    const hideAutoRatioIndex = componentsList.boxList.findIndex(
       (elem) => elem.key === 'hideAutoRatio',
     )
-    const findIndex = componentsList.value.boxList.findIndex(
+    const findIndex = componentsList.boxList.findIndex(
       (elem) => elem.key === 'width',
     )
     if (findIndex !== -1 && hideAutoRatioIndex === -1) {
-      componentsList.value.boxList.push({
+      componentsList.boxList.push({
         divider: '自动比例',
         field: 'hideAutoRatio',
         type: 'el-select',
@@ -136,7 +135,7 @@ watch(
 watch(
   () => styleData.value.hideAutoRatio,
   (val) => {
-    componentsList.value.boxList = componentsList.value.boxList.map((item) => {
+    componentsList.boxList = componentsList.boxList.map((item) => {
       if (item.key === 'width') {
         item.button = props.ratio && val === null ? '根据宽度设置' : ''
       }

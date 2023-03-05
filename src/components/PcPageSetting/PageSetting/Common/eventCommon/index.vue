@@ -22,6 +22,15 @@
               <el-icon class="ml10 pointer"><Delete /></el-icon>
             </template>
           </el-popconfirm>
+          <el-popconfirm
+            title="设置监听数据"
+            v-if="item.triggerType === 'dataWatch'"
+            @confirm="showWatchValueList(item)"
+          >
+            <template #reference>
+              <el-icon class="ml10 pointer"><DocumentCopy /></el-icon>
+            </template>
+          </el-popconfirm>
           <el-popconfirm title="复制" @confirm="handleCopyEvent(item)">
             <template #reference>
               <el-icon class="ml10 pointer"><DocumentCopy /></el-icon>
@@ -48,15 +57,23 @@
       </el-select>
       <el-button class="ml10" @click="addTriggerType">新增触发类型</el-button>
     </div>
+    <!-- 编辑数据监听参数 -->
+    <WatchValueList @confirm="watchValueListChange" ref="watchValueListRef" />
   </el-form>
 </template>
 
 <script setup>
+// PageSetupOperationEvent {
+//   hotOperations (Array[PageSetupHotOperation], optional): 热区事件 ,
+//   triggerType (string, optional): 执行类型 点击执行 click; 显示执行 show; ,
+//   watchValueList (Array[string], optional): 监听值列表
+// }
 import { computed, ref } from 'vue'
 import { EventsData, triggerType } from './data'
 import SelectJumpType from '../selectJumpType/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+import WatchValueList from '../WatchValueList/index.vue'
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
@@ -140,6 +157,24 @@ const handleDeleteEvent = (index) => {
 }
 
 /**
+ * 点击监听事件按钮
+ */
+const watchValueListRef = ref(null)
+const currentIndex = ref(0)
+const showWatchValueList = (watchValueList, index) => {
+  currentIndex.value = index
+  watchValueListRef.value.show(watchValueList ?? [''])
+}
+
+/**
+ * 数据监听参数修改
+ * @param {*} e
+ */
+const watchValueListChange = (list) => {
+  eventData.value[currentIndex.value] = list
+}
+
+/**
  * 黏贴事件
  */
 const handlePasteEvent = (item) => {
@@ -155,9 +190,15 @@ const handlePasteEvent = (item) => {
       confirmButtonText: '确认',
       cancelButtonText: '取消',
     }).then(() => {
-      item.hotOperations = item.hotOperations.concat(copyData.hotOperations)
+      if (copyData.hotOperations.length) {
+        item.hotOperations = item.hotOperations.concat(copyData.hotOperations)
+      } else {
+        item.hotOperations.push(copyData)
+      }
     })
-  }).catch((err) => ElMessage.error(err))
+  }).catch((err) => {
+    ElMessage.error(err)
+  })
 }
 </script>
 <style lang="scss" scoped></style>

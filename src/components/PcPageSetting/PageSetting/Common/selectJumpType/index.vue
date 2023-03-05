@@ -123,6 +123,7 @@
           <!-- h5路径 -->
           <el-input
             v-if="element.operationType === 'jump_h5'"
+            class="ml10"
             v-model="element.operationUrl"
           ></el-input>
 
@@ -180,7 +181,7 @@
           /></el-icon>
           <!-- 删除 -->
           <el-icon class="ml10 pointer" @click.stop="handleDeleteEvent(index)"
-            ><DeleteFilled
+            ><Delete
           /></el-icon>
           <!-- 条件 -->
           <el-icon
@@ -194,7 +195,7 @@
             class="ml10 pointer"
             v-show="editParametersShow(element)"
             @click="showEditParameters(element, index)"
-            ><List :color="paramsHasValue(element) ? '#409eff' : '#000000'"
+            ><Postcard :color="paramsHasValue(element) ? '#409eff' : '#000000'"
           /></el-icon>
 
           <!-- 赋值 -->

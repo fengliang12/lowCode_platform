@@ -48,7 +48,7 @@
     <FormCreate
       v-if="showImageConfig"
       v-model="modelValue.imageConfig"
-      :formItemList="imageConfigFormList"
+      :formList="imageConfigFormList"
     ></FormCreate>
 
     <!-- 位置宽度配置 -->
