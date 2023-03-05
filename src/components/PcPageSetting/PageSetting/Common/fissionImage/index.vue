@@ -19,7 +19,7 @@
         v-model="modelValue.imgType"
         placeholder="请选择图片类型"
         size="small"
-        style="width: 110px;"
+        style="width: 110px"
       >
         <el-option label="普通图片" value="common" />
         <el-option label="热区" value="hot" />
@@ -87,7 +87,7 @@ import { imageConfigData, imageConfigFormList } from './data'
 
 const props = defineProps(['modelValue', 'showPageBoxSetting'])
 const emit = defineEmits(['success'])
-const formLabelWidth = inject('formLabelWidth', 100)
+const formLabelWidth = inject('formLabelWidth', 110)
 
 /**
  * 文件上传成功后的回调
