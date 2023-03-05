@@ -33,15 +33,15 @@ export const setParams = (obj) => {
       if (isObject(getObj[elem])) {
         params.push({
           key: elem,
-          child: setParams(getObj)
+          child: setParams(getObj),
         })
       } else {
         params.push({
           key: elem,
           pageValue: {
             valueType: 'custom',
-            value: getObj[elem]
-          }
+            value: getObj[elem],
+          },
         })
       }
     })

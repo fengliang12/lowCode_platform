@@ -36,6 +36,7 @@
         :scroll="true"
         :group="{ name: 'itxst', pull: false, put: true }"
         class="draggable_right_box"
+        :style="pageStyle"
         item-key="$index"
         @move="rightMove"
         @end="rightEnd"
@@ -65,13 +66,13 @@
         >页面编辑</el-button
       >
       <ModuleSetting
-        v-if="tabBoxSetting === 'mode'"
+        v-show="tabBoxSetting === 'mode'"
         v-model="pageSetupStore.items.value"
         :parents="pageSetupStore.items.parents"
       ></ModuleSetting>
 
       <PageFormSetting
-        v-if="tabBoxSetting === 'page'"
+        v-show="tabBoxSetting === 'page'"
         ref="pageFormSettingRef"
         :detail="detail"
       ></PageFormSetting>
@@ -80,7 +81,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed, reactive } from 'vue'
+import { onMounted, ref, watch, computed } from 'vue'
 import componentsMapping from './CommonData/componentsMapping'
 import PageFormSetting from './Main/PageFormSetting/index.vue'
 import ModuleSetting from './Main/ModuleSetting/index.vue'
@@ -95,10 +96,12 @@ import { moduleData, setModule } from './data'
 import setItemsMap from './Handle/setItemsMap'
 import { cloneDeep } from 'lodash'
 import bus from '@/utils/bus.js'
+import handleStyle from './Handle/style'
 
 const pageSetupStore = usePageSetupStore()
 const formData = ref([])
 const tabBoxSetting = ref('page')
+const pageStyle = ref('')
 
 const props = defineProps({
   detail: {
@@ -106,6 +109,33 @@ const props = defineProps({
     default: () => ({}),
   },
 })
+
+watch(
+  () => props.detail.pageStyle,
+  (val) => {
+    let {
+      color,
+      fontSize,
+      fontWeight,
+      backgroundColor,
+      backgroundImage,
+      backgroundRepeat,
+      backgroundSize,
+    } = val
+    pageStyle.value = handleStyle({
+      color,
+      fontSize,
+      fontWeight,
+      backgroundColor,
+      backgroundImage,
+      backgroundRepeat,
+      backgroundSize,
+    })
+  },
+  {
+    deep: true,
+  },
+)
 
 /**
  * 左边列表的数据
@@ -165,32 +195,6 @@ watch(
     } else {
       tabBoxSetting.value = 'page'
     }
-  },
-)
-
-/**
- * 监听formData
- */
-const addItems = reactive({
-  index: 0,
-  data: null,
-})
-watch(
-  () => formData,
-  (newVal, oldVal) => {
-    if (newVal.length !== oldVal.length) {
-      let a = newVal.map((i) => JSON.stringify(i))
-      let b = oldVal.map((i) => JSON.stringify(i))
-      a.forEach((em, idx) => {
-        if (b.indexOf(em) === -1) {
-          addItems.index = idx
-        }
-      })
-      addItems.data = cloneDeep([newVal[addItems.index]])
-    }
-  },
-  {
-    deep: true,
   },
 )
 
@@ -256,6 +260,8 @@ const leftEnd = (e) => {
  * 点击左边上的菜单选项,添加到对应的组件中
  */
 const clickLeft = (moduleType) => {
+  let { width = 750, height = 200 } =
+    componentsMapping[moduleType].initData ?? {}
   if (
     !pageSetupStore.items?.value ||
     !componentsMapping[pageSetupStore.items?.value?.moduleType]?.isParent
@@ -265,6 +271,8 @@ const clickLeft = (moduleType) => {
       index: formData.value.length,
       moduleSettings: formData.value,
       moduleType: moduleType,
+      width,
+      height,
     })
   } else {
     ElMessageBox.confirm(
@@ -295,6 +303,8 @@ const clickLeft = (moduleType) => {
           index: formData.value.length,
           moduleSettings: formData.value,
           moduleType: moduleType,
+          width,
+          height,
         })
       })
   }
@@ -345,8 +355,9 @@ const rightMove = (e) => {
  * 右边移动结束
  * @param {*} e
  */
-const rightEnd = (e) => {
-  console.log('右边移动结束', e)
+const rightEnd = () => {
+  // 刷新el-tree
+  bus.emit('refreshElTree')
 }
 
 /**
@@ -354,7 +365,6 @@ const rightEnd = (e) => {
  */
 const setPageSetting = () => {
   pageSetupStore.setItems({ value: null })
-  tabBoxSetting.value = 'page'
 }
 
 /**

@@ -33,4 +33,5 @@ export default {
     wempower: 'empower',
     wresetPassWord: 'resetPassWord',
   },
+  frameSize: 'frameSize',
 }

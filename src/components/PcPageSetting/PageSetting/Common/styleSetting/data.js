@@ -7,7 +7,7 @@ export class styleSettingData {
     left = 0,
     top = 0,
     background = true,
-    front = true,
+    font = true,
     flex = true,
     box = true,
   } = {}) {
@@ -19,8 +19,8 @@ export class styleSettingData {
       this.backgroundSize = '100%'
     }
     // 字体
-    if (front) {
-      this.frontSize = 28
+    if (font) {
+      this.fontSize = 28
       this.fontWeight = null
       this.color = null
     }
@@ -74,15 +74,15 @@ export const formList = ({ ratio = 1, value }) => {
         options: [
           {
             //兼容老版本处理 relative 和 static状态交换
-            title: '静态定位(默认)',
+            label: '静态定位(默认)',
             value: 'relative',
           },
           {
-            title: '相对定位',
+            label: '相对定位',
             value: 'static',
           },
           {
-            title: '绝对定位',
+            label: '绝对定位',
             value: 'absolute',
           },
           {
@@ -90,7 +90,7 @@ export const formList = ({ ratio = 1, value }) => {
             value: 'fixed',
           },
           {
-            title: '粘性定位',
+            label: '粘性定位',
             value: 'sticky',
           },
         ],
@@ -190,23 +190,23 @@ export const formList = ({ ratio = 1, value }) => {
         },
         options: [
           {
-            title: '不重复(no-repeat)',
+            label: '不重复(no-repeat)',
             value: 'no-repeat',
           },
           {
-            title: '垂直和水平方向重复(repeat)',
+            label: '垂直和水平方向重复(repeat)',
             value: 'repeat',
           },
           {
-            title: '水平重复(repeat-x)',
+            label: '水平重复(repeat-x)',
             value: 'repeat-x',
           },
           {
-            title: '垂直重复(repeat-y)',
+            label: '垂直重复(repeat-y)',
             value: 'repeat-y',
           },
           {
-            title: '父元素继承(inherit)',
+            label: '父元素继承(inherit)',
             value: 'inherit',
           },
         ],
@@ -232,6 +232,7 @@ export const formList = ({ ratio = 1, value }) => {
         field: 'fontSize',
         type: 'el-input-number',
         title: '字体大小',
+        defaultValue: 28,
       },
       {
         field: 'fontWeight',
@@ -239,27 +240,27 @@ export const formList = ({ ratio = 1, value }) => {
         title: '字体粗细',
         options: [
           {
-            title: '默认值(normal)',
+            label: '默认值(normal)',
             value: 'normal',
           },
           {
-            title: '粗体(bold)',
+            label: '粗体(bold)',
             value: 'bold',
           },
           {
-            title: '更粗(bolder)',
+            label: '更粗(bolder)',
             value: 'bolder',
           },
           {
-            title: '更细(lighter)',
+            label: '更细(lighter)',
             value: 'lighter',
           },
           {
-            title: '100',
+            label: '100',
             value: '100',
           },
           {
-            title: '200',
+            label: '200',
             value: '200',
           },
           {
@@ -267,27 +268,27 @@ export const formList = ({ ratio = 1, value }) => {
             value: '300',
           },
           {
-            title: '400(同于 normal)',
+            label: '400(同于 normal)',
             value: '400',
           },
           {
-            title: '500',
+            label: '500',
             value: '500',
           },
           {
-            title: '600',
+            label: '600',
             value: '600',
           },
           {
-            title: '700( 等同于 bold)',
+            label: '700( 等同于 bold)',
             value: '700',
           },
           {
-            title: '800',
+            label: '800',
             value: '800',
           },
           {
-            title: '900',
+            label: '900',
             value: '900',
           },
         ],
@@ -296,21 +297,36 @@ export const formList = ({ ratio = 1, value }) => {
     //内容位置
     flexList: [
       {
+        field: 'flexDirection',
+        type: 'el-select',
+        title: '排列方向',
+        options: [
+          {
+            label: '水平',
+            value: 'row',
+          },
+          {
+            label: '垂直',
+            value: 'column',
+          },
+        ],
+      },
+      {
         divider: '内容位置',
         field: 'justifyContent',
         type: 'el-select',
         title: '水平方向',
         options: [
           {
-            title: '居左',
+            label: '居左',
             value: 'flex-start',
           },
           {
-            title: '居右',
+            label: '居右',
             value: 'flex-end',
           },
           {
-            title: '水平居中',
+            label: '水平居中',
             value: 'center',
           },
         ],
@@ -321,31 +337,16 @@ export const formList = ({ ratio = 1, value }) => {
         title: '竖直方向',
         options: [
           {
-            title: '顶部',
+            label: '顶部',
             value: 'flex-start',
           },
           {
-            title: '底部',
+            label: '底部',
             value: 'flex-end',
           },
           {
-            title: '垂直居中',
+            label: '垂直居中',
             value: 'center',
-          },
-        ],
-      },
-      {
-        field: 'flexDirection',
-        type: 'el-select',
-        title: '排列方向',
-        options: [
-          {
-            title: '水平',
-            value: 'row',
-          },
-          {
-            title: '垂直',
-            value: 'column',
           },
         ],
       },

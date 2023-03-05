@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 import { reactive } from 'vue'
 import { usePageSetupStore } from '@/store'
 
@@ -83,12 +83,12 @@ const pageSetupStore = usePageSetupStore()
 const lineOptions = reactive([
   {
     label: '线上',
-    value: 'onLine'
+    value: 'onLine',
   },
   {
     label: '线下',
-    value: 'offLine'
-  }
+    value: 'offLine',
+  },
 ])
 
 /**
@@ -97,12 +97,12 @@ const lineOptions = reactive([
 const gradeStatusList = reactive([
   {
     label: '升级',
-    value: 'upgrade'
+    value: 'upgrade',
   },
   {
     label: '降级',
-    value: 'downgrade'
-  }
+    value: 'downgrade',
+  },
 ])
 
 /**

@@ -92,9 +92,10 @@
           ></el-input>
           <el-icon
             :size="30"
-            :color="shareParamsHasValue ? '#339900' : '#bbbbbb'"
+            :color="shareParamsHasValue ? '#409eff' : '#bbbbbb'"
+            class="ml10"
             @click="showEditParameters('share')"
-            ><List
+            ><Postcard
           /></el-icon>
         </el-form-item>
         <el-form-item label="分享图片：">
@@ -110,9 +111,9 @@
       <el-form-item label="页面参数">
         <el-icon
           :size="30"
-          :color="paramsHasValue ? '#339900' : '#bbbbbb'"
+          :color="paramsHasValue ? '#409eff' : '#bbbbbb'"
           @click="showEditParameters('page')"
-          ><List
+          ><Postcard
         /></el-icon>
       </el-form-item>
 
@@ -178,8 +179,12 @@ const editParameters = ref(null)
 const paramsType = ref('')
 const showEditParameters = (type) => {
   paramsType.value = type
+  let params =
+    type === 'page'
+      ? pageSetupStore?.pageNewParams
+      : props.modelValue?.shareSetting?.shareParams
   editParameters.value.show({
-    params: pageSetupStore?.pageNewParams || [],
+    params: params ?? [],
     type: 'multiLevel',
   })
 }
@@ -214,5 +219,9 @@ defineExpose({ next })
 <style lang="scss" scoped>
 .flex {
   display: flex;
+}
+
+:deep(.el-form-item__content) {
+  flex-wrap: nowrap;
 }
 </style>

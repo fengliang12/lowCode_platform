@@ -1,12 +1,12 @@
 <template>
-  <FormCreate v-model="navigationBarData" :formItemList="formItemList">
+  <FormCreate v-model="navigationBarData" :formList="formComponentsList">
   </FormCreate>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
 import FormCreate from '@/components/formCreate/index.vue'
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 import NavigationBar from './data'
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -20,7 +20,7 @@ const navigationBarData = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**
@@ -29,102 +29,80 @@ const navigationBarData = computed({
 const formComponentsList = reactive([
   {
     divider: '自定义导航',
-    key: 'show',
-    component: 'el-switch',
-    label: '显示标题栏'
+    field: 'show',
+    type: 'el-switch',
+    title: '显示标题栏',
   },
   {
-    key: 'back',
-    component: 'el-switch',
-    label: '是否返回'
+    field: 'back',
+    type: 'el-switch',
+    title: '是否返回',
   },
   {
-    key: 'title',
-    component: 'el-input',
-    label: '标题'
+    field: 'title',
+    type: 'el-input',
+    title: '标题',
   },
   {
-    key: 'titleColor',
-    component: 'el-color-picker',
-    label: '标题颜色',
+    field: 'titleColor',
+    type: 'el-color-picker',
+    title: '标题颜色',
     props: {
-      'show-alpha': true
-    }
+      'show-alpha': true,
+    },
   },
   {
-    key: 'titleImage',
-    component: 'upload-file',
-    label: '标题图片'
+    field: 'titleImage',
+    type: 'upload-file',
+    title: '标题图片',
   },
   {
-    key: 'backgroundColor',
-    component: 'el-color-picker',
-    label: '导航背景色',
+    field: 'backgroundColor',
+    type: 'el-color-picker',
+    title: '导航背景色',
     props: {
-      'show-alpha': true
-    }
+      'show-alpha': true,
+    },
   },
   {
-    key: 'backgroundImage',
-    component: 'upload-file',
-    label: '导航背景图'
+    field: 'backgroundImage',
+    type: 'upload-file',
+    title: '导航背景图',
   },
   {
-    key: 'fill',
-    component: 'el-switch',
-    label: '是否填充'
+    field: 'fill',
+    type: 'el-switch',
+    title: '是否填充',
   },
   {
-    key: 'statusBarColor',
-    component: 'el-select',
-    label: '状态栏颜色',
+    field: 'statusBarColor',
+    type: 'el-select',
+    title: '状态栏颜色',
     props: {
       clearable: true,
-      placeholder: '请选择'
+      placeholder: '请选择',
     },
-    child: [
+    options: [
       {
-        component: 'el-option',
-        optionList: [
-          {
-            value: '#000000',
-            label: '黑色'
-          },
-          {
-            value: '#ffffff',
-            label: '白色'
-          }
-        ]
-      }
-    ]
+        value: '#000000',
+        label: '黑色',
+      },
+      {
+        value: '#ffffff',
+        label: '白色',
+      },
+    ],
   },
   {
-    key: 'backgroundColorOpacity',
-    component: 'el-switch',
-    label: '滚动背景渐变'
+    field: 'backgroundColorOpacity',
+    type: 'el-switch',
+    title: '滚动背景渐变',
   },
   {
-    key: 'backgroundColorOpacityDistance',
-    component: 'el-input',
-    label: '滚动渐变距离'
-  }
+    field: 'backgroundColorOpacityDistance',
+    type: 'el-input',
+    title: '滚动渐变距离',
+  },
 ])
-
-/**
- * 处理FormComponentsList
- */
-const formItemList = computed(() => {
-  return formComponentsList.map((elem) => {
-    return {
-      type: elem.component,
-      field: elem.key,
-      title: elem.label,
-      ...elem,
-      options: elem?.child?.[0]?.optionList.length
-        ? elem?.child?.[0]?.optionList
-        : []
-    }
-  })
-})
 </script>
 <style lang="scss" scoped></style>

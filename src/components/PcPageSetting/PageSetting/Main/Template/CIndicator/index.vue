@@ -24,7 +24,7 @@ const pageSetupStore = usePageSetupStore()
 const swiperData = computed(() => {
   return pageSetupStore?.itemsMap?.value
     ? Array.from(pageSetupStore.itemsMap.values()).filter(
-        (elem) => elem.moduleType === props.data.relationSwiper
+        (elem) => elem.moduleType === props.data.relationSwiper,
       )?.moduleSettings
     : []
 })
@@ -40,17 +40,17 @@ watch(
       currentIndex.value = index
     })
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 /**
  * 样式
  */
 const style = computed(() =>
-  props.data?.indicatorStyle.map((item) => handleStyle(item))
+  props.data?.indicatorStyle.map((item) => handleStyle(item)),
 )
 const activeStyle = computed(() =>
-  props.data?.indicatorActiveStyle.map((item) => handleStyle(item))
+  props.data?.indicatorActiveStyle.map((item) => handleStyle(item)),
 )
 </script>
 <style lang="scss" scoped></style>

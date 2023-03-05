@@ -16,7 +16,7 @@
     </div>
 
     <!-- 预览效果 -->
-    <el-dialog :visible.sync="dialog.dialogVisible" append-to-body>
+    <el-dialog v-model:visible="dialog.dialogVisible" append-to-body>
       <video
         v-if="checkFile(dialog.dialogImageUrl) === 'video'"
         :src="dialog.dialogImageUrl"
@@ -39,7 +39,7 @@ const emit = defineEmits(['del', 'edit'])
  */
 const dialog = reactive({
   dialogVisible: false,
-  dialogImageUrl: ''
+  dialogImageUrl: '',
 })
 const handlePictureCardPreview = (url) => {
   dialog.dialogImageUrl = url

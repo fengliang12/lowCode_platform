@@ -1,38 +1,38 @@
 export default [
   {
     label: '会员中心页',
-    value: '/pages/index/index'
+    value: '/pages/index/index',
   },
   {
     label: '我的',
-    value: '/pages/center/center'
+    value: '/pages/center/center',
   },
   {
     label: '卡券中心',
-    value: '/pages/center/coupon/coupon'
+    value: '/pages/center/coupon/coupon',
   },
   {
     label: '积分商城',
-    value: '/pages/integral-mall/integral-mall'
+    value: '/pages/integral-mall/integral-mall',
   },
   {
     label: '积分历史',
-    value: '/pages/integral-history/index'
+    value: '/pages/integral-history/index',
   },
   {
     label: '兑礼记录',
-    value: '/subPages/exchange/history/index'
+    value: '/subPages/exchange/history/index',
   },
   {
     label: '跳转内嵌h5',
-    value: '/pages/webView/index'
+    value: '/pages/webView/index',
   },
   {
     label: '选择专属ba',
     children: [
       {
         label: '门店列表',
-        value: '/pages/ba/index'
+        value: '/pages/ba/index',
       },
       {
         label: 'ba列表',
@@ -44,10 +44,10 @@ export default [
             pageValue: {
               value: '',
               valueType: '',
-              defaultValue: ''
-            }
-          }
-        ]
+              defaultValue: '',
+            },
+          },
+        ],
       },
       {
         label: 'ba详情',
@@ -59,22 +59,22 @@ export default [
             pageValue: {
               value: 'api.getBaInfo.data.userId',
               valueType: 'pageData',
-              defaultValue: ''
-            }
-          }
-        ]
-      }
-    ]
+              defaultValue: '',
+            },
+          },
+        ],
+      },
+    ],
   },
   {
     label: '站内信',
-    value: '/pages/mail/index'
+    value: '/pages/mail/index',
   },
   {
     label: '空瓶回收',
     value: '/subPages/recycle/index/index',
     type: 'bottleRecycle',
-    children: []
+    children: [],
   },
 
   {
@@ -90,8 +90,8 @@ export default [
             pageValue: {
               value: 'api.reservationProjects.0.serviceId',
               valueType: 'pageData',
-              defaultValue: ''
-            }
+              defaultValue: '',
+            },
           },
           {
             key: 'serviceName',
@@ -99,8 +99,8 @@ export default [
             pageValue: {
               value: 'parents.name',
               valueType: 'pageData',
-              defaultValue: ''
-            }
+              defaultValue: '',
+            },
           },
           {
             key: 'couponCode',
@@ -108,8 +108,8 @@ export default [
             pageValue: {
               value: '',
               valueType: 'pageData',
-              defaultValue: ''
-            }
+              defaultValue: '',
+            },
           },
           {
             key: 'couponTypeId',
@@ -117,10 +117,10 @@ export default [
             pageValue: {
               value: 'parents.thirdsCouponId',
               valueType: 'pageData',
-              defaultValue: ''
-            }
-          }
-        ]
+              defaultValue: '',
+            },
+          },
+        ],
       },
       {
         label: '预约详情页',
@@ -141,8 +141,8 @@ export default [
                     value: 'parents.thirdsCouponId',
                     valueType: 'pageData',
                     defaultValue: '',
-                    handle: null
-                  }
+                    handle: null,
+                  },
                 },
                 {
                   key: 'reservationId',
@@ -151,18 +151,18 @@ export default [
                     value: '',
                     valueType: 'custom',
                     defaultValue: '',
-                    handle: null
-                  }
-                }
-              ]
-            }
-          }
-        ]
+                    handle: null,
+                  },
+                },
+              ],
+            },
+          },
+        ],
       },
       {
         label: '预约记录',
-        value: '/pages/service-appointment/record/record'
-      }
-    ]
-  }
+        value: '/pages/service-appointment/record/record',
+      },
+    ],
+  },
 ]

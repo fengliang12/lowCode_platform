@@ -268,10 +268,15 @@ const handleClick = (tab, event) => {
 }
 </script>
 <style scoped>
-.demo-tabs > .el-tabs__content {
+:deep(.el-tabs__content) {
   padding: 32px;
   color: #6b778c;
   font-size: 32px;
   font-weight: 600;
+  overflow-y: scroll;
+  height: calc(100vh - 200px);
+}
+:deep(.el-tabs__content::-webkit-scrollbar) {
+  display: none !important;
 }
 </style>

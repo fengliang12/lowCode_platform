@@ -32,4 +32,5 @@ export default {
     wempower: '授权',
     wresetPassWord: '重置密码',
   },
+  frameSize: '框架尺寸',
 }

@@ -9,25 +9,25 @@ import { formList } from './data.js'
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   strokeWidth: {
     type: Number,
-    default: 0
+    default: 0,
   },
   borderRadius: {
     type: Number,
-    default: 0
+    default: 0,
   },
   // 赛选可输入项
   filterList: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   onLyFilter: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -41,7 +41,7 @@ const valueData = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**
@@ -59,8 +59,8 @@ watch(
     props.modelValue.borderRadius = newY
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
 </script>
 <style lang="scss" scoped></style>

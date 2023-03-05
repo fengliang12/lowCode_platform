@@ -29,11 +29,9 @@ export const useMenuStore = defineStore('menuStore', {
           route.redirect = route.path + '/' + route.children[0].path
           route.meta = route.children[0].meta
         }
-        console.log(route)
         router.addRoute(route)
       })
       this.menuList = routers
-      console.log('menuList', routers)
       router.replace(router.currentRoute.value.fullPath)
     },
   },

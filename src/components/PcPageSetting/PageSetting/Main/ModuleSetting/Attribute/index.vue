@@ -20,7 +20,7 @@
       <!--编辑api参数,有icon,#016ef8,#bfbfbf-->
       <el-icon
         :size="30"
-        :color="paramsHasValue ? '#339900' : '#bbbbbb'"
+        :color="paramsHasValue ? '#409eff' : '#bbbbbb'"
         @click="showEditParameters()"
         ><List
       /></el-icon>

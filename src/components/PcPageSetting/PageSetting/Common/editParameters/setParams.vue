@@ -94,7 +94,7 @@ const idMapParent = reactive({})
 const setIdMapParent = (
   list = props.modelValue,
   parentIndex = 0,
-  parent = props.modelValue
+  parent = props.modelValue,
 ) => {
   list.id = parentIndex
   list.forEach((elem, index) => {
@@ -116,7 +116,7 @@ watch(
   (val) => {
     setIdMapParent(val)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 /**
@@ -130,7 +130,7 @@ const addChild = (type, row) => {
     key: '',
     pageValue: new pageValueData(),
     child: null,
-    rules: []
+    rules: [],
   }
   if (type === 'paramList') {
     row.push(child)
@@ -155,7 +155,7 @@ const deleteChild = (row) => {
   if (idMapParent[row.id]?.child?.length) {
     idMapParent[row.id].child.splice(
       idMapParent[row.id].child.findIndex((elem) => elem.id === row.id),
-      1
+      1,
     )
   } else if (props.modelValue.length) {
     props.modelValue.splice(row.id - 1, 1)

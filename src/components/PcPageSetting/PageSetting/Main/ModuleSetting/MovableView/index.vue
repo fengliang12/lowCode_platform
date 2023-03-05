@@ -21,7 +21,7 @@ const valueData = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**

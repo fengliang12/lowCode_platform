@@ -3,72 +3,76 @@ export default {
   common: {
     name: '组', //名称
     isParent: true, //能否为父元素
-    followChildHeight: true //跟随子元素高度变化
+    followChildHeight: true, //跟随子元素高度变化
   },
   hot: {
     name: '图片',
-    isParent: false
+    isParent: false,
   },
   scrollView: {
     name: '滚动条',
-    isParent: true
+    isParent: true,
   },
   progress: {
     name: '进度条',
-    isParent: true
+    isParent: true,
   },
   text: {
     name: '文本',
-    isParent: false
+    isParent: false,
   },
   hotView: {
     name: '热区',
     isParent: false,
-    unComponents: true
+    unComponents: true,
   },
   carousel: {
     name: '轮播',
     isParent: true,
-    followChildHeight: true
+    followChildHeight: true,
   },
   indicator: {
     name: '指示点',
-    isParent: false
+    isParent: false,
   },
   slot: {
     name: '插槽',
-    isParent: false
+    isParent: false,
   },
   weChatButton: {
     name: '微信按钮',
-    isParent: false
+    isParent: false,
   },
   qrCode: {
     name: '二维码',
-    isParent: false
+    isParent: false,
+    initData: {
+      width: 200,
+      height: 200,
+    },
   },
   movableArea: {
     name: '拖拽区域',
     isParent: true,
     initData: {
       width: 750,
-      height: 300
-    }
+      height: 300,
+    },
   },
   movableView: {
     name: '拖拽容器',
     isParent: true,
     initData: {
       width: 100,
-      height: 100
-    }
+      height: 100,
+    },
   },
   richText: {
     name: '富文本',
     isParent: false,
     initData: {
       width: 750,
-      height: 300
-    }
-  }
+      height: 300,
+    },
+  },
 }

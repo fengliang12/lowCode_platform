@@ -50,7 +50,7 @@ export const initPageData = () => {
     },
     customHeader: false, //是否为自定义顶部导航 ,
     events: [new EventsData({ triggerType: 'onLoad' })], //操作事件
-    pageStyle: new styleSettingData({ front: false }), //页面样式配置
+    pageStyle: new styleSettingData({ font: false }), //页面样式配置
     pageHeight: null, //页面高度
     priority: 0, //页面优先级越大约再上
     navigationBar: new NavigationBar(),

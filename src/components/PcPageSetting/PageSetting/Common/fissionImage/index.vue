@@ -60,7 +60,7 @@
       :ratio="modelValue.ratio"
       :range="{
         width: 750,
-        height: 1000
+        height: 1000,
       }"
     />
 
@@ -76,7 +76,7 @@
 
 <script setup>
 // 还欠缺图片配置，视频配置，播放配置等功能
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 import { inject, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import PageBoxSetting from '../pageBoxSetting/index.vue'

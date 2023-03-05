@@ -9,8 +9,8 @@ import { formList } from './data.js'
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -24,7 +24,7 @@ const valueData = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**

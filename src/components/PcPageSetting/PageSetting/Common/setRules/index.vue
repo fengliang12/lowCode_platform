@@ -64,7 +64,7 @@ const rules = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**
@@ -81,7 +81,7 @@ const addRule = (index) => {
   rules.value.splice(index, 0, {
     required: true,
     type: '',
-    message: ''
+    message: '',
   })
 }
 

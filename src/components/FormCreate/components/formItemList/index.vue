@@ -1,6 +1,6 @@
 <template>
   <el-row v-if="formConfig?.inline" :gutter="formConfig?.gutter">
-    <el-span
+    <el-col
       v-for="(item, index) in formList"
       :key="index"
       :span="formConfig?.span"
@@ -11,7 +11,7 @@
         :propKey="propKey"
         :groupIndex="groupIndex"
       ></JudgeType>
-    </el-span>
+    </el-col>
   </el-row>
   <div v-for="(item, index) in formList" :key="index">
     <JudgeType

@@ -4,7 +4,7 @@
 
 <script setup>
 import FormCreate from '@/components/FormCreate/index.vue'
-import { computed, reactive } from '@vue/reactivity'
+import { computed, reactive } from 'vue'
 import { usePageSetupStore } from '@/store'
 
 const props = defineProps(['modelValue'])

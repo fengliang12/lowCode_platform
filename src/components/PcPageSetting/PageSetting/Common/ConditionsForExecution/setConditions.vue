@@ -169,8 +169,8 @@ watch(
   },
   {
     immediate: true,
-    deep: true
-  }
+    deep: true,
+  },
 )
 
 /**
@@ -206,7 +206,7 @@ const add = (row) => {
 const deleteChild = (row) => {
   idMapParent[row.id].child.splice(
     idMapParent[row.id].child.findIndex((elem) => elem.id === row.id),
-    1
+    1,
   )
   delete idMapParent[row.id]
 }
@@ -216,7 +216,7 @@ const deleteChild = (row) => {
  * @param {*} data
  */
 const judgeObj = {
-  '=': '==='
+  '=': '===',
 }
 const judge1 = (data) => {
   const value = data.value.value
@@ -239,7 +239,7 @@ const judge = (value) => {
   } else if (value.type && value.child?.length) {
     const orAnd = {
       or: ' || ',
-      and: ' && '
+      and: ' && ',
     }
     const arr = value.child.map((elem) => {
       return judge(elem)

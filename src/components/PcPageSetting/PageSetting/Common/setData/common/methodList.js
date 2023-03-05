@@ -5,9 +5,9 @@ export const methodList = [
     child: [
       {
         key: 'getKey',
-        label: '获取指定key值'
-      }
-    ]
+        label: '获取指定key值',
+      },
+    ],
   },
   {
     key: 'array',
@@ -15,29 +15,29 @@ export const methodList = [
     child: [
       {
         key: 'getKeyList',
-        label: '获取指定keyList'
+        label: '获取指定keyList',
       },
       {
         key: 'filter',
-        label: '过滤指定key对象'
+        label: '过滤指定key对象',
       },
       {
         key: 'findKey',
-        label: '获取指定key对象'
+        label: '获取指定key对象',
       },
       {
         key: 'min',
-        label: '最小值'
+        label: '最小值',
       },
       {
         key: 'max',
-        label: '最大值'
+        label: '最大值',
       },
       {
         key: 'arrLength',
-        label: '数组长度'
-      }
-    ]
+        label: '数组长度',
+      },
+    ],
   },
   {
     key: 'number',
@@ -45,21 +45,21 @@ export const methodList = [
     child: [
       {
         key: 'add',
-        label: '加'
+        label: '加',
       },
       {
         key: 'subtract',
-        label: '减'
+        label: '减',
       },
       {
         key: 'multiply',
-        label: '乘'
+        label: '乘',
       },
       {
         key: 'divided',
-        label: '除'
-      }
-    ]
+        label: '除',
+      },
+    ],
   },
   {
     key: 'date',
@@ -67,8 +67,8 @@ export const methodList = [
     child: [
       {
         key: 'handle',
-        label: '格式化'
-      }
-    ]
-  }
+        label: '格式化',
+      },
+    ],
+  },
 ]

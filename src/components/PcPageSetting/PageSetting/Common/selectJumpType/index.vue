@@ -187,14 +187,14 @@
             class="ml10 pointer"
             @click.stop="handleconditions(element, index)"
             ><Rank
-              :color="element.conditionsForExecution ? '#339900' : '#000000'"
+              :color="element.conditionsForExecution ? '#409eff' : '#000000'"
           /></el-icon>
           <!-- 参数 -->
           <el-icon
             class="ml10 pointer"
             v-show="editParametersShow(element)"
             @click="showEditParameters(element, index)"
-            ><List :color="paramsHasValue(element) ? '#339900' : '#000000'"
+            ><List :color="paramsHasValue(element) ? '#409eff' : '#000000'"
           /></el-icon>
 
           <!-- 赋值 -->

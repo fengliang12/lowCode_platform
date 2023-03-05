@@ -7,12 +7,7 @@
       ></BasicConfig>
     </el-tab-pane>
     <el-tab-pane label="样式设置">
-      <StyleSetting
-        v-model="pageFormData.pageStyle"
-        :flex="false"
-        :box="false"
-        :font="false"
-      >
+      <StyleSetting v-model="pageFormData.pageStyle" :flex="false" :box="false">
         <el-col>
           <el-form-item label="页面高度">
             <el-select v-model="pageFormData.pageHeight" placeholder="请选择">
@@ -69,10 +64,6 @@ import PageSetupApi from './PageSetupApi/index.vue'
 
 const props = defineProps(['detail'])
 const pageSetupStore = usePageSetupStore()
-
-/**
- * 监听detail，如果有值,初始化pageFormData
- */
 const pageFormData = ref(initPageData())
 
 /**
@@ -97,9 +88,6 @@ watch(
     pageFormData.value = handlePageData(val, initPageData())
     pageSetupStore.setPageNewParams(val.params)
   },
-  {
-    immediate: true,
-  },
 )
 
 /**
@@ -121,7 +109,6 @@ const save = async () => {
 const activeName = ref('first')
 const refObject = {}
 const setItemRef = (el, key) => {
-  console.log('el', el)
   if (el) {
     refObject[key] = el
   }
@@ -152,4 +139,16 @@ const beforeLeave = async (activeName) => {
 defineExpose({ save })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.el-tabs__content) {
+  padding: 32px;
+  color: #6b778c;
+  font-size: 32px;
+  font-weight: 600;
+  overflow-y: scroll;
+  height: calc(100vh - 200px);
+}
+:deep(.el-tabs__content::-webkit-scrollbar) {
+  display: none !important;
+}
+</style>

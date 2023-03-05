@@ -1,13 +1,14 @@
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isNumber, isEmpty } from 'lodash-es'
 
 const mapping = {
   left: 'margin-left',
   top: 'margin-top',
   bottom: 'margin-bottom',
-  right: 'margin-right'
+  right: 'margin-right',
 }
 
 export default (obj, ratio = 0.5) => {
+  if (isEmpty(obj)) return ''
   obj = cloneDeep(obj)
   let style = ''
   let setMargin = false
@@ -33,20 +34,22 @@ export default (obj, ratio = 0.5) => {
       style = `${style}${key}:absolute;`
     } else if (mapping[key] && setMargin) {
       style = `${style}${mapping[key]}:${obj[key] * ratio}px;`
-    } else if (isFinite(obj[key]) && key !== 'zIndex') {
-      style = `${style}${key}:${obj[key] * ratio}px;`
+    } else if (isNumber(obj[key]) && key !== 'zIndex') {
+      style = `${style}${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:
+      ${obj[key] * ratio}px;`
     } else {
-      style = `${style}${key}:${obj[key]};`
+      style = `${style}${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:
+      ${obj[key]};`
     }
   }
 
   const justifyContentMap = {
     'flex-end': 'right',
     'flex-start': 'left',
-    center: 'center'
+    center: 'center',
   }
   if (obj.justifyContent) {
-    style = `${style}textAlign:${justifyContentMap[obj.justifyContent]};`
+    style = `${style}text-align:${justifyContentMap[obj.justifyContent]};`
   }
   style = `${style}${handleCustom(obj.custom, ratio)};`
   return style

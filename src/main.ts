@@ -7,6 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import i18n from './i18n'
 import { useButtonStore } from './store/useButtonStore'
+import uploadFile from './components/upload'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -18,6 +19,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.config.globalProperties.$t = function (e: string) {
   return ''
 }
+
+app.use(uploadFile)
 
 app.use(createPinia()).use(router).use(ElementPlus).use(i18n).mount('#app')
 

@@ -32,29 +32,29 @@ export const formList = (children) => {
       options: [
         {
           label: '横向滚动',
-          value: 'scroll-x'
+          value: 'scroll-x',
         },
         {
           label: '竖向滚动',
-          value: 'scroll-y'
-        }
-      ]
+          value: 'scroll-y',
+        },
+      ],
     },
     {
       type: 'el-input-number',
       field: 'scrollTop',
       title: '竖向滚动条位置:',
       props: {
-        placeholder: '请输入'
-      }
+        placeholder: '请输入',
+      },
     },
     {
       type: 'el-input-number',
       field: 'scrollLeft',
       title: '横向滚动条位置:',
       props: {
-        placeholder: '请输入'
-      }
+        placeholder: '请输入',
+      },
     },
     {
       type: 'el-select',
@@ -66,63 +66,63 @@ export const formList = (children) => {
           return new Promise((resolve) => {
             console.log('children', children)
             resolve(
-              children.map((item) => ({ label: item.title, value: item.code }))
+              children.map((item) => ({ label: item.title, value: item.code })),
             )
           })
         },
-        to: 'options'
-      }
+        to: 'options',
+      },
     },
     {
       type: 'el-switch',
       field: 'scrollWithAnimation',
-      title: '动画过渡'
+      title: '动画过渡',
     },
     {
       type: 'el-switch',
       field: 'enableBlackToTop',
-      title: '返回顶部'
+      title: '返回顶部',
     },
     {
       type: 'el-switch',
       field: 'enableFlex',
-      title: '开启flex'
+      title: '开启flex',
     },
     {
       type: 'el-switch',
       field: 'scrollAnchoring',
       title: '滚动特性',
-      tips: '仅在 iOS 下生效'
+      tips: '仅在 iOS 下生效',
     },
     {
       type: 'el-switch',
       field: 'enhanced',
       title: '增强特性',
-      tips: 'enhanced'
+      tips: 'enhanced',
     },
     {
       type: 'el-switch',
       field: 'bounces',
       title: '边界弹性控制',
-      tips: 'iOS下scroll-view 边界弹性控制 (同时开启 enhanced 属性后生效)'
+      tips: 'iOS下scroll-view 边界弹性控制 (同时开启 enhanced 属性后生效)',
     },
     {
       type: 'el-switch',
       field: 'showScrollbar',
       title: '滚动条显隐控制',
-      tips: '同时开启 enhanced 属性后生效'
+      tips: '同时开启 enhanced 属性后生效',
     },
     {
       type: 'el-switch',
       field: 'pagingEnabled',
       title: '分页滑动效果',
-      tips: '同时开启 enhanced 属性后生效'
+      tips: '同时开启 enhanced 属性后生效',
     },
     {
       type: 'el-switch',
       field: 'fastDeceleration',
       title: '滑动减速速率控制',
-      tips: '同时开启 enhanced 属性后生效'
-    }
+      tips: '同时开启 enhanced 属性后生效',
+    },
   ]
 }

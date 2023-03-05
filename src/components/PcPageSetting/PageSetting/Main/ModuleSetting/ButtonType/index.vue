@@ -24,20 +24,20 @@ const emit = defineEmits(['update:modelValue'])
 const buttonTypeList = reactive([
   {
     value: 'getPhoneNumber',
-    label: '获取手机号'
+    label: '获取手机号',
   },
   {
     value: 'contact',
-    label: '微信客服'
+    label: '微信客服',
   },
   {
     value: 'share',
-    label: '分享'
+    label: '分享',
   },
   {
     value: 'getPhoneNumberAndRegister',
-    label: '获取手机号并静默注册'
-  }
+    label: '获取手机号并静默注册',
+  },
 ])
 
 /**
@@ -49,7 +49,7 @@ const data = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 </script>
 <style lang="scss" scoped></style>

@@ -2,7 +2,6 @@
   <el-form
     ref="formRef"
     :model="modelValue"
-    :inline="false"
     style="width: 100%"
     v-bind="formConfig"
   >
@@ -11,6 +10,7 @@
       v-if="init"
       :formData="valueData"
       :formList="formList"
+      propKey=""
     ></FormItemList>
     <el-row v-if="showSubmitBtn || showCancelBtn" type="flex" justify="end">
       <el-button
@@ -45,8 +45,8 @@ const props = withDefaults(
   defineProps<{
     modelValue: any
     formList: FormCreate.FormItemListType
-    options: any
-    formConfig: FormCreate.FormConfigProps
+    options?: any
+    formConfig?: FormCreate.FormConfigProps
   }>(),
   {
     modelValue: () => ({}),
@@ -59,11 +59,11 @@ const props = withDefaults(
 provide('formConfig', props.formConfig)
 
 const showCancelBtn = computed(() => {
-  return props.options.onCancel
+  return props.options?.onCancel
 })
 
 const showSubmitBtn = computed(() => {
-  return props.options.onCancel
+  return props.options?.onCancel
 })
 
 const initData = computed(() => {

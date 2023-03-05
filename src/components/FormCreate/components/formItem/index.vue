@@ -15,7 +15,7 @@
       v-model:nodes="valueData"
       v-bind="{ clearable: true, filterable: true, ...formItem.props }"
       :options="formItem.options"
-      v-on="formItem.on"
+      v-on="formItem.on ?? {}"
     >
       <template
         v-if="
@@ -33,11 +33,11 @@
     <!-- 提示 -->
     <template v-if="formItem.tips">
       <el-tooltip :content="formItem.tips" placement="top-start">
-        <i class="el-icon-warning-outline ml-10"></i>
+        <el-icon style="margin-left: 10px"><WarningFilled /></el-icon>
       </el-tooltip>
     </template>
     <template v-if="formItem.button">
-      <el-button class="ml-10" @click="formItem.btnClick">
+      <el-button style="margin-left: 10px" @click="formItem.btnClick">
         {{ formItem.button }}
       </el-button>
     </template>
@@ -149,7 +149,6 @@ const handleUpdate = () => {
           return get(props, `${b}`) ?? b
         })
       }
-      console.log('elem', elem)
       watch(
         () => formValue.value[elem],
         (val) => {
@@ -175,4 +174,8 @@ const handleUpdate = () => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.el-form-item__content) {
+  flex-wrap: nowrap;
+}
+</style>

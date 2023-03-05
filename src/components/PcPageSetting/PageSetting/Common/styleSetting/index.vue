@@ -11,7 +11,6 @@
 import { watch, computed } from 'vue'
 import { formList } from './data'
 import FormCreate from '@/components/FormCreate/index.vue'
-import { isEqual } from 'lodash'
 
 const props = defineProps({
   modelValue: {
@@ -50,11 +49,9 @@ const emit = defineEmits(['update:modelValue'])
  */
 const styleData = computed({
   get() {
-    console.log(1111)
     return props.modelValue
   },
   set(val) {
-    console.log(222)
     emit('update:modelValue', val)
   },
 })

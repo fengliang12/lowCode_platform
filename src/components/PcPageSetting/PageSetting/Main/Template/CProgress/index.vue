@@ -28,12 +28,12 @@ import handlePageValue from '../../../handle/handlePageValue'
 defineProps({
   data: {
     type: Object,
-    default: () => null
+    default: () => null,
   },
   pageValue: {
     type: Object,
-    default: () => null
-  }
+    default: () => null,
+  },
 })
 </script>
 <style lang="scss" scoped>

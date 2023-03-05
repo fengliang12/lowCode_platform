@@ -75,20 +75,20 @@ const switchCustom = ref(false)
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: null
+    default: null,
   },
   update: {
     type: Boolean,
-    default: false
+    default: false,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   wrap: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -104,7 +104,7 @@ const pageValue = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**

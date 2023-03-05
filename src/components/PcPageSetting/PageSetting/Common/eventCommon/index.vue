@@ -2,7 +2,7 @@
   <el-form v-if="eventData">
     <div v-for="(item, index) in eventData" :key="item.triggerType">
       <el-divider>
-        <div class="flex alignItems">
+        <div class="vhCenter">
           <el-select
             v-model="item.triggerType"
             placeholder="请选择"
@@ -57,17 +57,17 @@ import { EventsData, triggerType } from './data'
 import SelectJumpType from '../selectJumpType/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   isPage: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
-const emit = defineEmits(['update:modelValue'])
 
 /**
  * 初始化事件对象，如果没有，默认click
@@ -77,15 +77,15 @@ const eventData = computed({
     if (!props?.modelValue?.length && !props.isPage) {
       emit('update:modelValue', [
         new EventsData({
-          triggerType: 'click'
-        })
+          triggerType: 'click',
+        }),
       ])
     }
     return props.modelValue
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 /**
@@ -97,7 +97,7 @@ const setTriggerTypeList = computed(() => {
     list = triggerType.page.list
   }
 
-  if (!eventData.value) {
+  if (!props.modelValue?.length) {
     return list
   }
 
@@ -112,10 +112,10 @@ const setTriggerTypeList = computed(() => {
 /**
  * 新增触发类型列表
  */
-const newTriggerType = ref('')
+
 const addTriggerTypeList = computed(() => {
-  if (!eventData.value.length) {
-    return setTriggerTypeList
+  if (!props.modelValue?.length) {
+    return setTriggerTypeList.value
   }
   return setTriggerTypeList.value.filter((elem) => !elem.disabled)
 })
@@ -123,6 +123,7 @@ const addTriggerTypeList = computed(() => {
 /**
  * 添加Trigger
  */
+const newTriggerType = ref('')
 const addTriggerType = () => {
   if (!newTriggerType.value) {
     return ElMessage.warning('触发类型不能为空')
@@ -152,7 +153,7 @@ const handlePasteEvent = (item) => {
 
     ElMessageBox.confirm('确认粘贴吗到改事件吗', '提示', {
       confirmButtonText: '确认',
-      cancelButtonText: '取消'
+      cancelButtonText: '取消',
     }).then(() => {
       item.hotOperations = item.hotOperations.concat(copyData.hotOperations)
     })

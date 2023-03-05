@@ -21,12 +21,12 @@ import { computed, ref } from 'vue'
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   formList: {
     type: Array,
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -36,7 +36,7 @@ const checkedValue = computed({
   },
   set(val) {
     emit('update:modelValue', val)
-  }
+  },
 })
 
 // 全选

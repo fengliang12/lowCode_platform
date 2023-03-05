@@ -8,10 +8,15 @@ import { isEmpty } from 'lodash'
 
 const router = useRouter()
 
+export interface MenuState {
+  id: string
+  [e: string]: any
+}
+
 export const usePageSetupStore = defineStore('pageSetupStore', {
   // 开启数据持久化
   persist: true,
-  state: () => {
+  state: (): MenuState => {
     return {
       id: '',
       changeInfo: false, //信息是否被修改
@@ -26,7 +31,9 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       }, //页面配置
       childPageIds: [], //子页面配置主键集合
       jumpPageSetting: false, //限制点击跳转自定义页面
-      items: null, //正在配置的组件
+      items: {
+        value: null,
+      }, //正在配置的组件
       itemsMap: new Map(), //页面对应map
       showHotBox: true, //显示热区边框
       AloneApiList: [], // 单独页面api管理
@@ -79,14 +86,13 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 获取页面类型
      */
     async getPageSettingConstant() {
-      // const res = await api.pageSetupApi.getPageSettingConstant()
-      // const data = Object.fromEntries(
-      //   res.map((item) => {
-      //     return [item.value, item.result]
-      //   }),
-      // )
       this.pageSettingConstant = {
-        pageSettingType: [],
+        pageSettingType: [
+          {
+            value: '会员中心',
+            key: 'member_center',
+          },
+        ],
       }
     },
 
@@ -147,7 +153,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     /**!
      * 设置组件集合
      */
-    setPageItemsMap({ itemsMap, items, opt = 'set' }) {
+    setPageItemsMap({ itemsMap, items, opt = 'set' }: any) {
       if (isEmpty(this.itemsMap)) {
         this.itemsMap = new Map()
       }
