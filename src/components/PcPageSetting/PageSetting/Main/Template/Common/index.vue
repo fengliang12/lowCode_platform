@@ -1,7 +1,14 @@
 <template>
   <div
     v-if="data"
-    class="box bg"
+    class="box"
+    :class="`${
+      data.moduleType !== 'carousel' && pageSetupStore.showHotBox && 'bg'
+    } ${
+      data.moduleType === 'scrollView' &&
+      !data.scrollView.enableFlex &&
+      'scroll'
+    } ${animateValue ? `${animateValue}` : ''} ${data.code} ${stickyStyle}`"
     :style="`${style};display:${data.hide ? 'none' : ''}`"
     ref="buttonRef"
     @click="click"
@@ -64,7 +71,7 @@
 
     <!-- 富文本 -->
     <template v-if="data.moduleType === 'richText'">
-      <div v-html="data.richText.nodes" style="overflow: hidden;"></div>
+      <div v-html="data.richText.nodes" style="overflow: hidden"></div>
     </template>
 
     <!-- 页面展示不需要特殊处理的 -->

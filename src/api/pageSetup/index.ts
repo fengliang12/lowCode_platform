@@ -78,3 +78,42 @@ export const createPage: Api.PageSetup.createPage.Func = (data) => {
     data,
   })
 }
+
+/**
+ * 更新旧的
+ * @param {*} data
+ * @returns
+ */
+export const updatePage: Api.PageSetup.createPage.Func = (data) => {
+  return instance({
+    url: '/page_setup',
+    method: 'put',
+    data,
+  })
+}
+
+/**
+ * 删除旧的api
+ * @param {*} data
+ * @returns
+ */
+export const delOperationApi: Api.PageSetup.createPage.Func = (data) => {
+  return instance({
+    url: '/page_setup_api',
+    method: 'delete',
+    data,
+  })
+}
+
+/**
+ * 设置新的api
+ * @param {*} data
+ * @returns
+ */
+export const setupOperationApi: Api.PageSetup.createPage.Func = (data) => {
+  return instance({
+    url: '/page_setup_api',
+    method: 'post',
+    data,
+  })
+}

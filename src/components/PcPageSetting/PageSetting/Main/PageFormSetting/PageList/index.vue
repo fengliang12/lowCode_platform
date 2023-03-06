@@ -45,14 +45,14 @@
     <el-row>
       <el-button type="primary" @click="handleExport">JSON格式化预览</el-button>
     </el-row>
-    <!-- <JsonEditor ref="jsonEditorRef"></JsonEditor> -->
+    <JsonEditor ref="jsonEditorRef"></JsonEditor>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
 import { usePageSetupStore } from '@/store'
-// import JsonEditor from '../../../Common/jsonEditor/index.vue'
+import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
 
 const props = defineProps(['value'])

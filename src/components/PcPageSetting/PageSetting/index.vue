@@ -163,6 +163,8 @@ onMounted(() => {
   pageSetupStore.getCrowdList()
   pageSetupStore.getPageSettingConstant()
   pageSetupStore.getPageList()
+  pageSetupStore.changeAloneAPIList()
+  pageSetupStore.setPageNewParams([])
 })
 
 /**
@@ -174,7 +176,6 @@ watch(
     // 刷新接口
     pageSetupStore.changeAloneAPIList()
     pageSetupStore.setPageNewParams([])
-
     formData.value = initResData(val.moduleSettings)
     val.moduleSetting = formData.value
     //根据已经存在的值,遍历出itemMaps值

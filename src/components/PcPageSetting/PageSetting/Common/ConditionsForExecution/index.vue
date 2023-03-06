@@ -7,7 +7,7 @@
   >
     <SetConditions v-model="conditionsForExecution"></SetConditions>
     <template #footer>
-      <div class="flex justify-between">
+      <div v-if="conditionsForExecution" class="flex justify-between">
         <div class="flex alignItems">
           <el-button type="danger" @click="cancelCondition">取消判断</el-button>
           <div class="flex alignItems">
@@ -33,15 +33,18 @@ import { ref } from 'vue'
 import SetConditions from './setConditions.vue'
 import { ConditionsData } from './data'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { cloneDeep } from 'lodash'
 const emit = defineEmits(['confirm'])
+const dialogCondition = ref(false)
+const conditionsForExecution = ref()
 
 /**
  * 显示条件判断
  */
-const conditionsForExecution = ref([])
-const dialogCondition = ref(false)
 const show = (conditions) => {
-  conditionsForExecution.value = conditions ?? new ConditionsData({ id: 1 })
+  console.log('conditions', conditions)
+  conditionsForExecution.value =
+    cloneDeep(conditions) ?? new ConditionsData({ id: 1 })
   dialogCondition.value = true
 }
 
@@ -50,11 +53,7 @@ const show = (conditions) => {
  */
 const confirm = () => {
   if (!check(conditionsForExecution.value)) {
-    ElMessage.error({
-      message: '配置条件不符合规范',
-      showClose: true,
-      duration: 2000,
-    })
+    ElMessage.error('配置条件不符合规范')
     return
   }
   emit('confirm', conditionsForExecution.value)
@@ -67,7 +66,6 @@ const confirm = () => {
  */
 const check = (data) => {
   const { type, child, value, content, execution } = data
-  console.log('data', data)
   // 全部不填报错
   if (
     !type &&
@@ -97,9 +95,8 @@ const cancelCondition = () => {
     cancelButtonText: '取消',
     type: 'warning',
   }).then(() => {
-    conditionsForExecution.value = null
+    emit('confirm', null)
     dialogCondition.value = false
-    emit('confirm', conditionsForExecution.value)
   })
 }
 

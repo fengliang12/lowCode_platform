@@ -149,10 +149,27 @@ export const assignmentOption = [
 /**
  * 自定义事件
  */
+//自定义事件列表
 export const customEventList = [
   {
     value: 'register',
     label: '注册',
+  },
+  {
+    value: 'initRefresh',
+    label: '刷新用户注册',
+  },
+  {
+    value: 'backPage',
+    label: '返回上一页',
+  },
+  {
+    value: 'closPop',
+    label: '关闭弹窗',
+  },
+  {
+    value: 'getThreeData',
+    label: '获取三方数据',
   },
   {
     value: 'tips',
@@ -160,37 +177,46 @@ export const customEventList = [
     showContent: true,
   },
   {
-    value: 'backPage',
-    label: '返回上一页',
-  },
-  {
     value: 'makePhoneCall',
     label: '调用电话',
     showContent: true,
   },
   {
-    value: 'closPop',
-    label: '关闭弹窗',
+    value: 'getNetworkType',
+    label: '获取网络类型',
   },
   {
-    value: 'showLoading',
-    label: '加载中',
-  },
-  {
-    value: 'hideLoading',
-    label: '隐藏加载中',
-  },
-  {
-    value: 'initRefresh',
-    label: '刷新用户注册',
-  },
-  {
-    value: 'openLocation',
-    label: '微信内置地图查看位置',
-  },
-  {
-    value: 'exitMiniProgram',
-    label: '退出小程序',
+    label: '其他',
+    children: [
+      {
+        value: 'executeWait',
+        label: '执行等待',
+      },
+      {
+        value: 'showLoading',
+        label: '加载中',
+      },
+      {
+        value: 'hideLoading',
+        label: '隐藏加载中',
+      },
+      {
+        value: 'showShareMenu',
+        label: '页面允许分享',
+      },
+      {
+        value: 'hideShareMenu',
+        label: '页面禁止分享',
+      },
+      {
+        value: 'openLocation',
+        label: '微信内置地图查看位置',
+      },
+      {
+        value: 'exitMiniProgram',
+        label: '退出小程序',
+      },
+    ],
   },
 ]
 
@@ -436,7 +462,12 @@ export const gridLotteryOperationList = [
  * 需要额外的输入框的事件
  */
 export const moduleOperationListKey = Object.fromEntries(
-  [...moduleOperationList, ...moduleCarouselOperationList].map((elem) => {
+  [
+    ...moduleOperationList,
+    ...moduleCarouselOperationList,
+    ...moduleVideoOperationList,
+    ...gridLotteryOperationList,
+  ].map((elem) => {
     return [elem.value, elem]
   }),
 )

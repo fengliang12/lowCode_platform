@@ -21,11 +21,17 @@ import { ref, unref, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePageSetupStore } from '@/store'
 import { ElMessage } from 'element-plus'
-// import pageSetupApi from '@/api/pageSetup'
+import {
+  updatePage,
+  createPage,
+  delOperationApi,
+  setupOperationApi,
+} from '@/api/pageSetup'
 import updateApiList from '../../Handle/updateApiList'
 import { cloneDeep } from 'lodash'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
 
+const getPageDetail = inject('getPageDetail')
 const pageSetupStore = usePageSetupStore()
 const route = useRoute()
 
@@ -65,12 +71,9 @@ const importPageSetting = () => {
 /**
  * 创建页面配置
  */
-const getPageDetail = inject('getPageDetail')
 const createPageSetting = async () => {
   const { pageSetting, apiList } = jsonData.value
-  const request = route.query.id
-    ? pageSetupApi.updatePage
-    : pageSetupApi.createPage
+  const request = route.query.id ? updatePage : createPage
 
   const data = await request(pageSetting)
   const pageId = data.id
@@ -78,7 +81,7 @@ const createPageSetting = async () => {
   // 更新时需要删除原先的api
   if (route.query.id) {
     const deleteReqList = oldApiList.value.map((ele) => {
-      return pageSetupApi.delOperationApi(ele.id)
+      return delOperationApi(ele.id)
     })
     await Promise.all(deleteReqList)
     pageSetupStore.AloneApiList = []
@@ -86,7 +89,7 @@ const createPageSetting = async () => {
 
   const reqList = apiList.map((elem) => {
     elem.pageSetupId = pageId
-    return pageSetupApi.setupOperationApi(elem)
+    return setupOperationApi(elem)
   })
 
   await Promise.all(reqList).then(
@@ -117,7 +120,7 @@ const afterUpdateApi = async (res, data) => {
       apiMapId[oldApiList?.value?.[index].id] = elem.id
     })
     const newPageData = await updateApiList(data, apiMapId)
-    jsonData.value.pageSetting = await pageSetupApi.updatePage(newPageData)
+    jsonData.value.pageSetting = await updatePage(newPageData)
   }
 }
 

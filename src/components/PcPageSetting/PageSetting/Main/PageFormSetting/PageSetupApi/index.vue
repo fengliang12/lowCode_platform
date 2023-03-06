@@ -16,7 +16,7 @@
     </div>
 
     <!-- ApiList -->
-    <el-table :data="AloneApiList" style=" margin-top: 20px;width: 100%;">
+    <el-table :data="AloneApiList" style="margin-top: 20px; width: 100%">
       <el-table-column prop="apiName" label="API名称" width="180">
       </el-table-column>
       <el-table-column prop="method" label="方式" width="180">
@@ -34,7 +34,7 @@
           <el-button
             type="text"
             size="small"
-            style="margin-left: 15px;"
+            style="margin-left: 15px"
             @click="clickWriteApi(scope.row, true)"
             >编辑</el-button
           >
@@ -95,7 +95,7 @@ const addApiToList = () => {
     return
   }
   if (!pageApiId.value?.id) {
-    ElMessage.error('请先保存当前编辑内容')
+    ElMessage.error('请先选择需要的接口')
     return
   }
   let data = cascaderRef.value.getCheckedNodes(true)[0]

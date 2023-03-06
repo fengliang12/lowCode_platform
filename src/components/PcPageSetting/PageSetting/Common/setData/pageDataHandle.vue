@@ -5,8 +5,8 @@
     width="80%"
     append-to-body
   >
-    <el-button style="float: right;" @click="addChild"> 新增方法 </el-button>
-    <el-table :data="handle" :border="true" style="width: 100%;">
+    <el-button style="float: right" @click="addChild"> 新增方法 </el-button>
+    <el-table :data="handle" :border="true" style="width: 100%">
       <el-table-column prop="method" label="方法名" width="200">
         <template v-slot="scope">
           <el-cascader
@@ -121,11 +121,7 @@ const confirm = () => {
     emit('confirm', handle.value)
     dialogVisible.value = false
   } else {
-    ElMessage.error({
-      message: `配置不符合规范`,
-      showClose: true,
-      duration: 2000,
-    })
+    ElMessage.error('配置不符合规范')
   }
 }
 

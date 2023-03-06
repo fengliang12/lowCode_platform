@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import bus from '@/utils/bus'
 import PageModuleLimitData from '@/components/PcPageSetting/PageSetting/Common/pageModuleLimit/data'
 import { isEmpty } from 'lodash'
+import pageSetupTestData from './pageSetupTestData/index'
 
 const router = useRouter()
 
@@ -21,7 +22,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       changeInfo: false, //信息是否被修改
       pageList: [], //配置列表
       pageNewParams: [], //页面新增参数
-      PageSetupApiList: [], //api接口管理
+      PageSetupApiList: [], //全部api接口管理
 
       tagList: [], // 等级状态
       crowdList: [], // 人群
@@ -61,7 +62,6 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 获取总的api管理
      */
     async getPageSetupApi() {
-      // const res = await api.pageSetupApi.getPageSetupApi()
       this.PageSetupApiList = []
     },
 
@@ -69,15 +69,13 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 获取标签
      */
     async getTagList() {
-      // const res = await api.pageSetupApi.getMemberTagAll()
-      this.tagList = []
+      this.tagList = pageSetupTestData.getMemberTagAll
     },
 
     /**
      * 获取人群
      */
     async getCrowdList() {
-      // const res = await api.pageSetupApi.getCrowdAll()
       this.crowdList = []
     },
 
@@ -120,26 +118,15 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 管理api数组及参数
      */
     async changeAloneAPIList() {
-      // const res = await api.pageSetupApi.getOperationApi({
-      //   pageSetupId: this.id,
-      // })
-      // const data = res.filter((item) => item.pageSetupId === this.id)
-      this.AloneApiList = []
+      this.AloneApiList = pageSetupTestData.getOperationApi
+      console.log('接口数据', this.AloneApiList)
     },
 
     /**
      * 获取配置页面列表
      */
     async getPageList() {
-      if (this.pageList.length) return
-      // const res = await api.pageSetupApi.getAllPage()
-      // this.pageList = res.map((item) => {
-      //   return {
-      //     id: item.id,
-      //     title: item.title,
-      //     customHeader: item.customHeader,
-      //   }
-      // })
+      this.pageList = pageSetupTestData.getAllPage
     },
 
     /**
@@ -166,6 +153,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
           this.itemsMap.set(items.code, items)
         }
       }
+      console.log('setPageItemsMap', this.itemsMap)
     },
 
     /**

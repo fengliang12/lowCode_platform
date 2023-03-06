@@ -181,7 +181,7 @@ const handlePasteEvent = (item) => {
   const Promise = navigator.clipboard.readText()
   Promise.then((res) => {
     const copyData = JSON.parse(res)
-    if (!copyData.triggerType || !copyData.hotOperations.length) {
+    if (!copyData.operationType && !copyData.hotOperations.length) {
       ElMessage.error('格式化数据失败')
       return false
     }
@@ -190,7 +190,7 @@ const handlePasteEvent = (item) => {
       confirmButtonText: '确认',
       cancelButtonText: '取消',
     }).then(() => {
-      if (copyData.hotOperations.length) {
+      if (copyData.hotOperations?.length) {
         item.hotOperations = item.hotOperations.concat(copyData.hotOperations)
       } else {
         item.hotOperations.push(copyData)

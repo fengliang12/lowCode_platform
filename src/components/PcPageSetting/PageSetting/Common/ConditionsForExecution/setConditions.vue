@@ -49,7 +49,7 @@
         </template>
         <el-icon><WarnTriangleFilled /></el-icon>
       </el-tooltip>
-      <div>
+      <div class="ml10">
         <el-button v-show="modelValue.type" @click="add(modelValue)"
           >新增子条件</el-button
         >

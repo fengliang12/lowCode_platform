@@ -8,6 +8,7 @@ const { toClipboard } = useClipboard()
 export const handleCopyEvent = (item) => {
   // 拷贝对象不能为数组、对象类型。使用JSON.stringify转化为字符串
   const event = cloneDeep(JSON.stringify(item))
+  console.log('复制的数据', event)
   toClipboard(event)
     .then(() => {
       ElMessage.success('复制成功')

@@ -6,6 +6,7 @@
     clearable
     filterable
     value-key="templateId"
+    class="ml10"
   >
     <el-option
       v-for="(item, index) in messageTemplateList"
@@ -18,7 +19,6 @@
 
 <script setup>
 import { onMounted, computed, ref } from 'vue'
-import api from '@/api/axios.ts'
 const props = defineProps({
   modelValue: {
     type: Array,
@@ -48,12 +48,21 @@ onMounted(() => {
  */
 const messageTemplateList = ref([])
 const getTemplateList = async () => {
-  const result = await api.constantApi.getTemplateList({
-    page: 0,
-    size: 1000,
-    expression: '',
-    expArr: [],
-  })
+  // 接口数据模拟
+  const result = [
+    {
+      id: '8LQsjPJbKxMwnUGHBoKbCh',
+      templateId: '7lNfgvXN8YG6in8upT4r0en4Zwvu9I3BOu0xLE-8Aic',
+      templateType: 'receiveCouponSuccess',
+      title: '朋友圈广告送券',
+    },
+    {
+      id: '5Ur3rjrBbnG8QQcWXQz8qA',
+      templateId: 'BMtPGR2VIDQ6Jlo2iJdOLcNtb_rHKXTzoAUrquGHTXQ',
+      templateType: 'vend_machine_pickup',
+      title: '自动贩卖机发送提货码',
+    },
+  ]
   messageTemplateList.value = result.map((elem) => {
     elem.templateCode = elem.id
     return elem

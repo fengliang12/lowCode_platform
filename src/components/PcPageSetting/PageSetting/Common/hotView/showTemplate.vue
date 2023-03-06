@@ -1,5 +1,9 @@
 <template>
-  <div class="divBox showHotBox" :style="style">
+  <div
+    class="divBox"
+    :class="{ showHotBox: pageSetupStore.showHotBox }"
+    :style="style"
+  >
     <template v-if="value.pageShowData && value.pageShowData.pageValue.value">
       <img
         v-if="value.pageShowData.showType === 'image'"
@@ -20,6 +24,9 @@
 import { computed } from 'vue'
 import handleStyle from '../../Handle/style'
 import handlePageValue from '../../Handle/handlePageValue'
+import { usePageSetupStore } from '@/store'
+
+const pageSetupStore = usePageSetupStore()
 
 /**
  * defineProps

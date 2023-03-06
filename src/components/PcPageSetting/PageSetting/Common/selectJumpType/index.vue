@@ -30,16 +30,32 @@
             @editBack="popEdit(index)"
           ></upload-file>
 
-          <!-- 跳转小程序地址 -->
+          <!--operationUrl： 跳转小程序内部页面 -->
           <PagepathCascader
             v-if="element.operationType === 'page_jump'"
             v-model="element.operationUrl"
             @changeInfo="pagePathCascaderChange($event, index)"
           ></PagepathCascader>
 
-          <!-- 自定义事件\跳转配置页面\api访问\联动组件\授权 -->
+          <!--operationUrl： 自定义事件 -->
+          <el-cascader
+            v-if="element.operationType == 'custom_event'"
+            class="ml10"
+            clearable
+            filterable
+            :show-all-levels="false"
+            :props="{
+              emitPath: false,
+            }"
+            v-model="element.operationUrl"
+            :options="customEventList"
+            @change="selectTypeChange($event, element)"
+            @visible-change="visibleChange($event, element)"
+          ></el-cascader>
+
+          <!--operationUrl：跳转配置页面\api访问\操作组件\授权 -->
           <el-select
-            v-if="selectTypeKeys.includes(element.operationType)"
+            v-else-if="selectTypeKeys.includes(element.operationType)"
             v-model="element.operationUrl"
             clearable
             filterable
@@ -61,7 +77,26 @@
             ></el-option>
           </el-select>
 
-          <!-- 自定义事件中需要的输入内容 -->
+          <!--linkMiniAppId： 其他小程序小程序appId -->
+          <el-input
+            v-if="element.operationType == 'jump_relevance_mini'"
+            class="ml10 flex-1"
+            v-model="element.linkMiniAppId"
+            placeholder="小程序appId"
+          ></el-input>
+
+          <!--operationUrl： h5路径、其他小程序跳转路径 -->
+          <el-input
+            v-if="
+              element.operationType === 'jump_h5' ||
+              element.operationType === 'jump_relevance_mini'
+            "
+            class="ml10"
+            v-model="element.operationUrl"
+            placeholder="请输入路径"
+          ></el-input>
+
+          <!-- content：自定义事件中需要额外的添加内容：提示、调用电话 -->
           <el-input
             v-if="
               customEvenKey[element.operationUrl] &&
@@ -72,13 +107,13 @@
             class="ml10"
           ></el-input>
 
-          <!-- 订阅消息 -->
+          <!--subscribeNotices: 订阅消息 -->
           <SubscribeNoticesSelect
             v-if="element.operationType == 'subscribe_notice'"
             v-model="element.subscribeNotices"
           ></SubscribeNoticesSelect>
 
-          <!-- 对组件的操作 -->
+          <!--moduleOperation: 组件的操作 -->
           <el-cascader
             v-if="element.operationType === 'associated_module'"
             v-model="element.moduleOperation"
@@ -89,9 +124,10 @@
             :props="{
               emitPath: false,
             }"
+            class="ml10"
           ></el-cascader>
 
-          <!-- 操作额外的输入框 -->
+          <!--content: 操作额外的输入框 -->
           <el-input
             v-if="
               moduleOperationListKey[element.moduleOperation] &&
@@ -103,9 +139,10 @@
                 moduleOperationListKey[element.moduleOperation].props) ||
               {}
             "
+            class="ml10"
           ></el-input>
 
-          <!-- 操作动画 -->
+          <!--content: 操作动画 -->
           <el-cascader
             v-if="element.moduleOperation === 'animate'"
             v-model="element.content"
@@ -117,17 +154,11 @@
             }"
             clearable
             :show-all-levels="false"
+            class="ml10"
             @change="animateCascaderChange(element, $event, index)"
           ></el-cascader>
 
-          <!-- h5路径 -->
-          <el-input
-            v-if="element.operationType === 'jump_h5'"
-            class="ml10"
-            v-model="element.operationUrl"
-          ></el-input>
-
-          <!-- 跳转类型 -->
+          <!--moduleOperation: 跳转类型 -->
           <el-select
             v-if="moduleOperationListSelect[element.operationType]"
             v-model="element.moduleOperation"
@@ -144,7 +175,7 @@
             ></el-option>
           </el-select>
 
-          <!-- 新增页面参数 -->
+          <!--operationUrl: 新增页面参数 -->
           <template v-if="element.operationType === 'set_params'">
             <el-cascader
               v-model="element.operationUrl"
@@ -157,12 +188,14 @@
                 checkStrictly: true,
               }"
               clearable
+              class="ml10"
               @change="pageNewParamsCascaderChange(element, $event)"
             ></el-cascader>
-            <!-- 操作赋值 -->
+            <!--moduleOperation: 操作赋值 -->
             <el-select
               v-model="element.moduleOperation"
               @change="changeParams($event, element)"
+              class="ml10"
             >
               <el-option
                 v-for="option in assignmentOption"
@@ -186,7 +219,7 @@
           <!-- 条件 -->
           <el-icon
             class="ml10 pointer"
-            @click.stop="handleconditions(element, index)"
+            @click.stop="handleConditions(element, index)"
             ><Rank
               :color="element.conditionsForExecution ? '#409eff' : '#000000'"
           /></el-icon>
@@ -274,7 +307,7 @@
 import { computed, watch, ref } from 'vue'
 import { usePageSetupStore } from '@/store'
 import Draggable from 'vuedraggable'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
 
 import {
@@ -327,8 +360,18 @@ const hotOperations = computed({
  * 添加事件
  */
 const handleAddEvent = () => {
+  if (
+    !hotOperations.value?.every(
+      (elem) =>
+        !!elem.operationUrl ||
+        elem.subscribeNotices.length ||
+        elem?.imageSetting?.imgUrl,
+    )
+  ) {
+    ElMessage.error('请先输入内容')
+    return
+  }
   hotOperations.value.push(new PageHotOperation())
-  emit('update:modelValue', hotOperations.value)
 }
 
 watch(
@@ -646,9 +689,15 @@ const saveParams = async ({ reset = false }) => {
  * 判断参数是否有值
  * @param {} element
  */
+const AloneApiListKey = computed(() => {
+  return Object.fromEntries(
+    pageSetupStore.AloneApiList.map((item) => [item.id, item]),
+  )
+})
+
 const paramsHasValue = (element) => {
-  if (element.operationUrl === 'api') {
-    return pageSetupStore.AloneApiList?.[element.operationUrl]?.params
+  if (element.operationType === 'api') {
+    return AloneApiListKey.value?.[element.operationUrl]?.params
   } else {
     return element.params
   }
@@ -658,7 +707,7 @@ const paramsHasValue = (element) => {
  * 点击编辑条件
  */
 const conditionsForExecutionRef = ref(null)
-const handleconditions = (element, index) => {
+const handleConditions = (element, index) => {
   currentIndex.value = index
   conditionsForExecutionRef.value.show(element.conditionsForExecution)
 }
@@ -720,23 +769,11 @@ const popEdit = (index) => {
   currentIndex.value = index
   dialogVisible1.value = true
 }
-
-/**
- * 复制事件
- */
-// const { toClipboard } = useClipboard()
-// const copyHotOperations = (element) => {
-//   const event = cloneDeep(JSON.stringify(element))
-//   toClipboard(event)
-//     .then(() => {
-//       ElMessage.success('复制成功')
-//     })
-//     .catch(() => {
-//       ElMessage.error('复制失败')
-//     })
-// }
 </script>
 <style lang="scss" scoped>
+:deep(.el-input) {
+  width: auto;
+}
 .el-form-item {
   display: block;
 }

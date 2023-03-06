@@ -4,17 +4,19 @@
       v-if="!switchCustom"
       :options="pageSetupStore.pageDataList"
       :model-value="dPageShowDataValue(valueData)"
-      placeholder="请选择"
+      placeholder="请选择数据"
       :show-all-levels="false"
       @change="cascaderChange"
       :props="{ value: 'key', children: 'child' }"
       clearable
     >
       <template v-slot="{ data }">
-        <span>{{ data.label }}</span>
-        <el-icon @click="handleCopyEvent(data.key)" class="ml10"
-          ><DocumentCopy
-        /></el-icon>
+        <div class="content">
+          <span>{{ data.label }}</span>
+          <el-icon @click="handleCopyEvent(data.key)" class="ml10"
+            ><DocumentCopy
+          /></el-icon>
+        </div>
       </template>
     </el-cascader>
 
@@ -39,7 +41,7 @@
         :content="`切换${switchCustom ? '选择' : '手动'}`"
         placement="top-start"
       >
-        <el-icon :size="16" style="margin-right: 10px;">
+        <el-icon :size="16" style="margin-right: 10px">
           <Switch @click="switchCustom = !switchCustom" />
         </el-icon>
       </el-tooltip>
@@ -72,8 +74,7 @@ import { dPageShowDataValue } from '../../Handle/filters'
 import PageDataHandle from './pageDataHandle.vue'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
 
-const pageSetupStore = usePageSetupStore()
-const switchCustom = ref(false)
+const emit = defineEmits(['update:modelValue', 'update:handle'])
 const props = defineProps({
   modelValue: {
     type: String,
@@ -97,7 +98,8 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue', 'update:handle'])
+const pageSetupStore = usePageSetupStore()
+const switchCustom = ref(false)
 
 /**
  * pageValue.value
@@ -185,12 +187,19 @@ const pageDataHandleChange = (val) => {
   align-items: center;
   justify-content: center;
   min-width: 300px;
+
   .icon-list {
     padding: 0 10px;
     width: 80px;
     display: flex;
     font-size: 20px;
   }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .input {
