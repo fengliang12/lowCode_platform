@@ -37,7 +37,8 @@ export const useUserStore = defineStore('userStore', {
         await menuStore.generateSystemMenus(result.data.roleId)
         const buttonStore = useButtonStore()
         await buttonStore.generateButtons(result.data.permissions)
-        router.push({ path: '/index' })
+        // router.push({ path: '/index' })
+        router.push({ path: '/pageSetting/pageIndex/edit' })
       })
     },
     loginByToken(authorization: string) {

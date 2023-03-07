@@ -1,68 +1,199 @@
 <template>
-  <el-upload
-    class="avatar-uploader"
-    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :before-upload="beforeAvatarUpload"
-  >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-    <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-  </el-upload>
+  <div>
+    <el-upload
+      action=""
+      :list-type="listType"
+      :show-file-list="showFileList"
+      :multiple="multiple"
+      :before-upload="beforeUpload"
+      :http-request="handleUpload"
+      :on-success="MonSuccess"
+      :on-error="MonError"
+      :on-change="MonChange"
+      :on-remove="MonRemove"
+      class="avatar-uploader"
+    >
+      <template #default>
+        <div v-if="data.onUploading" class="progress">
+          <div class="elProgress">
+            <el-progress
+              type="circle"
+              :width="65"
+              :percentage="data.progressNum"
+            />
+          </div>
+          <div class="abort" @click.stop="abortUploadFn">取消上传</div>
+        </div>
+        <el-icon v-if="!url" class="el-icon-plus avatar-uploader-icon"
+          ><Plus
+        /></el-icon>
+        <div v-if="url && typeUrlString" class="avatar_box">
+          <img class="avatar" :src="url" alt="上传图片" />
+          <span class="el-upload-list__item-actions">
+            <span
+              class="el-upload-list__item-preview"
+              @click.stop="handlePictureCardPreview(url)"
+            >
+              <el-icon><zoom-in /></el-icon>
+            </span>
+            <!-- 编辑 -->
+            <span class="el-upload-list__item-preview">
+              <el-icon><Edit /></el-icon>
+            </span>
+            <span
+              class="el-upload-list__item-preview"
+              @click.stop="handleRemove(url)"
+            >
+              <el-icon><Delete /></el-icon>
+            </span>
+          </span>
+        </div>
+      </template>
+    </el-upload>
+
+    <el-dialog v-model="dialogVisible">
+      <img w-full :src="data.dialogImageUrl" alt="Preview Image" />
+    </el-dialog>
+  </div>
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue'
+import { uploadFile } from '@/api/Upload/index'
+import { fileInfo } from './handle.js'
 import { ElMessage } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
+const emit = defineEmits(['update:url'])
+const props = defineProps({
+  url: {
+    default: '',
+  },
+  // 是否多选
+  multiple: {
+    value: Boolean,
+    default: false,
+  },
+  onlyUpload: {
+    value: Boolean,
+    default: false,
+  },
+  showFileList: {
+    value: Boolean,
+    default: false,
+  },
+  listType: {
+    value: String,
+    default: 'picture-card', // text/picture/picture-card
+  },
+  initFileType: {
+    value: String,
+    default: '',
+  },
+  maxSize: {
+    // 文件大小
+    value: Number,
+    default: 0,
+  },
+})
 
-import type { UploadProps } from 'element-plus'
+const dialogVisible = ref(false)
 
-const imageUrl = ref('')
+const data = reactive({
+  onUploading: false,
+  progressNum: 0,
+  dialogImageUrl: '',
+  currentFile: null,
+  selectFileType: '',
+  typeObj: {
+    image: {
+      name: '图片',
+      maxSize: 1000,
+    },
+    video: {
+      name: '视频',
+      maxSize: 10000,
+    },
+    audio: {
+      name: '音频',
+      maxSize: 10000,
+    },
+  },
+})
 
-const handleAvatarSuccess: UploadProps['onSuccess'] = (uploadFile) => {
-  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+/**
+ * 取消上传
+ */
+const abortUploadFn = () => {}
+
+// 判断url是不是字符串
+const typeUrlString = computed(() => {
+  return !(props.url instanceof Array)
+})
+
+/**
+ * 文件上传之前，进行类型校验、文件大小校验，返回false、或者promise.reject不会再上传
+ */
+const beforeUpload = (file) => {
+  console.log(file)
+  let { initFileType } = props
+  if (initFileType && !file.type.includes(initFileType)) {
+    console.log(2)
+    ElMessage.error(`上传${data.typeObj[initFileType].name}格式!`)
+    return Promise.reject()
+  }
+  let type = file.type.split('/')[0]
+  //验证是否为限制类型
+  if (!Object.keys(data.typeObj).includes(type)) {
+    console.log(3)
+    ElMessage.error(
+      `上传  ${Object.values(data.typeObj)
+        .map((elem) => elem.name)
+        .join('/')}  格式!`,
+    )
+    return Promise.reject()
+  }
+  const maxFileSize = props.maxSize || data.typeObj[type].maxSize
+  const isLt500KB = file.size / 1024 < maxFileSize
+  if (!isLt500KB) {
+    ElMessage.warning(`文件大小最好不要超过${maxFileSize}KB，请压缩后上传!`)
+    return Promise.resolve()
+  }
+  data.currentFile = file
+  data.selectFileType = type
 }
 
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
-    return false
-  }
-  return true
+/**
+ * 覆盖默认的上传行为，可以自定义上传的实现
+ */
+const handleUpload = async ({ file }) => {
+  file = data.currentFile || file
+  const el = await fileInfo(data.selectFileType, file)
+  console.log('el', el)
+  let form = new FormData()
+  form.append('file', file)
+  const res = await uploadFile(form)
+  console.log('上传路径', res?.data?.data?.url)
+  emit('update:url', res?.data?.data?.url)
+}
+
+/**
+ * 文件上传成功回调
+ */
+const MonSuccess = (response, file, fileList) => {
+  console.log(response, file, fileList)
+}
+const MonError = () => {}
+const MonChange = () => {}
+const MonRemove = () => {}
+
+const handleRemove = (url) => {
+  console.log(url)
+}
+
+const handlePictureCardPreview = (url) => {
+  data.dialogImageUrl = url
+  dialogVisible.value = true
 }
 </script>
-
-<style scoped>
-.avatar-uploader .avatar {
-  display: block;
-  width: 178px;
-  height: 178px;
-}
-</style>
-
-<style>
-.avatar-uploader .el-upload {
-  position: relative;
-  overflow: hidden;
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  transition: var(--el-transition-duration-fast);
-  cursor: pointer;
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
-
-.el-icon.avatar-uploader-icon {
-  width: 178px;
-  height: 178px;
-  font-size: 28px;
-  text-align: center;
-  color: #8c939d;
-}
+<style lang="scss">
+@import './index.scss';
 </style>

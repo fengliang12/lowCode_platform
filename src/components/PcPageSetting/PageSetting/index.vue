@@ -131,10 +131,9 @@ watch(
       backgroundRepeat,
       backgroundSize,
     })
+    console.log('pageStyle.value', pageStyle.value)
   },
-  {
-    deep: true,
-  },
+  { deep: true },
 )
 
 /**

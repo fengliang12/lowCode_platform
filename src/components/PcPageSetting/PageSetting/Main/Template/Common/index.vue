@@ -8,7 +8,7 @@
       data.moduleType === 'scrollView' &&
       !data.scrollView.enableFlex &&
       'scroll'
-    } ${animateValue ? `${animateValue}` : ''} ${data.code} ${stickyStyle}`"
+    } ${animateValue ? `${animateValue}` : ''}`"
     :style="`${style};display:${data.hide ? 'none' : ''}`"
     ref="buttonRef"
     @click="click"
@@ -112,7 +112,7 @@ import { onMounted } from 'vue'
 
 const props = defineProps(['data', 'showHotBox', 'parents'])
 const pageSetupStore = usePageSetupStore()
-
+const animateValue = ref('')
 /**
  * 页面展示不需要特殊处理的,只需要展示样式功能即可的
  */
