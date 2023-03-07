@@ -66,6 +66,7 @@
 
     <!-- 热区模块 -->
     <HotView
+      v-if="modelValue.hotModuleSettings"
       v-model="modelValue.hotModuleSettings"
       v-model:visible="showHotView"
       :imgUrl="modelValue.firstFrameVideo || modelValue.imgUrl"

@@ -6,7 +6,6 @@
     append-to-body
     :show-close="true"
     destroy-on-close
-    custom-class="hotViewElDialog"
   >
     <div class="contentBox" ref="hotViewElDialogRef">
       <!-- 左边热区绘制 -->

@@ -54,6 +54,8 @@
     <el-dialog v-model="dialogVisible">
       <img w-full :src="data.dialogImageUrl" alt="Preview Image" />
     </el-dialog>
+
+    <canvas ref="canvasRef" style="display: none"></canvas>
   </div>
 </template>
 <script setup>
@@ -62,6 +64,7 @@ import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue'
 import { uploadFile } from '@/api/Upload/index'
 import { fileInfo } from './handle.js'
 import { ElMessage } from 'element-plus'
+import { floor } from 'lodash-es'
 const emit = defineEmits(['update:url'])
 const props = defineProps({
   url: {
@@ -92,6 +95,12 @@ const props = defineProps({
     // 文件大小
     value: Number,
     default: 0,
+  },
+  onSuccess: {
+    value: Function,
+    default: function () {
+      return () => {}
+    },
   },
 })
 
@@ -171,8 +180,91 @@ const handleUpload = async ({ file }) => {
   let form = new FormData()
   form.append('file', file)
   const res = await uploadFile(form)
+  if (!res?.data) return
+
+  let firstFrameVideo = ''
+  if (data.selectFileType === 'video') {
+    firstFrameVideo = await createFirstFrameVideo(el).catch((err) => {
+      console.error('上传首帧图失败', err)
+    })
+  }
+  emitCallback(res?.data?.data?.url, firstFrameVideo, el)
   console.log('上传路径', res?.data?.data?.url)
-  emit('update:url', res?.data?.data?.url)
+}
+
+const canvasRef = ref(null)
+const createFirstFrameVideo = (el) => {
+  return new Promise((resole) => {
+    el.currentTime = 0.5
+    el.addEventListener('canplay', async () => {
+      const ctx = canvasRef.value
+      ctx.width = el.videoWidth
+      ctx.height = el.videoHeight
+      ctx.getContext('2d').drawImage(el, 0, 0, el.videoWidth, el.videoHeight)
+      // this.testUrl = ctx.toDataURL("image/png");
+      const file = dataURLtoFile(
+        ctx.toDataURL('image/jpeg'),
+        Date.now().toString() + '.jpeg',
+      )
+      let form = new FormData()
+      form.append('file', file)
+      const res = await uploadFile(form)
+      resole(res?.data?.data?.url)
+    })
+  })
+}
+
+//上传图片
+const dataURLtoFile = (dataUrl, filename) => {
+  let arr = dataUrl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  return new File([u8arr], filename, { type: mime })
+}
+
+const emitCallback = (url, firstFrameVideo = '', el) => {
+  const { height = 150, width = 0 } = el
+  const ratio = floor(width / height, 4)
+  el.width = floor(width, 2)
+  el.height = floor(height, 2)
+  //只用于上传
+  if (props.onlyUpload) {
+    props.onSuccess({
+      url: url,
+      firstFrameVideo,
+      fileType: data.selectFileType,
+      el,
+      ratio,
+    })
+    return
+  }
+  if (typeUrlString.value) {
+    console.log(1)
+    emit('update:url', url)
+    props.onSuccess({
+      url: url,
+      firstFrameVideo,
+      fileType: data.selectFileType,
+      el,
+      ratio,
+    })
+  } else {
+    const arr = props.url
+    arr.push(item)
+    emit('update:url', arr)
+    props.onSuccess({
+      url: arr,
+      firstFrameVideo,
+      fileType: data.selectFileType,
+      el,
+      ratio,
+    })
+  }
 }
 
 /**
