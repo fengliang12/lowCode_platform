@@ -21,6 +21,7 @@ export default (obj, ratio = 0.5) => {
   }
   for (let key in obj) {
     if ((!obj[key] && obj[key] !== 0) || key === 'custom') continue
+    let lowerKey = key.replace(/([A-Z])/g, '-$1').toLowerCase()
     //渐变色背景色
     if (
       obj[key]?.indexOf &&
@@ -29,16 +30,16 @@ export default (obj, ratio = 0.5) => {
     ) {
       style = `${style}background:${obj[key]};`
     } else if (key === 'backgroundImage') {
-      style = `${style}${key}:url(${obj[key]});`
+      style = `${style}${lowerKey}:url(${obj[key]});`
     } else if (key === 'position' && obj[key] === 'fixed') {
       style = `${style}${key}:absolute;`
     } else if (mapping[key] && setMargin) {
       style = `${style}${mapping[key]}:${obj[key] * ratio}px;`
     } else if (isNumber(obj[key]) && key !== 'zIndex') {
-      style = `${style}${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:
+      style = `${style}${lowerKey}:
       ${obj[key] * ratio}px;`
     } else {
-      style = `${style}${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:
+      style = `${style}${lowerKey}:
       ${obj[key]};`
     }
   }

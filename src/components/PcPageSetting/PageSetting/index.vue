@@ -65,11 +65,11 @@
         @click="setPageSetting"
         >页面编辑</el-button
       >
-      <ModuleSetting
+      <!-- <ModuleSetting
         v-show="tabBoxSetting === 'mode'"
         v-model="pageSetupStore.items.value"
         :parents="pageSetupStore.items.parents"
-      ></ModuleSetting>
+      ></ModuleSetting> -->
 
       <PageFormSetting
         v-show="tabBoxSetting === 'page'"
@@ -110,28 +110,29 @@ const props = defineProps({
   },
 })
 
+console.log('props.detail', props.detail)
+
 watch(
   () => props.detail.pageStyle,
   (val) => {
-    // let {
-    //   color,
-    //   fontSize,
-    //   fontWeight,
-    //   backgroundColor,
-    //   backgroundImage,
-    //   backgroundRepeat,
-    //   backgroundSize,
-    // } = val
-    // pageStyle.value = handleStyle({
-    //   color,
-    //   fontSize,
-    //   fontWeight,
-    //   backgroundColor,
-    //   backgroundImage,
-    //   backgroundRepeat,
-    //   backgroundSize,
-    // })
-    console.log(val)
+    let {
+      color,
+      fontSize,
+      fontWeight,
+      backgroundColor,
+      backgroundImage,
+      backgroundRepeat,
+      backgroundSize,
+    } = val
+    pageStyle.value = handleStyle({
+      color,
+      fontSize,
+      fontWeight,
+      backgroundColor,
+      backgroundImage,
+      backgroundRepeat,
+      backgroundSize,
+    })
   },
   { deep: true },
 )

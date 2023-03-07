@@ -65,7 +65,7 @@ import PageSetupApi from './PageSetupApi/index.vue'
 
 const props = defineProps(['detail'])
 const pageSetupStore = usePageSetupStore()
-const pageFormData = ref(initPageData())
+const pageFormData = ref()
 
 /**
  * 初始化页面数据
@@ -86,8 +86,11 @@ const handlePageData = (data, initData) => {
 watch(
   () => props.detail,
   (val) => {
-    pageFormData.value = handlePageData(cloneDeep(val), initPageData())
+    pageFormData.value = handlePageData(val, initPageData())
     pageSetupStore.setPageNewParams(val.params)
+  },
+  {
+    immediate: true,
   },
 )
 
