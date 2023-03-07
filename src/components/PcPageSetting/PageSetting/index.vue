@@ -113,25 +113,25 @@ const props = defineProps({
 watch(
   () => props.detail.pageStyle,
   (val) => {
-    let {
-      color,
-      fontSize,
-      fontWeight,
-      backgroundColor,
-      backgroundImage,
-      backgroundRepeat,
-      backgroundSize,
-    } = val
-    pageStyle.value = handleStyle({
-      color,
-      fontSize,
-      fontWeight,
-      backgroundColor,
-      backgroundImage,
-      backgroundRepeat,
-      backgroundSize,
-    })
-    console.log('pageStyle.value', pageStyle.value)
+    // let {
+    //   color,
+    //   fontSize,
+    //   fontWeight,
+    //   backgroundColor,
+    //   backgroundImage,
+    //   backgroundRepeat,
+    //   backgroundSize,
+    // } = val
+    // pageStyle.value = handleStyle({
+    //   color,
+    //   fontSize,
+    //   fontWeight,
+    //   backgroundColor,
+    //   backgroundImage,
+    //   backgroundRepeat,
+    //   backgroundSize,
+    // })
+    console.log(val)
   },
   { deep: true },
 )
@@ -173,8 +173,6 @@ watch(
   () => props.detail,
   (val) => {
     // 刷新接口
-    pageSetupStore.changeAloneAPIList()
-    pageSetupStore.setPageNewParams([])
     formData.value = initResData(val.moduleSettings)
     val.moduleSetting = formData.value
     //根据已经存在的值,遍历出itemMaps值
