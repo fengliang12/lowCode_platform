@@ -10,6 +10,7 @@ import { useButtonStore } from './store/useButtonStore'
 import uploadFile from './components/upload'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import 'default-passive-events'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

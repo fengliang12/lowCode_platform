@@ -66,7 +66,6 @@
 
     <!-- 热区模块 -->
     <HotView
-      v-if="showHotView"
       v-model="modelValue.hotModuleSettings"
       v-model:visible="showHotView"
       :imgUrl="modelValue.firstFrameVideo || modelValue.imgUrl"
@@ -85,8 +84,8 @@ import { handleUploadSuccessInfo } from '../../Handle/upload'
 import FormCreate from '@/components/FormCreate/index.vue'
 import { imageConfigData, imageConfigFormList } from './data'
 
-const props = defineProps(['modelValue', 'showPageBoxSetting'])
 const emit = defineEmits(['success'])
+const props = defineProps(['modelValue', 'showPageBoxSetting'])
 const formLabelWidth = inject('formLabelWidth', 110)
 
 /**
@@ -103,7 +102,7 @@ const uploadSuccessCallback = (e) => {
  */
 const showHotView = ref(false)
 const setShowHotView = () => {
-  if (!props.modelValue.imgUrl) {
+  if (!props.modelValue?.imgUrl) {
     ElMessage.error('请先上传文件')
     return
   }

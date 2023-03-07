@@ -28,11 +28,11 @@
             @confirm="delOnceFromList(scope.row)"
           >
             <template #reference>
-              <el-button type="text">删除</el-button>
+              <el-button type="primary">删除</el-button>
             </template>
           </el-popconfirm>
           <el-button
-            type="text"
+            type="primary"
             size="small"
             style="margin-left: 15px"
             @click="clickWriteApi(scope.row, true)"

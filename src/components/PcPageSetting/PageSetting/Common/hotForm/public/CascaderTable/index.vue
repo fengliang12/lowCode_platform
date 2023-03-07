@@ -18,11 +18,13 @@
       ></el-table-column>
       <el-table-column label="操作" width="180">
         <template v-slot="$scope">
-          <el-button type="text" @click="handleEditRow($scope)">修改</el-button>
-          <el-button type="text" @click="handleAddChild($scope)"
+          <el-button type="primary" @click="handleEditRow($scope)"
+            >修改</el-button
+          >
+          <el-button type="primary" @click="handleAddChild($scope)"
             >添加子选项</el-button
           >
-          <el-button type="text" @click="handleDeleteRow($scope)"
+          <el-button type="primary" @click="handleDeleteRow($scope)"
             >删除</el-button
           >
         </template>

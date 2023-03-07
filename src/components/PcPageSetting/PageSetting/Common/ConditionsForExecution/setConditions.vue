@@ -149,7 +149,12 @@ const idMapParent = reactive([])
 /**
  *  递归获取id对应父级
  */
-const setIdMapParent = (data, index = 0, pId = 0, parent) => {
+const setIdMapParent = (
+  data = props.modelValue,
+  index = 0,
+  pId = 0,
+  parent,
+) => {
   const id = !pId ? 1 : pId * 100 + index
   if (pId !== 0) {
     idMapParent[id] = parent
@@ -169,7 +174,6 @@ watch(
   },
   {
     immediate: true,
-    deep: true,
   },
 )
 
@@ -197,6 +201,7 @@ const typeChange = (row) => {
  */
 const add = (row) => {
   row.child.push(new ConditionsData({}))
+  setIdMapParent()
 }
 
 /**
@@ -209,6 +214,7 @@ const deleteChild = (row) => {
     1,
   )
   delete idMapParent[row.id]
+  setIdMapParent()
 }
 
 /**

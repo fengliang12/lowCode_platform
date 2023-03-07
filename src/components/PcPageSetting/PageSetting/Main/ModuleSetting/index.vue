@@ -163,7 +163,7 @@ import componentsMapping from '../../CommonData/componentsMapping'
 import { usePageSetupStore } from '@/store'
 import { merge } from 'lodash'
 
-const props = defineProps(['modelValue'])
+const props = defineProps(['modelValue', 'parents'])
 const emit = defineEmits(['update:modelValue'])
 const pageSetupStore = usePageSetupStore()
 const optionUploadImage = ref(true)
@@ -174,8 +174,7 @@ const activeName = ref('attribute')
  */
 const items = computed({
   get() {
-    console.log('选中的组件', props.modelValue)
-    return props.modelValue?.code ? props.modelValue : null
+    return props.modelValue
   },
   set(val) {
     emit('update:modelValue', merge(props.modelValue, val))
@@ -196,7 +195,6 @@ watch(
  */
 const tabNameList = computed(() => {
   if (!items.value.moduleType) return []
-
   const commonList = ['attribute', 'styleSetting', 'events']
   const tabList = {
     common: ['setData'],

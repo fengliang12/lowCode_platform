@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-show="visible"
+    :model-value="visible"
     title="热区"
     @close="close"
     append-to-body
@@ -132,8 +132,8 @@ import HotForm from '../hotForm/index.vue'
 import { showTypeList } from '../setData/common/pageData'
 import posData, { hotTypeList } from './data'
 
-const props = defineProps(['modelValue', 'visible', 'imgUrl'])
 const emit = defineEmits(['update:modelValue', 'update:visible'])
+const props = defineProps(['modelValue', 'visible', 'imgUrl'])
 const formLabelWidth = inject('formLabelWidth', 100)
 
 const lineList = ['top', 'right', 'bottom', 'left']

@@ -28,13 +28,6 @@ pageSetupStore.id = route.query?.id || ''
  * 监听detail,如果有变化那就是修改了detail
  */
 const detail = ref({})
-watch(
-  () => detail,
-  () => {
-    pageSetupStore.changeInfo = true
-  },
-  { deep: true },
-)
 
 onMounted(() => {
   initPageSetupApi()

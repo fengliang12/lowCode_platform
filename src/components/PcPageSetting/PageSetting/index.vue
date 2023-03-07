@@ -110,6 +110,8 @@ const props = defineProps({
   },
 })
 
+console.log('props.detail', props.detail)
+
 watch(
   () => props.detail.pageStyle,
   (val) => {
@@ -132,9 +134,7 @@ watch(
       backgroundSize,
     })
   },
-  {
-    deep: true,
-  },
+  { deep: true },
 )
 
 /**
@@ -174,8 +174,6 @@ watch(
   () => props.detail,
   (val) => {
     // 刷新接口
-    pageSetupStore.changeAloneAPIList()
-    pageSetupStore.setPageNewParams([])
     formData.value = initResData(val.moduleSettings)
     val.moduleSetting = formData.value
     //根据已经存在的值,遍历出itemMaps值

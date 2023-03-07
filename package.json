@@ -17,6 +17,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "axios": "^1.2.5",
+    "default-passive-events": "^2.0.0",
     "echarts": "^5.4.1",
     "element-plus": "^2.2.28",
     "indexdbwrapper": "^1.0.4",
