@@ -8,6 +8,7 @@ import 'element-plus/dist/index.css'
 import i18n from './i18n'
 import { useButtonStore } from './store/useButtonStore'
 import uploadFile from './components/upload'
+import attributeComponents from '@/components/PcPageSetting/PageSetting/Common/hotForm/public/index.js'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'default-passive-events'
@@ -17,7 +18,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
-app.use(uploadFile)
+app.use(uploadFile).use(attributeComponents)
 
 app.use(createPinia()).use(router).use(ElementPlus).use(i18n).mount('#app')
 

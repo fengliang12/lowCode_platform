@@ -113,6 +113,7 @@ import { onMounted } from 'vue'
 const props = defineProps(['data', 'showHotBox', 'parents'])
 const pageSetupStore = usePageSetupStore()
 const animateValue = ref('')
+
 /**
  * 页面展示不需要特殊处理的,只需要展示样式功能即可的
  */

@@ -65,11 +65,7 @@
         @click="setPageSetting"
         >页面编辑</el-button
       >
-      <ModuleSetting
-        v-show="tabBoxSetting === 'mode'"
-        v-model="pageSetupStore.items.value"
-        :parents="pageSetupStore.items.parents"
-      ></ModuleSetting>
+      <ModuleSetting v-show="tabBoxSetting === 'mode'"></ModuleSetting>
 
       <PageFormSetting
         v-show="tabBoxSetting === 'page'"

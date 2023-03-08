@@ -1,7 +1,6 @@
 <template>
   <el-dialog
     :model-value="visible"
-    title="热区"
     @close="close"
     append-to-body
     :show-close="true"
@@ -444,112 +443,5 @@ const save = () => {
 </script>
 
 <style lang="scss">
-.el-dialog {
-  width: 90%;
-  margin: auto;
-  margin-top: 2vh !important;
-}
-.hotViewDiv {
-  border: 1px solid red;
-  position: absolute;
-  z-index: 10;
-  background-size: 100% !important;
-}
-
-.contentBox {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  height: 80vh;
-  overflow-x: scroll;
-}
-
-#imgBox {
-  width: 750px;
-  min-width: 750px;
-  position: relative;
-  box-sizing: border-box;
-  height: 100%;
-  overflow-y: scroll;
-
-  .img {
-    display: block;
-    width: 100%;
-  }
-  .bgImg {
-    position: relative;
-    width: 100%;
-  }
-  .on {
-    border: 1px solid #1989fa;
-  }
-  .delHot {
-    cursor: pointer;
-    position: absolute;
-    right: -10px;
-    top: -10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    border: none;
-  }
-}
-
-#imgBox::-webkit-scrollbar {
-  display: none;
-}
-
-.form {
-  min-width: 300px;
-  width: calc(95% - 750px);
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.form::-webkit-scrollbar {
-  display: none;
-}
-
-.lineBox {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  $width: 4px;
-  .line {
-    position: absolute;
-  }
-  .top {
-    width: 100%;
-    height: $width;
-    top: 0;
-    left: 0;
-    cursor: ns-resize;
-  }
-  .right {
-    top: 0;
-    right: 0;
-    width: $width;
-    cursor: ew-resize;
-    height: 100%;
-  }
-  .left {
-    top: 0;
-    left: 0;
-    width: $width;
-    cursor: ew-resize;
-    height: 100%;
-  }
-  .bottom {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: $width;
-    cursor: ns-resize;
-  }
-}
+@import './index.scss';
 </style>

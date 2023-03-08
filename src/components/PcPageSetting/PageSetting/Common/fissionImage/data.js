@@ -65,11 +65,11 @@ export const imageConfigFormList = [
     field: 'lazyLoad',
     type: 'el-select',
     title: '懒加载',
-    defaultValue: null,
+    defaultValue: false,
     options: [
       {
         label: '关闭',
-        value: null,
+        value: false,
       },
       {
         label: '开启',
@@ -81,11 +81,11 @@ export const imageConfigFormList = [
     field: 'showMenuByLongpress',
     type: 'el-select',
     title: '开启长按识别',
-    defaultValue: null,
+    defaultValue: false,
     options: [
       {
         label: '关闭',
-        value: null,
+        value: false,
       },
       {
         label: '开启',

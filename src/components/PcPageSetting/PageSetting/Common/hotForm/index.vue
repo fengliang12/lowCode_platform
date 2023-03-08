@@ -1,5 +1,5 @@
 <template>
-  <FormCreate v-model="valueData" :formList="formItemList"></FormCreate>
+  <FormCreate v-model="valueData" :formList="formList"></FormCreate>
 </template>
 
 <script setup>
@@ -20,6 +20,7 @@ const valueData = computed({
     return props.modelValue
   },
   set(val) {
+    console.log('表单', val)
     emit('update:modelValue', val)
   },
 })
@@ -53,7 +54,7 @@ const commonFormItem = [
 /**
  * 表单配置
  */
-const formItemList = reactive([
+const formList = reactive([
   {
     field: 'key',
     title: 'key值',
@@ -66,7 +67,7 @@ const formItemList = reactive([
     props: {
       placeholder: '请选择类型',
     },
-    option: formTypeList,
+    options: formTypeList,
     on: {
       change: (e) => {
         props.modelValue.attribute = new formTypeKeyMapClass[e].class()
@@ -75,15 +76,17 @@ const formItemList = reactive([
     },
     control: [
       {
-        handle(type) {
-          return type === 'input'
+        handle(val) {
+          console.log(val)
+
+          return val === 'Input'
         },
-        formItemList: [
+        formList: [
           ...commonFormItem,
           {
             field: 'attribute',
             type: 'object',
-            formItemList: [
+            formList: [
               {
                 field: 'pageValue',
                 title: '默认值',
@@ -179,7 +182,7 @@ const formItemList = reactive([
         handle(type) {
           return type == 'Date'
         },
-        formItemList: [
+        formList: [
           ...commonFormItem,
           {
             //默认值
@@ -193,12 +196,12 @@ const formItemList = reactive([
           },
           {
             field: 'start',
-            type: 'a-date',
+            type: 'ADate',
             title: '开始时间',
           },
           {
             field: 'end',
-            type: 'a-date',
+            type: 'ADate',
             title: '结束时间',
           },
         ],
@@ -207,7 +210,7 @@ const formItemList = reactive([
         handle(type) {
           return type == 'OmsAddress'
         },
-        formItemList: [
+        formList: [
           {
             type: 'object',
             field: 'attribute',
@@ -235,7 +238,7 @@ const formItemList = reactive([
         handle(type) {
           return type == 'Cascader'
         },
-        formItemList: [
+        formList: [
           {
             type: 'object',
             field: 'attribute',

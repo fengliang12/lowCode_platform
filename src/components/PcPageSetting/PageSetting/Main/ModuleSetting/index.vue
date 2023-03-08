@@ -1,19 +1,19 @@
 <template>
   <el-tabs
-    v-if="items"
+    v-if="selectedItem"
     v-model="activeName"
     class="demo-tabs"
     @tab-click="handleClick"
   >
     <!-- 属性 -->
     <el-tab-pane label="属性" name="attribute">
-      <Attribute v-model="items"></Attribute>
+      <Attribute v-model="selectedItem"></Attribute>
     </el-tab-pane>
 
     <!-- 样式配置 -->
     <el-tab-pane label="样式" name="styleSetting">
       <StyleSetting
-        v-model="items.pageStyle"
+        v-model="selectedItem.pageStyle"
         v-bind="styleSettingProps"
       ></StyleSetting>
     </el-tab-pane>
@@ -31,11 +31,11 @@
       </el-row>
       <el-form v-if="optionUploadImage">
         <FissionImage
-          v-model="items.imageSetting"
+          v-model="selectedItem.imageSetting"
           @success="imageSuccess"
         ></FissionImage>
       </el-form>
-      <SetData v-else v-model="items.pageValue"></SetData>
+      <SetData v-else v-model="selectedItem.pageValue"></SetData>
     </el-tab-pane>
 
     <!-- 内容配置 -->
@@ -44,7 +44,7 @@
       label="内容配置"
       name="setData"
     >
-      <SetData v-model="items.pageValue" />
+      <SetData v-model="selectedItem.pageValue" />
     </el-tab-pane>
 
     <!-- 轮播配置 -->
@@ -53,7 +53,7 @@
       name="swiperSetting"
       label="轮播配置"
     >
-      <SwiperSetting v-model="items.carousel"></SwiperSetting>
+      <SwiperSetting v-model="selectedItem.carousel"></SwiperSetting>
     </el-tab-pane>
 
     <!-- 轮播子图 -->
@@ -62,7 +62,10 @@
       name="childList"
       label="轮播子图"
     >
-      <ChildList v-model="items.moduleSettings" :parents="items"></ChildList>
+      <ChildList
+        v-model="selectedItem.moduleSettings"
+        :parents="selectedItem"
+      ></ChildList>
     </el-tab-pane>
 
     <!-- 微信按钮 -->
@@ -71,7 +74,7 @@
       name="buttonType"
       label="按钮类型"
     >
-      <ButtonType v-model="items.buttonType"></ButtonType>
+      <ButtonType v-model="selectedItem.buttonType"></ButtonType>
     </el-tab-pane>
 
     <!-- 指示点配置 -->
@@ -80,7 +83,7 @@
       name="indicator"
       label="指示点配置"
     >
-      <Indicator v-model="items.indicator"></Indicator>
+      <Indicator v-model="selectedItem.indicator"></Indicator>
     </el-tab-pane>
 
     <!-- 可移动区域 -->
@@ -89,7 +92,7 @@
       name="movableArea"
       label="可移动区域"
     >
-      <MovableArea v-model="items.movableArea"></MovableArea>
+      <MovableArea v-model="selectedItem.movableArea"></MovableArea>
     </el-tab-pane>
 
     <!-- 可移动的视图容器 -->
@@ -98,7 +101,7 @@
       name="movableView"
       label="视图容器"
     >
-      <MovableView v-model="items.movableView"></MovableView>
+      <MovableView v-model="selectedItem.movableView"></MovableView>
     </el-tab-pane>
 
     <!-- 进度条 -->
@@ -108,7 +111,7 @@
       label="进度条"
     >
       <Progress
-        v-model="items.progress"
+        v-model="selectedItem.progress"
         :strokeWidth="modelValue.pageStyle.width"
         :borderRadius="modelValue.pageStyle.borderRadius"
       ></Progress>
@@ -121,8 +124,8 @@
       label="滚动条"
     >
       <ScrollView
-        v-model="items.scrollView"
-        :moduleSettings="items.moduleSettings"
+        v-model="selectedItem.scrollView"
+        :moduleSettings="selectedItem.moduleSettings"
       ></ScrollView>
     </el-tab-pane>
 
@@ -132,12 +135,12 @@
       name="richText"
       label="富文本"
     >
-      <RichText v-model="items.richText"></RichText>
+      <RichText v-model="selectedItem.richText"></RichText>
     </el-tab-pane>
 
     <!-- 事件 -->
     <el-tab-pane name="events" label="事件">
-      <EventCommon v-model="items.events"></EventCommon>
+      <EventCommon v-model="selectedItem.events"></EventCommon>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -163,8 +166,6 @@ import componentsMapping from '../../CommonData/componentsMapping'
 import { usePageSetupStore } from '@/store'
 import { merge } from 'lodash'
 
-const props = defineProps(['modelValue', 'parents'])
-const emit = defineEmits(['update:modelValue'])
 const pageSetupStore = usePageSetupStore()
 const optionUploadImage = ref(true)
 const activeName = ref('attribute')
@@ -172,17 +173,18 @@ const activeName = ref('attribute')
 /**
  * 处理中组件的数据
  */
-const items = computed({
+const selectedItem = computed({
   get() {
-    return props.modelValue
+    return pageSetupStore.items.value
   },
   set(val) {
-    emit('update:modelValue', merge(props.modelValue, val))
+    console.log('处理中组件的数据', val)
+    pageSetupStore.items.value = merge(pageSetupStore.items.value, val)
   },
 })
 
 watch(
-  () => props.modelValue,
+  () => pageSetupStore.items.value,
   () => {
     activeName.value = 'attribute'
   },
@@ -194,7 +196,7 @@ watch(
  * 根据不同组件显示不同的tab
  */
 const tabNameList = computed(() => {
-  if (!items.value.moduleType) return []
+  if (!selectedItem.value.moduleType) return []
   const commonList = ['attribute', 'styleSetting', 'events']
   const tabList = {
     common: ['setData'],
@@ -212,7 +214,7 @@ const tabNameList = computed(() => {
     movableView: ['movableView'],
     richText: ['richText'],
   }
-  return [...tabList[items.value.moduleType], ...commonList]
+  return [...tabList[selectedItem.value.moduleType], ...commonList]
 })
 
 /**
@@ -221,14 +223,14 @@ const tabNameList = computed(() => {
 const styleSettingProps = computed(() => {
   return {
     font:
-      items.value.moduleType === 'text' ||
-      items.value.moduleType === 'common' ||
-      items.value.moduleType === 'qrCode',
+      selectedItem.value.moduleType === 'text' ||
+      selectedItem.value.moduleType === 'common' ||
+      selectedItem.value.moduleType === 'qrCode',
     bg:
-      items.value.moduleType !== 'progress' ||
-      items.value.moduleType !== 'scrollView',
-    flex: items.value.modelValue !== 'progress',
-    ratio: items.value?.imageSetting?.ratio || 0,
+      selectedItem.value.moduleType !== 'progress' ||
+      selectedItem.value.moduleType !== 'scrollView',
+    flex: selectedItem.value.modelValue !== 'progress',
+    ratio: selectedItem.value?.imageSetting?.ratio || 0,
   }
 })
 
@@ -237,9 +239,11 @@ const styleSettingProps = computed(() => {
  * @param {*} e
  */
 const imageSuccess = (e) => {
-  const newHeight = (items.value.pageStyle.width / e.ratio).toFixed(0)
-  if (items.value.moduleType === 'hot') {
-    items.value.pageStyle.height = newHeight
+  const newHeight = Number(
+    (selectedItem.value.pageStyle.width / e.ratio).toFixed(0),
+  )
+  if (selectedItem.value.moduleType === 'hot') {
+    selectedItem.value.pageStyle.height = newHeight
   }
 
   //父元素高度跟随子元素最大高度变化

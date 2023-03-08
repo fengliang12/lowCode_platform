@@ -1,13 +1,12 @@
-import { defineAsyncComponent } from 'vue'
+// 批量全局注册组件：https://juejin.cn/post/7162741138883870733
 let files = import.meta.globEager('./**/*.vue')
 export default {
   install(app) {
-    console.log('1111', app)
     Object.keys(files).forEach((key) => {
       let name = key.split('/')[1]
       let value = files[key]
       console.log(name, value)
-      app.component(name, defineAsyncComponent(value))
+      app.component(name, value.default)
     })
   },
 }

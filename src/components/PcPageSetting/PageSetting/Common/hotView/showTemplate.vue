@@ -14,7 +14,7 @@
         "
       />
       <template v-else>
-        {{ handlePageValue(pageValue) }}
+        {{ handlePageValue(value.pageShowData.pageValue) }}
       </template>
     </template>
   </div>

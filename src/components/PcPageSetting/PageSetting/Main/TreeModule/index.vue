@@ -169,6 +169,7 @@ const del = (data, node) => {
         value: null,
       })
     }
+    refreshElTree()
   })
 }
 

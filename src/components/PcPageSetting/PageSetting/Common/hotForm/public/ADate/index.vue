@@ -1,11 +1,6 @@
 <template>
   <div class="flex">
-    <el-select
-      v-model="modelValue.type"
-      placeholder="选择类型"
-      @change="dateChange"
-      class="mr10"
-    >
+    <el-select v-model="modelValue.type" placeholder="选择类型" class="mr10">
       <el-option
         v-for="item in dateTypeList"
         :key="item.value"
@@ -28,14 +23,14 @@
     <!-- 相对日期 -->
     <el-input-number
       class="mr10"
-      style="width: 200px;"
-      v-if="value.type === 'relative'"
-      v-model="value.value"
+      style="width: 200px"
+      v-if="modelValue.type === 'relative'"
+      v-model="modelValue.value"
       placeholder="输入自定义内容"
     />
 
     <el-tooltip
-      v-if="value.type === 'relative'"
+      v-if="modelValue.type === 'relative'"
       content="正数为相对当前日期往后推几天，负数为相对当前日期往前推几天"
       placement="top-start"
     >
@@ -47,7 +42,7 @@
 
 <script setup>
 import { reactive } from 'vue'
-const props = defineProps(['modelValue'])
+defineProps(['modelValue'])
 
 /**
  * 日期类型
@@ -62,12 +57,5 @@ const dateTypeList = reactive([
     value: 'fixed',
   },
 ])
-
-/**
- * 日期选择
- */
-const dateChange = () => {
-  props.modelValue.value = ''
-}
 </script>
 <style lang="scss" scoped></style>

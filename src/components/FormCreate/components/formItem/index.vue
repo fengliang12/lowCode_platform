@@ -15,7 +15,7 @@
       v-model:nodes="valueData"
       v-bind="{ clearable: true, filterable: true, ...formItem.props }"
       :options="formItem.options"
-      v-on="formItem.on ?? {}"
+      v-on="{ ...formItem?.on }"
     >
       <template
         v-if="

@@ -42,9 +42,13 @@
       label="显示图片配置"
       v-if="['img'].includes(modelValue.multimediaType)"
     >
-      <el-switch v-model="showImageConfig" @change="showImageConfigChange">
-      </el-switch>
+      <el-switch
+        v-model="showImageConfig"
+        @change="showImageConfigChange"
+      ></el-switch>
     </el-form-item>
+
+    <!-- 表单 -->
     <FormCreate
       v-if="showImageConfig"
       v-model="modelValue.imageConfig"
@@ -66,7 +70,7 @@
 
     <!-- 热区模块 -->
     <HotView
-      v-if="modelValue.hotModuleSettings"
+      v-if="showHotView"
       v-model="modelValue.hotModuleSettings"
       v-model:visible="showHotView"
       :imgUrl="modelValue.firstFrameVideo || modelValue.imgUrl"
@@ -76,8 +80,7 @@
 
 <script setup>
 // 还欠缺图片配置，视频配置，播放配置等功能
-import { computed } from 'vue'
-import { inject, ref } from 'vue'
+import { inject, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import PageBoxSetting from '../pageBoxSetting/index.vue'
 import HotView from '../hotView/index.vue'
@@ -113,11 +116,17 @@ const setShowHotView = () => {
 /**
  * 图片配置
  */
-const showImageConfig = computed(() => {
-  return props.modelValue.imageConfig === null ? false : true
-})
+const showImageConfig = ref(false)
+watch(
+  () => props.modelValue.imageConfig,
+  (val) => {
+    showImageConfig.value = val === null ? false : true
+  },
+  {
+    immediate: true,
+  },
+)
 const showImageConfigChange = (val) => {
-  showImageConfig.value = val
   props.modelValue.imageConfig = val ? imageConfigData : null
 }
 </script>

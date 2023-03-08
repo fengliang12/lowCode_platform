@@ -35,12 +35,10 @@ export default (obj, ratio = 0.5) => {
       style = `${style}${key}:absolute;`
     } else if (mapping[key] && setMargin) {
       style = `${style}${mapping[key]}:${obj[key] * ratio}px;`
-    } else if (isNumber(obj[key]) && key !== 'zIndex') {
-      style = `${style}${lowerKey}:
-      ${obj[key] * ratio}px;`
+    } else if (isFinite(obj[key]) && key !== 'zIndex') {
+      style = `${style}${lowerKey}:${obj[key] * ratio}px;`
     } else {
-      style = `${style}${lowerKey}:
-      ${obj[key]};`
+      style = `${style}${lowerKey}:${obj[key]};`
     }
   }
 
@@ -53,6 +51,7 @@ export default (obj, ratio = 0.5) => {
     style = `${style}text-align:${justifyContentMap[obj.justifyContent]};`
   }
   style = `${style}${handleCustom(obj.custom, ratio)};`
+
   return style
 }
 const handleCustom = (custom, ratio) => {

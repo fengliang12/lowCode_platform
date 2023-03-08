@@ -56,6 +56,7 @@ const confirm = () => {
     ElMessage.error('配置条件不符合规范')
     return
   }
+  console.log('配置条件', conditionsForExecution.value)
   emit('confirm', conditionsForExecution.value)
   dialogCondition.value = false
 }

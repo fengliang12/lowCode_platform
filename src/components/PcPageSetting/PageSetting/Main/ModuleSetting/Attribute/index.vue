@@ -109,7 +109,7 @@ const termOfValidity = computed({
 const editParameters = ref(null)
 const showEditParameters = () => {
   editParameters.value.show({
-    params: props.modelValue?.params || [],
+    params: valueData.value?.params || [],
     type: 'multiLevel',
   })
 }
@@ -119,13 +119,15 @@ const showEditParameters = () => {
  */
 const conditionsForExecutionRef = ref(null)
 const showConditionsForExecution = () => {
-  conditionsForExecutionRef.value.show(props.modelValue.conditionsForExecution)
+  conditionsForExecutionRef.value.show(valueData.value.conditionsForExecution)
 }
 
 /**
  *条件回调
  */
-const conditionsForExecutionChange = () => {}
+const conditionsForExecutionChange = (conditions) => {
+  valueData.value.conditionsForExecution = conditions
+}
 
 /**
  * 页面参数回调
