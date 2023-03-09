@@ -58,6 +58,8 @@
 import { computed, reactive, watch, inject, onMounted } from 'vue'
 import FOptionList from '../../public/FOptionList/index.vue'
 import FormItemList from '../formItemList/index.vue'
+import setData from '@/components/pcPageSetting/pageSetting/common/setData/index.vue'
+
 import { get } from 'lodash-es'
 
 const formValue: any = inject('formValue')

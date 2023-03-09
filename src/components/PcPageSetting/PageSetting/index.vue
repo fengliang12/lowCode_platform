@@ -65,7 +65,11 @@
         @click="setPageSetting"
         >页面编辑</el-button
       >
-      <ModuleSetting v-show="tabBoxSetting === 'mode'"></ModuleSetting>
+      <ModuleSetting
+        v-show="tabBoxSetting === 'mode'"
+        v-model="pageSetupStore.items.value"
+        :parents="pageSetupStore.items.parents"
+      ></ModuleSetting>
 
       <PageFormSetting
         v-show="tabBoxSetting === 'page'"
@@ -105,8 +109,6 @@ const props = defineProps({
     default: () => ({}),
   },
 })
-
-console.log('props.detail', props.detail)
 
 watch(
   () => props.detail.pageStyle,

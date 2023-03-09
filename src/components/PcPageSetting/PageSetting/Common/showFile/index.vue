@@ -2,7 +2,7 @@
   <div class="show_file">
     <template v-if="src">
       <video v-if="checkFile(src) === 'video'" :src="src" class="video-box" />
-      <img v-else :src="src" style="width: 100%;" alt class="avatar" />
+      <img v-else :src="src" style="width: 100%" alt class="avatar" />
     </template>
     <div class="el-upload-list__item-actions">
       <!-- 预览 -->
@@ -62,13 +62,11 @@ onMounted(() => {})
 </script>
 <style lang="scss" scoped>
 .show_file {
-  width: 200px;
-  height: 200px;
+  width: 178px;
+  height: 178px;
   position: relative;
-  margin-top: 20px;
   border: 1px solid #cccccc;
   overflow: hidden;
-  margin-right: 10px;
 }
 .el-upload-list__item-actions {
   position: absolute;
@@ -76,6 +74,7 @@ onMounted(() => {})
   height: 100%;
   left: 0;
   top: 0;
+  z-index: 90;
   cursor: default;
   text-align: center;
   color: #fff;

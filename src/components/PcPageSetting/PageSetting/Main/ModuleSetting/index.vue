@@ -65,6 +65,7 @@
       <ChildList
         v-model="selectedItem.moduleSettings"
         :parents="selectedItem"
+        @success="imageSuccess"
       ></ChildList>
     </el-tab-pane>
 
@@ -166,6 +167,8 @@ import componentsMapping from '../../CommonData/componentsMapping'
 import { usePageSetupStore } from '@/store'
 import { merge } from 'lodash'
 
+const emit = defineEmits(['update:modelValue', 'success'])
+const props = defineProps(['modelValue', 'parents'])
 const pageSetupStore = usePageSetupStore()
 const optionUploadImage = ref(true)
 const activeName = ref('attribute')
@@ -175,16 +178,15 @@ const activeName = ref('attribute')
  */
 const selectedItem = computed({
   get() {
-    return pageSetupStore.items.value
+    return props.modelValue
   },
   set(val) {
-    console.log('处理中组件的数据', val)
-    pageSetupStore.items.value = merge(pageSetupStore.items.value, val)
+    emit('update:modelValue', merge(props.modelValue, val))
   },
 })
 
 watch(
-  () => pageSetupStore.items.value,
+  () => props.modelValue,
   () => {
     activeName.value = 'attribute'
   },
@@ -209,7 +211,7 @@ const tabNameList = computed(() => {
     weChatButton: ['buttonType'],
     slot: ['setData'],
     qrCode: ['setData'],
-    gridLottery: ['childList', 'gridLottery'],
+    gridLottery: ['gridLottery'],
     movableArea: ['movableArea'],
     movableView: ['movableView'],
     richText: ['richText'],
@@ -239,11 +241,23 @@ const styleSettingProps = computed(() => {
  * @param {*} e
  */
 const imageSuccess = (e) => {
+  console.log('图片上传成功后回调函数', e)
   const newHeight = Number(
     (selectedItem.value.pageStyle.width / e.ratio).toFixed(0),
   )
+
+  emit('success', e)
+
   if (selectedItem.value.moduleType === 'hot') {
     selectedItem.value.pageStyle.height = newHeight
+  }
+
+  //轮播子组件返回时修改
+  if (selectedItem.value.moduleType === 'carousel') {
+    selectedItem.value.pageStyle.height =
+      newHeight > selectedItem.value.pageStyle.height
+        ? newHeight
+        : selectedItem.value.pageStyle.height
   }
 
   //父元素高度跟随子元素最大高度变化
@@ -256,6 +270,43 @@ const imageSuccess = (e) => {
         ? newHeight
         : pageSetupStore.items.parents.pageStyle.height
   }
+  handleCarouselChild()
+}
+
+watch(
+  () => selectedItem.value?.carousel?.nextMargin,
+  () => {
+    handleCarouselChild()
+  },
+)
+
+watch(
+  () => selectedItem.value?.carousel?.previousMargin,
+  () => {
+    handleCarouselChild()
+  },
+)
+
+const handleCarouselChild = () => {
+  if (!selectedItem.value.carousel) return
+  const { nextMargin = 0, previousMargin = 0 } = selectedItem.value.carousel
+  console.log('监听', nextMargin, previousMargin)
+  const { width = 0 } = selectedItem.value?.pageStyle || {}
+  if (width && selectedItem.value?.moduleSettings?.length) {
+    selectedItem.value.moduleSettings.map((elem) => {
+      const newWidth = width - nextMargin - previousMargin
+      //新宽度大于老宽度不做修改
+      if (newWidth > elem.pageStyle.width) {
+        return
+      }
+      elem.pageStyle.height =
+        (newWidth / elem.pageStyle.width) * elem.pageStyle.height
+      elem.pageStyle.width = newWidth
+      if (elem.pageStyle.height > selectedItem.value.pageStyle.height) {
+        selectedItem.value.pageStyle.height = elem.pageStyle.height
+      }
+    })
+  }
 }
 
 /**
@@ -265,8 +316,8 @@ const setOptionUploadImage = () => {
   optionUploadImage.value = !optionUploadImage.value
 }
 
-const handleClick = (tab, event) => {
-  console.log(tab, event)
+const handleClick = () => {
+  // console.log(tab, event)
 }
 </script>
 <style scoped>

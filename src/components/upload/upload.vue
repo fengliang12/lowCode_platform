@@ -34,17 +34,17 @@
               class="el-upload-list__item-preview"
               @click.stop="handlePictureCardPreview(url)"
             >
-              <el-icon><zoom-in /></el-icon>
+              <el-icon class="icon"><zoom-in /></el-icon>
             </span>
             <!-- 编辑 -->
             <span class="el-upload-list__item-preview">
-              <el-icon><Edit /></el-icon>
+              <el-icon class="icon"><Edit /></el-icon>
             </span>
             <span
               class="el-upload-list__item-preview"
               @click.stop="handleRemove(url)"
             >
-              <el-icon><Delete /></el-icon>
+              <el-icon class="icon"><Delete /></el-icon>
             </span>
           </span>
         </div>

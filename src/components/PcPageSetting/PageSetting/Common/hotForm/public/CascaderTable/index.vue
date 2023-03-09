@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <div class="toolBar">
-      <el-button type="primary" size="mini" @click="handleAddChild"
+      <el-button type="primary" size="default" @click="handleAddChild"
         >添加一级选项</el-button
       >
     </div>

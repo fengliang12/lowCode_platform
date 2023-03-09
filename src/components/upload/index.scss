@@ -82,12 +82,18 @@
   right: 10px;
   top: 0;
   font-size: 12px;
-  color: #606266;
+  color: #ffffff;
   display: none;
 }
 .el-upload-list__item-actions span {
   display: none;
   cursor: pointer;
+}
+
+.el-upload-list__item-actions:hover .icon {
+  display: inline-block;
+  cursor: pointer;
+  color: #fff;
 }
 
 .el-icon-delete:before {

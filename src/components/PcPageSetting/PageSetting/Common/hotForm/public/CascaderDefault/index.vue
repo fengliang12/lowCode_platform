@@ -1,13 +1,13 @@
 <template>
   <el-row>
     <SetData
-      v-for="(item, index) in modelValue"
+      v-for="(item, index) in CascaderValue"
       class="mb10"
       :key="item.key"
-      v-model="modelValue[index].pageValue"
+      v-model="CascaderValue[index].pageValue"
     >
       <template #table>
-        <div class="mr10">{{ labelMap[key] || key }}:</div>
+        <div class="title">{{ labelMap[item.key] || item.key }}:</div>
       </template>
     </SetData>
   </el-row>
@@ -15,7 +15,9 @@
 
 <script setup>
 import SetData from '../../../setData/index.vue'
-defineProps({
+import { computed } from 'vue'
+const emit = defineEmits(['update:modelValue'])
+const props = defineProps({
   modelValue: {
     type: Array,
     default: () => [],
@@ -25,5 +27,21 @@ defineProps({
     default: () => ({}),
   },
 })
+
+const CascaderValue = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+})
+
+console.log('CascaderDefault', props.labelMap)
+console.log('modelValue', props.modelValue)
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.title {
+  width: 150px;
+}
+</style>

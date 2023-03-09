@@ -122,7 +122,7 @@ import ImageVideo from '../imageVideo/index.vue'
 import { cloneDeep, debounce } from 'lodash'
 import { generateId } from '../../Handle/util'
 import componentsMapping from '../../CommonData/componentsMapping'
-import { formTypeList } from './common/formTypeList'
+import { formTypeList } from '../hotForm/common/formTypeList'
 import SetData from '../setData/index.vue'
 import StyleSetting from '../styleSetting/index.vue'
 import SelectJumpType from '../selectJumpType/index.vue'
@@ -189,7 +189,9 @@ const initWindowEvent = () => {
 const bgImgRef = ref(null)
 const domRect = ref({})
 const getDomRect = () => {
-  const clientBox = hotViewImgBoxRef.value.getBoundingClientRect()
+  console.log('调用了')
+  if (!hotViewImgBoxRef?.value || !bgImgRef.value) return
+  const clientBox = hotViewImgBoxRef?.value?.getBoundingClientRect()
   let fileRef = bgImgRef.value.fileRef
   clientBox.height = fileRef.offsetHeight
   domRect.value = clientBox
@@ -200,7 +202,7 @@ const getDomRect = () => {
  */
 const currentIndex = ref(-1)
 const imageLoaded = () => {
-  setTimeout(getDomRect)
+  setTimeout(getDomRect, 300)
   var oBox = hotViewImgBoxRef.value
   let pos = null
   var oDiv = null

@@ -20,9 +20,7 @@
       el: '.swiper-pagination',
       clickable: true,
       renderBullet(index, className) {
-        return `<span class=${className} swiper-pagination-bullet-custom>${
-          index + 1
-        }</span>`
+        return `<span class=${className} style='background-color:${data.carousel.indicatorActiveColor}' swiper-pagination-bullet-custom></span>`
       },
     }"
     :navigation="{
@@ -33,8 +31,14 @@
     :auto-height="true"
     @swiper="onSwiper"
     @slideChange="onSlideChange"
+    class="swiper-box"
   >
-    <swiper-slide v-for="(item, index) in data.moduleSettings" :key="index">
+    <swiper-slide
+      v-for="(item, index) in data.moduleSettings"
+      :key="index"
+      :style="`display:flex;justify-content:${data.pageStyle.justifyContent};align-items:${data.pageStyle.alignItems};
+        `"
+    >
       <Common :data="item" :parents="data"></Common>
     </swiper-slide>
     <div
@@ -69,14 +73,17 @@ const onSwiper = (index) => {
   bus.emit('relationSwiperIndex', index)
 }
 
-const onSlideChange = () => {
-  console.log('slide change')
-}
+const onSlideChange = () => {}
 </script>
 
 <style lang="scss" scoped>
+.swiper-box {
+  width: 100%;
+  height: 100%;
+}
 .swiper-autoheight,
 .swiper-autoheight .swiper-slide {
   width: 100%;
+  height: 100%;
 }
 </style>

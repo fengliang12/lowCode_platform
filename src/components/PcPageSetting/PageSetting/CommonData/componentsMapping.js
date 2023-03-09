@@ -5,6 +5,15 @@ export default {
     isParent: true, //能否为父元素
     followChildHeight: true, //跟随子元素高度变化
   },
+  carousel: {
+    name: '轮播',
+    isParent: true,
+    followChildHeight: true,
+  },
+  indicator: {
+    name: '指示点',
+    isParent: false,
+  },
   hot: {
     name: '图片',
     isParent: false,
@@ -34,15 +43,7 @@ export default {
     isParent: false,
     unComponents: true,
   },
-  carousel: {
-    name: '轮播',
-    isParent: true,
-    followChildHeight: true,
-  },
-  indicator: {
-    name: '指示点',
-    isParent: false,
-  },
+
   slot: {
     name: '插槽',
     isParent: false,

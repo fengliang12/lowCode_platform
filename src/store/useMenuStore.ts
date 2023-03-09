@@ -5,12 +5,8 @@ import Layout from '@/Layout/index.vue'
 import router from '@/router'
 const modules = import.meta.glob('../views/**/*.vue')
 
-export interface MenuState {
-  menuList: RouteRecordRaw[]
-}
-
 export const useMenuStore = defineStore('menuStore', {
-  state: (): MenuState => {
+  state: () => {
     return {
       menuList: [],
     }

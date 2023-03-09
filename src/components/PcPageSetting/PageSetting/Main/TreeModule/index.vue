@@ -6,6 +6,7 @@
       :data="formData"
       :props="{ children: 'moduleSettings', label: 'title' }"
       node-key="code"
+      :current-node-key="currentNodeKey"
       draggable
       default-expand-all
       highlight-current
@@ -57,17 +58,27 @@
 </template>
 
 <script setup>
-import { nextTick, ref } from 'vue'
+import { nextTick, ref, reactive, computed } from 'vue'
 import componentsMapping from '../../CommonData/componentsMapping'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { usePageSetupStore } from '@/store'
 import setItemsMap from '../../Handle/setItemsMap'
-import { cloneDeep } from 'lodash'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
 import bus from '@/utils/bus.js'
+import cloneDeepModule from '../../Handle/handleCloneModule'
 
 const pageSetupStore = usePageSetupStore()
-defineProps(['formData'])
+const props = defineProps(['formData'])
+
+// const treeData = reactive({
+//   label: '页面布局',
+//   code: '0',
+//   moduleSettings: props.formData,
+// })
+
+const currentNodeKey = computed(() => {
+  return pageSetupStore.items?.value?.code || ''
+})
 
 /**
  * 点击节点，切换选中组件
@@ -133,7 +144,7 @@ const paste = (data) => {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
     }).then(() => {
-      const pageSetting = cloneDeep(copyData)
+      const pageSetting = cloneDeepModule(copyData, pageSetupStore.itemsMap)
       if (!data.moduleSettings) {
         data.moduleSettings = []
       }

@@ -2,9 +2,7 @@
   <div
     v-if="data"
     class="box"
-    :class="`${
-      data.moduleType !== 'carousel' && pageSetupStore.showHotBox && 'bg'
-    } ${
+    :class="`${pageSetupStore.showHotBox && 'bg'} ${
       data.moduleType === 'scrollView' &&
       !data.scrollView.enableFlex &&
       'scroll'

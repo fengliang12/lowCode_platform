@@ -6,10 +6,7 @@
 import { computed, watch } from 'vue'
 import FormCreate from '@/components/FormCreate/index.vue'
 import { onMounted, reactive } from 'vue'
-import {
-  formTypeKeyMapClass,
-  formTypeList,
-} from '../hotView/common/formTypeList'
+import { formTypeKeyMapClass, formTypeList } from './common/formTypeList'
 import { pageValueData } from '../setData/data'
 
 const emit = defineEmits(['update:modelValue'])
@@ -20,7 +17,6 @@ const valueData = computed({
     return props.modelValue
   },
   set(val) {
-    console.log('表单', val)
     emit('update:modelValue', val)
   },
 })
@@ -70,8 +66,8 @@ const formList = reactive([
     options: formTypeList,
     on: {
       change: (e) => {
-        props.modelValue.attribute = new formTypeKeyMapClass[e].class()
-        props.modelValue.key = formTypeKeyMapClass[e].defaultKey
+        valueData.value.attribute = new formTypeKeyMapClass[e].class()
+        valueData.value.key = formTypeKeyMapClass[e].defaultKey
       },
     },
     control: [
@@ -185,24 +181,30 @@ const formList = reactive([
         formList: [
           ...commonFormItem,
           {
-            //默认值
-            type: 'setData',
-            field: 'pageValue',
-            title: '默认值',
-            props: {
-              usValue: true,
-              span: 24,
-            },
-          },
-          {
-            field: 'start',
-            type: 'ADate',
-            title: '开始时间',
-          },
-          {
-            field: 'end',
-            type: 'ADate',
-            title: '结束时间',
+            field: 'attribute',
+            type: 'object',
+            formList: [
+              {
+                //默认值
+                type: 'setData',
+                field: 'pageValue',
+                title: '默认值',
+                props: {
+                  usValue: true,
+                  span: 24,
+                },
+              },
+              {
+                field: 'start',
+                type: 'ADate',
+                title: '开始时间',
+              },
+              {
+                field: 'end',
+                type: 'ADate',
+                title: '结束时间',
+              },
+            ],
           },
         ],
       },
@@ -215,6 +217,7 @@ const formList = reactive([
             type: 'object',
             field: 'attribute',
             formList: [
+              ...commonFormItem,
               {
                 type: 'CascaderDefault',
                 field: 'valueList',
@@ -229,7 +232,6 @@ const formList = reactive([
                   },
                 },
               },
-              ...commonFormItem,
             ],
           },
         ],
@@ -259,8 +261,8 @@ const formList = reactive([
                 ],
                 on: {
                   change: (v) => {
-                    props.modelValue.attribute = new formTypeKeyMapClass[
-                      props.value.type
+                    valueData.value.attribute = new formTypeKeyMapClass[
+                      valueData.value.type
                     ].class(v)
                   },
                 },
@@ -324,7 +326,9 @@ const formList = reactive([
                         },
                         on: {
                           change: (value) => {
-                            props.value.attribute.valueList = new Array(value)
+                            valueData.value.attribute.valueList = new Array(
+                              value,
+                            )
                               .fill(null)
                               .map((i, index) => ({
                                 key: `value${index}`,
@@ -367,11 +371,11 @@ const formList = reactive([
  * 级联层级
  */
 const cascadeLevel = computed(() => {
-  if (props.modelValue.type === 'Cascader') {
-    if (props.modelValue.attribute?.type == 'custom') {
-      return getMaxFloor(props.modelValue.attribute?.cascaderList || [])
+  if (valueData.value.type === 'Cascader') {
+    if (valueData.value.attribute?.type == 'custom') {
+      return getMaxFloor(valueData.value.attribute?.cascaderList || [])
     } else {
-      return props.modelValue?.attribute?.cascadeLevel || 0
+      return valueData.value?.attribute?.cascadeLevel || 0
     }
   }
   return 0
@@ -401,26 +405,26 @@ const getMaxFloor = (treeData) => {
  * 监听
  */
 watch(cascadeLevel, (v, o) => {
-  if (props.modelValue?.type === 'Cascader') {
+  if (valueData.value?.type === 'Cascader') {
     if (
-      !props.modelValue?.attribute?.valueList ||
-      props.modelValue?.attribute?.valueList.length == 0
+      !valueData.value?.attribute?.valueList ||
+      valueData.value?.attribute?.valueList.length == 0
     ) {
-      props.modelValue.attribute.valueList = new Array(v)
+      valueData.value.attribute.valueList = new Array(v)
         .fill(null)
         .map((i, index) => ({
           key: `value${index}`,
           pageValue: new pageValueData({ valueType: 'pageData' }),
         }))
-    } else if (v > o && o == props.modelValue.attribute.valueList.length) {
-      const key = `value${props.modelValue.attribute?.valueList?.length}`
-      props.modelValue.attribute.valueList.push({
+    } else if (v > o && o == valueData.value.attribute.valueList.length) {
+      const key = `value${valueData.value.attribute?.valueList?.length}`
+      valueData.value.attribute.valueList.push({
         key,
         pageValue: new pageValueData({ valueType: 'pageData' }),
       })
-    } else if (v < o && o == props.modelValue.attribute.valueList.length) {
-      props.modelValue.attribute.valueList.splice(
-        props.modelValue.attribute.valueList.length - 1,
+    } else if (v < o && o == valueData.value.attribute.valueList.length) {
+      valueData.value.attribute.valueList.splice(
+        valueData.value.attribute.valueList.length - 1,
         1,
       )
     }

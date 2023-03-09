@@ -2,18 +2,23 @@
   <div>
     <upload-file :on-success="successCallback" multiple></upload-file>
     <Draggable
-      :list="modelValue"
+      :list="ChildListData"
       animation="500"
       item-key="$index"
       class="draggable_box"
     >
       <template #item="{ element, index }">
-        <ShowFile
-          :src="element.imageSetting.imgUrl"
-          :key="index"
-          @edit="editChild(index)"
-          @del="delChild(index)"
-        ></ShowFile>
+        <div class="moreImg">
+          <ShowFile
+            :src="element.imageSetting?.imgUrl"
+            :key="index"
+            @edit="editChild(index)"
+            @del="delChild(index)"
+          ></ShowFile>
+          <div class="showFile CommonBox">
+            <Common class="Common" :data="element" onlyShow></Common>
+          </div>
+        </div>
       </template>
     </Draggable>
 
@@ -21,7 +26,7 @@
       <ModuleSetting
         :parents="parents"
         @success="uploadSuccess"
-        v-model="modelValue[currentIndex]"
+        v-model="ChildListData[currentIndex]"
       />
       <template #footer>
         <el-button @click="dialogVisible = false" type="primary">
@@ -33,25 +38,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Draggable from 'vuedraggable'
 import ShowFile from '../../../Common/showFile/index.vue'
+import Common from '../../Template/Common/index.vue'
 import { setModule } from '../../../data'
 import ModuleSetting from '../index.vue'
 import { usePageSetupStore } from '@/store'
 import setItemsMap from '../../../Handle/setItemsMap.js'
 import bus from '@/utils/bus'
 
+const emit = defineEmits(['update:modelValue', 'success'])
 const props = defineProps(['modelValue', 'parents'])
 const pageSetupStore = usePageSetupStore()
 
+const ChildListData = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+})
 /**
  * 图片上传回调
  */
-const successCallback = ({ url }) => {
-  const data = setModule({ moduleType: 'hot' })
+const successCallback = ({ url, fileType, el, ratio }) => {
+  let { width, height } = el
+  const data = setModule({ moduleType: 'hot', width, height })
   data.imageSetting.imgUrl = url
+  data.multimediaType = fileType === 'image' ? 'img' : fileType
   props.modelValue.push(data)
+  emit('success', {
+    ratio,
+  })
   bus.emit('refreshElTree')
 }
 
@@ -82,11 +102,35 @@ const delChild = (index) => {
 /**
  * 弹窗中图片上传成功回调
  */
-const uploadSuccess = () => {}
+const uploadSuccess = (e) => {
+  emit('success', e)
+}
 </script>
 <style lang="scss" scoped>
+.moreImg {
+  border: 1px solid #999;
+  position: relative;
+  width: 178px;
+  height: 178px;
+  margin: 10px 10px 10px 0;
+  overflow: hidden;
+}
+
 .draggable_box {
   display: flex;
   flex-wrap: wrap;
+}
+
+.showFile {
+  position: absolute;
+  top: 0;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+}
+
+.Common {
+  transform-origin: top left;
+  transform: scale(0.6) !important;
 }
 </style>
