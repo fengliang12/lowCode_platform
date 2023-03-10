@@ -288,7 +288,7 @@ watch(
 )
 
 const handleCarouselChild = () => {
-  if (!selectedItem.value.carousel) return
+  if (!selectedItem.value?.carousel) return
   const { nextMargin = 0, previousMargin = 0 } = selectedItem.value.carousel
   console.log('监听', nextMargin, previousMargin)
   const { width = 0 } = selectedItem.value?.pageStyle || {}

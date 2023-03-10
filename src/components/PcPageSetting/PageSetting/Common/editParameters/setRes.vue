@@ -3,7 +3,7 @@
     <el-link disabled type="primary"> 参数以apiPath0示意，可多个 </el-link>
     <el-button
       type="warning"
-      style="float: right; margin-bottom: 10px;"
+      style="float: right; margin-bottom: 10px"
       @click="addChild('paramList', modelValue)"
     >
       新增参数
@@ -13,7 +13,7 @@
       row-key="id"
       :tree-props="{ children: 'child', hasChildren: 'hasChildren' }"
       :border="true"
-      style=" margin-bottom: 20px;width: 100%;"
+      style="margin-bottom: 20px; width: 100%"
     >
       <!-- 键值(key) -->
       <el-table-column label="字段键值" prop="key" min-width="300px">
@@ -26,7 +26,7 @@
               placeholder="请输入字段"
             ></el-input>
           </div>
-          <div class="flex" style="margin-left: 30px;">
+          <div class="flex" style="margin-left: 30px">
             <div>字段名(label)：</div>
             <el-input
               class="w200"

@@ -12,7 +12,7 @@
     @click="click"
     @contextmenu.prevent="rightClick"
   >
-    <!-- 弹窗 -->
+    <!--复制和删除的操作弹窗 -->
     <el-popover
       ref="popoverRef"
       :virtual-ref="buttonRef"
@@ -88,6 +88,12 @@
         :key="item"
       ></div>
     </div>
+
+    <img
+      v-if="showDraggableBox"
+      class="handle pointer"
+      src="@/assets/draggable_box.png"
+    />
   </div>
 </template>
 
@@ -108,7 +114,7 @@ import setItemsMap from '../../../Handle/setItemsMap.js'
 import { cloneDeep } from 'lodash'
 import { onMounted } from 'vue'
 
-const props = defineProps(['data', 'showHotBox', 'parents'])
+const props = defineProps(['data', 'parents'])
 const pageSetupStore = usePageSetupStore()
 const animateValue = ref('')
 
@@ -116,6 +122,20 @@ const animateValue = ref('')
  * 页面展示不需要特殊处理的,只需要展示样式功能即可的
  */
 const simpleComponents = ['common', 'movableView', 'movableArea']
+
+/**
+ * 样式
+ */
+const showDraggableBox = computed(() => {
+  if (
+    props.data?.pageStyle?.position === 'relative' ||
+    props.data?.pageStyle?.position === 'static'
+  ) {
+    return true
+  }
+  return false
+})
+
 /**
  * 样式
  */

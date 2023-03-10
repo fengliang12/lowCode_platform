@@ -5,7 +5,9 @@
     width="80%"
     append-to-body
   >
-    <el-button style="float: right" @click="addChild"> 新增方法 </el-button>
+    <el-button class="mb10" style="float: right" @click="addChild">
+      新增方法
+    </el-button>
     <el-table :data="handle" :border="true" style="width: 100%">
       <el-table-column prop="method" label="方法名" width="200">
         <template v-slot="scope">

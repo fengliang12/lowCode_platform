@@ -38,7 +38,7 @@
             </span>
             <!-- 编辑 -->
             <span class="el-upload-list__item-preview">
-              <el-icon class="icon"><Edit /></el-icon>
+              <el-icon class="icon" @click="edit"><Edit /></el-icon>
             </span>
             <span
               class="el-upload-list__item-preview"
@@ -65,7 +65,7 @@ import { uploadFile } from '@/api/Upload/index'
 import { fileInfo } from './handle.js'
 import { ElMessage } from 'element-plus'
 import { floor } from 'lodash-es'
-const emit = defineEmits(['update:url'])
+const emit = defineEmits(['update:url', 'editBack'])
 const props = defineProps({
   url: {
     default: '',
@@ -95,6 +95,10 @@ const props = defineProps({
     // 文件大小
     value: Number,
     default: 0,
+  },
+  hasEditBack: {
+    value: Boolean,
+    default: false,
   },
   onSuccess: {
     value: Function,
@@ -176,7 +180,6 @@ const beforeUpload = (file) => {
 const handleUpload = async ({ file }) => {
   file = data.currentFile || file
   const el = await fileInfo(data.selectFileType, file)
-  console.log('el', el)
   let form = new FormData()
   form.append('file', file)
   const res = await uploadFile(form)
@@ -189,7 +192,6 @@ const handleUpload = async ({ file }) => {
     })
   }
   emitCallback(res?.data?.data?.url, firstFrameVideo, el)
-  console.log('上传路径', res?.data?.data?.url)
 }
 
 const canvasRef = ref(null)
@@ -227,6 +229,15 @@ const dataURLtoFile = (dataUrl, filename) => {
   return new File([u8arr], filename, { type: mime })
 }
 
+//点击编辑
+const edit = (e) => {
+  console.log(props.hasEditBack)
+  if (props.hasEditBack) {
+    e.stopPropagation()
+    emit('editBack')
+  }
+}
+
 const emitCallback = (url, firstFrameVideo = '', el) => {
   const { height = 150, width = 0 } = el
   const ratio = floor(width / height, 4)
@@ -244,7 +255,6 @@ const emitCallback = (url, firstFrameVideo = '', el) => {
     return
   }
   if (typeUrlString.value) {
-    console.log(1)
     emit('update:url', url)
     props.onSuccess({
       url: url,

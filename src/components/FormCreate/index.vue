@@ -2,7 +2,7 @@
   <el-form
     ref="formRef"
     :model="modelValue"
-    style="width: 100%;"
+    style="width: 100%"
     v-bind="formConfig"
   >
     <slot></slot>

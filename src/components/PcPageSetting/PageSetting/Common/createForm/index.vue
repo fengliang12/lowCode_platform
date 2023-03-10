@@ -10,10 +10,9 @@
               :is="item.component"
               v-model="modelValue[item.key]"
               v-model:url="modelValue[item.key]"
-              :value="modelValue[item.key] || item.defaultValue"
               :id="item.key + idx"
               v-bind="{ clearable: true, filterable: true, ...item.props }"
-              v-on="item?.on || {}"
+              v-on="{ ...item?.on }"
             >
               <template v-if="item.child">
                 <div v-for="(child, cIndex) in item.child" :key="cIndex">

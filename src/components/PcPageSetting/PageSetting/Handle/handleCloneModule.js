@@ -23,8 +23,8 @@ const cloneDeepModule = (pageSetting, itemsMap) => {
     data.code = code
   })
   if (mess) {
-    ElMessage.error({
-      message: `组件编号被修改`,
+    ElMessage.warning({
+      message: `注意：组件编号被修改`,
       showClose: true,
       duration: 2000,
     })

@@ -4,6 +4,7 @@ import App from './App.vue'
 import { createPinia } from 'pinia'
 import router from './router'
 import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'element-plus/dist/index.css'
 import i18n from './i18n'
 import { useButtonStore } from './store/useButtonStore'
@@ -23,7 +24,12 @@ app.use(uploadFile)
 app.use(PageSettingCommon)
 app.use(attributeComponents)
 
-app.use(createPinia()).use(router).use(ElementPlus).use(i18n).mount('#app')
+app
+  .use(createPinia())
+  .use(router)
+  .use(ElementPlus, { locale: zhCn })
+  .use(i18n)
+  .mount('#app')
 
 // 按钮权限
 const buttonStore = useButtonStore()

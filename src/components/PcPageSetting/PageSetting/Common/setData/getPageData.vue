@@ -36,7 +36,7 @@
     <!-- 操作数据方法 -->
     <div class="icon-list">
       <el-tooltip
-        :show-after="1000"
+        :show-after="500"
         effect="dark"
         :content="`切换${switchCustom ? '选择' : '手动'}`"
         placement="top-start"
@@ -190,9 +190,11 @@ const pageDataHandleChange = (val) => {
 
   .icon-list {
     padding: 0 10px;
-    width: 80px;
     display: flex;
     font-size: 20px;
+    .el-icon {
+      cursor: pointer;
+    }
   }
 }
 

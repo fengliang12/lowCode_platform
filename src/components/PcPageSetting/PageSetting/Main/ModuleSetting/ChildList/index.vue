@@ -1,6 +1,6 @@
 <template>
   <div>
-    <upload-file :on-success="successCallback" multiple></upload-file>
+    <upload-file :on-success="successCallback"></upload-file>
     <Draggable
       :list="ChildListData"
       animation="500"
@@ -64,6 +64,7 @@ const ChildListData = computed({
  * 图片上传回调
  */
 const successCallback = ({ url, fileType, el, ratio }) => {
+  console.log('图片上传回调', url)
   let { width, height } = el
   const data = setModule({ moduleType: 'hot', width, height })
   data.imageSetting.imgUrl = url

@@ -38,7 +38,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       showHotBox: true, //显示热区边框
       AloneApiList: [], // 单独页面api管理
       usePageLimit: false,
-      pageLimit: {},
+      pageLimit: null,
       pageLimitInclude: false,
       brandList: [], //品牌列表
     }

@@ -23,7 +23,7 @@
           </Draggable>
         </el-tab-pane>
         <el-tab-pane label="已选组件">
-          <TreeModule ref="treeModuleRef" :formData="formData"></TreeModule>
+          <TreeModule ref="treeModuleRef" :detail="[detail]"></TreeModule>
         </el-tab-pane>
         <el-tab-pane label="全局组件"> 暂无数据 </el-tab-pane>
       </el-tabs>
@@ -43,15 +43,12 @@
         :handle="'.handle'"
       >
         <template #item="{ element }">
-          <div class="right_box">
-            <Common
-              :data="element"
-              :parents="{
-                moduleSettings: formData,
-              }"
-            ></Common>
-            <img class="handle pointer" src="@/assets/draggable_box.png" />
-          </div>
+          <Common
+            :data="element"
+            :parents="{
+              moduleSettings: formData,
+            }"
+          ></Common>
         </template>
       </Draggable>
     </div>
@@ -244,6 +241,7 @@ const leftMove = (e) => {
 const leftEnd = (e) => {
   if (moveCheck.value) return
   const data = formData.value[e.newIndex]
+  if (!data) return
   setPageData({
     index: e.newIndex,
     moduleSettings: formData.value,
@@ -335,6 +333,8 @@ const setPageData = ({
     items: tempItem,
     opt: 'add',
   })
+
+  props.detail.moduleSettings = formData.value
 
   // 刷新el-tree
   bus.emit('refreshElTree')

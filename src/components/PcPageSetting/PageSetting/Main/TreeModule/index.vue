@@ -3,7 +3,7 @@
     <el-tree
       v-if="refresh"
       ref="treeModuleRef"
-      :data="formData"
+      :data="detail"
       :props="{ children: 'moduleSettings', label: 'title' }"
       node-key="code"
       :current-node-key="currentNodeKey"
@@ -17,9 +17,9 @@
     >
       <template #default="{ node, data }">
         <div class="tree_content">
-          <div class="m100 ml10">{{ node.label }}</div>
+          <div class="m100">{{ node?.label || '页面布局' }}</div>
           <div class="vhCenter">
-            <div class="ml10 vhCenter">
+            <div class="ml10 vhCenter" v-if="!data.shareSetting">
               <img
                 class="cat"
                 v-show="data.hide"
@@ -34,21 +34,22 @@
                 src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a0c47e0a129b4d89af9e09fb0d4ec2bc.png"
               />
             </div>
-            <div class="ml10 vhCenter">
+            <div class="ml10 vhCenter" v-if="!data.shareSetting">
               <el-icon @click="handleCopyEvent(data, node)"
                 ><DocumentCopy
               /></el-icon>
             </div>
             <div
-              v-if="componentsMapping?.[data.moduleType]?.isParent"
+              v-if="
+                componentsMapping?.[data.moduleType]?.isParent ||
+                data.shareSetting
+              "
               class="ml10 vhCenter"
             >
               <el-icon @click="paste(data, node)"><CopyDocument /></el-icon>
             </div>
-            <div class="ml10 vhCenter">
-              <el-icon class="ml10" @click="del(data, node)"
-                ><DeleteFilled
-              /></el-icon>
+            <div class="ml10 vhCenter" v-if="!data.shareSetting">
+              <el-icon @click="del(data, node)"><DeleteFilled /></el-icon>
             </div>
           </div>
         </div>
@@ -68,13 +69,9 @@ import bus from '@/utils/bus.js'
 import cloneDeepModule from '../../Handle/handleCloneModule'
 
 const pageSetupStore = usePageSetupStore()
-const props = defineProps(['formData'])
+const props = defineProps(['detail'])
 
-// const treeData = reactive({
-//   label: '页面布局',
-//   code: '0',
-//   moduleSettings: props.formData,
-// })
+console.log(props.detail)
 
 const currentNodeKey = computed(() => {
   return pageSetupStore.items?.value?.code || ''
@@ -140,7 +137,7 @@ const paste = (data) => {
     if (!copyData.code || !copyData.moduleType) {
       return ElMessage.error('格式化数据失败')
     }
-    ElMessageBox.confirm(`确认粘贴吗到${data.title}`, '提示', {
+    ElMessageBox.confirm(`确认粘贴吗到${data.title ?? '页面布局'}`, '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
     }).then(() => {

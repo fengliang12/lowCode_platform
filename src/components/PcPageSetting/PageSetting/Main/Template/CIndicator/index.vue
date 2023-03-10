@@ -18,16 +18,29 @@ import bus from '@/utils/bus.js'
 const props = defineProps(['data'])
 const pageSetupStore = usePageSetupStore()
 
+console.log('CIndicator', props.data)
+
 /**
  * 指示点数量
  */
-const swiperData = computed(() => {
-  return pageSetupStore?.itemsMap?.value
-    ? Array.from(pageSetupStore.itemsMap.values()).filter(
-        (elem) => elem.moduleType === props.data.relationSwiper,
-      )?.moduleSettings
-    : []
-})
+const swiperData = ref([])
+
+watch(
+  () => props.data?.indicator?.relationSwiper,
+  (val) => {
+    console.log(222, pageSetupStore?.itemsMap?.values)
+    let list = pageSetupStore?.itemsMap
+      ? Array.from(pageSetupStore.itemsMap.values()).filter(
+          (elem) => elem.code === val,
+        )?.[0]?.moduleSettings
+      : []
+    console.log('list', list?.length)
+    if (list?.length) {
+      swiperData.value = list
+    }
+  },
+)
+console.log('swiperData', swiperData.value)
 
 /**
  * 轮播指示点位置

@@ -1,7 +1,7 @@
 <template>
   <el-form>
     <el-form-item label="关联组件">
-      <el-select v-model="modelValue.relationSwiper">
+      <el-select v-model="indicatorData.relationSwiper" clearable>
         <el-option
           v-for="item in carouselList"
           :key="item.code"
@@ -11,7 +11,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="点击切换轮播">
-      <el-switch v-model="modelValue.currentSwitch"></el-switch>
+      <el-switch v-model="indicatorData.currentSwitch"></el-switch>
     </el-form-item>
     <el-form-item>
       <template #label>
@@ -28,9 +28,9 @@
         </div>
       </template>
       <div
-        v-for="(item, index) in modelValue.indicatorStyle"
+        v-for="(item, index) in indicatorData.indicatorStyle"
         :key="index"
-        style="width: 100%;"
+        style="width: 100%"
         class="flex alignItems"
       >
         <div v-if="index === 0">指示点默认样式</div>
@@ -46,7 +46,7 @@
           ><EditPen
         /></el-icon>
         <el-icon
-          v-if="index === modelValue.indicatorStyle.length - 1"
+          v-if="index === indicatorData.indicatorStyle.length - 1"
           class="ml10 pointer"
           @click="addStyle('indicatorStyle', index)"
           ><CirclePlus
@@ -68,9 +68,9 @@
         </div>
       </template>
       <div
-        v-for="(item, index) in modelValue.indicatorActiveStyle"
+        v-for="(item, index) in indicatorData.indicatorActiveStyle"
         :key="index"
-        style="width: 100%;"
+        style="width: 100%"
         class="flex alignItems"
       >
         <div v-if="index === 0">指示点选中样式</div>
@@ -86,7 +86,7 @@
           ><EditPen
         /></el-icon>
         <el-icon
-          v-if="index === modelValue.indicatorStyle.length - 1"
+          v-if="index === indicatorData.indicatorStyle.length - 1"
           class="ml10 pointer"
           @click="addStyle('indicatorActiveStyle', index)"
           ><CirclePlus
@@ -96,17 +96,17 @@
   </el-form>
 
   <el-dialog title="样式" v-model="dialog.visible">
-    <el-form label-width="100px" label-position="right" style="width: 100%;">
-      <StyleSetting
-        v-model="dialog.item"
-        :font="false"
-        :flex="false"
-      ></StyleSetting>
-      <template #footer>
+    <StyleSetting
+      v-model="dialog.item"
+      :font="false"
+      :flex="false"
+    ></StyleSetting>
+    <template #footer>
+      <div>
         <el-button @click="dialog.visible = false">取 消</el-button>
-        <el-button type="primary" @click="confirm">确 定</el-button></template
-      >
-    </el-form>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+      </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -117,7 +117,17 @@ import { styleSettingData } from '../../../Common/styleSetting/data'
 import StyleSetting from '../../../Common/styleSetting/index.vue'
 import { cloneDeep } from 'lodash'
 const pageSetupStore = usePageSetupStore()
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])
+
+const indicatorData = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+})
 
 /**
  * 轮播图list
@@ -134,7 +144,7 @@ const carouselList = computed(() => {
  * 删除样式
  */
 const deleteStyle = (type, index) => {
-  props.modelValue[type].splice(index, 1)
+  indicatorData.value[type].splice(index, 1)
 }
 
 /**
@@ -160,14 +170,15 @@ const editStyle = (item, type, index) => {
  */
 const confirm = () => {
   let { item, type, index } = dialog.value
-  props.modelValue[type][index] = item
+  indicatorData.value[type][index] = item
+  dialog.value.visible = false
 }
 
 /**
  * 添加样式
  */
 const addStyle = (type) => {
-  props.modelValue[type].push(
+  indicatorData.value[type].push(
     new styleSettingData({
       width: 40,
       height: 40,

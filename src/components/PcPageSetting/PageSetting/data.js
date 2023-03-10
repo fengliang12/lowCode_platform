@@ -57,9 +57,7 @@ export class moduleData {
 
     //页面值
     this.pageValue = ['text', 'common', 'slot'].includes(moduleType)
-      ? new pageValueData({
-          valueType: moduleType === 'common' ? 'pageData' : 'custom',
-        })
+      ? new pageValueData({ valueType: 'custom' })
       : null
 
     //事件数据

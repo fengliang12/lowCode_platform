@@ -36,8 +36,7 @@
     <swiper-slide
       v-for="(item, index) in data.moduleSettings"
       :key="index"
-      :style="`display:flex;justify-content:${data.pageStyle.justifyContent};align-items:${data.pageStyle.alignItems};
-        `"
+      :style="`display:flex;justify-content:${data.pageStyle.justifyContent};align-items:${data.pageStyle.alignItems};`"
     >
       <Common :data="item" :parents="data"></Common>
     </swiper-slide>
@@ -79,7 +78,7 @@ const onSlideChange = () => {}
 <style lang="scss" scoped>
 .swiper-box {
   width: 100%;
-  height: 100%;
+  height: 100% !important;
 }
 .swiper-autoheight,
 .swiper-autoheight .swiper-slide {

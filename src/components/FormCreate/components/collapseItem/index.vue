@@ -1,5 +1,9 @@
 <template>
-  <el-collapse v-model="active" :accordion="accordion" v-on="formItem.on">
+  <el-collapse
+    v-model="active"
+    :accordion="accordion"
+    v-on="{ ...formItem?.on }"
+  >
     <template v-if="isArrayList">
       <el-collapse-item
         v-for="(collapse, index) in valueData"
