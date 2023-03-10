@@ -21,9 +21,19 @@ const pageSetupStore = usePageSetupStore()
 console.log('CIndicator', props.data)
 
 /**
+ * 样式
+ */
+const style = computed(() =>
+  props.data?.indicator?.indicatorStyle?.map((item) => handleStyle(item)),
+)
+const activeStyle = computed(() =>
+  props.data?.indicator?.indicatorActiveStyle.map((item) => handleStyle(item)),
+)
+
+/**
  * 指示点数量
  */
-const swiperData = ref([])
+const swiperData = ref(0)
 
 watch(
   () => props.data?.indicator?.relationSwiper,
@@ -34,13 +44,12 @@ watch(
           (elem) => elem.code === val,
         )?.[0]?.moduleSettings
       : []
-    console.log('list', list?.length)
-    if (list?.length) {
-      swiperData.value = list
-    }
+    swiperData.value = list?.length ? list?.length : 0
+  },
+  {
+    immediate: true,
   },
 )
-console.log('swiperData', swiperData.value)
 
 /**
  * 轮播指示点位置
@@ -54,16 +63,6 @@ watch(
     })
   },
   { immediate: true },
-)
-
-/**
- * 样式
- */
-const style = computed(() =>
-  props.data?.indicatorStyle.map((item) => handleStyle(item)),
-)
-const activeStyle = computed(() =>
-  props.data?.indicatorActiveStyle.map((item) => handleStyle(item)),
 )
 </script>
 <style lang="scss" scoped></style>
