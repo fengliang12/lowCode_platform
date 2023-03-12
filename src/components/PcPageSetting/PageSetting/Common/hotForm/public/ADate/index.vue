@@ -23,7 +23,7 @@
     <!-- 相对日期 -->
     <el-input
       class="mr10"
-      style="width: 200px"
+      style="width: 200px;"
       v-if="ADateData.type === 'relative'"
       v-model="ADateData.value"
       placeholder="输入自定义内容"

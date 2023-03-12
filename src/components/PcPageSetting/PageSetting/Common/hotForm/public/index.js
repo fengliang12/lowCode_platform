@@ -5,7 +5,6 @@ export default {
     Object.keys(files).forEach((key) => {
       let name = key.split('/')[1]
       let value = files[key]
-      console.log(name, value)
       app.component(name, value.default)
     })
   },

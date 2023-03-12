@@ -109,3 +109,11 @@ export const formTypeList = [
 export const formTypeKeyMapClass = Object.fromEntries(
   formTypeList.map((elem) => [elem.value, elem]),
 )
+
+export default class {
+  constructor() {
+    this.type = formTypeList[0].value;
+    this.key = ''
+    this.attribute = new formTypeList[0].class();
+  }
+}

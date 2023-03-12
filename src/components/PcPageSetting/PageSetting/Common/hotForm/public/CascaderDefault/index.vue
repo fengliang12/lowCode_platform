@@ -36,9 +36,6 @@ const CascaderValue = computed({
     emit('update:modelValue', val)
   },
 })
-
-console.log('CascaderDefault', props.labelMap)
-console.log('modelValue', props.modelValue)
 </script>
 <style lang="scss" scoped>
 .title {

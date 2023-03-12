@@ -25,16 +25,11 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import ShowTemplate from '../../../Common/hotView/showTemplate.vue'
 import ImageVideo from '../../../Common/imageVideo/index.vue'
 import handlePageValue from '../../../Handle/handlePageValue'
 
 const props = defineProps(['data'])
-
-onMounted(() => {
-  console.log(props.data)
-})
 </script>
 
 <style lang="scss" scoped>

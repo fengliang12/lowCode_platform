@@ -64,7 +64,6 @@ export const formList = (children) => {
       effect: {
         fetch: () => {
           return new Promise((resolve) => {
-            console.log('children', children)
             resolve(
               children.map((item) => ({ label: item.title, value: item.code })),
             )

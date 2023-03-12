@@ -43,14 +43,6 @@ const setCopyData = async ({
   }
   //copy组件
   const cloneData = await cloneDeepModule(data, itemsMap)
-  console.log(
-    //clone数据
-    cloneData,
-    //新老code映射
-    store.state.pageSetting.moduleCode,
-    //新老api映射
-    mapApi,
-  )
   return updateModuleCode(
     //clone数据
     cloneData,

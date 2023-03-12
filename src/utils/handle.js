@@ -1,5 +1,4 @@
 export const checkFile = (fileValue) => {
-  console.log(fileValue)
   if (!fileValue) return ''
   var index = fileValue.lastIndexOf('.') //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
   let fileValueSuffix = fileValue.substring(index) //截断"."之前的，得到后缀

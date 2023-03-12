@@ -211,7 +211,6 @@ const columnCheckedList = computed(() => {
  * @param {*} elem
  */
 const tableUpdate = (params, elem) => {
-  console.log(params, elem)
   let { edit } = props.tableOptions
   edit && edit(params.row)
 }

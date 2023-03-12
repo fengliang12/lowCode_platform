@@ -6,6 +6,8 @@
 import { reactive, computed } from 'vue'
 import FormCreate from '@/components/FormCreate/index.vue'
 import { formList } from './data.js'
+
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -17,14 +19,11 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
-
 /**
  * 值
  */
 const valueData = computed({
   get() {
-    console.log(props.modelValue)
     return props.modelValue
   },
   set(val) {

@@ -7,14 +7,18 @@
 </template>
 
 <script setup>
-import { onUnmounted, ref, watch, provide, onMounted } from 'vue'
+import { onUnmounted, ref, provide, onMounted, watch } from 'vue'
 import PageSetting from './PageSetting/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-// import pageSetupApi from '@/api/pageSetup'
 import { usePageSetupStore } from '@/store'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import bus from '@/utils/bus'
 import indexedDB, { storeName } from './utils/indexedDB'
+import {
+  createPageSetup,
+  updatePageSetup,
+  getPageSetupInfo,
+} from '@/api/pageSetup'
 
 //公共数据
 const pageSetupStore = usePageSetupStore()
@@ -41,6 +45,13 @@ onUnmounted(() => {
   bus.off('getPageDetail')
 })
 
+watch(
+  () => route?.query?.id,
+  () => {
+    console.log('监听')
+    getPageDetail()
+  },
+)
 /**
  * 获取公共api列表
  */
@@ -56,8 +67,8 @@ const initPageSetupApi = async () => {
  */
 const getPageDetail = async () => {
   if (!route.query?.id) return false
-  // const res = await pageSetupApi.getPageDetail(route.query?.id)
-  // detail.value = res
+  const res = await getPageSetupInfo(route.query?.id)
+  detail.value = res.data.data
 }
 
 /**
@@ -83,13 +94,16 @@ const savePageSetting = () => {
 const pageSettingRef = ref(null)
 const save = async () => {
   const res = await pageSettingRef.value.save().catch(() => {})
+  console.log(res)
   if (!res) return
 
   //更新还是创建
   loading.value = true
-  const request = res.id ? pageSetupApi.updatePage : pageSetupApi.createPage
+  const request = res.id ? updatePageSetup : createPageSetup
   const result = await request(res)
   loading.value = false
+
+  let pageSetup = result.data.data
 
   const msg = res.id ? '修改成功' : '创建成功'
   ElMessage.success(msg)
@@ -97,18 +111,19 @@ const save = async () => {
   if (!res.id) {
     //将当前新增加的页面添加到pageList中
     pageSetupStore.pageList.push({
-      id: result.id,
-      title: result.title,
-      customHeader: result.customHeader,
-    })
-    //刷新当前编辑页面
-    router.replace({
-      name: 'pageSetupEdit',
-      query: { id: result.id },
+      id: pageSetup.id,
+      title: pageSetup.title,
+      customHeader: pageSetup.customHeader,
     })
   }
 
-  saveIndexedDB([res])
+  // //刷新当前编辑页面
+  router.replace({
+    path: '/pageSetting/pageIndex/edit',
+    query: { id: pageSetup.id },
+  })
+
+  // saveIndexedDB([res])
 }
 
 /**

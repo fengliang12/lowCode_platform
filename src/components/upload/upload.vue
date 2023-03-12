@@ -55,7 +55,7 @@
       <img w-full :src="data.dialogImageUrl" alt="Preview Image" />
     </el-dialog>
 
-    <canvas ref="canvasRef" style="display: none"></canvas>
+    <canvas ref="canvasRef" style="display: none;"></canvas>
   </div>
 </template>
 <script setup>
@@ -146,17 +146,14 @@ const typeUrlString = computed(() => {
  * 文件上传之前，进行类型校验、文件大小校验，返回false、或者promise.reject不会再上传
  */
 const beforeUpload = (file) => {
-  console.log(file)
   let { initFileType } = props
   if (initFileType && !file.type.includes(initFileType)) {
-    console.log(2)
     ElMessage.error(`上传${data.typeObj[initFileType].name}格式!`)
     return Promise.reject()
   }
   let type = file.type.split('/')[0]
   //验证是否为限制类型
   if (!Object.keys(data.typeObj).includes(type)) {
-    console.log(3)
     ElMessage.error(
       `上传  ${Object.values(data.typeObj)
         .map((elem) => elem.name)
@@ -231,7 +228,6 @@ const dataURLtoFile = (dataUrl, filename) => {
 
 //点击编辑
 const edit = (e) => {
-  console.log(props.hasEditBack)
   if (props.hasEditBack) {
     e.stopPropagation()
     emit('editBack')
@@ -287,9 +283,7 @@ const MonError = () => {}
 const MonChange = () => {}
 const MonRemove = () => {}
 
-const handleRemove = (url) => {
-  console.log(url)
-}
+const handleRemove = (url) => {}
 
 const handlePictureCardPreview = (url) => {
   data.dialogImageUrl = url

@@ -103,7 +103,6 @@ const removeTab = (targetName: string) => {
           editableTabs.value[index + 1] || editableTabs.value[index - 1]
         if (nextTab) {
           editableTabsValue.value = nextTab.path
-          console.log(nextTab.path)
           router.replace({ path: nextTab.path })
         }
       }
@@ -120,8 +119,6 @@ const left: Ref<string> = ref('')
 const top: Ref<string> = ref('')
 //显示菜单选项
 const openContextMenu = (e: any) => {
-  console.log(e)
-
   if (e.srcElement.id) {
     let currentContextTabId = e.srcElement.id.split('-')[1]
     tagsStore.saveCurContextTabId(currentContextTabId)
@@ -139,7 +136,6 @@ const closeAllTabs = () => {
 }
 //关闭左边
 const closeOtherTabs = (type: string) => {
-  console.log(type)
   tagsStore.closeOtherTags(type)
   contextMenuVisible.value = false
 }

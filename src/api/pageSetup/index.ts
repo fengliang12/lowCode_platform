@@ -57,38 +57,50 @@ export const getCrowdAll: Api.PageSetup.getAllPage.Func = () => {
 }
 
 /**
- * 根据页面id获取数据
+ * 根据页面id获取页面配置
  */
-export const getPageDetail: Api.PageSetup.getPageDetail.Func = (id) => {
+export const getPageSetupInfo: Api.PageSetup.getPageDetail.Func = (id) => {
   return instance({
-    url: `/page_setup/item/${id}`,
+    url: `/pageSetup/getDetail?id=${id}`,
     method: 'get',
   })
 }
 
 /**
- * 创建新的
+ * 创建页面配置
  * @param {*} data
  * @returns
  */
-export const createPage: Api.PageSetup.createPage.Func = (data) => {
+export const createPageSetup: Api.PageSetup.createPage.Func = (data) => {
   return instance({
-    url: '/page_setup',
+    url: '/pageSetup/create',
     method: 'post',
     data,
   })
 }
 
 /**
- * 更新旧的
+ * 更新页面配置
  * @param {*} data
  * @returns
  */
-export const updatePage: Api.PageSetup.createPage.Func = (data) => {
+export const updatePageSetup: Api.PageSetup.createPage.Func = (data) => {
   return instance({
-    url: '/page_setup',
+    url: '/pageSetup/update',
     method: 'put',
     data,
+  })
+}
+
+/**
+ * 删除页面配置
+ * @param {*} data
+ * @returns
+ */
+export const deletePageSetup: Api.PageSetup.createPage.Func = (id) => {
+  return instance({
+    url: `/pageSetup/delete?id=${id}`,
+    method: 'delete',
   })
 }
 

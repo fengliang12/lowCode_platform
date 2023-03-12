@@ -11,6 +11,16 @@ import IndicatorData from './Main/ModuleSetting/Indicator/data'
 import MovableAreaData from './Main/ModuleSetting/MovableArea/data'
 import MovableViewData from './Main/ModuleSetting/MovableView/data'
 import RichTextData from './Main/ModuleSetting/RichText/data'
+import StickyData from './Main/ModuleSetting/Sticky/data'
+import ShareElementData from './Main/ModuleSetting/ShareElement/data'
+import GridLotteryData from './Main/ModuleSetting/gridLottery/data'
+import PageContainerData from './Main/ModuleSetting/pageContainer/data'
+import CountDownData from './Main/ModuleSetting/countDown/data'
+import FormData from './Common/hotForm/common/formTypeList'
+
+
+
+
 
 /**
  * 组件类型
@@ -54,7 +64,12 @@ export class moduleData {
     this.movableView =
       moduleType === 'movableView' ? new MovableViewData() : null //拖拽容器
     this.richText = moduleType === 'richText' ? new RichTextData() : null //富文本
-
+    this.sticky = moduleType === "sticky" ? new StickyData() : null;   //吸附
+    this.shareElement = moduleType === 'shareElement' ? new ShareElementData() : null //共享元素
+    this.pageContainer = moduleType === 'pageContainer' ? new PageContainerData() : null //页面容器
+    this.gridLottery = moduleType === 'gridLottery' ? new GridLotteryData() : null //九宫格
+    this.countDown = moduleType === 'countDown' ? new CountDownData() : null //倒计时
+    this.form = moduleType === 'form' ? new FormData() : null //表单
     //页面值
     this.pageValue = ['text', 'common', 'slot'].includes(moduleType)
       ? new pageValueData({ valueType: 'custom' })

@@ -2,7 +2,7 @@
   <el-form
     ref="formRef"
     :model="modelValue"
-    style="width: 100%"
+    style="width: 100%;"
     v-bind="formConfig"
   >
     <slot></slot>
@@ -126,8 +126,7 @@ const validate = () => {
  */
 const onSubmit = () => {
   validate()?.then((res) => {
-    console.log(res)
-
+    console.log('最终数据', res)
     props.options?.onSubmit(props.modelValue)
   })
 }

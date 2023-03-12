@@ -189,7 +189,6 @@ const initWindowEvent = () => {
 const bgImgRef = ref(null)
 const domRect = ref({})
 const getDomRect = () => {
-  console.log('调用了')
   if (!hotViewImgBoxRef?.value || !bgImgRef.value) return
   const clientBox = hotViewImgBoxRef?.value?.getBoundingClientRect()
   let fileRef = bgImgRef.value.fileRef

@@ -17,7 +17,6 @@ export default class MovableViewData {
 }
 
 export const formList = (itemsMap) => {
-  console.log(itemsMap.values())
   return [
     {
       field: 'relationSwiper',
@@ -27,16 +26,18 @@ export const formList = (itemsMap) => {
       effect: {
         fetch: () => {
           return new Promise((resolve) => {
+            console.log('itemsMap', itemsMap.values);
             let tempList = itemsMap?.values
-              ? Array.from(itemsMap.values()).map((elem) => {
-                  if (elem.moduleType === 'carousel') {
-                    return {
-                      label: elem.title,
-                      value: elem.code,
-                    }
-                  }
-                })
+              ? Array.from(itemsMap.values()).filter((elem) => {
+                if (elem.moduleType === 'carousel') {
+                  return elem
+                }
+              }).map(item => ({
+                label: item.title,
+                value: item.code,
+              }))
               : []
+            console.log('tempList', tempList);
             resolve(tempList)
           })
         },

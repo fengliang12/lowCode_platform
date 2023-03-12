@@ -58,8 +58,13 @@
     </template>
 
     <!-- 进度条 -->
-    <template v-else-if="data.modelType === 'progress'">
+    <template v-else-if="data.moduleType === 'progress'">
       <CProgress :data="data"></CProgress>
+    </template>
+
+    <!-- 九宫格 -->
+    <template v-else-if="data.moduleType === 'gridLottery'">
+      <CGridLottery :data="data.gridLottery"></CGridLottery>
     </template>
 
     <!-- 插槽 -->
@@ -68,8 +73,8 @@
     </template>
 
     <!-- 富文本 -->
-    <template v-if="data.moduleType === 'richText'">
-      <div v-html="data.richText.nodes" style="overflow: hidden"></div>
+    <template v-else-if="data.moduleType === 'richText'">
+      <div v-html="data.richText.nodes" style="overflow: hidden;"></div>
     </template>
 
     <!-- 页面展示不需要特殊处理的 -->
@@ -103,6 +108,7 @@ import CSwiper from '../CSwiper/index.vue'
 import CqrCode from '../CqrCode/index.vue'
 import CProgress from '../CProgress/index.vue'
 import CIndicator from '../CIndicator/index.vue'
+import CGridLottery from '../CGridLottery/index.vue'
 
 import handleStyle from '../../../Handle/style'
 import handlePageValue from '../../../Handle/handlePageValue'
@@ -121,7 +127,15 @@ const animateValue = ref('')
 /**
  * 页面展示不需要特殊处理的,只需要展示样式功能即可的
  */
-const simpleComponents = ['common', 'movableView', 'movableArea']
+const simpleComponents = [
+  'common',
+  'movableView',
+  'movableArea',
+  'shareElement',
+  'pageContainer',
+  'countDown',
+  'form',
+]
 
 /**
  * 样式

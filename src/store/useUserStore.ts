@@ -22,8 +22,6 @@ export const useUserStore = defineStore('userStore', {
   actions: {
     login(data: Api.Auth.login.IRequest) {
       login(data).then(async (res) => {
-        console.log('login', res)
-
         const result = res.data
         ElMessage({
           message: '登录成功',

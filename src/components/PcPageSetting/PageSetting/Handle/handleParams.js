@@ -10,7 +10,6 @@ export const getParams = (keyList) => {
     for (let i = 0; i < keyList.length; i++) {
       const elem = keyList[i]
       if (elem.pageValue.valueType === 'pageData') {
-        console.error('无法处理动态数据')
         return
       }
       if (!elem?.child?.length && elem?.pageValue?.value) {
@@ -48,6 +47,5 @@ export const setParams = (obj) => {
     return params
   }
   const params = setParams(obj)
-  console.log('params', params)
   return params
 }

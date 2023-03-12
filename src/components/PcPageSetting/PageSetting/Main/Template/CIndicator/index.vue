@@ -18,8 +18,6 @@ import bus from '@/utils/bus.js'
 const props = defineProps(['data'])
 const pageSetupStore = usePageSetupStore()
 
-console.log('CIndicator', props.data)
-
 /**
  * 样式
  */
@@ -38,7 +36,6 @@ const swiperData = ref(0)
 watch(
   () => props.data?.indicator?.relationSwiper,
   (val) => {
-    console.log(222, pageSetupStore?.itemsMap?.values)
     let list = pageSetupStore?.itemsMap
       ? Array.from(pageSetupStore.itemsMap.values()).filter(
           (elem) => elem.code === val,

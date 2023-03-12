@@ -1,8 +1,8 @@
 export default class RichTextData {
   constructor() {
     this.space = '' //显示连续空格
-    this.nodes = '' //HTML String
     this.userSelect = false //文本是否可选，该属性会使节点显示为 block
+    this.nodes = '' //HTML String
   }
 }
 

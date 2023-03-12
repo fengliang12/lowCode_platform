@@ -704,7 +704,7 @@ const paramsHasValue = (element) => {
   if (element.operationType === 'api') {
     return AloneApiListKey.value?.[element.operationUrl]?.params
   } else {
-    return element.params
+    return element.params?.length
   }
 }
 

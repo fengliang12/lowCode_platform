@@ -24,5 +24,6 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'vue/no-mutating-props': 'off',
     'no-undef': 'off',
+    'prettier/prettier': 'off',
   },
 }

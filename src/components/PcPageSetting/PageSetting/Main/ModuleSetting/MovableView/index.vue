@@ -1,5 +1,5 @@
 <template>
-  <FormCreate v-model="valueData" :formList="formItemList"></FormCreate>
+  <FormCreate v-model="movableAreaData" :formList="formItemList"></FormCreate>
 </template>
 
 <script setup>
@@ -15,7 +15,7 @@ const pageSetupStore = usePageSetupStore()
 /**
  * 值
  */
-const valueData = computed({
+const movableAreaData = computed({
   get() {
     return props.modelValue
   },

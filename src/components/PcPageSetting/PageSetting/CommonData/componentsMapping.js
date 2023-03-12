@@ -30,14 +30,6 @@ export default {
     name: '文本',
     isParent: false,
   },
-  gridLottery: {
-    name: '九宫格抽奖',
-    isParent: false,
-    initData: {
-      width: 600,
-      height: 600,
-    },
-  },
   hotView: {
     name: '热区',
     isParent: false,
@@ -58,6 +50,14 @@ export default {
     initData: {
       width: 200,
       height: 200,
+    },
+  },
+  gridLottery: {
+    name: '九宫格抽奖',
+    isParent: false,
+    initData: {
+      width: 600,
+      height: 600,
     },
   },
   movableArea: {
@@ -84,6 +84,7 @@ export default {
       height: 300,
     },
   },
+
   sticky: {
     name: '吸附',
     isParent: true,
@@ -100,8 +101,20 @@ export default {
       height: 300,
     },
   },
+  pageContainer: {
+    name: '页面容器',
+    isParent: true,
+    initData: {
+      width: 750,
+      height: 300,
+    },
+  },
   countDown: {
     name: '倒计时',
     isParent: true,
+  },
+  form: {
+    name: "表单",
+    isParent: false,
   },
 }

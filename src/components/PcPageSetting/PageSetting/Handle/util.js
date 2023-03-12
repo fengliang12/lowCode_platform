@@ -6,15 +6,12 @@ export const getModuleCode = (type, codeMap = new Set()) => {
   if (codeMap.has(code)) {
     code = getModuleCode(type, codeMap)
   }
-  console.log('存在重新生成', code)
   return code
 }
 
 export const generateId = (type, oldCode = '', itemsMap) => {
-  console.log(oldCode)
   //校验传入code是否存在不存在直接返回
   if (oldCode && !itemsMap?.has?.(oldCode)) {
-    console.log('oldCode', oldCode)
     return oldCode
   }
 

@@ -42,7 +42,6 @@ const conditionsForExecution = ref()
  * 显示条件判断
  */
 const show = (conditions) => {
-  console.log('conditions', conditions)
   conditionsForExecution.value =
     cloneDeep(conditions) ?? new ConditionsData({ id: 1 })
   dialogCondition.value = true
@@ -56,7 +55,6 @@ const confirm = () => {
     ElMessage.error('配置条件不符合规范')
     return
   }
-  console.log('配置条件', conditionsForExecution.value)
   emit('confirm', conditionsForExecution.value)
   dialogCondition.value = false
 }

@@ -145,7 +145,7 @@ export const formList = ({ ratio = 1, value }) => {
         title: '宽度',
         button: '',
         btnClick: () => {
-          value.width = floor(Number(value.height) * ratio, 2)
+          value.width = floor(Number(value.height) / ratio, 2)
         },
       },
       {
@@ -297,6 +297,7 @@ export const formList = ({ ratio = 1, value }) => {
     //内容位置
     flexList: [
       {
+        divider: '内容位置',
         field: 'flexDirection',
         type: 'el-select',
         title: '排列方向',
@@ -312,7 +313,6 @@ export const formList = ({ ratio = 1, value }) => {
         ],
       },
       {
-        divider: '内容位置',
         field: 'justifyContent',
         type: 'el-select',
         title: '水平方向',

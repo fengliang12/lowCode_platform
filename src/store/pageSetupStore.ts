@@ -119,7 +119,6 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      */
     async changeAloneAPIList() {
       this.AloneApiList = pageSetupTestData.getOperationApi
-      console.log('接口数据', this.AloneApiList)
     },
 
     /**
@@ -153,7 +152,6 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
           this.itemsMap.set(items.code, items)
         }
       }
-      console.log('setPageItemsMap', this.itemsMap)
     },
 
     /**

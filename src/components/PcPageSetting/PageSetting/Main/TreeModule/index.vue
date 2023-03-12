@@ -71,8 +71,6 @@ import cloneDeepModule from '../../Handle/handleCloneModule'
 const pageSetupStore = usePageSetupStore()
 const props = defineProps(['detail'])
 
-console.log(props.detail)
-
 const currentNodeKey = computed(() => {
   return pageSetupStore.items?.value?.code || ''
 })

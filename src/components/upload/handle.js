@@ -50,7 +50,6 @@ export const getWebpFromFile = () => {
       }
       img.src = url
     } catch (error) {
-      console.error(error)
       resolve(rawFile)
       URL.revokeObjectURL(url)
     }

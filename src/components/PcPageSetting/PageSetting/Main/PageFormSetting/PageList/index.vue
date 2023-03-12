@@ -75,7 +75,6 @@ const add = () => {
   pageSetupStore.setChildPageIds(
     uniq([...pageSetupStore.childPageIds, selectId.value]),
   )
-  console.log(pageSetupStore.childPageIds)
   selectId.value = ''
 }
 

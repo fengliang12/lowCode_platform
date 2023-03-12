@@ -64,7 +64,6 @@ const ChildListData = computed({
  * 图片上传回调
  */
 const successCallback = ({ url, fileType, el, ratio }) => {
-  console.log('图片上传回调', url)
   let { width, height } = el
   const data = setModule({ moduleType: 'hot', width, height })
   data.imageSetting.imgUrl = url

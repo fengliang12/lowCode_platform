@@ -22,8 +22,8 @@ import { useRoute } from 'vue-router'
 import { usePageSetupStore } from '@/store'
 import { ElMessage } from 'element-plus'
 import {
-  updatePage,
-  createPage,
+  updatePageSetup,
+  createPageSetup,
   delOperationApi,
   setupOperationApi,
 } from '@/api/pageSetup'
@@ -73,7 +73,7 @@ const importPageSetting = () => {
  */
 const createPageSetting = async () => {
   const { pageSetting, apiList } = jsonData.value
-  const request = route.query.id ? updatePage : createPage
+  const request = route.query.id ? updatePageSetup : createPageSetup
 
   const data = await request(pageSetting)
   const pageId = data.id
@@ -120,7 +120,7 @@ const afterUpdateApi = async (res, data) => {
       apiMapId[oldApiList?.value?.[index].id] = elem.id
     })
     const newPageData = await updateApiList(data, apiMapId)
-    jsonData.value.pageSetting = await updatePage(newPageData)
+    jsonData.value.pageSetting = await updatePageSetup(newPageData)
   }
 }
 

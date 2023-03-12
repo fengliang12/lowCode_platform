@@ -73,8 +73,6 @@ const formList = reactive([
     control: [
       {
         handle(val) {
-          console.log(val)
-
           return val === 'Input'
         },
         formList: [

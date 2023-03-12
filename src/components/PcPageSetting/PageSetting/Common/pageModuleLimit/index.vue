@@ -74,11 +74,9 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])
 const pageSetupStore = usePageSetupStore()
 
-console.log('limit', props.modelValue)
 const limit = computed({
   get() {
     if (!props.modelValue) {
-      console.log('qqq')
       emit('update:modelValue', new PageModuleLimitData())
     }
     return props.modelValue

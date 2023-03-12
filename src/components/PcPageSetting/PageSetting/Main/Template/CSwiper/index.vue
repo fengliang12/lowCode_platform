@@ -65,10 +65,8 @@ import 'swiper/css/scrollbar' // 轮播图的滚动条
 // 在modules加入要使用的模块
 const modules = [Autoplay, Pagination, Navigation, Scrollbar]
 
-const props = defineProps(['data'])
-console.log('props.data', props.data)
+defineProps(['data'])
 const onSwiper = (index) => {
-  console.log('onSwiper', index)
   bus.emit('relationSwiperIndex', index)
 }
 

@@ -130,13 +130,64 @@
       ></ScrollView>
     </el-tab-pane>
 
-    <!-- 滚动条 -->
+    <!-- 富文本 -->
     <el-tab-pane
       v-if="tabNameList.includes('richText')"
       name="richText"
       label="富文本"
     >
       <RichText v-model="selectedItem.richText"></RichText>
+    </el-tab-pane>
+
+    <!-- 吸附 -->
+    <el-tab-pane
+      v-if="tabNameList.includes('sticky')"
+      name="sticky"
+      label="吸附"
+    >
+      <Sticky v-model="selectedItem.sticky"></Sticky>
+    </el-tab-pane>
+
+    <!-- 共享元素 -->
+    <el-tab-pane
+      v-if="tabNameList.includes('shareElement')"
+      name="shareElement"
+      label="共享元素"
+    >
+      <ShareElement v-model="selectedItem.shareElement"></ShareElement>
+    </el-tab-pane>
+
+    <!-- 页面容器 -->
+    <el-tab-pane
+      v-if="tabNameList.includes('pageContainer')"
+      name="pageContainer"
+      label="页面容器"
+    >
+      <PageContainer v-model="selectedItem.pageContainer"></PageContainer>
+    </el-tab-pane>
+
+    <!-- 倒计时 -->
+    <el-tab-pane
+      v-if="tabNameList.includes('countDown')"
+      name="countDown"
+      label="倒计时"
+    >
+      <SetData class="mb10" v-model="selectedItem.pageValue" />
+      <CountDown v-model="selectedItem.countDown"></CountDown>
+    </el-tab-pane>
+
+    <!-- 九宫格 -->
+    <el-tab-pane
+      v-if="tabNameList.includes('gridLottery')"
+      name="gridLottery"
+      label="九宫格"
+    >
+      <GridLottery v-model="selectedItem.gridLottery"></GridLottery>
+    </el-tab-pane>
+
+    <!-- 表单-->
+    <el-tab-pane v-if="tabNameList.includes('form')" name="form" label="表单">
+      <HotForm v-model="selectedItem.form"></HotForm>
     </el-tab-pane>
 
     <!-- 事件 -->
@@ -158,6 +209,12 @@ import MovableView from './MovableView/index.vue'
 import Progress from './Progress/index.vue'
 import ScrollView from './ScrollView/index.vue'
 import RichText from './RichText/index.vue'
+import Sticky from './Sticky/index.vue'
+import ShareElement from './ShareElement/index.vue'
+import GridLottery from './GridLottery/index.vue'
+import PageContainer from './PageContainer/index.vue'
+import CountDown from './CountDown/index.vue'
+import HotForm from '../../Common/hotForm/index.vue'
 
 import StyleSetting from '../../Common/styleSetting/index.vue'
 import FissionImage from '../../Common/fissionImage/index.vue'
@@ -215,6 +272,11 @@ const tabNameList = computed(() => {
     movableArea: ['movableArea'],
     movableView: ['movableView'],
     richText: ['richText'],
+    sticky: ['sticky'],
+    shareElement: ['shareElement'],
+    pageContainer: ['pageContainer'],
+    countDown: ['countDown'],
+    form: ['form'],
   }
   return [...tabList[selectedItem.value.moduleType], ...commonList]
 })
@@ -241,7 +303,6 @@ const styleSettingProps = computed(() => {
  * @param {*} e
  */
 const imageSuccess = (e) => {
-  console.log('图片上传成功后回调函数', e)
   const newHeight = Number(
     (selectedItem.value.pageStyle.width / e.ratio).toFixed(0),
   )
@@ -250,6 +311,7 @@ const imageSuccess = (e) => {
 
   if (selectedItem.value.moduleType === 'hot') {
     selectedItem.value.pageStyle.height = newHeight
+    selectedItem.value.pageStyle.ratio = e.ratio
   }
 
   //轮播子组件返回时修改
@@ -290,7 +352,6 @@ watch(
 const handleCarouselChild = () => {
   if (!selectedItem.value?.carousel) return
   const { nextMargin = 0, previousMargin = 0 } = selectedItem.value.carousel
-  console.log('监听', nextMargin, previousMargin)
   const { width = 0 } = selectedItem.value?.pageStyle || {}
   if (width && selectedItem.value?.moduleSettings?.length) {
     selectedItem.value.moduleSettings.map((elem) => {
@@ -316,9 +377,7 @@ const setOptionUploadImage = () => {
   optionUploadImage.value = !optionUploadImage.value
 }
 
-const handleClick = () => {
-  // console.log(tab, event)
-}
+const handleClick = () => {}
 </script>
 <style scoped>
 :deep(.el-tabs__content) {

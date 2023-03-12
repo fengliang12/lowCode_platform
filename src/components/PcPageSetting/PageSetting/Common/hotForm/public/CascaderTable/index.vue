@@ -18,13 +18,13 @@
       ></el-table-column>
       <el-table-column label="操作" width="180">
         <template v-slot="$scope">
-          <el-button type="primary" @click="handleEditRow($scope)"
+          <el-button type="primary" @click="handleEditRow($scope.row)"
             >修改</el-button
           >
-          <el-button type="primary" @click="handleAddChild($scope)"
+          <el-button type="primary" @click="handleAddChild($scope.row)"
             >添加子选项</el-button
           >
-          <el-button type="primary" @click="handleDeleteRow($scope)"
+          <el-button type="primary" @click="handleDeleteRow($scope.row)"
             >删除</el-button
           >
         </template>
@@ -69,7 +69,7 @@ const currentEdit = ref(null)
 const dialogVisible = ref(false)
 const dialogInfo = ref({
   label: '',
-  vale: '',
+  value: '',
 })
 const handleEditRow = (row) => {
   type.value = 'edit'
@@ -108,7 +108,7 @@ const handleParentsId = (children, parent) => {
  * 添加
  */
 const handleAddChild = (row) => {
-  if (row) {
+  if (row?.id) {
     currentEdit.value = row
   }
   type.value = 'add'
@@ -122,13 +122,12 @@ const onConfirmDialog = () => {
   if (!dialogInfo.value.label || !dialogInfo.value.value) {
     return ElMessage.error('请输入label和value')
   }
-  if (type.value == 'add') {
+  if (type.value === 'add') {
     const child = {
       ...dialogInfo.value,
       id: getId(),
       pId: currentEdit.value ? currentEdit.value.id : 0,
     }
-
     if (currentEdit.value) {
       if (!currentEdit.value?.children) {
         currentEdit.value.children = []
@@ -155,11 +154,10 @@ const handleDeleteRow = (row) => {
     cancelButtonText: '取消',
     confirmButtonText: '确定',
   }).then(() => {
-    let delIndex = parentsIdMap.value[row.id].findIndex((i) => i.id === row.id)
-    parentsIdMap.value[row.id].splice(delIndex, 1)
-
-    if (!parentsIdMap.value[row.id].length) {
-      delete parentsIdMap.value[row.id]
+    let delIndex = parentsIdMap.value[row.pId].findIndex((i) => i.id === row.id)
+    parentsIdMap.value[row.pId].splice(delIndex, 1)
+    if (!parentsIdMap.value[row.pId].length) {
+      delete parentsIdMap.value[row.pId]
     }
   })
 }
