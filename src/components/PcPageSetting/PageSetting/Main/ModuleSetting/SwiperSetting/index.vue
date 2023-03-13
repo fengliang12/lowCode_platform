@@ -5,7 +5,7 @@
 <script setup>
 import FormCreate from '@/components/FormCreate/index.vue'
 import { computed, reactive } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])

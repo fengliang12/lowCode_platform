@@ -16,7 +16,7 @@
     </div>
 
     <!-- ApiList -->
-    <el-table :data="AloneApiList" style="margin-top: 20px; width: 100%;">
+    <el-table :data="AloneApiList" style="margin-top: 20px; width: 100%">
       <el-table-column prop="apiName" label="API名称" width="180">
       </el-table-column>
       <el-table-column prop="method" label="方式" width="180">
@@ -34,7 +34,7 @@
           <el-button
             type="primary"
             size="small"
-            style="margin-left: 15px;"
+            style="margin-left: 15px"
             @click="clickWriteApi(scope.row, true)"
             >编辑</el-button
           >
@@ -59,7 +59,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import EditParameters from '../../../Common/editParameters/index.vue'
 import api from '@/api/axios.ts'
 

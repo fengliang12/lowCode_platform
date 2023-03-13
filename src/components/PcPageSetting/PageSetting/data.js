@@ -18,10 +18,6 @@ import PageContainerData from './Main/ModuleSetting/pageContainer/data'
 import CountDownData from './Main/ModuleSetting/countDown/data'
 import FormData from './Common/hotForm/common/formTypeList'
 
-
-
-
-
 /**
  * 组件类型
  */
@@ -64,10 +60,13 @@ export class moduleData {
     this.movableView =
       moduleType === 'movableView' ? new MovableViewData() : null //拖拽容器
     this.richText = moduleType === 'richText' ? new RichTextData() : null //富文本
-    this.sticky = moduleType === "sticky" ? new StickyData() : null;   //吸附
-    this.shareElement = moduleType === 'shareElement' ? new ShareElementData() : null //共享元素
-    this.pageContainer = moduleType === 'pageContainer' ? new PageContainerData() : null //页面容器
-    this.gridLottery = moduleType === 'gridLottery' ? new GridLotteryData() : null //九宫格
+    this.sticky = moduleType === 'sticky' ? new StickyData() : null //吸附
+    this.shareElement =
+      moduleType === 'shareElement' ? new ShareElementData() : null //共享元素
+    this.pageContainer =
+      moduleType === 'pageContainer' ? new PageContainerData() : null //页面容器
+    this.gridLottery =
+      moduleType === 'gridLottery' ? new GridLotteryData() : null //九宫格
     this.countDown = moduleType === 'countDown' ? new CountDownData() : null //倒计时
     this.form = moduleType === 'form' ? new FormData() : null //表单
     //页面值
@@ -78,6 +77,7 @@ export class moduleData {
     //事件数据
     this.events = null
     this.hotOperations = [] //事件
+    this.parentsCode = undefined
   }
 }
 

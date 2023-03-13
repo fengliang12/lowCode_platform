@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import { createPinia } from 'pinia'
+import pinia from '@/store/index'
 import router from './router'
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
@@ -16,16 +16,19 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'default-passive-events'
 
 const app = createApp(App)
+
+//将图标转为全局组件
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
+//注册全局组件
 app.use(uploadFile)
 app.use(PageSettingCommon)
 app.use(attributeComponents)
 
 app
-  .use(createPinia())
+  .use(pinia)
   .use(router)
   .use(ElementPlus, { locale: zhCn })
   .use(i18n)

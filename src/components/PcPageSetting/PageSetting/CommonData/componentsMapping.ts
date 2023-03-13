@@ -35,7 +35,6 @@ export default {
     isParent: false,
     unComponents: true,
   },
-
   slot: {
     name: '插槽',
     isParent: false,
@@ -114,7 +113,7 @@ export default {
     isParent: true,
   },
   form: {
-    name: "表单",
+    name: '表单',
     isParent: false,
   },
 }

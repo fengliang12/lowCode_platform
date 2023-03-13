@@ -12,7 +12,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import handleStyle from '../../../Handle/style'
 import bus from '@/utils/bus.js'
 const props = defineProps(['data'])

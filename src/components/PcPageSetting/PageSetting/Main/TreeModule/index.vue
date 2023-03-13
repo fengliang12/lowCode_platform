@@ -58,19 +58,20 @@
   </div>
 </template>
 
-<script setup>
-import { nextTick, ref, reactive, computed } from 'vue'
+<script setup lang="ts">
+import { nextTick, ref, computed } from 'vue'
 import componentsMapping from '../../CommonData/componentsMapping'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import setItemsMap from '../../Handle/setItemsMap'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
 import bus from '@/utils/bus.js'
 import cloneDeepModule from '../../Handle/handleCloneModule'
 
 const pageSetupStore = usePageSetupStore()
-const props = defineProps(['detail'])
+defineProps(['detail'])
 
+//当前操作的组件
 const currentNodeKey = computed(() => {
   return pageSetupStore.items?.value?.code || ''
 })
@@ -78,7 +79,7 @@ const currentNodeKey = computed(() => {
 /**
  * 点击节点，切换选中组件
  */
-const nodeClick = (data, node) => {
+const nodeClick = (data: any, node: { parent: { data: any } }) => {
   pageSetupStore.setItems({
     value: data,
     parents: node?.parent?.data ? node.parent.data : null,
@@ -89,7 +90,11 @@ const nodeClick = (data, node) => {
  * 拖拽时判定目标节点能否成为，拖动目标位置。
  * 如果返回 false ，拖动节点不能被拖放到目标节点。
  */
-const allowDrop = (draggingNode, dropNode, type) => {
+const allowDrop = (
+  draggingNode: any,
+  dropNode: { data: { moduleType: string | number } },
+  type: string,
+) => {
   return componentsMapping?.[dropNode.data.moduleType]?.isParent
     ? true
     : type !== 'inner'
@@ -98,7 +103,11 @@ const allowDrop = (draggingNode, dropNode, type) => {
 /**
  * 拖拽成功完成时触发的事件
  */
-const nodeDrop = (draggingNode, dropNode, type) => {
+const nodeDrop = (
+  draggingNode: { data: { parentsCode: any } },
+  dropNode: { data: { code: any; parentsCode: any } },
+  type: string,
+) => {
   if (type === 'inner') {
     draggingNode.data.parentsCode = dropNode.data.code
   } else {
@@ -121,14 +130,14 @@ const refreshElTree = () => {
 /**
  * 切换显示和隐藏
  */
-const setItemStatus = (data) => {
+const setItemStatus = (data: { hide: boolean }) => {
   data.hide = !data.hide
 }
 
 /**
  * 黏贴
  */
-const paste = (data) => {
+const paste = (data: { title: any; moduleSettings: any[] }) => {
   const Promise = navigator.clipboard.readText()
   Promise.then((res) => {
     const copyData = JSON.parse(res)
@@ -155,7 +164,7 @@ const paste = (data) => {
  * 删除
  * @param {*} data
  */
-const del = (data, node) => {
+const del = (data: { code: any }, node: { parent: any }) => {
   ElMessageBox.confirm('确认删除', '提示', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
@@ -163,14 +172,16 @@ const del = (data, node) => {
   }).then(() => {
     const parent = node.parent
     const siblings = parent.data.moduleSettings || parent.data
-    const index = siblings.findIndex((item) => item.code === data.code)
+    const index = siblings.findIndex(
+      (item: { code: any }) => item.code === data.code,
+    )
     siblings.splice(index, 1)
 
     pageSetupStore.setPageItemsMap({
       itemsMap: setItemsMap(data, pageSetupStore.itemsMap, 'delete'),
     })
 
-    if (pageSetupStore.items.value.code === data.code) {
+    if (pageSetupStore.items?.value.code === data.code) {
       pageSetupStore.setItems({
         value: null,
       })

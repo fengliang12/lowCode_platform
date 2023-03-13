@@ -29,6 +29,7 @@
     "mitt": "^3.0.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.28",
+    "pinia-plugin-persist": "^1.0.0",
     "qrcode.vue": "^3.3.3",
     "sass": "^1.57.1",
     "screenfull": "^6.0.2",

@@ -15,7 +15,7 @@
 
 <script setup>
 import { dPageShowDataValue } from '../../../../Handle/filters'
-import { usePageSetupStore } from '@/store/index.ts'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 const pageSetupStore = usePageSetupStore()
 const emit = defineEmits(['update:modelValue'])
 defineProps(['modelValue'])

@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import { computed, ref } from 'vue'
 import PageModuleLimit from '../../../Common/pageModuleLimit/index.vue'
 const pageSetupStore = usePageSetupStore()

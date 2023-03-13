@@ -19,7 +19,7 @@
 import JsonEditorVue from 'json-editor-vue3'
 import { ref, unref, inject } from 'vue'
 import { useRoute } from 'vue-router'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import { ElMessage } from 'element-plus'
 import {
   updatePageSetup,

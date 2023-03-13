@@ -67,7 +67,7 @@
 
 <script setup>
 import { reactive, computed } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import PageModuleLimitData from './data'
 
 const emit = defineEmits(['update:modelValue'])

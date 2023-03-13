@@ -1,6 +1,6 @@
 import handleModule from './handleModule'
 import { generateId } from './util'
-import { usePageSetupStore } from '../../../../store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import { cloneDeep } from 'lodash-es'
 import { ElMessage } from 'element-plus'
 const pageSetupStore = usePageSetupStore()

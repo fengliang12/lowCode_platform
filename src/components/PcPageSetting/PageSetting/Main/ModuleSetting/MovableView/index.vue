@@ -6,7 +6,7 @@
 import { computed } from 'vue'
 import FormCreate from '@/components/FormCreate/index.vue'
 import { formList } from './data.js'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])

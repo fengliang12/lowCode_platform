@@ -17,16 +17,16 @@
       "@/*": ["./src/*"] // 这里需要配置
     },
     "suppressImplicitAnyIndexErrors": true,
-    "allowJs": true
+    "allowJs": true,
+    "types": ["pinia-plugin-persist"]
   },
-
   "include": [
+    "src/typing.d.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/store/pageSetupStore.js",
-    "src/store/pageSetupStore.js"
+    "src/store/pageSetupStore.ts"
   ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]

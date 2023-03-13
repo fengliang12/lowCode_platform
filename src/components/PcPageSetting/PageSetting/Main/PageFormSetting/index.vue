@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import { initPageData, pageHeightList } from './data'
 import BasicConfig from './BasicConfig/index.vue'
 import StyleSetting from '../../Common/styleSetting/index.vue'

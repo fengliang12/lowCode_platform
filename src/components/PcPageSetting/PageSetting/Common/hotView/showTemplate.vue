@@ -24,7 +24,7 @@
 import { computed } from 'vue'
 import handleStyle from '../../Handle/style'
 import handlePageValue from '../../Handle/handlePageValue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 
 const pageSetupStore = usePageSetupStore()
 

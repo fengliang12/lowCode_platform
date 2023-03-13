@@ -135,7 +135,7 @@
 
 <script setup>
 import { ref, computed, provide, watch } from 'vue'
-import { usePageSetupStore } from '@/store/index.ts'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import EditParameters from '../../../Common/editParameters/index.vue'
 
 const pageSetupStore = usePageSetupStore()

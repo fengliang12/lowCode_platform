@@ -310,7 +310,7 @@
 
 <script setup>
 import { computed, watch, ref } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import Draggable from 'vuedraggable'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'

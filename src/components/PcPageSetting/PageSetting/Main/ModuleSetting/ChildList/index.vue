@@ -44,7 +44,7 @@ import ShowFile from '../../../Common/showFile/index.vue'
 import Common from '../../Template/Common/index.vue'
 import { setModule } from '../../../data'
 import ModuleSetting from '../index.vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import setItemsMap from '../../../Handle/setItemsMap.js'
 import bus from '@/utils/bus'
 

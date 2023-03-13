@@ -32,7 +32,7 @@
     <!-- 右边移动区域 -->
     <div class="right">
       <Draggable
-        :list="formData"
+        :list="_data.formData"
         :scroll="true"
         :group="{ name: 'itxst', pull: false, put: true }"
         class="draggable_right_box"
@@ -46,7 +46,7 @@
           <Common
             :data="element"
             :parents="{
-              moduleSettings: formData,
+              moduleSettings: _data.formData,
             }"
           ></Common>
         </template>
@@ -56,20 +56,21 @@
     <!-- 编辑区 -->
     <div class="tab_box">
       <el-button
-        v-show="tabBoxSetting === 'mode'"
+        v-show="_data.tabBoxSetting === 'mode'"
         class="showPageSetting"
         type="primary"
         @click="setPageSetting"
         >页面编辑</el-button
       >
       <ModuleSetting
-        v-show="tabBoxSetting === 'mode'"
+        v-if="pageSetupStore.items"
+        v-show="_data.tabBoxSetting === 'mode'"
         v-model="pageSetupStore.items.value"
         :parents="pageSetupStore.items.parents"
       ></ModuleSetting>
 
       <PageFormSetting
-        v-show="tabBoxSetting === 'page'"
+        v-show="_data.tabBoxSetting === 'page'"
         ref="pageFormSettingRef"
         :detail="detail"
       ></PageFormSetting>
@@ -77,8 +78,8 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted, ref, watch, computed } from 'vue'
+<script setup lang="ts">
+import { onMounted, ref, watch, reactive } from 'vue'
 import componentsMapping from './CommonData/componentsMapping'
 import PageFormSetting from './Main/PageFormSetting/index.vue'
 import ModuleSetting from './Main/ModuleSetting/index.vue'
@@ -87,19 +88,15 @@ import Common from './Main/Template/Common/index.vue'
 import OnlyTitle from './Common/onlyTitle/index.vue'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import Draggable from 'vuedraggable'
 import { moduleData, setModule } from './data'
 import setItemsMap from './Handle/setItemsMap'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isArray, set } from 'lodash'
 import bus from '@/utils/bus.js'
 import handleStyle from './Handle/style'
 
 const pageSetupStore = usePageSetupStore()
-const formData = ref([])
-const tabBoxSetting = ref('page')
-const pageStyle = ref('')
-
 const props = defineProps({
   detail: {
     type: Object,
@@ -107,6 +104,31 @@ const props = defineProps({
   },
 })
 
+/**
+ * 初始数据
+ */
+const _data = reactive({
+  formData: [],
+  tabBoxSetting: 'page',
+})
+
+/**
+ * 左边列表的数据
+ */
+const leftList = reactive(
+  Object.keys(componentsMapping)
+    .filter((elem) => !componentsMapping[elem].unComponents) //排除unComponents
+    .map(
+      (elem) =>
+        new moduleData({
+          moduleType: elem,
+          ...(componentsMapping[elem]?.initData ?? {}),
+        }), //返回对应的实例
+    ),
+)
+
+//监听pageStyle，给整个页面添加样式
+const pageStyle = ref<string>('')
 watch(
   () => props.detail.pageStyle,
   (val) => {
@@ -133,19 +155,34 @@ watch(
 )
 
 /**
- * 左边列表的数据
+ * 监听detail
  */
-const leftList = computed(() => {
-  return Object.keys(componentsMapping)
-    .filter((elem) => !componentsMapping[elem].unComponents) //排除unComponents
-    .map(
-      (elem) =>
-        new moduleData({
-          moduleType: elem,
-          ...(componentsMapping[elem]?.initData ?? {}),
-        }), //返回对应的实例
-    )
-})
+watch(
+  () => props.detail,
+  (val) => {
+    // 刷新接口
+    _data.formData = initResData(val.moduleSettings)
+    val.moduleSettings = _data.formData
+    //根据已经存在的值,遍历出itemMaps值
+    pageSetupStore.setPageItemsMap({
+      itemsMap: setItemsMap(val),
+    })
+  },
+)
+
+/**
+ * 监听pageSetupStore.items，切换配置类型
+ */
+watch(
+  () => pageSetupStore.items,
+  () => {
+    if (pageSetupStore?.items?.value) {
+      _data.tabBoxSetting = 'mode'
+    } else {
+      _data.tabBoxSetting = 'page'
+    }
+  },
+)
 
 /**
  * 生命周期
@@ -163,46 +200,14 @@ onMounted(() => {
 })
 
 /**
- * 监听detail
- */
-watch(
-  () => props.detail,
-  (val) => {
-    // 刷新接口
-    formData.value = initResData(val.moduleSettings)
-    val.moduleSetting = formData.value
-    //根据已经存在的值,遍历出itemMaps值
-    pageSetupStore.setPageItemsMap({
-      itemsMap: setItemsMap(val),
-    })
-  },
-)
-
-/**
- * 监听pageSetupStore.items，切换配置类型
- */
-watch(
-  () => pageSetupStore.items,
-  () => {
-    if (pageSetupStore?.items?.value) {
-      tabBoxSetting.value = 'mode'
-    } else {
-      tabBoxSetting.value = 'page'
-    }
-  },
-)
-
-/**
  * 数据初始化，如果数据是为null则赋初始数据，如果数据是object进行递归
  * @param {*} data
  */
-const initResData = (data) => {
-  data.forEach((elem) => {
-    const module = leftList.value.find(
-      (item) => item.moduleType === elem.moduleType,
-    )
+const initResData = (data: any) => {
+  data.forEach((elem: any) => {
+    const module = leftList.find((item) => item.moduleType === elem.moduleType)
     if (module) {
-      const setKey = (elem, module) => {
+      const setKey = (elem: any, module: any) => {
         Object.keys(elem).forEach((item) => {
           if (
             elem[item] === null &&
@@ -229,7 +234,7 @@ const initResData = (data) => {
  * 左边只能移动到右边，不能上下移动
  */
 const moveCheck = ref(false)
-const leftMove = (e) => {
+const leftMove = (e: { from: any; to: any }) => {
   const move = e.from === e.to
   moveCheck.value = move
   return !move
@@ -238,13 +243,13 @@ const leftMove = (e) => {
 /**
  * 右边移动结束
  */
-const leftEnd = (e) => {
+const leftEnd = (e: { newIndex: string | number }) => {
   if (moveCheck.value) return
-  const data = formData.value[e.newIndex]
+  const data = _data.formData[e.newIndex]
   if (!data) return
   setPageData({
     index: e.newIndex,
-    moduleSettings: formData.value,
+    moduleSettings: _data.formData,
     moduleType: data.moduleType,
     width: data.pageStyle.width,
     height: data.pageStyle.height,
@@ -254,7 +259,7 @@ const leftEnd = (e) => {
 /**
  * 点击左边上的菜单选项,添加到对应的组件中
  */
-const clickLeft = (moduleType) => {
+const clickLeft = (moduleType: string | number) => {
   let { width = 750, height = 200 } =
     componentsMapping[moduleType].initData ?? {}
   if (
@@ -263,8 +268,8 @@ const clickLeft = (moduleType) => {
   ) {
     // 没有选中的组件或者当前选中组件不是父类组件
     setPageData({
-      index: formData.value.length,
-      moduleSettings: formData.value,
+      index: _data.formData.length,
+      moduleSettings: _data.formData,
       moduleType: moduleType,
       width,
       height,
@@ -280,23 +285,23 @@ const clickLeft = (moduleType) => {
       },
     )
       .then(() => {
-        if (!pageSetupStore.items?.value?.moduleSettings) {
-          pageSetupStore.items.value.moduleSettings = []
+        if (!isArray(pageSetupStore.items?.value?.moduleSettings)) {
+          set(pageSetupStore.items?.value, 'moduleSettings', [])
         }
         const { width, height } = pageSetupStore?.items?.value?.pageStyle || {}
         setPageData({
-          index: pageSetupStore.items.value.moduleSettings.length,
-          moduleSettings: pageSetupStore.items.value.moduleSettings,
+          index: pageSetupStore.items?.value.moduleSettings.length,
+          moduleSettings: pageSetupStore.items?.value.moduleSettings,
           moduleType: moduleType,
           width,
           height,
-          parents: pageSetupStore.items.value,
+          parents: pageSetupStore.items?.value,
         })
       })
       .catch(() => {
         setPageData({
-          index: formData.value.length,
-          moduleSettings: formData.value,
+          index: _data.formData.length,
+          moduleSettings: _data.formData,
           moduleType: moduleType,
           width,
           height,
@@ -316,7 +321,7 @@ const setPageData = ({
   width,
   height,
   parents = null,
-} = {}) => {
+}: any = {}) => {
   const tempItem = (moduleSettings[index] = setModule({
     moduleType,
     width,
@@ -324,6 +329,7 @@ const setPageData = ({
   }))
 
   tempItem.parentsCode = parents?.code ?? pageSetupStore.id
+
   pageSetupStore.setItems({
     value: tempItem,
     parents,
@@ -334,7 +340,7 @@ const setPageData = ({
     opt: 'add',
   })
 
-  props.detail.moduleSettings = formData.value
+  props.detail.moduleSettings = _data.formData
 
   // 刷新el-tree
   bus.emit('refreshElTree')
@@ -344,7 +350,7 @@ const setPageData = ({
  * 右边只能上下移动
  * @param {*} e
  */
-const rightMove = (e) => {
+const rightMove = (e: { from: any; to: any }) => {
   return e.from === e.to
 }
 
@@ -353,7 +359,6 @@ const rightMove = (e) => {
  * @param {*} e
  */
 const rightEnd = () => {
-  // 刷新el-tree
   bus.emit('refreshElTree')
 }
 
@@ -367,21 +372,23 @@ const setPageSetting = () => {
 /**
  * 保存组件
  */
-const pageFormSettingRef = ref(null)
+const pageFormSettingRef = ref<InstanceType<typeof PageFormSetting> | null>(
+  null,
+)
 const save = async () => {
-  const pageForm = await pageFormSettingRef.value.save()
+  const pageForm = await pageFormSettingRef.value?.save()
   if (!pageForm) {
-    tabBoxSetting.value = 'page'
+    _data.tabBoxSetting = 'page'
     ElMessage.error('保存失败')
     return false
   }
 
-  if (formData.value.length === 0) {
+  if (_data.formData.length === 0) {
     ElMessage.error('至少配置一条组件')
     return false
   }
 
-  pageForm.moduleSettings = formData
+  pageForm.moduleSettings = _data.formData
   const req = cloneDeep(pageForm)
   return cloneDeep(req)
 }

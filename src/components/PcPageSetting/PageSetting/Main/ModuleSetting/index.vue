@@ -221,7 +221,7 @@ import FissionImage from '../../Common/fissionImage/index.vue'
 import SetData from '../../Common/setData/index.vue'
 import EventCommon from '../../Common/eventCommon/index.vue'
 import componentsMapping from '../../CommonData/componentsMapping'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import { merge } from 'lodash'
 
 const emit = defineEmits(['update:modelValue', 'success'])

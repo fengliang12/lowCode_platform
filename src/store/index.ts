@@ -1,5 +1,7 @@
-export * from './useTagsStore'
-export * from './useMenuStore'
-export * from './useButtonStore'
-export * from './useUserStore'
-export * from './pageSetupStore'
+import { createPinia } from 'pinia'
+import piniaPersist from 'pinia-plugin-persist'
+
+const pinia = createPinia()
+pinia.use(piniaPersist)
+
+export default pinia

@@ -27,7 +27,7 @@ import { ref, computed, reactive } from 'vue'
 import SetParams from './setParams.vue'
 import { cloneDeep } from 'lodash'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 
 const emit = defineEmits(['confirmParameters'])
 const pageSetupStore = usePageSetupStore()

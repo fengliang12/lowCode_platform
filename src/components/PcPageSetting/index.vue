@@ -6,11 +6,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onUnmounted, ref, provide, onMounted, watch } from 'vue'
 import PageSetting from './PageSetting/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import bus from '@/utils/bus'
 import indexedDB, { storeName } from './utils/indexedDB'
@@ -26,7 +26,7 @@ const router = useRouter()
 const route = useRoute()
 
 pageSetupStore.changeInfo = !route.query?.id
-pageSetupStore.id = route.query?.id || ''
+pageSetupStore.id = route.query?.id ?? ''
 
 /**
  * 监听detail,如果有变化那就是修改了detail
@@ -48,7 +48,6 @@ onUnmounted(() => {
 watch(
   () => route?.query?.id,
   () => {
-    console.log('监听')
     getPageDetail()
   },
 )
@@ -58,7 +57,7 @@ watch(
 const loading = ref(false)
 const initPageSetupApi = async () => {
   loading.value = true
-  // await pageSetupStore.getPageSetupApi()
+  await pageSetupStore.getPageSetupApi()
   loading.value = false
 }
 
@@ -67,7 +66,7 @@ const initPageSetupApi = async () => {
  */
 const getPageDetail = async () => {
   if (!route.query?.id) return false
-  const res = await getPageSetupInfo(route.query?.id)
+  const res = await getPageSetupInfo(route.query?.id as string)
   detail.value = res.data.data
 }
 
@@ -84,25 +83,26 @@ const savePageSetting = () => {
       save()
     })
     .catch(() => {
-      ElMessage('已取消')
+      ElMessage.warning('已保存已取消')
     })
 }
 
 /**
  * 点击保存
  */
-const pageSettingRef = ref(null)
+const pageSettingRef = ref<InstanceType<typeof PageSetting> | null>(null)
 const save = async () => {
-  const res = await pageSettingRef.value.save().catch(() => {})
-  console.log(res)
+  if (!pageSettingRef?.value) return
+  const res = await pageSettingRef.value.save()
   if (!res) return
+
+  console.log('需要保存的数据', res)
 
   //更新还是创建
   loading.value = true
   const request = res.id ? updatePageSetup : createPageSetup
   const result = await request(res)
   loading.value = false
-
   let pageSetup = result.data.data
 
   const msg = res.id ? '修改成功' : '创建成功'
@@ -113,27 +113,29 @@ const save = async () => {
     pageSetupStore.pageList.push({
       id: pageSetup.id,
       title: pageSetup.title,
-      customHeader: pageSetup.customHeader,
     })
+    pageSetupStore.id = pageSetup.id
   }
 
   // //刷新当前编辑页面
   router.replace({
     path: '/pageSetting/pageIndex/edit',
-    query: { id: pageSetup.id },
+    query: { id: pageSetupStore.id },
   })
 
-  // saveIndexedDB([res])
+  // 将数据保存到浏览器数据库中
+  saveIndexedDB([res])
 }
 
 /**
  * 将每一次操作成功的数据备份到indexDB中
  */
-const saveIndexedDB = async (pageList) => {
-  let history = await indexedDB.get(storeName, 'syncBrandComponentHistory_all')
+const saveIndexedDB = async (pageList: any) => {
+  let id = `syncBrandComponentHistory_${pageSetupStore.id}`
+  let history = await indexedDB.get(storeName, id)
   if (!history) {
     indexedDB.add(storeName, {
-      id: 'syncBrandComponentHistory_all',
+      id: id,
       value: [
         {
           time: new Date(),
@@ -144,24 +146,21 @@ const saveIndexedDB = async (pageList) => {
   } else {
     const pageString = JSON.stringify(pageList)
     const saveTemp = history.value
-    if (pageString !== JSON.stringify(saveTemp[saveTemp.length - 1].data)) {
+    if (
+      pageString != JSON.stringify(saveTemp[saveTemp.length - 1].data || {})
+    ) {
       saveTemp.push({
         time: new Date(),
         data: pageList,
       })
+      if (saveTemp.length > 10) {
+        saveTemp.shift()
+      }
+      indexedDB.put(storeName, {
+        id: id,
+        value: saveTemp,
+      })
     }
-    if (saveTemp.length > 10) {
-      saveTemp.shift()
-    }
-    indexedDB.put(storeName, {
-      id: `syncBrandComponentHistory_${pageSetupStore.id}`,
-      value: [
-        {
-          time: new Date(),
-          data: pageList,
-        },
-      ],
-    })
   }
 }
 

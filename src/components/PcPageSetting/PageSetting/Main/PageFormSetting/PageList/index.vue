@@ -51,7 +51,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { usePageSetupStore } from '@/store'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
 
