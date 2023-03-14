@@ -23,7 +23,7 @@
               <img
                 class="cat"
                 v-show="data.hide"
-                src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a04fbe1d38ed74dde93f52e10090a10d.png"
+                src="@/assets/images/closeEye.png"
                 alt=""
                 @click.stop="setItemStatus(data)"
               />
@@ -31,7 +31,7 @@
                 v-show="!data.hide"
                 class="cat"
                 @click.stop="setItemStatus(data)"
-                src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a0c47e0a129b4d89af9e09fb0d4ec2bc.png"
+                src="@/assets/images/eye.png"
               />
             </div>
             <div class="ml10 vhCenter" v-if="!data.shareSetting">

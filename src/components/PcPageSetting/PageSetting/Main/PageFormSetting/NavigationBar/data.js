@@ -19,7 +19,7 @@ export default class {
     //状态栏颜色
     this.statusBarColor = null
     //滚动显示背景
-    this.backgroundColorOpacity = null
+    this.backgroundColorOpacity = false
     this.backgroundColorOpacityDistance = null
   }
 }
@@ -28,22 +28,22 @@ export const componentsList = () => {
   return [
     {
       divider: '自定义导航',
-      filed: 'show',
+      field: 'show',
       type: 'el-switch',
       title: '显示标题栏',
     },
     {
-      filed: 'back',
+      field: 'back',
       type: 'el-switch',
       title: '是否返回',
     },
     {
-      filed: 'title',
+      field: 'title',
       type: 'el-input',
       title: '标题',
     },
     {
-      filed: 'titleColor',
+      field: 'titleColor',
       type: 'el-color-picker',
       title: '标题颜色',
       props: {
@@ -51,12 +51,12 @@ export const componentsList = () => {
       },
     },
     {
-      filed: 'titleImage',
+      field: 'titleImage',
       type: 'upload-file',
       title: '标题图片',
     },
     {
-      filed: 'backgroundColor',
+      field: 'backgroundColor',
       type: 'el-color-picker',
       title: '导航背景色',
       props: {
@@ -64,17 +64,17 @@ export const componentsList = () => {
       },
     },
     {
-      filed: 'backgroundImage',
+      field: 'backgroundImage',
       type: 'upload-file',
       title: '导航背景图',
     },
     {
-      filed: 'fill',
+      field: 'fill',
       type: 'el-switch',
       title: '是否填充',
     },
     {
-      filed: 'statusBarColor',
+      field: 'statusBarColor',
       type: 'el-select',
       title: '状态栏颜色',
       props: {
@@ -93,12 +93,12 @@ export const componentsList = () => {
       ],
     },
     {
-      filed: 'backgroundColorOpacity',
+      field: 'backgroundColorOpacity',
       type: 'el-switch',
       title: '滚动背景渐变',
     },
     {
-      filed: 'backgroundColorOpacityDistance',
+      field: 'backgroundColorOpacityDistance',
       type: 'el-input',
       title: '滚动渐变距离',
     },

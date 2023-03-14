@@ -46,12 +46,13 @@
         </el-icon>
       </el-tooltip>
       <el-tooltip
+        v-if="showHandle"
         :show-after="1000"
         effect="dark"
         content="数据编辑"
         placement="top-start"
       >
-        <el-icon :size="16" v-if="showHandle"
+        <el-icon :size="16"
           ><EditPen
             @click="editHandle"
             :color="handleData && handleData.length ? '#000000' : '#bbbbbb'"
