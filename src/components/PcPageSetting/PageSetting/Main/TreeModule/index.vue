@@ -11,9 +11,9 @@
       default-expand-all
       highlight-current
       :expand-on-click-node="false"
+      :allow-drop="allowDrop"
       @node-click="nodeClick"
       @node-drop="nodeDrop"
-      :allow-drop="allowDrop"
     >
       <template #default="{ node, data }">
         <div class="tree_content">
@@ -85,8 +85,9 @@ const nodeClick = (data: any, node: { parent: { data: any } }) => {
 }
 
 /**
- * 拖拽时判定目标节点能否成为，拖动目标位置。
+ * 拖拽时判定目标节点能否成为拖动目标位置。
  * 如果返回 false ，拖动节点不能被拖放到目标节点。
+ * type 参数有三种情况：'prev'、'inner' 和 'next'，分别表示放置在目标节点前、插入至目标节点和放置在目标节点后
  */
 const allowDrop = (
   draggingNode: any,

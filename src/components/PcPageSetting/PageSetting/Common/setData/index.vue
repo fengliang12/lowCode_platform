@@ -44,12 +44,14 @@
         <upload-file v-if="switchCustom" v-model:url="pageValue.value" />
         <el-tooltip
           :show-after="1000"
-          class="item"
+          class="vhCenter"
           effect="dark"
           :content="`切换${switchCustom ? '手动' : '上传'}`"
           placement="top-start"
         >
-          <el-icon><Sort @click="switchCustom = !switchCustom" /></el-icon>
+          <el-icon :size="20" style="margin-left: 10px">
+            <Switch @click="switchCustom = !switchCustom"
+          /></el-icon>
         </el-tooltip>
       </div>
     </template>
@@ -58,7 +60,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // PageValue {
 //   value:string;
 //   defaultValue:string;
@@ -71,7 +73,7 @@ import GetPageData from './getPageData.vue'
 import { pageValueData } from './data'
 import { valueType } from './common/pageData'
 
-const switchCustom = ref(false)
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -90,7 +92,8 @@ const props = defineProps({
     default: false,
   },
 })
-const emit = defineEmits(['update:modelValue'])
+
+const switchCustom = ref(false)
 
 /**
  * 初始化pageValue

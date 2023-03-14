@@ -1,12 +1,12 @@
 <template>
   <div
     v-if="data"
-    class="box"
+    class="box animate__animated"
     :class="`${pageSetupStore.showHotBox && 'bg'} ${
       data.moduleType === 'scrollView' &&
       !data.scrollView.enableFlex &&
       'scroll'
-    } ${animateValue ? `${animateValue}` : ''}`"
+    } ${_data.animateValue ? `${_data.animateValue}` : ''}`"
     :style="`${style};display:${data.hide ? 'none' : ''}`"
     ref="buttonRef"
     @click="click"
@@ -14,9 +14,8 @@
   >
     <!--复制和删除的操作弹窗 -->
     <el-popover
-      ref="popoverRef"
       :virtual-ref="buttonRef"
-      :visible="visible"
+      :visible="_data.visible"
       virtual-triggering
       placement="right"
       :width="200"
@@ -114,21 +113,21 @@ import handleStyle from '../../../Handle/style'
 import handlePageValue from '../../../Handle/handlePageValue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import Common from './index.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import setItemsMap from '../../../Handle/setItemsMap.js'
-import { cloneDeep } from 'lodash'
 import { onMounted } from 'vue'
+import cloneDeepModule from '../../../Handle/handleCloneModule'
 
-const props = defineProps(['data', 'parents'])
 const pageSetupStore = usePageSetupStore()
-const animateValue = ref('')
+const props = defineProps(['data', 'parents', 'showDraggable'])
 
 /**
  * 页面展示不需要特殊处理的,只需要展示样式功能即可的
  */
 const simpleComponents = [
   'common',
+  'scrollView',
   'movableView',
   'movableArea',
   'shareElement',
@@ -137,13 +136,19 @@ const simpleComponents = [
   'form',
 ]
 
+const _data = reactive({
+  visible: false,
+  animateValue: '',
+})
+
 /**
- * 样式
+ * 拉取按钮是否显示,必须最上层组件，并且是relative和static
  */
 const showDraggableBox = computed(() => {
   if (
-    props.data?.pageStyle?.position === 'relative' ||
-    props.data?.pageStyle?.position === 'static'
+    props.showDraggable &&
+    (props.data?.pageStyle?.position === 'relative' ||
+      props.data?.pageStyle?.position === 'static')
   ) {
     return true
   }
@@ -151,7 +156,7 @@ const showDraggableBox = computed(() => {
 })
 
 /**
- * 样式
+ * 盒子的样式
  */
 const style = computed(() => {
   if (props.data.moduleType === 'carousel') {
@@ -166,6 +171,22 @@ const style = computed(() => {
       bottom,
       position,
     })
+  }
+  if (props.data.moduleType === 'scrollView') {
+    const { direction } = props.data.scrollView
+    let temp = {}
+    if (direction === 'scroll-x') {
+      temp = {
+        'overflow-x': 'scroll',
+        'overflow-y': 'hidden',
+      }
+    } else {
+      temp = {
+        'overflow-x': 'hidden',
+        'overflow-y': 'scroll',
+      }
+    }
+    return handleStyle({ ...temp, ...props.data.pageStyle })
   }
   return handleStyle(props.data.pageStyle)
 })
@@ -190,17 +211,15 @@ const click = (e) => {
 /**
  * 右击元素
  */
-const visible = ref(false)
 const buttonRef = ref()
-const popoverRef = ref(null)
 const rightClick = (e) => {
   e.stopPropagation()
-  visible.value = true
+  _data.visible = true
 }
 
 onMounted(() => {
   document.addEventListener('click', () => {
-    visible.value = false
+    _data.visible = false
   })
 })
 
@@ -214,7 +233,7 @@ const deleteItem = () => {
     type: 'warning',
   }).then(() => {
     const index = props.parents.moduleSettings.findIndex(
-      (item) => item.code === props.data,
+      (item) => item.code === props.data.code,
     )
     props.parents.moduleSettings.splice(index, 1)
     pageSetupStore.setPageItemsMap({
@@ -233,7 +252,9 @@ const deleteItem = () => {
  * 复制组件,这里不能直接copy
  */
 const copy = () => {
-  props.parents.moduleSettings.push(cloneDeep(props.data))
+  props.parents.moduleSettings.push(
+    cloneDeepModule(props.data, pageSetupStore.itemsMap),
+  )
   hideVisible()
 }
 
@@ -241,7 +262,7 @@ const copy = () => {
  * 隐藏显示
  */
 const hideVisible = () => {
-  visible.value = false
+  _data.visible = false
 }
 </script>
 

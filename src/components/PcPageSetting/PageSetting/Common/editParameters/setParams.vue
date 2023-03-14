@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="box-content">
-      <el-link disabled type="primary"> 参数以apiPath0示意，可多个 </el-link>
+      <el-link v-if="type === 'api'" disabled type="primary">
+        参数以apiPath0示意，可多个
+      </el-link>
       <el-button class="add-btn" @click="addChild('paramList', modelValue)">
         新增参数
       </el-button>
@@ -12,7 +14,7 @@
       row-key="id"
       :tree-props="{ children: 'child', hasChildren: 'hasChildren' }"
       :border="true"
-      style="margin-bottom: 20px; width: 100%;"
+      style="margin-bottom: 20px; width: 100%"
     >
       <!-- 键值(key) -->
       <el-table-column label="键值(key)" prop="key" min-width="300px">
@@ -72,7 +74,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // PageApiInfoParams {
 //   key (string, optional): 接口key ,
 //   pageValue (PageValue, optional): 页面值 ,
@@ -99,7 +101,7 @@ const setIdMapParent = (
   parent = props.modelValue,
 ) => {
   list.id = parentIndex
-  list.forEach((elem, index) => {
+  list.forEach((elem: { id: any; child: any }, index: number) => {
     let id = parentIndex + (index + 1)
     elem.id = id
     idMapParent[id] = parent
@@ -124,7 +126,7 @@ watch(
 /**
  * 添加子数据
  */
-const addChild = (type, row) => {
+const addChild = (type: string, row: any) => {
   row.pageValue = null
   row.rules = []
   const child = {
@@ -149,14 +151,14 @@ const addChild = (type, row) => {
 /**
  * 删除子数据
  */
-const deleteChild = (row) => {
+const deleteChild = (row: { id: number }) => {
   if (idMapParent[row.id]?.child?.length === 1) {
     idMapParent[row.id].pageValue = new pageValueData()
   }
 
   if (idMapParent[row.id]?.child?.length) {
     let index = idMapParent[row.id].child.findIndex(
-      (elem) => elem.id === row.id,
+      (elem: { id: any }) => elem.id === row.id,
     )
     idMapParent[row.id].child.splice(index, 1)
   } else if (props.modelValue.length) {
