@@ -25,19 +25,17 @@
                 v-show="data.hide"
                 src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a04fbe1d38ed74dde93f52e10090a10d.png"
                 alt=""
-                @click.stop="setItemStatus(data, node)"
+                @click.stop="setItemStatus(data)"
               />
               <img
                 v-show="!data.hide"
                 class="cat"
-                @click.stop="setItemStatus(data, node)"
+                @click.stop="setItemStatus(data)"
                 src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a0c47e0a129b4d89af9e09fb0d4ec2bc.png"
               />
             </div>
             <div class="ml10 vhCenter" v-if="!data.shareSetting">
-              <el-icon @click="handleCopyEvent(data, node)"
-                ><DocumentCopy
-              /></el-icon>
+              <el-icon @click="handleCopyEvent(data)"><DocumentCopy /></el-icon>
             </div>
             <div
               v-if="
@@ -46,7 +44,7 @@
               "
               class="ml10 vhCenter"
             >
-              <el-icon @click="paste(data, node)"><CopyDocument /></el-icon>
+              <el-icon @click="paste(data)"><CopyDocument /></el-icon>
             </div>
             <div class="ml10 vhCenter" v-if="!data.shareSetting">
               <el-icon @click="del(data, node)"><DeleteFilled /></el-icon>
