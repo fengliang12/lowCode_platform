@@ -18,10 +18,10 @@
           v-model="activeTime"
           class="width-full"
           type="datetimerange"
+          from="YYYY-MM-DD HH:mm:ss"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          @change="dateChange"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="是否启用：">
@@ -133,10 +133,11 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, provide, watch } from 'vue'
+<script setup lang="ts">
+import { ref, computed, provide } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import EditParameters from '../../../Common/editParameters/index.vue'
+import type { FormInstance } from 'element-plus'
 
 const pageSetupStore = usePageSetupStore()
 const props = defineProps(['modelValue'])
@@ -152,38 +153,29 @@ const shareParamsHasValue = computed(() => {
   return props.modelValue.shareSetting?.shareParams?.length > 0
 })
 
-/**
- * 处理开始和结束时间
- */
-const activeTime = ref([])
-watch(
-  () => props.modelValue.form,
-  () => {
-    activeTime.value = [props.modelValue.form, props.modelValue.to]
+//活动时间
+const activeTime = computed({
+  get() {
+    return [props.modelValue.form, props.modelValue.to]
   },
-)
-/**
- * 时间事件选择
- * @param {} val
- */
-const dateChange = (val) => {
-  if (!val) return
-  props.modelValue.form = val[0]
-  props.modelValue.form = val[1]
-}
+  set(val) {
+    props.modelValue.from = val[0]
+    props.modelValue.to = val[1]
+  },
+})
 
 /**
  * 点击显示页面参数配置弹出
  */
-const editParameters = ref(null)
+const editParameters = ref<InstanceType<typeof EditParameters> | null>(null)
 const paramsType = ref('')
-const showEditParameters = (type) => {
+const showEditParameters = (type: string) => {
   paramsType.value = type
   let params =
     type === 'page'
       ? pageSetupStore?.pageNewParams
       : props.modelValue?.shareSetting?.shareParams
-  editParameters.value.show({
+  editParameters.value?.show({
     params: params ?? [],
     type: 'multiLevel',
   })
@@ -192,7 +184,7 @@ const showEditParameters = (type) => {
 /**
  * 获取页面参数编辑的结果
  */
-const editParametersChange = (paramList) => {
+const editParametersChange = (paramList: never[]) => {
   if (!paramList) paramList = []
   if (paramsType.value === 'page') {
     pageSetupStore.setPageNewParams(paramList)
@@ -201,10 +193,10 @@ const editParametersChange = (paramList) => {
   }
 }
 
-const form = ref(null)
+const form = ref<FormInstance | null>(null)
 const emit = defineEmits(['update:activeName'])
 const next = async ({ check = false, activeName = 'counter' }) => {
-  const valid = await form.value.validate().catch(() => false)
+  const valid = await form.value?.validate().catch(() => false)
   if (!valid) {
     return check ? Promise.reject(false) : false
   }

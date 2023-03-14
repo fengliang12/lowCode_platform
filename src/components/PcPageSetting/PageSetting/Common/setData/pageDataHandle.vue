@@ -5,10 +5,10 @@
     width="80%"
     append-to-body
   >
-    <el-button class="mb10" style="float: right;" @click="addChild">
+    <el-button class="mb10" style="float: right" @click="addChild">
       新增方法
     </el-button>
-    <el-table :data="handle" :border="true" style="width: 100%;">
+    <el-table :data="handle" :border="true" style="width: 100%">
       <el-table-column prop="method" label="方法名" width="200">
         <template v-slot="scope">
           <el-cascader
@@ -52,7 +52,7 @@
   </el-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // PageValueHandle {
 //   key (string, optional): key ,
 //   method (string, optional): 方法 ,
@@ -72,9 +72,9 @@ const emit = defineEmits(['confirm'])
  * 弹窗
  * @param {*} handleData
  */
-const handle = ref([])
+const handle = ref<HandleData[]>([])
 const dialogVisible = ref(false)
-const show = (handleData) => {
+const show = (handleData: any) => {
   handle.value = cloneDeep(handleData) ?? [new HandleData()]
   dialogVisible.value = true
 }
@@ -89,7 +89,7 @@ const addChild = () => {
 /**
  * 删除方法
  */
-const deleteChild = ({ $index }) => {
+const deleteChild = ({ $index }: any) => {
   handle.value.splice($index, 1)
 }
 
@@ -97,7 +97,7 @@ const deleteChild = ({ $index }) => {
  * 多级菜单选择
  * @param {*} item
  */
-const cascaderChange = (item, row) => {
+const cascaderChange = (item: any[], row: { method: any }) => {
   row.method = item.join('.')
 }
 
@@ -131,7 +131,7 @@ const confirm = () => {
  * check
  */
 const check = () => {
-  return handle.value.every((item) => {
+  return handle.value.every((item: any) => {
     return item.method
   })
 }

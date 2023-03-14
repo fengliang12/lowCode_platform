@@ -11,9 +11,9 @@
       default-expand-all
       highlight-current
       :expand-on-click-node="false"
+      :allow-drop="allowDrop"
       @node-click="nodeClick"
       @node-drop="nodeDrop"
-      :allow-drop="allowDrop"
     >
       <template #default="{ node, data }">
         <div class="tree_content">
@@ -25,19 +25,17 @@
                 v-show="data.hide"
                 src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a04fbe1d38ed74dde93f52e10090a10d.png"
                 alt=""
-                @click.stop="setItemStatus(data, node)"
+                @click.stop="setItemStatus(data)"
               />
               <img
                 v-show="!data.hide"
                 class="cat"
-                @click.stop="setItemStatus(data, node)"
+                @click.stop="setItemStatus(data)"
                 src="https://wechatv2.blob.core.chinacloudapi.cn/ysl/scrm/image/a0c47e0a129b4d89af9e09fb0d4ec2bc.png"
               />
             </div>
             <div class="ml10 vhCenter" v-if="!data.shareSetting">
-              <el-icon @click="handleCopyEvent(data, node)"
-                ><DocumentCopy
-              /></el-icon>
+              <el-icon @click="handleCopyEvent(data)"><DocumentCopy /></el-icon>
             </div>
             <div
               v-if="
@@ -46,7 +44,7 @@
               "
               class="ml10 vhCenter"
             >
-              <el-icon @click="paste(data, node)"><CopyDocument /></el-icon>
+              <el-icon @click="paste(data)"><CopyDocument /></el-icon>
             </div>
             <div class="ml10 vhCenter" v-if="!data.shareSetting">
               <el-icon @click="del(data, node)"><DeleteFilled /></el-icon>
@@ -87,8 +85,9 @@ const nodeClick = (data: any, node: { parent: { data: any } }) => {
 }
 
 /**
- * 拖拽时判定目标节点能否成为，拖动目标位置。
+ * 拖拽时判定目标节点能否成为拖动目标位置。
  * 如果返回 false ，拖动节点不能被拖放到目标节点。
+ * type 参数有三种情况：'prev'、'inner' 和 'next'，分别表示放置在目标节点前、插入至目标节点和放置在目标节点后
  */
 const allowDrop = (
   draggingNode: any,

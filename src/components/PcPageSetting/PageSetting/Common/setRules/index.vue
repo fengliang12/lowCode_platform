@@ -36,7 +36,7 @@
               <i
                 @click="addRule(index + 1)"
                 class="el-icon-circle-plus-outline icon"
-                style="color: #409eff;"
+                style="color: #409eff"
               />
             </el-tooltip>
           </div>
@@ -45,7 +45,7 @@
               <i
                 @click="delRule(index)"
                 class="el-icon-remove-outline icon"
-                style="color: #f56c6c;"
+                style="color: #f56c6c"
               />
             </el-tooltip>
           </div>
@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // PageApiRule {
 //   message (string, optional): 消息 ,
 //   required (boolean, optional): 是否请求 ,
@@ -90,7 +90,7 @@ const hasRules = computed(() => {
 /**
  * 添加规则
  */
-const addRule = (index) => {
+const addRule = (index: number) => {
   rules.value.splice(index, 0, {
     required: true,
     type: '',
@@ -102,7 +102,7 @@ const addRule = (index) => {
  * 删除规则
  * @param {*} index
  */
-const delRule = (index) => {
+const delRule = (index: number) => {
   rules.value.splice(index, 1)
 }
 </script>

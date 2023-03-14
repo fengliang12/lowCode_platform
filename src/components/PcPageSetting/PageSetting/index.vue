@@ -45,6 +45,7 @@
         <template #item="{ element }">
           <Common
             :data="element"
+            :showDraggable="true"
             :parents="{
               moduleSettings: _data.formData,
             }"

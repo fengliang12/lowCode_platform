@@ -26,7 +26,8 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/store/pageSetupStore.ts"
+    "src/store/pageSetupStore.ts",
+    "src/components/PcPageSetting/PageSetting/Handle/setIdMapParent.js"
   ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]

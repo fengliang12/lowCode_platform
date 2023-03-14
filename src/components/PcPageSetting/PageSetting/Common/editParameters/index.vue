@@ -1,7 +1,7 @@
 <template>
   <el-dialog
-    v-model="dialog"
-    :title="paramsData.type === 'api' ? '编辑api参数' : '携带参数'"
+    v-model="_data.dialog"
+    :title="_data.type === 'api' ? '编辑api参数' : '携带参数'"
     width="90%"
     append-to-body
   >
@@ -9,9 +9,9 @@
     <slot name="name"></slot>
     <div class="flex">{{ handleApiUrl }}</div>
     <SetParams
-      v-model="paramsData.paramList"
-      :type="paramsData.type"
-      :hideRules="paramsData.hideRules"
+      v-model="_data.paramList"
+      :type="_data.type"
+      :hideRules="_data.hideRules"
     ></SetParams>
     <template #footer>
       <div class="dialog-footer">
@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import SetParams from './setParams.vue'
 import { cloneDeep } from 'lodash'
 import { ElMessageBox, ElMessage } from 'element-plus'
@@ -33,10 +33,10 @@ const emit = defineEmits(['confirmParameters'])
 const pageSetupStore = usePageSetupStore()
 
 /**
- * 初始化
+ * 初始化数据
  */
-const dialog = ref(false)
-const paramsData = reactive({
+const _data = reactive({
+  dialog: false,
   type: '',
   paramList: [],
   apiInfo: null,
@@ -48,11 +48,11 @@ const paramsData = reactive({
  * @param {*} param0
  */
 const show = ({ params, api, type, ruleStatus = false }) => {
-  paramsData.paramList = cloneDeep(params)
-  paramsData.apiInfo = api
-  paramsData.type = type
-  paramsData.hideRules = ruleStatus
-  dialog.value = true
+  _data.paramList = cloneDeep(params)
+  _data.apiInfo = api
+  _data.type = type
+  _data.hideRules = ruleStatus
+  _data.dialog = true
 }
 
 /**
@@ -60,9 +60,9 @@ const show = ({ params, api, type, ruleStatus = false }) => {
  */
 const handleApiUrl = computed(() => {
   let i = 0
-  if (!paramsData.apiInfo?.apiUrl) return ''
-  return paramsData.apiInfo.apiUrl.replace(/@@@@/g, () => {
-    return paramsData.paramList[i++].pageValue.value || '暂无数据'
+  if (!_data.apiInfo?.apiUrl) return ''
+  return _data.apiInfo.apiUrl.replace(/@@@@/g, () => {
+    return _data.paramList[i++]?.pageValue?.value || '暂无数据'
   })
 })
 
@@ -71,14 +71,14 @@ const handleApiUrl = computed(() => {
  */
 const confirm = () => {
   let check = true
-  paramsData.paramList.forEach((param) => {
+  _data.paramList.forEach((param) => {
     if (!checkFn(param)) {
       check = false
     }
   })
   if (check) {
-    emit('confirmParameters', paramsData.paramList)
-    dialog.value = false
+    emit('confirmParameters', _data.paramList)
+    _data.dialog = false
   } else {
     ElMessage.error('配置不符合规范')
   }
@@ -110,21 +110,20 @@ const cancel = () => {
     confirmButtonText: '确定',
   }).then(() => {
     if (
-      paramsData.apiInfo &&
-      pageSetupStore.getMinApi.minApiKey?.[paramsData.apiInfo.apiKey]?.params
+      _data.apiInfo &&
+      pageSetupStore.getMinApi.minApiKey?.[_data.apiInfo.apiKey]?.params
     ) {
       emit(
         'confirmParameters',
         cloneDeep(
-          pageSetupStore.getMinApi.minApiKey?.[paramsData.apiInfo.apiKey]
-            ?.params,
+          pageSetupStore.getMinApi.minApiKey?.[_data.apiInfo.apiKey]?.params,
         ),
-        paramsData.type,
+        _data.type,
       )
     } else {
-      emit('confirmParameters', null, paramsData.type)
+      emit('confirmParameters', null, _data.type)
     }
-    dialog.value = false
+    _data.dialog = false
   })
 }
 

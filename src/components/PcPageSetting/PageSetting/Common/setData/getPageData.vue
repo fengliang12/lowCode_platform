@@ -67,7 +67,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { dPageShowDataValue } from '../../Handle/filters'
@@ -161,22 +161,22 @@ watch(
  * 多级菜单选择
  * @param {*} item
  */
-const cascaderChange = (item) => {
+const cascaderChange = (item: any) => {
   valueData.value = item.join('.')
 }
 
 /**
  * 点击数据处理图标
  */
-const pageDataHandleRef = ref(null)
+const pageDataHandleRef = ref<InstanceType<typeof PageDataHandle> | null>(null)
 const editHandle = () => {
-  pageDataHandleRef.value.show(handleData.value)
+  pageDataHandleRef.value?.show(handleData.value)
 }
 
 /**
  * 数据处理结果
  */
-const pageDataHandleChange = (val) => {
+const pageDataHandleChange = (val: unknown[]) => {
   handleData.value = val
 }
 </script>

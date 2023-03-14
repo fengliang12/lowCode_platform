@@ -3,7 +3,7 @@
     <el-tab-pane label="基础配置" name="first">
       <BasicConfig
         :ref="(el) => setItemRef(el, 'first')"
-        v-model:active-name="activeName"
+        v-model:activeName="activeName"
         v-model="pageFormData"
       ></BasicConfig>
     </el-tab-pane>
@@ -50,38 +50,22 @@
   </el-tabs>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { initPageData, pageHeightList } from './data'
 import BasicConfig from './BasicConfig/index.vue'
 import StyleSetting from '../../Common/styleSetting/index.vue'
 import EventCommon from '../../Common/eventCommon/index.vue'
-import { isObject } from 'lodash'
 import NavigationBar from './NavigationBar/index.vue'
 import PageList from './PageList/index.vue'
 import PageLimit from './PageLimit/index.vue'
 import PageSetupApi from './PageSetupApi/index.vue'
+import { handlePageData } from '../../Handle/handlePageData'
 
-const props = defineProps(['detail'])
 const pageSetupStore = usePageSetupStore()
+const props = defineProps(['detail'])
 const pageFormData = ref()
-
-/**
- * 初始化页面数据
- */
-const handlePageData = (data, initData) => {
-  if (isObject(data)) {
-    Object.keys(initData).forEach((key) => {
-      if (data[key] === null || data[key] === undefined) {
-        data[key] = initData[key]
-      } else {
-        data[key] = handlePageData(data[key], initData[key])
-      }
-    })
-  }
-  return data
-}
 
 watch(
   () => props.detail,
@@ -109,7 +93,6 @@ const save = async () => {
   const check = await beforeLeave('end').catch((err) => {
     console.log('err', err)
   })
-
   if (!check) return false
   pageFormData.value.params = pageSetupStore.pageNewParams
   return pageFormData.value
@@ -120,7 +103,7 @@ const save = async () => {
  */
 const activeName = ref('first')
 const refObject = {}
-const setItemRef = (el, key) => {
+const setItemRef = (el: any, key: string | number) => {
   if (el) {
     refObject[key] = el
   }
@@ -129,9 +112,9 @@ const setItemRef = (el, key) => {
 /**
  * 每个tab栏离开前
  */
-const beforeLeave = async (activeName) => {
+const beforeLeave = (name: string) => {
   const arr = ['first', 'end']
-  const index = arr.indexOf(activeName)
+  const index = arr.indexOf(name)
   const checkArr = arr.slice(0, index)
 
   let promiseList = checkArr.map((item, index) => {
@@ -141,7 +124,7 @@ const beforeLeave = async (activeName) => {
         check: true,
         activeName: checkArr[index + 1],
       })
-      .catch((err) => {
+      .catch((err: any) => {
         activeName.value = item
         return Promise.reject(err)
       })
