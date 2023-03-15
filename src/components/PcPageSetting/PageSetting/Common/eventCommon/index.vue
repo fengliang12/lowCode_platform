@@ -25,10 +25,13 @@
           <el-popconfirm
             title="设置监听数据"
             v-if="item.triggerType === 'dataWatch'"
-            @confirm="showWatchValueList(item)"
+            @confirm="showWatchValueList(item, index)"
           >
             <template #reference>
-              <el-icon class="ml10 pointer"><DocumentCopy /></el-icon>
+              <el-icon class="ml10 pointer"
+                ><Postcard
+                  :color="paramsHasValue(item) ? '#409eff' : '#000000'"
+              /></el-icon>
             </template>
           </el-popconfirm>
           <el-popconfirm title="复制" @confirm="handleCopyEvent(item)">
@@ -87,6 +90,14 @@ const props = defineProps({
 })
 
 /**
+ * 是否有监听的参数
+ * @param {*} element
+ */
+const paramsHasValue = (element) => {
+  return element.watchValueList?.length
+}
+
+/**
  * 初始化事件对象，如果没有，默认click
  */
 const eventData = computed({
@@ -129,7 +140,6 @@ const setTriggerTypeList = computed(() => {
 /**
  * 新增触发类型列表
  */
-
 const addTriggerTypeList = computed(() => {
   if (!props.modelValue?.length) {
     return setTriggerTypeList.value
@@ -161,9 +171,9 @@ const handleDeleteEvent = (index) => {
  */
 const watchValueListRef = ref(null)
 const currentIndex = ref(0)
-const showWatchValueList = (watchValueList, index) => {
+const showWatchValueList = (item, index) => {
   currentIndex.value = index
-  watchValueListRef.value.show(watchValueList ?? [''])
+  watchValueListRef.value?.show(item.watchValueList ?? [''])
 }
 
 /**
@@ -171,7 +181,7 @@ const showWatchValueList = (watchValueList, index) => {
  * @param {*} e
  */
 const watchValueListChange = (list) => {
-  eventData.value[currentIndex.value] = list
+  eventData.value[currentIndex.value].watchValueList = list
 }
 
 /**

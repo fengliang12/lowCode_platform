@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { formList } from './data'
 import FormCreate from '@/components/FormCreate/index.vue'
@@ -15,7 +15,6 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: Object,
-
     default: null,
   },
   font: {
@@ -61,7 +60,7 @@ const styleData = computed({
  */
 
 const formItemList = computed(() => {
-  let arr = []
+  let arr: any[] = []
   let componentsList = formList({ ratio: props.ratio, value: props.modelValue })
   if (props.box) {
     arr = arr.concat(componentsList.boxList)

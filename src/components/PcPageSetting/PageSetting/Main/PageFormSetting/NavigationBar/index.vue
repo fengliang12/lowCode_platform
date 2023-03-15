@@ -1,11 +1,10 @@
 <template>
-  <FormCreate v-model="navigationBarData" :formList="formList"></FormCreate>
+  <FormCreate v-model="navigationBarData" :formList="formItemList"></FormCreate>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import FormCreate from '@/components/formCreate/index.vue'
-import { computed } from 'vue'
 import NavigationBar, { componentsList } from './data'
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])
@@ -25,6 +24,6 @@ const navigationBarData = computed({
 /**
  * 动态组件列表
  */
-const formList = reactive(componentsList())
+const formItemList = reactive(componentsList())
 </script>
 <style lang="scss" scoped></style>
