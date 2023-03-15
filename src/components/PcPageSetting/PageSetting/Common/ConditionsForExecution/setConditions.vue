@@ -144,7 +144,7 @@ import handlePageValue from '../../Handle/handlePageValue'
 import { conditionsList, andOr, ConditionsData } from './data'
 import { cloneDeep } from 'lodash'
 const props = defineProps(['modelValue'])
-const idMapParent = reactive([])
+const idMapParent = reactive({})
 
 /**
  *  递归获取id对应父级

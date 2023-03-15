@@ -23,8 +23,8 @@
             </template>
           </el-popconfirm>
           <el-popconfirm
-            title="设置监听数据"
             v-if="item.triggerType === 'dataWatch'"
+            title="设置监听数据"
             @confirm="showWatchValueList(item, index)"
           >
             <template #reference>
@@ -125,7 +125,7 @@ const setTriggerTypeList = computed(() => {
     list = triggerType.page.list
   }
 
-  if (!props.modelValue?.length) {
+  if (!eventData.value?.length) {
     return list
   }
 
@@ -191,7 +191,7 @@ const handlePasteEvent = (item) => {
   const Promise = navigator.clipboard.readText()
   Promise.then((res) => {
     const copyData = JSON.parse(res)
-    if (!copyData.operationType && !copyData.hotOperations.length) {
+    if (!copyData?.operationType && !copyData.hotOperations?.length) {
       ElMessage.error('格式化数据失败')
       return false
     }
@@ -200,9 +200,11 @@ const handlePasteEvent = (item) => {
       confirmButtonText: '确认',
       cancelButtonText: '取消',
     }).then(() => {
+      //复制的是一个类型下的全部事件
       if (copyData.hotOperations?.length) {
         item.hotOperations = item.hotOperations.concat(copyData.hotOperations)
       } else {
+        //复制某一条数据
         item.hotOperations.push(copyData)
       }
     })

@@ -2,6 +2,7 @@ export class EventsData {
   constructor({ triggerType = 'click' } = {}) {
     this.triggerType = triggerType //执行类型 click | show | onLoad;
     this.hotOperations = []
+    this.watchValueList = []
   }
 }
 

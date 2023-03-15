@@ -13,13 +13,16 @@
     <el-form-item
       :label-width="formLabelWidth"
       label="图片类型"
-      v-if="['video', 'img'].includes(modelValue.multimediaType)"
+      v-if="
+        ['video', 'img'].includes(modelValue.multimediaType) ||
+        showPageBoxSetting
+      "
     >
       <el-select
         v-model="modelValue.imgType"
         placeholder="请选择图片类型"
         size="small"
-        style="width: 110px;"
+        style="width: 110px"
       >
         <el-option label="普通图片" value="common" />
         <el-option label="热区" value="hot" />
@@ -40,7 +43,7 @@
     <el-form-item
       :label-width="formLabelWidth"
       label="显示图片配置"
-      v-if="['img'].includes(modelValue.multimediaType)"
+      v-if="['img'].includes(modelValue.multimediaType) || showPageBoxSetting"
     >
       <el-switch
         v-model="showImageConfig"
