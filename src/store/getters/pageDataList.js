@@ -42,120 +42,120 @@ const handleComponentChild = (elem, itemsMap) => {
     },
     ...(elem.params?.length
       ? [
-        {
-          key: 'componentNewParams',
-          label: `组件新增数据`,
-          child: elem.params?.length ? handlePageNewParams(elem.params) : [],
-        },
-      ]
+          {
+            key: 'componentNewParams',
+            label: `组件新增数据`,
+            child: elem.params?.length ? handlePageNewParams(elem.params) : [],
+          },
+        ]
       : []),
     ...(elem.moduleType === 'carousel'
       ? [
-        {
-          key: 'swiperLength',
-          label: '轮播长度',
-        },
-        {
-          key: 'current',
-          label: '轮播当前位置',
-        },
-        {
-          key: 'currentData',
-          label: '当前轮播数据',
-          get child() {
-            if (!elem?.moduleSettings?.length) {
-              return null
-            }
-            const items = elem.moduleSettings.find((child) => {
-              return child?.moduleType === 'common' && child?.pageValue?.value
-              // eslint-disable-next-line prettier/prettier
-            })
-            if (!items) return null
-            const data = getData(items.pageValue.value)
-            return data
+          {
+            key: 'swiperLength',
+            label: '轮播长度',
           },
-        },
-      ]
+          {
+            key: 'current',
+            label: '轮播当前位置',
+          },
+          {
+            key: 'currentData',
+            label: '当前轮播数据',
+            get child() {
+              if (!elem?.moduleSettings?.length) {
+                return null
+              }
+              const items = elem.moduleSettings.find((child) => {
+                return child?.moduleType === 'common' && child?.pageValue?.value
+                // eslint-disable-next-line prettier/prettier
+              })
+              if (!items) return null
+              const data = getData(items.pageValue.value)
+              return data
+            },
+          },
+        ]
       : []),
     ...(elem.moduleType === 'gridLottery'
       ? [
-        {
-          key: 'data',
-          label: '抽奖数据',
-          child: [
-            {
-              key: 'win',
-              label: '是否中奖(win)',
-            },
-            {
-              key: 'status',
-              label: '邮寄信息填写状态(status)',
-            },
-            {
-              key: 'prize',
-              label: '奖品信息(prize)',
-              child: [
-                {
-                  key: 'code',
-                  label: '奖品code(code)',
-                },
-                {
-                  key: 'prizeName',
-                  label: '奖品名称(prizeName)',
-                },
-                {
-                  key: 'desc',
-                  label: '奖品描述(desc)',
-                },
-                {
-                  keyL: 'prizeAttribute',
-                  label: '奖品属性(prizeAttribute)',
-                },
-                {
-                  keyL: 'prizeImg',
-                  label: '奖品图片(prizeImg)',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          key: 'count',
-          label: '抽奖次数数据',
-        },
-      ]
+          {
+            key: 'data',
+            label: '抽奖数据',
+            child: [
+              {
+                key: 'win',
+                label: '是否中奖(win)',
+              },
+              {
+                key: 'status',
+                label: '邮寄信息填写状态(status)',
+              },
+              {
+                key: 'prize',
+                label: '奖品信息(prize)',
+                child: [
+                  {
+                    key: 'code',
+                    label: '奖品code(code)',
+                  },
+                  {
+                    key: 'prizeName',
+                    label: '奖品名称(prizeName)',
+                  },
+                  {
+                    key: 'desc',
+                    label: '奖品描述(desc)',
+                  },
+                  {
+                    keyL: 'prizeAttribute',
+                    label: '奖品属性(prizeAttribute)',
+                  },
+                  {
+                    keyL: 'prizeImg',
+                    label: '奖品图片(prizeImg)',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            key: 'count',
+            label: '抽奖次数数据',
+          },
+        ]
       : []),
     //设置图片组件数据
     ...(elem.moduleType === 'hot'
       ? [
-        {
-          key: 'imageSetting',
-          label: '多媒体组件信息',
-          get child() {
-            const items = [
-              {
-                key: 'imgUrl',
-                label: `图片url`,
-              },
-            ]
-            if (elem?.imageSetting?.multimediaType === 'video')
-              items.push({
-                key: 'firstFrameVideo',
-                label: `视频封面海报`,
-              })
-            return items
+          {
+            key: 'imageSetting',
+            label: '多媒体组件信息',
+            get child() {
+              const items = [
+                {
+                  key: 'imgUrl',
+                  label: `图片url`,
+                },
+              ]
+              if (elem?.imageSetting?.multimediaType === 'video')
+                items.push({
+                  key: 'firstFrameVideo',
+                  label: `视频封面海报`,
+                })
+              return items
+            },
           },
-        },
-      ]
+        ]
       : []),
     //当选到轮播下面的子组件时
     ...(getCarouselIndex(elem.code, itemsMap)
       ? [
-        {
-          key: 'carouselIndex',
-          label: '组件所在轮播位置',
-        },
-      ]
+          {
+            key: 'carouselIndex',
+            label: '组件所在轮播位置',
+          },
+        ]
       : []),
   ]
   return arr
@@ -183,7 +183,7 @@ const getCurrentComponent = (state) => {
   if (item) {
     arr.push({
       key: `${item.code}_0`,
-      label: `${item.title ?? item.code}`,
+      label: `当前组件数据`,
       child: handleComponentChild(item, state?.itemsMap),
     })
   }
@@ -192,7 +192,7 @@ const getCurrentComponent = (state) => {
 
 function getData(value) {
   const keys = value.split('.')
-  let data = ''
+  let data = null
   // 页面入参动态数据
   if (value.includes('pageInfo.options.')) {
     return [
@@ -209,13 +209,15 @@ function getData(value) {
     },
     {
       key: 'appStore',
-      child: getAppStore(),
+      child: appStore,
     },
   ]
   keys.map((key) => {
     const list = data || pageDataList
     data = list.find((elem) => elem.key === key)?.child
   })
+
+  // 处理一下为数组的情况
   if (data?.length === 1 && data?.[0].key == 0 && data[0]?.child?.length) {
     data = data[0].child
   }
@@ -271,13 +273,13 @@ export default (state) => {
       label: `组件数据(component)`,
       child: state?.itemsMap?.values
         ? [
-          ...(state.items?.value ? getCurrentComponent(state) : []),
-          ...Array.from(state.itemsMap.values()).map((elem) => ({
-            key: `${elem.code}_0`,
-            label: `${elem.title ?? elem.code}`,
-            child: handleComponentChild(elem, state?.itemsMap),
-          })),
-        ]
+            ...(state.items?.value ? getCurrentComponent(state) : []),
+            ...Array.from(state.itemsMap.values()).map((elem) => ({
+              key: `${elem.code}_0`,
+              label: `${elem.title ?? elem.code}`,
+              child: handleComponentChild(elem, state?.itemsMap),
+            })),
+          ]
         : [],
     },
     {
