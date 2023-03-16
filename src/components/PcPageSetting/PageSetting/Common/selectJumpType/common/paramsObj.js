@@ -1,6 +1,7 @@
 import { animationDefault, animationComponentsList } from './animate'
 import { transitionDefault, transitionComponentsList } from './transition'
 
+//有参数的事件的集合
 export default {
   animate: {
     value: animationDefault,

@@ -16,6 +16,7 @@ export const getParams = (keyList) => {
         params[elem.key] = elem.pageValue.value
       } else if (elem?.child?.length) {
         params[elem.key] = isInteger(elem.child[0].key) ? [] : {}
+        setData(elem?.child, params[elem.key])
       }
     }
     return params

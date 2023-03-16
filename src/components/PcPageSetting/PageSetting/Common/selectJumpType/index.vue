@@ -294,11 +294,11 @@
     />
 
     <!-- 动画参数配置 -->
-    <el-dialog v-model="showSetParams" append-to-body width="80%">
+    <el-dialog v-model="_params.showSetParams" append-to-body width="80%">
       <template #footer>
         <createForm
-          v-model="selectParams"
-          :formComponentsList="formComponentsList"
+          v-model="_params.selectParams"
+          :formComponentsList="_params.formComponentsList"
         />
         <el-button type="danger" @click="saveParams({ reset: true })"
           >恢复默认</el-button
@@ -310,7 +310,7 @@
 </template>
 
 <script setup>
-import { computed, watch, ref } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import Draggable from 'vuedraggable'
 import { ElMessageBox, ElMessage } from 'element-plus'
@@ -550,6 +550,8 @@ const animateCascader = (el) => {
     itemRefs.push(el)
   }
 }
+
+//初始化params
 const animateCascaderChange = (element, value, index) => {
   const data = itemRefs?.[index].getCheckedNodes()?.[0].data?.params
   if (!element.params && data) {
@@ -588,13 +590,16 @@ const editParametersShow = (elem) => {
 /**
  * 这里开始处理不同事件的参数-------------------------
  */
-const showSetParams = ref(false)
-const selectParams = ref({})
-const formComponentsList = ref([])
+const _params = reactive({
+  showSetParams: false,
+  selectParams: {},
+  formComponentsList: [],
+  selectItem: {},
+  writeId: '',
+})
+
 const currentIndex = ref(-1)
-const writeId = ref('')
 const editParametersRef = ref(null)
-const selectItem = ref({})
 const showEditParameters = (element, index) => {
   //判断是否为动画
   const res = Object.keys(paramsObj).some((elem) => {
@@ -603,12 +608,12 @@ const showEditParameters = (element, index) => {
       elem === element.moduleOperation ||
       elem === element.operationUrl
     ) {
-      showSetParams.value = true
-      selectItem.value = element
-      selectParams.value = element.params
+      _params.showSetParams = true
+      _params.selectItem = element
+      _params.selectParams = element.params
         ? getParams(element.params)
         : paramsObj[elem].value
-      formComponentsList.value = paramsObj[elem].componentsList
+      _params.formComponentsList = paramsObj[elem].componentsList
       return true
     }
   })
@@ -617,7 +622,7 @@ const showEditParameters = (element, index) => {
   let ApiObj = pageSetupStore.AloneApiList.filter(
     (once) => once.id === element.operationUrl,
   )[0]
-  writeId.value = element.operationUrl
+  _params.writeId = element.operationUrl
   currentIndex.value = index
   // 编辑api参数
   if (element.operationType === 'api') {
@@ -638,7 +643,26 @@ const showEditParameters = (element, index) => {
 }
 
 /**
- * 编辑参数结果
+ * 保存参数
+ * @param {*} param0
+ */
+const saveParams = async ({ reset = false }) => {
+  if (reset) {
+    await ElMessageBox.confirm('是否恢复默认配置?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+    _params.selectItem.params = null
+    _params.showSetParams = false
+    return
+  }
+  _params.showSetParams = false
+  _params.selectItem.params = setParams(_params.selectParams)
+}
+
+/**
+ * 编辑参数结果回调函数
  * @param {*} list
  * @param {*} type
  */
@@ -650,7 +674,7 @@ const editParametersCallback = async (list, type) => {
   if (type === 'multiLevel') {
     if (hotOperations.value[currentIndex.value].operationType == 'api') {
       let ApiObj = AloneApiList.value.filter(
-        (once) => once.id === writeId.value,
+        (once) => once.id === _params.writeId,
       )[0]
       await api.pageSetupApi.changeOperationApiMes({
         ...ApiObj,
@@ -665,21 +689,6 @@ const editParametersCallback = async (list, type) => {
   }
 }
 
-//保存参数
-const saveParams = async ({ reset = false }) => {
-  if (reset) {
-    await ElMessageBox.confirm('是否恢复默认配置?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-    selectItem.value.params = null
-    showSetParams.value = false
-    return
-  }
-  showSetParams.value = false
-  selectItem.value.params = setParams(selectParams.value)
-}
 /**
  * 判断参数是否有值
  * @param {} element
