@@ -19,14 +19,17 @@
 
 <script setup>
 import { onMounted, computed, ref } from 'vue'
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: Array,
     default: () => [],
   },
 })
-const emit = defineEmits(['update:modelValue'])
 
+/**
+ * 订阅消息
+ */
 const subscribeNotices = computed({
   get() {
     if (!props.modelValue) {

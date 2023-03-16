@@ -128,6 +128,25 @@
               class="ml10"
             ></el-cascader>
 
+            <!--moduleOperation: 跳转类型 navigateTo\redirectTo\reLaunch -->
+            <el-select
+              v-if="moduleOperationListSelect[element.operationType]"
+              v-model="element.moduleOperation"
+              placeholder="请选择"
+              class="ml10"
+              clearable
+              filterable
+            >
+              <el-option
+                v-for="option in moduleOperationListSelect[
+                  element.operationType
+                ]"
+                :key="option.value"
+                :label="option.label"
+                :value="option.value"
+              ></el-option>
+            </el-select>
+
             <!--content: 操作额外的输入框 -->
             <el-input
               v-if="
@@ -159,25 +178,6 @@
               @change="animateCascaderChange(element, $event, index)"
             ></el-cascader>
 
-            <!--moduleOperation: 跳转类型 -->
-            <el-select
-              v-if="moduleOperationListSelect[element.operationType]"
-              v-model="element.moduleOperation"
-              placeholder="请选择"
-              class="ml10"
-              clearable
-              filterable
-            >
-              <el-option
-                v-for="option in moduleOperationListSelect[
-                  element.operationType
-                ]"
-                :key="option.value"
-                :label="option.label"
-                :value="option.value"
-              ></el-option>
-            </el-select>
-
             <!--operationUrl: 新增页面参数 -->
             <template v-if="element.operationType === 'set_params'">
               <el-cascader
@@ -194,6 +194,7 @@
                 class="ml10"
                 @change="pageNewParamsCascaderChange(element, $event)"
               ></el-cascader>
+
               <!--moduleOperation: 操作赋值 -->
               <el-select
                 v-model="element.moduleOperation"
@@ -351,8 +352,8 @@ const pageSetupStore = usePageSetupStore()
  */
 const hotOperations = computed({
   get() {
-    if (!props.modelValue) {
-      emit('update:modelValue', [])
+    if (!props.modelValue?.length) {
+      emit('update:modelValue', [new PageHotOperation()])
     }
     return props.modelValue
   },
@@ -378,17 +379,6 @@ const handleAddEvent = () => {
   }
   hotOperations.value.push(new PageHotOperation())
 }
-
-watch(
-  () => hotOperations.value.length,
-  (val) => {
-    // 如果数量为零，默认添加一个
-    if (val === 0) {
-      handleAddEvent()
-    }
-  },
-  { immediate: true },
-)
 
 /**
  * el-cascader的options属性
