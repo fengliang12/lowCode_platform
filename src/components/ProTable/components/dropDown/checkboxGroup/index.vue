@@ -5,18 +5,21 @@
         全选
       </el-checkbox>
     </el-row>
-    <el-checkbox-group :modelValue="checkedValue" @change="checkboxGroupChange">
+    <el-checkbox-group v-model="checkedValue" @change="checkboxGroupChange">
       <el-checkbox
+        class="check-box"
         v-for="(item, index) in formList"
         :key="index"
         :label="item"
-      ></el-checkbox>
+      >
+        {{ item.title }}
+      </el-checkbox>
     </el-checkbox-group>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -28,13 +31,16 @@ const props = defineProps({
     default: () => [],
   },
 })
+
 const emit = defineEmits(['update:modelValue'])
 
 const checkedValue = computed({
   get() {
+    console.log('props.modelValue', props.modelValue)
     return props.modelValue
   },
   set(val) {
+    console.log(val)
     emit('update:modelValue', val)
   },
 })
@@ -46,14 +52,27 @@ const handleCheckAllChange = (val) => {
   checkedValue.value = val ? props.formList : initFormList
 }
 
+watch(
+  () => checkedValue.value.length,
+  (val) => {
+    if (val === props.formList.length) {
+      checkAll.value = true
+    }
+  },
+  {
+    immediate: true,
+  },
+)
+
 /**
  * 单选
  * @param {*} val
  */
-const checkboxGroupChange = (val) => {
-  checkedValue.value = val
-  if (checkedValue.value.length === props.formList.length) {
-    checkAll.value = true
-  }
-}
+const checkboxGroupChange = () => {}
 </script>
+
+<style lang="scss" scoped>
+.check-box {
+  display: flex;
+}
+</style>

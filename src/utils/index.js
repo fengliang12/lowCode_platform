@@ -1,3 +1,4 @@
+import { isArray, isString } from "lodash"
 export const checkFile = (fileValue) => {
   if (!fileValue) return ''
   var index = fileValue.lastIndexOf('.') //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
@@ -45,12 +46,16 @@ export const formatParams = function (params, expressionKey = {}) {
   for (let key in data) {
     expression = `${expression}${expression ? ' AND ' : ''}`
     if (data[key] instanceof Array) {
-      expression = `${expression}${key} ge ${data[key][0]} AND ${key} le ${data[key][1]}`
+      expression = `${expression}${key}ge${handleParams(data[key][0])} AND ${key}le${handleParams(data[key][1])}`
     } else {
-      expression = `${expression}${key} ${expressionKey[key] || 'eq'} ${
-        data[key]
-      }`
+      expression = `${expression}${key}${expressionKey[key] || '='}${handleParams(data[key])
+        }`
     }
   }
   return expression
+}
+
+
+export const handleParams = (val) => {
+  return isString(val) ? `'${val}'` : val
 }

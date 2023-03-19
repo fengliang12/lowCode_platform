@@ -8,14 +8,16 @@
         :options="searchFormOptions"
         :formConfig="{
           inline: true,
+          span: 4,
         }"
       ></FormCreate>
     </div>
-    <el-row justify="end">
+    <el-row justify="end" style="margin-bottom: 20px">
       <el-button type="primary" @click="addData"> 新增 </el-button>
       <el-button type="primary" @click="getTableData"> 查询 </el-button>
       <el-button type="info" @click="refreshSearchValue"> 重置 </el-button>
       <DropDown
+        class="ml10"
         :columnFormList="columnFormList"
         v-model:columnCheckedList="columnCheckedList"
         :searchFormList="searchFormList"
@@ -67,20 +69,17 @@
           </template>
         </el-table-column>
       </template>
-      <el-table-column
-        v-if="tableOptions?.length > 0"
-        :prop="column.field"
-        :label="column.title"
-        v-bind="column.props"
-      >
+      <el-table-column v-if="tableOptions.operation?.length > 0" label="操作">
         <template v-slot="scope">
-          <button
+          <el-button
             v-for="(item, index) in tableOptions.operation"
             :key="index"
+            type="primary"
+            v-bind="item.props"
             @click="item.handleFn(scope.row)"
           >
             {{ item.title }}
-          </button>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,11 +87,11 @@
     <!-- 分页 -->
     <div class="page">
       <el-pagination
-        :current-page="currentPage"
-        :page-size="size"
+        v-model:current-page="table.currentPage"
+        v-model:page-size="table.size"
         :page-sizes="[5, 10, 20, 50]"
-        :total="totalElements"
         layout="total,sizes, prev, pager, next, jumper"
+        :total="table.totalElements"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
       />
@@ -101,11 +100,11 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, computed, ref } from 'vue'
+import { onMounted, reactive, computed, ref, watch } from 'vue'
 import FormCreate from '@/components/FormCreate/index.vue'
 import EditCell from './components/editCell/index.vue'
 import DropDown from './components/dropDown/index.vue'
-import ExpandDom from './components/expandDom/index.vue'
+import ExpandDom from './components/expandDom'
 import { formatParams } from '@/utils/index.js'
 import { cloneDeep, isObject } from 'lodash'
 import mapTable from './utils/index'
@@ -121,12 +120,19 @@ const props = defineProps([
 ])
 
 const table = reactive({
-  currentPage: 0,
+  currentPage: 1,
   size: 10,
-  totalElements: 10,
+  totalElements: 100,
   data: null,
   loading: false,
 })
+
+watch(
+  () => table.currentPage,
+  (val) => {
+    console.log(val)
+  },
+)
 
 onMounted(() => {
   getTableData()
@@ -147,7 +153,7 @@ const getTableData = async () => {
     }),
   })
   table.data = res?.data
-  table.totalElements = res?.data?.totalElements
+  table.totalElements = res?.data?.totalElements ?? 10
   table.loading = false
 }
 
@@ -155,7 +161,6 @@ const getTableData = async () => {
  * 改变当前页
  */
 const handleCurrentChange = async (val) => {
-  table.currentPage = val
   await getTableData()
 }
 
@@ -163,8 +168,17 @@ const handleCurrentChange = async (val) => {
  * 改变尺寸
  */
 const handleSizeChange = async (val) => {
-  table.size = val
   await getTableData()
+}
+
+/**
+ * 表单编辑
+ * @param {*} params
+ * @param {*} elem
+ */
+const tableUpdate = (params, elem) => {
+  let { edit } = props.tableOptions
+  edit && edit(params.row)
 }
 
 /**
@@ -199,21 +213,11 @@ const columnFormList = computed(() => {
     })
   return data
 })
-const columnCheckedList = computed(() => {
-  return columnFormList.value.filter((elem) => {
+const columnCheckedList = ref(
+  columnFormList.value.filter((elem) => {
     return !elem?.hideOption?.includes('table')
-  })
-})
-
-/**
- * 表单编辑
- * @param {*} params
- * @param {*} elem
- */
-const tableUpdate = (params, elem) => {
-  let { edit } = props.tableOptions
-  edit && edit(params.row)
-}
+  }),
+)
 
 /**
  * 搜索框--------------------------
@@ -269,17 +273,17 @@ const searchFormList = computed(() => {
     return true
   })
 })
-const searchCheckedList = computed(() => {
-  return columnFormList.value.filter((elem) => {
+const searchCheckedList = ref(
+  searchFormList.value.filter((elem) => {
     return !elem?.hideOption?.includes('search')
-  })
-})
+  }),
+)
 
 /**
  * 重置查询表单
  */
 const refreshSearchValue = () => {
-  searchValue.value = props.searchInitValue
+  searchValue.value = props.searchInitValue ?? {}
   getTableData()
 }
 
@@ -290,9 +294,15 @@ const addData = () => {
   if (props.dialogFormInitValue) {
     console.log('弹窗')
   } else {
-    let addFn = props.tableOptions.operation.find((item) => item.type === 'add')
+    let addFn = props.tableOptions?.add
     addFn && addFn()
   }
 }
+
+defineExpose({ getTableData })
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.page {
+  margin-top: 20px;
+}
+</style>

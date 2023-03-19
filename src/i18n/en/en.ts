@@ -8,6 +8,8 @@ export default {
     wPageSetting: 'wPageSetting',
     wPageIndex: 'wPageIndex',
     wPageEdit: 'wPageEdit',
+    wPageApiEdit: 'wPageApiEdit',
+    wPageApiList: 'wPageApiList',
     wOrderManger: 'OrderManger',
     wOrderQuery: 'OrderQuery',
     wOrderAction: 'OrderAction',

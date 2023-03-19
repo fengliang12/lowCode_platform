@@ -2,7 +2,7 @@
   <div class="edit_cell">
     <div v-if="column.canEdit" class="can_edit" @click="beginEdit">
       <div v-show="!editStatus">
-        {{ valueData }}
+        {{ modelValue }}
       </div>
       <div v-show="editStatus">
         <el-input
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="no_edit" v-else>
-      {{ valueData }}
+      {{ modelValue }}
     </div>
   </div>
 </template>

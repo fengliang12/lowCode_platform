@@ -13,7 +13,7 @@
       ></JudgeType>
     </el-col>
   </el-row>
-  <div v-for="(item, index) in formList" :key="index">
+  <div v-else v-for="(item, index) in formList" :key="index">
     <JudgeType
       :formData="formData"
       :formItem="item"

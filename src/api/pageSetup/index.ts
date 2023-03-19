@@ -24,17 +24,6 @@ export const getAllPage: Api.PageSetup.getAllPage.Func = () => {
 }
 
 /**
- *获取总的api
- * @returns
- */
-export const getPageSetupApi: Api.PageSetup.getAllPage.Func = () => {
-  return instance({
-    url: `/member-manage/store/page_setup_api_info/tree/info`,
-    method: 'get',
-  })
-}
-
-/**
  * 获取所有会员标签
  * @returns
  */
@@ -46,13 +35,13 @@ export const getMemberTagAll: Api.PageSetup.getAllPage.Func = () => {
 }
 
 /**
- * 获取人群
- * @returns
+ * 根据页面id获取页面配置
  */
-export const getCrowdAll: Api.PageSetup.getAllPage.Func = () => {
+export const getPageSetupList: Api.PageSetup.getPageDetail.Func = (data) => {
   return instance({
-    url: `//member-manage/store/gac/customer/crowd/findList`,
+    url: `/pageSetup/getPageSetupList`,
     method: 'get',
+    params: data,
   })
 }
 
@@ -99,8 +88,56 @@ export const updatePageSetup: Api.PageSetup.createPage.Func = (data) => {
  */
 export const deletePageSetup: Api.PageSetup.createPage.Func = (id) => {
   return instance({
-    url: `/pageSetup/delete?id=${id}`,
+    url: `/pageSetup/delete/${id}`,
     method: 'delete',
+  })
+}
+
+/**
+ *获取总的api
+ * @returns
+ */
+export const getOperationApi: Api.PageSetup.getAllPage.Func = () => {
+  return instance({
+    url: `/pageSetupApi/list`,
+    method: 'get',
+  })
+}
+
+/**
+ *获取总的api
+ * @returns
+ */
+export const getOperationApiDetail = (id: any) => {
+  return instance({
+    url: `/pageSetupApi/detail?id=${id}`,
+    method: 'get',
+  })
+}
+
+/**
+ * 创建新的api
+ * @param {*} data
+ * @returns
+ */
+export const createOperationApi: Api.PageSetup.createPage.Func = (data) => {
+  return instance({
+    url: '/pageSetupApi/create',
+    method: 'post',
+    data,
+  })
+}
+
+/**
+ * 更新api
+ * @param {*} data
+ * @returns
+ */
+export const updateOperationApi: Api.PageSetup.createPage.Func = (data) => {
+  return instance({
+    url: '/pageSetupApi/update',
+    method: 'put',
+    data,
   })
 }
 
@@ -109,23 +146,9 @@ export const deletePageSetup: Api.PageSetup.createPage.Func = (id) => {
  * @param {*} data
  * @returns
  */
-export const delOperationApi: Api.PageSetup.createPage.Func = (data) => {
+export const delOperationApi: Api.PageSetup.createPage.Func = (id) => {
   return instance({
-    url: '/page_setup_api',
+    url: `/pageSetupApi/delete/${id}`,
     method: 'delete',
-    data,
-  })
-}
-
-/**
- * 设置新的api
- * @param {*} data
- * @returns
- */
-export const setupOperationApi: Api.PageSetup.createPage.Func = (data) => {
-  return instance({
-    url: '/page_setup_api',
-    method: 'post',
-    data,
   })
 }

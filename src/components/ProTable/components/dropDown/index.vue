@@ -1,8 +1,8 @@
 <template>
   <el-dropdown :hide-on-click="false" trigger="click" @visible-change="click">
-    <el-button size="mini" type="primary" icon="el-icon-s-tools" circle />
+    <el-button size="small" type="primary" icon="Setting" circle />
     <template #dropdown>
-      <el-dropdown-menu>
+      <el-dropdown-menu class="dropdown-menu">
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="表格显示" name="1"
             ><CheckboxGroup
@@ -39,7 +39,7 @@ const emit = defineEmits([
 
 const columnCheckedList = computed({
   get() {
-    return props.searchCheckedList
+    return props.columnCheckedList
   },
   set(val) {
     emit('update:columnCheckedList', val)
@@ -48,6 +48,7 @@ const columnCheckedList = computed({
 
 const searchCheckedList = computed({
   get() {
+    console.log('searchCheckedList', props.searchCheckedList)
     return props.searchCheckedList
   },
   set(val) {
@@ -67,5 +68,9 @@ const click = () => {
   align-items: center;
   color: var(--el-color-primary);
   cursor: pointer;
+}
+
+.dropdown-menu {
+  padding: 10px 20px;
 }
 </style>

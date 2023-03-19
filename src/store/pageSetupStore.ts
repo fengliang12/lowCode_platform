@@ -5,14 +5,15 @@ import bus from '@/utils/bus'
 import PageModuleLimitData from '@/components/PcPageSetting/PageSetting/Common/pageModuleLimit/data'
 import { isEmpty } from 'lodash'
 import pageSetupTestData from './pageSetupTestData/index'
+import { getOperationApi } from '@/api/pageSetup/index'
 
 const router = useRouter()
 
 export interface MenuState {
   id: string | LocationQueryValue[]
-  items:{
-    value:any,
-    parents:any
+  items: {
+    value: any
+    parents: any
   } | null
   [e: string]: any
 }
@@ -35,7 +36,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       jumpPageSetting: false, //限制点击跳转自定义页面
       items: {
         value: null,
-        parents:null
+        parents: null,
       }, //正在配置的组件
       itemsMap: new Map(), //页面对应map
       showHotBox: true, //显示热区边框
@@ -65,7 +66,8 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 获取总的api管理
      */
     async getPageSetupApi() {
-      this.PageSetupApiList = []
+      const res = await getOperationApi()
+      this.PageSetupApiList = res.data.data
     },
 
     /**
@@ -205,6 +207,6 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     },
   },
   persist: {
-    enabled:true
+    enabled: true,
   },
 })

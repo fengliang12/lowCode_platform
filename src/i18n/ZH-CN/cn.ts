@@ -8,6 +8,8 @@ export default {
     wPageSetting: '页面管理',
     wPageIndex: '页面配置',
     wPageEdit: '页面编辑',
+    wPageApiEdit: '接口编辑',
+    wPageApiList: '接口列表',
     wOrderManger: '订单管理',
     wOrderQuery: '订单查询',
     wOrderAction: '订单处理',

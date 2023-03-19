@@ -43,7 +43,7 @@
 
     <!-- 轮播图 -->
     <template v-else-if="data.moduleType === 'carousel'">
-      <CSwiper :data="data" :style="style"></CSwiper>
+      <CSwiper :data="data"></CSwiper>
     </template>
 
     <!-- 指示点 -->

@@ -55,8 +55,10 @@ const currentIndex = ref(0)
 watch(
   () => props.data.relationSwiper,
   () => {
-    bus.on('relationSwiperIndex', (index) => {
-      currentIndex.value = index
+    bus.on('relationSwiperIndex', (swiper) => {
+      if (swiper.code === props.data.indicator.relationSwiper) {
+        currentIndex.value = swiper.index
+      }
     })
   },
   { immediate: true },
