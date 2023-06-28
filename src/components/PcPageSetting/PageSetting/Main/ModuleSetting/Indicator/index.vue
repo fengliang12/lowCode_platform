@@ -30,7 +30,7 @@
       <div
         v-for="(item, index) in indicatorData.indicatorStyle"
         :key="index"
-        style="width: 100%"
+        style="width: 100%;"
         class="flex alignItems"
       >
         <div v-if="index === 0">指示点默认样式</div>
@@ -70,7 +70,7 @@
       <div
         v-for="(item, index) in indicatorData.indicatorActiveStyle"
         :key="index"
-        style="width: 100%"
+        style="width: 100%;"
         class="flex alignItems"
       >
         <div v-if="index === 0">指示点选中样式</div>

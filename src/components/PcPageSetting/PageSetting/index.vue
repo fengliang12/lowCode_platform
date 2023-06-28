@@ -17,6 +17,7 @@
               <div class="item" @click="clickLeft(element.moduleType)">
                 <OnlyTitle
                   :title="componentsMapping[element.moduleType].name"
+                  :icon="componentsMapping[element.moduleType].icon"
                 />
               </div>
             </template>

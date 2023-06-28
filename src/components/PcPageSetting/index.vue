@@ -96,8 +96,6 @@ const save = async () => {
   const res = await pageSettingRef.value.save()
   if (!res) return
 
-  console.log('需要保存的数据', res)
-
   //更新还是创建
   loading.value = true
   const request = res.id ? updatePageSetup : createPageSetup

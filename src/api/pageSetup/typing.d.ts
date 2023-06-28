@@ -764,8 +764,8 @@ declare namespace Api {
     namespace createPage {
       type Func = (data: any) => MRP<IResponse>
       interface IResponse {
-        id: string,
-        title:string
+        id: string
+        title: string
       }
     }
   }

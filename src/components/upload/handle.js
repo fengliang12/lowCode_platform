@@ -56,12 +56,13 @@ export const getWebpFromFile = () => {
   })
 }
 
-export const VideoInfo = (file) => {
+export const getVideoInfo = (file) => {
   return new Promise((resole) => {
     var blob = new Blob([file]) // 文件转化成二进制文件
     const el = document.createElement('video')
     el.currentTime = 0.5
     el.src = URL.createObjectURL(blob)
+    console.log(URL.createObjectURL(blob));
     el.addEventListener('canplay', async () => {
       el.width = el.videoWidth
       el.height = el.videoHeight
@@ -103,6 +104,7 @@ export const getAudioInfo = (file) => {
     })
   })
 }
+
 
 export const fileInfo = (selectFileType, file) => {
   const firstGet = selectFileType === 'audio' ? getAudioInfo : getImageInfo

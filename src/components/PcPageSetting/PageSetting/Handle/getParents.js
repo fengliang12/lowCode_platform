@@ -1,6 +1,7 @@
 //判断是否有满足函数的父组件 hasCurrent// 是否包含当前值
 const getParents = (code, itemsMap, fn, { hasCurrent = false } = {}) => {
-  const item = itemsMap.get(code)
+  console.log(code);
+  const item = itemsMap && itemsMap?.get(code)
   //是否包含当前值
   if (hasCurrent) {
     const value = fn(item)

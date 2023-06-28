@@ -12,7 +12,7 @@
         }"
       ></FormCreate>
     </div>
-    <el-row justify="end" style="margin-bottom: 20px">
+    <el-row justify="end" style="margin-bottom: 20px;">
       <el-button type="primary" @click="addData"> 新增 </el-button>
       <el-button type="primary" @click="getTableData"> 查询 </el-button>
       <el-button type="info" @click="refreshSearchValue"> 重置 </el-button>

@@ -16,7 +16,7 @@ http.interceptors.request.use(
     loadingInstance = ElLoading.service('加载中')
     if (userStore?.token) {
       config.headers = {
-        Authorization: userStore.token,
+        authorization: userStore.token,
       }
     }
     return config

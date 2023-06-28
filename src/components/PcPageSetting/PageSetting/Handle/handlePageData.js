@@ -5,9 +5,9 @@ const isObject = function (obj) {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
-export const handlePageData = (data, initData) => {
+export const handlePageData = (data = {}, initData) => {
   if (isObject(data) || Array.isArray(data)) {
-    Object.keys(initData).forEach((key) => {
+    isObject(initData) && Object.keys(initData).forEach((key) => {
       if (data[key] === null || data[key] === undefined) {
         data[key] = initData[key]
       } else {

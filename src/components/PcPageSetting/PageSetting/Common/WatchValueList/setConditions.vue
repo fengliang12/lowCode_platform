@@ -1,11 +1,11 @@
 <template>
+  <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
   <div class="flex mb10" v-for="(_item, index) in modelValue" :key="index">
     <GetPageData
       :props="{ checkStrictly: true }"
       v-model="modelValue[index]"
       :showHandle="false"
     />
-    <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
     <el-button
       type="danger"
       :icon="Delete"

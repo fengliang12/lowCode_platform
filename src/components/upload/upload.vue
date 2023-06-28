@@ -28,7 +28,22 @@
           ><Plus
         /></el-icon>
         <div v-if="url && typeUrlString" class="avatar_box">
-          <img class="avatar" :src="url" alt="上传图片" />
+          <img
+            v-if="checkFile(url) === 'image'"
+            class="avatar"
+            :src="url"
+            alt="上传图片"
+          />
+          <video
+            v-if="checkFile(url) === 'video'"
+            class="avatar"
+            :src="url"
+          ></video>
+          <audio
+            v-if="checkFile(url) === 'audio'"
+            class="avatar"
+            :src="url"
+          ></audio>
           <span class="el-upload-list__item-actions">
             <span
               class="el-upload-list__item-preview"
@@ -52,7 +67,26 @@
     </el-upload>
 
     <el-dialog v-model="dialogVisible">
-      <img w-full :src="data.dialogImageUrl" alt="Preview Image" />
+      <img
+        v-if="checkFile(url) === 'image'"
+        w-full
+        :src="data.dialogImageUrl"
+        alt="Preview Image"
+      />
+      <video
+        v-if="checkFile(url) === 'video'"
+        w-full
+        :src="data.dialogImageUrl"
+        alt="Preview Image"
+        controls
+      ></video>
+      <audio
+        v-if="checkFile(url) === 'audio'"
+        w-full
+        :src="data.dialogImageUrl"
+        alt="Preview Image"
+        controls
+      ></audio>
     </el-dialog>
 
     <canvas ref="canvasRef" style="display: none;"></canvas>
@@ -65,6 +99,7 @@ import { uploadFile } from '@/api/Upload/index'
 import { fileInfo } from './handle.js'
 import { ElMessage } from 'element-plus'
 import { floor } from 'lodash-es'
+import { checkFile } from '@/utils'
 const emit = defineEmits(['update:url', 'editBack'])
 const props = defineProps({
   url: {

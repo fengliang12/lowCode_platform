@@ -49,7 +49,7 @@
           :content="`切换${switchCustom ? '手动' : '上传'}`"
           placement="top-start"
         >
-          <el-icon :size="20" style="margin-left: 10px">
+          <el-icon :size="20" style="margin-left: 10px;">
             <Switch @click="switchCustom = !switchCustom"
           /></el-icon>
         </el-tooltip>

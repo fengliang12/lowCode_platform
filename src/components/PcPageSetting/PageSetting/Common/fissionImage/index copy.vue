@@ -59,15 +59,15 @@
     <el-form-item
       :label-width="formLabelWidth"
       label="显示视频配置"
-      v-if="['video'].includes(modelValue.multimediaType)"
+      v-if="['video'].includes(value.multimediaType) || valueType"
     >
-      <el-switch v-model="showImageConfig" @change="showImageConfigChange">
+      <el-switch v-model="showVideoConfig" @change="showVideoConfigChange">
       </el-switch>
     </el-form-item>
 
-    <!-- 表单 -->
+    <!-- 图片表单 -->
     <FormCreate
-      v-if="showImageConfig"
+      v-if="showImageConfig && modelValue.multimediaType === 'img'"
       v-model="modelValue.imageConfig"
       :formList="imageConfigFormList"
     ></FormCreate>
@@ -110,11 +110,7 @@ import PageBoxSetting from '../pageBoxSetting/index.vue'
 import HotView from '../hotView/index.vue'
 import { handleUploadSuccessInfo } from '../../Handle/upload'
 import FormCreate from '@/components/FormCreate/index.vue'
-import {
-  imageConfigData,
-  imageConfigFormList,
-  videoConfigFormList,
-} from './data'
+import { imageConfigData, imageConfigFormList } from './data'
 
 const emit = defineEmits(['success'])
 const props = defineProps(['modelValue', 'showPageBoxSetting'])

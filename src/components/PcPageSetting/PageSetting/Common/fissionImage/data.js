@@ -94,3 +94,65 @@ export const imageConfigFormList = [
     ],
   },
 ]
+
+
+/**
+ * 图片表单配置
+ */
+export const videoConfigFormList = [
+  {
+    field: 'mode',
+    type: 'el-select',
+    title: '图片裁剪、缩放的模式',
+    options: [
+      {
+        label: '只保证图片的短边能完全显示出来(aspectFill)',
+        value: 'aspectFill',
+      },
+      {
+        label: '宽度不变，高度自动变化(widthFix)',
+        value: 'widthFix',
+      },
+      {
+        label: '高度不变，宽度自动变化(heightFix)',
+        value: 'heightFix',
+      },
+      {
+        label: '使图片的长边能完全显示出来(aspectFit)',
+        value: 'aspectFit',
+      },
+    ],
+  },
+  {
+    field: 'lazyLoad',
+    type: 'el-select',
+    title: '懒加载',
+    defaultValue: false,
+    options: [
+      {
+        label: '关闭',
+        value: false,
+      },
+      {
+        label: '开启',
+        value: true,
+      },
+    ],
+  },
+  {
+    field: 'showMenuByLongpress',
+    type: 'el-select',
+    title: '开启长按识别',
+    defaultValue: false,
+    options: [
+      {
+        label: '关闭',
+        value: false,
+      },
+      {
+        label: '开启',
+        value: true,
+      },
+    ],
+  },
+]

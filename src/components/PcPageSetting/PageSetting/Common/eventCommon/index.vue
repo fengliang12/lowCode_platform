@@ -77,6 +77,8 @@ import SelectJumpType from '../selectJumpType/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { handleCopyEvent } from '../../Handle/handleCopyEvent'
 import WatchValueList from '../WatchValueList/index.vue'
+import { usePageSetupStore } from '@/store/pageSetupStore'
+const pageSetupStore = usePageSetupStore()
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
@@ -121,6 +123,11 @@ const eventData = computed({
  */
 const setTriggerTypeList = computed(() => {
   let list = triggerType.common.list
+  let type = pageSetupStore?.items?.value?.moduleType
+  if (type && triggerType[type]?.list) {
+    list = triggerType[type].list
+  }
+
   if (props.isPage) {
     list = triggerType.page.list
   }

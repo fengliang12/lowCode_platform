@@ -86,6 +86,7 @@ export const swiperTriggerType = [
 
 //微信按钮事件
 export const weChatButtonTriggerTypeList = [
+  ...commonTriggerTypeList,
   {
     value: 'success',
     label: '成功',
