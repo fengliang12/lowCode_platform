@@ -5,7 +5,6 @@
       v-model="modelValue[index]"
       :showHandle="false"
     />
-    <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
     <el-button
       type="danger"
       :icon="Delete"
@@ -13,6 +12,7 @@
       @click.stop="handleDelete(index)"
     />
   </div>
+  <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
 </template>
 
 <script setup lang="ts">

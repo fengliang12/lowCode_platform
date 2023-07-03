@@ -152,3 +152,16 @@ export const delOperationApi: Api.PageSetup.createPage.Func = (id) => {
     method: 'delete',
   })
 }
+
+
+/**
+ * 删除旧的api
+ * @param {*} data
+ * @returns
+ */
+export const setupOperationApi: Api.PageSetup.createPage.Func = (id) => {
+  return instance({
+    url: `/pageSetupApi/delete/${id}`,
+    method: 'delete',
+  })
+}

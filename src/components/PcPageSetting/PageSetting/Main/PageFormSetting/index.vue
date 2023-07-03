@@ -71,7 +71,7 @@ watch(
   () => props.detail,
   (val) => {
     pageFormData.value = handlePageData(val, initPageData())
-    pageSetupStore.setPageNewParams(val.params)
+    pageSetupStore.setPageNewParams(val?.params || [])
   },
   {
     immediate: true,
@@ -91,7 +91,7 @@ watch(
  */
 const save = async () => {
   const check = await beforeLeave('end').catch((err) => {
-    console.log('err', err)
+    return err
   })
   if (!check) return false
   pageFormData.value.params = pageSetupStore.pageNewParams

@@ -156,14 +156,44 @@ watch(
 )
 
 /**
- * 监听detail
+ * 数据初始化，如果数据是为null则赋初始数据，如果数据是object进行递归
+ * @param {*} data
+ */
+const initResData = (data: any) => {
+  data.forEach((elem: any) => {
+    const module = leftList.find((item) => item.moduleType === elem.moduleType)
+    if (module) {
+      const setKey = (elem: any, module: any) => {
+        Object.keys(elem).forEach((item) => {
+          if (
+            elem[item] === null &&
+            module[item] !== null &&
+            module[item] !== undefined
+          ) {
+            elem[item] = cloneDeep(module[item])
+          } else if (
+            typeof elem[item] === 'object' &&
+            elem[item] !== null &&
+            module[item]
+          ) {
+            setKey(elem[item], module[item])
+          }
+        })
+      }
+      setKey(elem, module)
+    }
+  })
+  return data
+}
+
+/**
+ * 监听detail,detail地址发生变化，也就是接口返回值
  */
 watch(
   () => props.detail,
   (val) => {
     // 刷新接口
     _data.formData = initResData(val.moduleSettings)
-    val.moduleSettings = _data.formData
     //根据已经存在的值,遍历出itemMaps值
     pageSetupStore.setPageItemsMap({
       itemsMap: setItemsMap(val),
@@ -199,37 +229,6 @@ onMounted(() => {
   pageSetupStore.changeAloneAPIList()
   pageSetupStore.setPageNewParams([])
 })
-
-/**
- * 数据初始化，如果数据是为null则赋初始数据，如果数据是object进行递归
- * @param {*} data
- */
-const initResData = (data: any) => {
-  data.forEach((elem: any) => {
-    const module = leftList.find((item) => item.moduleType === elem.moduleType)
-    if (module) {
-      const setKey = (elem: any, module: any) => {
-        Object.keys(elem).forEach((item) => {
-          if (
-            elem[item] === null &&
-            module[item] !== null &&
-            module[item] !== undefined
-          ) {
-            elem[item] = cloneDeep(module[item])
-          } else if (
-            typeof elem[item] === 'object' &&
-            elem[item] !== null &&
-            module[item]
-          ) {
-            setKey(elem[item], module[item])
-          }
-        })
-      }
-      setKey(elem, module)
-    }
-  })
-  return data
-}
 
 /**
  * 左边只能移动到右边，不能上下移动
@@ -291,7 +290,7 @@ const clickLeft = (moduleType: string | number) => {
         }
         const { width, height } = pageSetupStore?.items?.value?.pageStyle || {}
         setPageData({
-          index: pageSetupStore.items?.value.moduleSettings.length,
+          index: pageSetupStore.items?.value?.moduleSettings?.length,
           moduleSettings: pageSetupStore.items?.value.moduleSettings,
           moduleType: moduleType,
           width,
@@ -389,7 +388,7 @@ const save = async () => {
     return false
   }
 
-  pageForm.moduleSettings = _data.formData
+  // pageForm.moduleSettings = _data.formData
   const req = cloneDeep(pageForm)
   return cloneDeep(req)
 }

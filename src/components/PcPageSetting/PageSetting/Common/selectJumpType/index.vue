@@ -41,6 +41,8 @@
             <!--operationUrl： 自定义事件 -->
             <el-cascader
               v-if="element.operationType == 'custom_event'"
+              v-model="element.operationUrl"
+              :options="customEventList"
               class="ml10"
               clearable
               filterable
@@ -48,15 +50,11 @@
               :props="{
                 emitPath: false,
               }"
-              v-model="element.operationUrl"
-              :options="customEventList"
-              @change="selectTypeChange($event, element)"
-              @visible-change="visibleChange($event, element)"
             ></el-cascader>
 
             <!--operationUrl：跳转配置页面\api访问\操作组件\授权 -->
             <el-select
-              v-else-if="selectTypeKeys.includes(element.operationType)"
+              v-if="selectTypeKeys.includes(element.operationType)"
               v-model="element.operationUrl"
               clearable
               filterable
@@ -78,14 +76,6 @@
               ></el-option>
             </el-select>
 
-            <!--linkMiniAppId： 其他小程序小程序appId -->
-            <el-input
-              v-if="element.operationType == 'jump_relevance_mini'"
-              class="ml10 flex-1"
-              v-model="element.linkMiniAppId"
-              placeholder="小程序appId"
-            ></el-input>
-
             <!--operationUrl： h5路径、其他小程序跳转路径 -->
             <el-input
               v-if="
@@ -95,6 +85,14 @@
               class="ml10"
               v-model="element.operationUrl"
               placeholder="请输入路径"
+            ></el-input>
+
+            <!--linkMiniAppId： 其他小程序小程序appId -->
+            <el-input
+              v-if="element.operationType == 'jump_relevance_mini'"
+              class="ml10 flex-1"
+              v-model="element.linkMiniAppId"
+              placeholder="小程序appId"
             ></el-input>
 
             <!-- content：自定义事件中需要额外的添加内容：提示、调用电话 -->
@@ -181,8 +179,9 @@
             <!--operationUrl: 新增页面参数 -->
             <template v-if="element.operationType === 'set_params'">
               <el-cascader
-                v-model="element.operationUrl"
+                :modelValue="pageShowDataValue(element?.operationUrl)"
                 :options="pageSetupStore.pageNewParams"
+                separator="."
                 placeholder="请选择"
                 :props="{
                   value: 'key',
@@ -219,6 +218,12 @@
             <!-- 删除 -->
             <el-icon class="ml10 pointer" @click.stop="handleDeleteEvent(index)"
               ><Delete
+            /></el-icon>
+            <!-- 添加子集 -->
+            <el-icon
+              class="ml10 pointer"
+              @click.stop="handleAddChildEvent(item)"
+              ><FolderAdd
             /></el-icon>
             <!-- 条件 -->
             <el-icon
@@ -342,6 +347,7 @@ import EditParameters from '../editParameters/index.vue'
 import ConditionsForExecution from '../conditionsForExecution/index.vue'
 import createForm from '../createForm/index.vue'
 import api from '@/api/axios.ts'
+import { set } from 'lodash'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -378,6 +384,28 @@ const handleAddEvent = () => {
     return
   }
   hotOperations.value.push(new PageHotOperation())
+}
+
+/**
+ * 添加子集
+ */
+const handleAddChildEvent = (item) => {
+  if (
+    item?.child &&
+    !item?.child?.every(
+      (elem) =>
+        !!elem.operationUrl ||
+        elem.subscribeNotices.length ||
+        elem?.imageSetting?.imgUrl,
+    )
+  ) {
+    ElMessage.error('请先输入内容')
+    return
+  }
+  if (!item?.child) {
+    set(item, 'child', [])
+  }
+  item.child.push(new PageHotOperation())
 }
 
 /**
@@ -436,12 +464,6 @@ const changeParams = (e, item) => {
 
 const selectType = computed(() => {
   return {
-    //自定义事件
-    custom_event: {
-      optionList: customEventList,
-      label: 'label',
-      value: 'value',
-    },
     // 跳转配置页面
     page_setting: {
       optionList: pageSetupStore.pageList,
@@ -457,6 +479,8 @@ const selectType = computed(() => {
     // 操作组件
     associated_module: {
       optionList: [],
+      label: 'label',
+      value: 'value',
       on: {
         'visible-change': (value) => {
           if (value) {
@@ -510,17 +534,30 @@ const visibleChange = (e, element) => {
  * 获取可操作组件
  */
 const setAssociatedModule = () => {
-  if (!pageSetupStore.itemsMap?.values) return []
-  selectType.value.associated_module.optionList = Array.from(
-    pageSetupStore.itemsMap.values(),
-  ).map((elem) => ({
+  let { itemsMap, items } = pageSetupStore
+  if (!itemsMap?.values) return []
+  let _arr = Array.from(itemsMap.values()).map((elem) => ({
     value: elem.code,
     label: `${elem.title ?? elem.code}`,
   }))
+
+  if (items?.value) {
+    let index = Array.from(itemsMap.values()).findIndex(
+      (i) => i.code == items.value.code,
+    )
+    if (index != -1) {
+      _arr.splice(index, 1)
+      _arr.unshift({
+        value: items.value.code,
+        label: `当前组件`,
+      })
+    }
+  }
+  selectType.value.associated_module.optionList = _arr
 }
 
 /**
- * 获取操作组件的方法类别
+ * 获取操作组件的方法类别,这里会根据选择的组件的类型，添加操作组件的方法
  */
 const getModuleOperationList = (operationUrl) => {
   if (operationUrl.includes('carousel')) {
@@ -772,6 +809,15 @@ const dialogVisible1 = ref(false)
 const popEdit = (index) => {
   currentIndex.value = index
   dialogVisible1.value = true
+}
+
+/**
+ * 处理页面参数的显示问题
+ * @param {*} value
+ */
+const pageShowDataValue = (value) => {
+  if (!value) return []
+  return value.split('.')
 }
 </script>
 <style lang="scss" scoped>

@@ -14,6 +14,7 @@ const setItemsMap = (pageSetting, set = new Map(), opt = 'set') => {
       }
     }
   })
+  console.log('itemsMap', set)
   return set
 }
 export default setItemsMap
