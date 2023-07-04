@@ -164,7 +164,7 @@ watch(
   (val) => {
     // 刷新接口
     _data.formData = initResData(val.moduleSettings)
-    val.moduleSettings = _data.formData
+    // val.moduleSettings = _data.formData
     //根据已经存在的值,遍历出itemMaps值
     pageSetupStore.setPageItemsMap({
       itemsMap: setItemsMap(val),
@@ -342,7 +342,7 @@ const setPageData = ({
     opt: 'add',
   })
 
-  props.detail.moduleSettings = _data.formData
+  // props.detail.moduleSettings = _data.formData
 
   // 刷新el-tree
   bus.emit('refreshElTree')

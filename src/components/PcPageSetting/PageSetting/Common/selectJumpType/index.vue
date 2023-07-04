@@ -314,7 +314,7 @@ import { computed, ref, reactive } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import Draggable from 'vuedraggable'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+import { handleCopyEvent } from '../../Handle/handleCopyEvent.js'
 
 import {
   EventList,
@@ -337,10 +337,11 @@ import { setParams, getParams } from '../../Handle/handleParams'
 import PagepathCascader from '../pagePathCascader/index.vue'
 import SubscribeNoticesSelect from '../subscribeNoticesSelect/index.vue'
 import FissionImage from '../fissionImage/index.vue'
-import SetData from '../setData/index.vue'
 import EditParameters from '../editParameters/index.vue'
-import ConditionsForExecution from '../conditionsForExecution/index.vue'
+import ConditionsForExecution from '../ConditionsForExecution/index.vue'
 import createForm from '../createForm/index.vue'
+import SetData from '../setData/index.vue'
+
 import api from '@/api/axios.ts'
 
 const props = defineProps(['modelValue'])
