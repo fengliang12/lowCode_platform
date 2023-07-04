@@ -2,13 +2,15 @@
   <div>
     <!-- 选择操作 -->
     <el-form-item v-if="hotOperations" label="操作类型（操作类型有先后顺序）">
-      <Draggable
-        :list="hotOperations"
-        handle=".draggable-move-icon"
-        animation="500"
-        item-key="$index"
+      <el-tree
+        v-if="eventTreeRef"
+        :data="hotOperations"
+        :props="{ children: 'child' }"
+        icon="CaretRight"
+        node-key="id"
+        draggable
       >
-        <template #item="{ element, index }">
+        <template #default="{ node, data: element }">
           <div class="mb10 eventItem">
             <el-cascader
               v-model="element.operationType"
@@ -222,7 +224,7 @@
             <!-- 添加子集 -->
             <el-icon
               class="ml10 pointer"
-              @click.stop="handleAddChildEvent(item)"
+              @click.stop="handleAddChildEvent(element)"
               ><FolderAdd
             /></el-icon>
             <!-- 条件 -->
@@ -279,7 +281,7 @@
             </el-tooltip>
           </div>
         </template>
-      </Draggable>
+      </el-tree>
     </el-form-item>
 
     <!-- 图片弹窗编辑 -->
@@ -333,7 +335,7 @@
 </template>
 
 <script setup>
-import { computed, ref, reactive } from 'vue'
+import { computed, ref, reactive, nextTick } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import Draggable from 'vuedraggable'
 import { ElMessageBox, ElMessage } from 'element-plus'
@@ -408,6 +410,7 @@ const handleAddEvent = () => {
 /**
  * 添加子集
  */
+const eventTreeRef = ref(true)
 const handleAddChildEvent = (item) => {
   if (
     item?.child &&
@@ -425,6 +428,11 @@ const handleAddChildEvent = (item) => {
     set(item, 'child', [])
   }
   item.child.push(new PageHotOperation())
+  console.log('item', item)
+  eventTreeRef.value = false
+  nextTick(() => {
+    eventTreeRef.value = true
+  })
 }
 
 /**
@@ -861,6 +869,10 @@ const pageShowDataValue = (value) => {
 <style lang="scss" scoped>
 :deep(.el-input) {
   width: auto;
+}
+
+:deep(.el-tree-node__content) {
+  height: auto;
 }
 .el-form-item {
   display: block;
