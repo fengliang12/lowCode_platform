@@ -1,14 +1,14 @@
 <template>
   <div>
     <!-- 添加角色 -->
-    <div style="margin: 5px 10px; text-align: left;">
+    <div style="margin: 5px 10px; text-align: left">
       <el-button type="primary" @click="toAdd">{{
         $t('button.wadd')
       }}</el-button>
     </div>
 
     <!-- 角色表 -->
-    <div style="margin: 5px 10px; text-align: left;">
+    <div style="margin: 5px 10px; text-align: left">
       <el-table :data="state.roles">
         <el-table-column prop="name" label="角色名称"></el-table-column>
         <el-table-column prop="description" label="描述"></el-table-column>
@@ -71,7 +71,7 @@
         default-expand-all
         :default-checked-keys="defaultCheckedKeys"
       />
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 20px">
         <el-button @click="resetChecked">清空</el-button>
         <el-button type="primary" @click="setPermission">确认</el-button>
       </div>

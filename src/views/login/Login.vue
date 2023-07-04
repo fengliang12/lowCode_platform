@@ -35,7 +35,7 @@
             v-model="loginForm.verifyCode"
             placeholder="验证码"
             type="text"
-            style="display: inline-block; width: 40%;"
+            style="display: inline-block; width: 40%"
             @keyup.enter="handleLogin"
           ></el-input>
           <div
@@ -45,10 +45,10 @@
           ></div>
         </el-form-item>
 
-        <el-form-item style="background: none; border: none;">
+        <el-form-item style="background: none; border: none">
           <el-button
             type="primary"
-            style="margin-bottom: 30px; width: 100%;"
+            style="margin-bottom: 30px; width: 100%"
             @click="handleLogin"
             >{{ $t('button.wLogin') }}</el-button
           >

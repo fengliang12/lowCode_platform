@@ -1,7 +1,7 @@
 <template>
   <div class="icon-list">
     <div v-for="name in icons" :key="name" @click="selectedIcon(name)">
-      <component :is="name" style="width: 20px; height: 20px;"></component>
+      <component :is="name" style="width: 20px; height: 20px"></component>
     </div>
   </div>
 </template>

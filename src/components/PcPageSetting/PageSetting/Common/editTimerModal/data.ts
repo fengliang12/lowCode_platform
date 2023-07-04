@@ -1,5 +1,4 @@
-export  const formListFn =function(store:any,oldName:any){
-
+export const formListFn = function (store: any, oldName: any) {
   return [
     {
       field: 'name',
@@ -7,13 +6,14 @@ export  const formListFn =function(store:any,oldName:any){
       type: 'el-input',
       rules: [
         {
-          validator: (r:any, v:string, cb:any) => {
+          validator: (r: any, v: string, cb: any) => {
             if (!v) {
               cb(new Error('事件名称不能为空'))
             } else if (!/([a-z])([a-z1-9])*(_([a-z1-9]+))*/.test(v)) {
               cb(new Error('请输入正确事件名称'))
             } else if (
-              v != oldName?.value && store?.timerNameList?.find((i: string) => i === v)
+              v != oldName?.value &&
+              store?.timerNameList?.find((i: string) => i === v)
             ) {
               cb(new Error('事件名称已存在'))
             } else {

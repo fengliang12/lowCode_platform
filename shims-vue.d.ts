@@ -11,4 +11,3 @@ declare module '@vue/runtime-core' {
     $t: any
   }
 }
-

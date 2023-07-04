@@ -45,7 +45,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       pageLimit: null,
       pageLimitInclude: false,
       brandList: [], //品牌列表
-      timerNameList:[]
+      timerNameList: [],
     }
   },
   getters,
@@ -210,12 +210,11 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     /**
      * 添加异步事件名称
      */
-    addTimerName(name:string){
-      if(this.timerNameList.find((i: string) => i === name)) return false;
+    addTimerName(name: string) {
+      if (this.timerNameList.find((i: string) => i === name)) return false
       this.timerNameList.push(name)
-      console.log(this.timerNameList);
-
-    }
+      console.log(this.timerNameList)
+    },
   },
   persist: {
     enabled: true,

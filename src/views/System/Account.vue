@@ -47,10 +47,10 @@
     </el-dialog>
 
     <!-- 系统用户表格 -->
-    <div style="margin: 0 10px; text-align: left;">
+    <div style="margin: 0 10px; text-align: left">
       <el-row>
         <el-col :span="24" :xs="24">
-          <div style="margin: 5px 10px; text-align: left;">
+          <div style="margin: 5px 10px; text-align: left">
             <el-button type="primary" @click="toAddUser">{{
               $t('button.wadd')
             }}</el-button>
@@ -99,7 +99,7 @@
       </el-row>
 
       <!-- 分页 -->
-      <el-row style="float: right;">
+      <el-row style="float: right">
         <el-pagination
           layout="total,sizes,prev,pager,next,jumper"
           :total="state.users.length"

@@ -3,12 +3,12 @@
     <img
       v-if="isFullscreen"
       src="../../../assets/images/notFull.png"
-      style="width: 25px; height: 25px;"
+      style="width: 25px; height: 25px"
     />
     <img
       v-else
       src="../../../assets/images/isFull.png"
-      style="width: 25px; height: 25px;"
+      style="width: 25px; height: 25px"
     />
   </div>
 </template>
