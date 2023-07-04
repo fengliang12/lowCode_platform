@@ -34,7 +34,7 @@
               /></el-icon>
             </template>
           </el-popconfirm>
-          <el-popconfirm title="复制" @confirm="handleCopyEvent(item)">
+          <el-popconfirm title="复制" @confirm="handleCopyEvents(item)">
             <template #reference>
               <el-icon class="ml10 pointer"><DocumentCopy /></el-icon>
             </template>
@@ -75,7 +75,7 @@ import { computed, ref } from 'vue'
 import { EventsData, triggerType } from './data'
 import SelectJumpType from '../selectJumpType/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 import WatchValueList from '../WatchValueList/index.vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 const pageSetupStore = usePageSetupStore()

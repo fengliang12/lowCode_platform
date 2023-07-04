@@ -13,7 +13,7 @@
       <template v-slot="{ data }">
         <div class="content">
           <span>{{ data.label }}</span>
-          <el-icon @click="handleCopyEvent(data.key)" class="ml10"
+          <el-icon @click="handleCopyEvents(data.key)" class="ml10"
             ><DocumentCopy
           /></el-icon>
         </div>
@@ -41,7 +41,7 @@
         :content="`切换${switchCustom ? '选择' : '手动'}`"
         placement="top-start"
       >
-        <el-icon :size="16" style="margin-right: 10px;">
+        <el-icon :size="16" style="margin-right: 10px">
           <Switch @click="switchCustom = !switchCustom" />
         </el-icon>
       </el-tooltip>
@@ -73,7 +73,7 @@ import { computed, ref, watch } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { dPageShowDataValue } from '../../Handle/filters'
 import PageDataHandle from './pageDataHandle.vue'
-import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 
 const emit = defineEmits(['update:modelValue', 'update:handle'])
 const props = defineProps({

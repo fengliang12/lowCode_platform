@@ -1,7 +1,7 @@
 <template>
   <el-dialog :model-value="settingDialogVisible" @close="closeSettingDialog">
     <div class="flex json_box">
-      <el-button class="copy_btn" type="primary" @click="handleCopyEvent"
+      <el-button class="copy_btn" type="primary" @click="handleCopyEvents"
         >复制配置</el-button
       >
       <JsonEditorVue class="editor" v-model="jsonData" />
@@ -29,7 +29,7 @@ import {
 } from '@/api/pageSetup'
 import updateApiList from '../../Handle/updateApiList'
 import { cloneDeep } from 'lodash'
-import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 
 const getPageDetail = inject('getPageDetail')
 const pageSetupStore = usePageSetupStore()

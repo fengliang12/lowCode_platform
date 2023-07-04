@@ -33,11 +33,11 @@
     <!-- 提示 -->
     <template v-if="formItem.tips">
       <el-tooltip :content="formItem.tips" placement="top-start">
-        <el-icon style="margin-left: 10px;"><WarningFilled /></el-icon>
+        <el-icon style="margin-left: 10px"><WarningFilled /></el-icon>
       </el-tooltip>
     </template>
     <template v-if="formItem.button">
-      <el-button style="margin-left: 10px;" @click="formItem.btnClick">
+      <el-button style="margin-left: 10px" @click="formItem.btnClick">
         {{ formItem.button }}
       </el-button>
     </template>
@@ -58,7 +58,6 @@
 import { computed, reactive, watch, inject, onMounted } from 'vue'
 import FOptionList from '../../public/FOptionList/index.vue'
 import FormItemList from '../formItemList/index.vue'
-import setData from '@/components/pcPageSetting/pageSetting/common/setData/index.vue'
 
 import { get } from 'lodash-es'
 

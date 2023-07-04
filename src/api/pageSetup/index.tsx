@@ -74,7 +74,7 @@ const Redeem = () => {
    * 根据字典给tabList的activityCode属性赋值
    */
   const initTableList = useMemoizedFn(async () => {
-    let dict = await dictData.getDictData("ACTIVITIES_ID_LIST");
+    const dict = await dictData.getDictData("ACTIVITIES_ID_LIST");
     tabList.forEach((item) => {
       item.activityCode =
         dict?.data?.dictDataItems.find(
@@ -108,15 +108,15 @@ const Redeem = () => {
     await app.init();
     setGoodsList([]);
     setCouponList([]);
-    let code = tabList[activeIndex.current.index].activityCode;
-    let title = tabList[activeIndex.current.index].title;
+    const code = tabList[activeIndex.current.index].activityCode;
+    const title = tabList[activeIndex.current.index].title;
 
     //吉日兑礼
     if (activeIndex.current.index === 1) {
-      let desc = tabList[activeIndex.current.index].desc;
+      const desc = tabList[activeIndex.current.index].desc;
       // let timeList = desc.includes("-") ? desc.split("-") : [8, 11, 23];
-      let timeList = [7, 11, 23];
-      let state = judgeActivityTime(timeList);
+      const timeList = [7, 11, 23];
+      const state = judgeActivityTime(timeList);
       setActivityState(state);
       if (!state) {
         if (intervalTime.current) clearInterval(intervalTime.current);
@@ -159,9 +159,9 @@ const Redeem = () => {
   const [couponList, setCouponList] = useState<
     Api.middleExchange.Public.MiddleExchangeGoodsView[]
   >([]);
-  let coupon: Array<Api.middleExchange.Public.MiddleExchangeGoodsView> = [];
+  const coupon: Array<Api.middleExchange.Public.MiddleExchangeGoodsView> = [];
   const handleGoodList = useMemoizedFn((data, title) => {
-    let category = data.child.find((t) => t.name === title);
+    const category = data.child.find((t) => t.name === title);
     if (!category?.child) return;
     setGoodsList(category.child);
     handleCoupon(category);
@@ -210,7 +210,7 @@ const Redeem = () => {
    * 点击立即兑换
    */
   const clickExchange = useMemoizedFn((e) => {
-    let { good } = e.currentTarget?.dataset;
+    const { good } = e.currentTarget?.dataset;
     if (!good || !dataLakeInfo) return;
     if (good.sellOut) {
       toast({ title: "该商品已兑完", mask: true });
@@ -248,7 +248,7 @@ const Redeem = () => {
   });
 
   const subscribeToMessages = async () => {
-    let accept = await sendSubscribeToMessages([
+    const accept = await sendSubscribeToMessages([
       GET_SUBSCRIBE_TO_MESSAGES.auspicious_day_activity_start,
     ]);
     if (accept && accept.length > 0) {

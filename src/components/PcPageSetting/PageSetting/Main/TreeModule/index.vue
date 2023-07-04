@@ -35,7 +35,9 @@
               />
             </div>
             <div class="ml10 vhCenter" v-if="!data.shareSetting">
-              <el-icon @click="handleCopyEvent(data)"><DocumentCopy /></el-icon>
+              <el-icon @click="handleCopyEvents(data)"
+                ><DocumentCopy
+              /></el-icon>
             </div>
             <div
               v-if="
@@ -62,7 +64,7 @@ import componentsMapping from '../../CommonData/componentsMapping'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import setItemsMap from '../../Handle/setItemsMap'
-import { handleCopyEvent } from '../../Handle/handleCopyEvent'
+import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 import bus from '@/utils/bus.js'
 import cloneDeepModule from '../../Handle/handleCloneModule'
 

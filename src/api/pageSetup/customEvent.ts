@@ -61,7 +61,7 @@ const customEvent: backP<customEventType> = async ({
       });
       return true;
     case "getNetworkType":
-      let res = await Taro.getNetworkType();
+      const res = await Taro.getNetworkType();
       set(pageDataStore.authInfo, "getNetworkType", res);
       return true;
     // 加载中

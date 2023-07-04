@@ -1,4 +1,4 @@
-import { isArray, isString } from "lodash"
+import { isString } from "lodash"
 export const checkFile = (fileValue) => {
   if (!fileValue) return ''
   var index = fileValue.lastIndexOf('.') //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
