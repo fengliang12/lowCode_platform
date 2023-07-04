@@ -253,6 +253,18 @@
               /></el-icon>
             </el-tooltip>
 
+            <!-- 定时器 -->
+            <el-tooltip
+              :show-after="500"
+              effect="dark"
+              content="定时器"
+              placement="right"
+            >
+              <el-icon class="ml10 pointer" @click="showEditTimerModal(element)"
+                ><AlarmClock
+              /></el-icon>
+            </el-tooltip>
+
             <!-- 拖动事件 -->
             <el-tooltip
               :show-after="500"
@@ -311,6 +323,12 @@
         <el-button @click="saveParams" type="primary"> 确 定 </el-button>
       </template>
     </el-dialog>
+
+    <!-- 定时器的参数 -->
+    <EditTimerModal
+      ref="editTimerModalRef"
+      @confirm="editTimerModalCallback"
+    ></EditTimerModal>
   </div>
 </template>
 
@@ -346,8 +364,10 @@ import SetData from '../setData/index.vue'
 import EditParameters from '../editParameters/index.vue'
 import ConditionsForExecution from '../conditionsForExecution/index.vue'
 import createForm from '../createForm/index.vue'
+import EditTimerModal from '../editTimerModal/index.vue'
+
 import api from '@/api/axios.ts'
-import { set } from 'lodash'
+import { cloneDeep, set, assignIn } from 'lodash'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -809,6 +829,25 @@ const dialogVisible1 = ref(false)
 const popEdit = (index) => {
   currentIndex.value = index
   dialogVisible1.value = true
+}
+
+/**
+ * 定时器
+ */
+const currentItem = ref(null)
+const editTimerModalRef = ref(null)
+const showEditTimerModal = (elem) => {
+  console.log(editTimerModalRef.value)
+  currentItem.value = elem
+  editTimerModalRef.value?.show?.(cloneDeep(elem))
+}
+
+/**
+ *异步事件回调
+ * @param {*} value
+ */
+const editTimerModalCallback = (value) => {
+  assignIn(currentItem.value, value)
 }
 
 /**
