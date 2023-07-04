@@ -146,7 +146,7 @@ const setShowHotView = () => {
  */
 const showImageConfig = ref(false)
 watch(
-  () => props.modelValue.imageConfig,
+  () => props.modelValue?.imageConfig,
   (val) => {
     showImageConfig.value = val === null ? false : true
   },

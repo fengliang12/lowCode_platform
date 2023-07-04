@@ -33,8 +33,7 @@ const operationUrl = computed({
  * @param {*} value
  */
 const cascaderRef = ref(null)
-const handleChange = (value) => {
-  operationUrl.value = value
+const handleChange = () => {
   emit('changeInfo', cascaderRef.value.getCheckedNodes()[0].data)
 }
 </script>

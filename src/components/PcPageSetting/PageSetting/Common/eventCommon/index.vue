@@ -67,8 +67,8 @@
 
 <script setup>
 // PageSetupOperationEvent {
-//   hotOperations (Array[PageSetupHotOperation], optional): 热区事件 ,
 //   triggerType (string, optional): 执行类型 点击执行 click; 显示执行 show; ,
+//   hotOperations (Array[PageSetupHotOperation], optional): 热区事件 ,
 //   watchValueList (Array[string], optional): 监听值列表
 // }
 import { computed, ref } from 'vue'

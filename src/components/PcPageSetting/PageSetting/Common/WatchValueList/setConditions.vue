@@ -13,6 +13,7 @@
       @click.stop="handleDelete(index)"
     />
   </div>
+  <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
 </template>
 
 <script setup lang="ts">

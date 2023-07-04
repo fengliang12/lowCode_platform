@@ -112,6 +112,8 @@ export class PageHotOperation {
     this.params = params
     // 取值
     this.pageValue = null
+    // child
+    this.child = []
   }
 }
 
