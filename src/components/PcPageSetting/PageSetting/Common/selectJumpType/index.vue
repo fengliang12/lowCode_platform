@@ -7,11 +7,13 @@
         :data="hotOperations"
         :props="{ children: 'child' }"
         icon="CaretRight"
+        default-expand-all
         node-key="id"
         draggable
       >
         <template #default="{ node, data: element }">
-          <div class="mb10 eventItem">
+          <div class="eventItem">
+            <!-- operationType 事件类型 -->
             <el-cascader
               v-model="element.operationType"
               :options="eventTypeList"
@@ -23,21 +25,21 @@
               @change="changeEvent(element)"
             ></el-cascader>
 
-            <!-- 1、弹窗 -->
+            <!--imageSetting  弹窗 -->
             <upload-file
               v-if="element.operationType === 'pop_ups'"
               v-model:url="element.imageSetting.imgUrl"
               class="ml10"
               :hasEditBack="true"
               :on-success="(e) => uploadSuccessCallback(e, element)"
-              @editBack="popEdit(index)"
+              @editBack="popEdit(element)"
             ></upload-file>
 
             <!--operationUrl： 跳转小程序内部页面 -->
             <PagepathCascader
               v-if="element.operationType === 'page_jump'"
               v-model="element.operationUrl"
-              @changeInfo="pagePathCascaderChange($event, index)"
+              @changeInfo="pagePathCascaderChange($event, element)"
             ></PagepathCascader>
 
             <!--operationUrl： 自定义事件 -->
@@ -48,7 +50,6 @@
               class="ml10"
               clearable
               filterable
-              :show-all-levels="false"
               :props="{
                 emitPath: false,
               }"
@@ -175,7 +176,7 @@
               clearable
               :show-all-levels="false"
               class="ml10"
-              @change="animateCascaderChange(element, $event, index)"
+              @change="($event) => animateCascaderChange($event, element)"
             ></el-cascader>
 
             <!--operationUrl: 新增页面参数 -->
@@ -287,8 +288,8 @@
     <!-- 图片弹窗编辑 -->
     <el-dialog v-model="dialogVisible1" append-to-body width="80%">
       <FissionImage
-        v-if="currentIndex >= 0"
-        v-model="hotOperations[currentIndex].imageSetting"
+        v-if="currentItem"
+        v-model="currentItem.imageSetting"
         :formItemFile="{ label: '' }"
         :showPageBoxSetting="true"
         :showSettingList="['width', 'height', 'radius']"
@@ -357,6 +358,7 @@ import {
 
 import paramsObj from './common/paramsObj'
 import { animateList } from './common/animate'
+import SetData from '../setData/index.vue'
 
 import { setParams, getParams } from '../../Handle/handleParams'
 import PagepathCascader from '../pagePathCascader/index.vue'
@@ -463,9 +465,8 @@ const changeEvent = (item) => {
 /**
  * 小程序路径选择后
  */
-const pagePathCascaderChange = (event, index) => {
-  hotOperations.value[index].params =
-    event?.params?.length > 0 ? event.params : []
+const pagePathCascaderChange = (event, element) => {
+  element.params = event?.params?.length > 0 ? event.params : []
 }
 
 /**
@@ -616,10 +617,18 @@ const animateCascader = (el) => {
 }
 
 //初始化params
-const animateCascaderChange = (element, value, index) => {
-  const data = itemRefs?.[index].getCheckedNodes()?.[0].data?.params
-  if (!element.params && data) {
-    element.params = setParams(data)
+const animateCascaderChange = (e, element) => {
+  console.log('e', e)
+  if (itemRefs?.length) {
+    const itemRef = itemRefs.find((item) => {
+      return item.getCheckedNodes()[0].data.value === e
+    })
+    if (itemRef) {
+      const params = itemRef.getCheckedNodes()[0]?.data?.params
+      if (params) {
+        element.params = setParams(params)
+      }
+    }
   }
 }
 
@@ -832,16 +841,16 @@ const UploadSuccessSetBoxInfo = (
 /**
  * 弹窗编辑
  */
+const currentItem = ref(null)
 const dialogVisible1 = ref(false)
-const popEdit = (index) => {
-  currentIndex.value = index
+const popEdit = (element) => {
+  currentItem.value = element
   dialogVisible1.value = true
 }
 
 /**
  * 定时器
  */
-const currentItem = ref(null)
 const editTimerModalRef = ref(null)
 const showEditTimerModal = (elem) => {
   console.log(editTimerModalRef.value)
@@ -881,6 +890,7 @@ const pageShowDataValue = (value) => {
   width: 100%;
   display: flex;
   align-items: center;
+  margin: 5px 0;
 }
 .draggable-move-icon {
   height: 32px;

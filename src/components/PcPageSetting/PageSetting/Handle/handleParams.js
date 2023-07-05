@@ -26,27 +26,23 @@ export const getParams = (keyList) => {
 }
 // 普通对象转自定义params
 export const setParams = (obj) => {
-  const setParams = (getObj) => {
-    const elem = Object.keys(getObj)
-    const params = []
-    elem.forEach((elem) => {
-      if (isObject(getObj[elem])) {
-        params.push({
-          key: elem,
-          child: setParams(getObj),
-        })
-      } else {
-        params.push({
-          key: elem,
-          pageValue: {
-            valueType: 'custom',
-            value: getObj[elem],
-          },
-        })
-      }
-    })
-    return params
-  }
-  const params = setParams(obj)
+  const keyList = Object.keys(obj)
+  const params = []
+  keyList.forEach((key) => {
+    if (isObject(obj[key])) {
+      params.push({
+        key: key,
+        child: setParams(obj),
+      })
+    } else {
+      params.push({
+        key: key,
+        pageValue: {
+          valueType: 'custom',
+          value: obj[key],
+        },
+      })
+    }
+  })
   return params
 }

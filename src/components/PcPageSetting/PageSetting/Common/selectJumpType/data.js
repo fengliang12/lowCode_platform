@@ -114,6 +114,8 @@ export class PageHotOperation {
     this.pageValue = null
     // child
     this.child = []
+    //异步事件
+    this.syncEvent = {}
   }
 }
 

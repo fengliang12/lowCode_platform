@@ -34,6 +34,7 @@ const operationUrl = computed({
  */
 const cascaderRef = ref(null)
 const handleChange = () => {
+  // cascaderRef.value.getCheckedNodes()[0].data 能够拿到当前节点的数据
   emit('changeInfo', cascaderRef.value.getCheckedNodes()[0].data)
 }
 </script>
