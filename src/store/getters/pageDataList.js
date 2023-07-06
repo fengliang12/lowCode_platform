@@ -208,7 +208,7 @@ function getData(value) {
       child: Object.values(apiMap),
     },
     {
-      key: 'appStore',
+      key: 'appStore', //全局数据
       child: appStore,
     },
   ]

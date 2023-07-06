@@ -2,7 +2,7 @@ import handleModule from './handleModule'
 import { replace } from 'lodash-es'
 
 //更新页面组件code列表
-const updateApiList = (pageSetting, moduleCode, mapApi) => {
+const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
   //处理组件code
   const setModuleCode = (hotOperations) => {
     if (!hotOperations?.length) return hotOperations
@@ -66,6 +66,7 @@ const updateApiList = (pageSetting, moduleCode, mapApi) => {
     }
     return conditionsForExecution
   }
+
   handleModule(pageSetting, ({ data, type }) => {
     if (type === 'hotModule') {
       data.hotOperations = setModuleCode(data.hotOperations)
@@ -111,4 +112,4 @@ const updateApiList = (pageSetting, moduleCode, mapApi) => {
   return pageSetting
 }
 
-export default updateApiList
+export default updateModuleCode

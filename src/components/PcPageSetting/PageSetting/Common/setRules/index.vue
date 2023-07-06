@@ -33,19 +33,21 @@
         <div class="icon-box">
           <div class="mb10">
             <el-tooltip effect="dark" content="新增" placement="top">
-              <i
+              <el-button
+                type="primary"
+                :icon="Plus"
+                circle
                 @click="addRule(index + 1)"
-                class="el-icon-circle-plus-outline icon"
-                style="color: #409eff"
               />
             </el-tooltip>
           </div>
           <div>
             <el-tooltip effect="dark" content="删除" placement="top">
-              <i
+              <el-button
+                type="danger"
+                :icon="Delete"
+                circle
                 @click="delRule(index)"
-                class="el-icon-remove-outline icon"
-                style="color: #f56c6c"
               />
             </el-tooltip>
           </div>
@@ -60,11 +62,12 @@
 
 <script setup lang="ts">
 // PageApiRule {
-//   message (string, optional): 消息 ,
 //   required (boolean, optional): 是否请求 ,
 //   type (string, optional): 类型
+//   message (string, optional): 消息 ,
 // }
 import { computed } from 'vue'
+import { Delete, Plus } from '@element-plus/icons-vue'
 
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])

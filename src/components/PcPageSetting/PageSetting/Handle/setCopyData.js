@@ -1,11 +1,15 @@
+import cloneDeepModule from './handleCloneModule'
+import updateModuleCode from './updateModuleCode'
+import { usePageSetupStore } from '@/store/pageSetupStore'
 // 复制数据处理
 const setCopyData = async ({
   data,
-  AloneApiList = store.state.pageSetting.AloneApiList,
-  pageSetupId = store.state.pageSetting.id,
+  AloneApiList,
+  pageSetupId,
   otherConfig,
   itemsMap,
 }) => {
+  const pageSetupStore = usePageSetupStore()
   // api列表数据处理
   const apiList = data?.customApiList?.filter(Boolean) || []
   const mapApi = {}
@@ -43,11 +47,12 @@ const setCopyData = async ({
   }
   //copy组件
   const cloneData = await cloneDeepModule(data, itemsMap)
+
   return updateModuleCode(
     //clone数据
     cloneData,
     //新老code映射
-    store.state.pageSetting.moduleCode,
+    pageSetupStore.moduleCode,
     //新老api映射
     mapApi,
   )

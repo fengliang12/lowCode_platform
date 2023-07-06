@@ -1,6 +1,10 @@
 <template>
   <el-form v-if="eventData">
-    <div v-for="(item, index) in eventData" :key="item.triggerType">
+    <div
+      v-for="(item, index) in eventData"
+      :key="item.triggerType"
+      class="mb10"
+    >
       <el-divider>
         <div class="vhCenter">
           <el-select

@@ -5,7 +5,7 @@ const handleImageSetting = (imageSetting, fn) => {
   if (!imageSetting?.imgUrl) return
   if (imageSetting?.hotModuleSettings?.length) {
     forEach(imageSetting.hotModuleSettings, (child) => {
-      fn({ data: child, parents: imageSetting })
+      fn({ data: child, type: 'hotModule', parents: imageSetting })
     })
   }
 }
@@ -32,7 +32,7 @@ const handleModule = (pageSetting, fn, parents = null) => {
     })
   }
   handleImageSetting(pageSetting.imageSetting, fn)
-  fn({ data: pageSetting, parents })
+  fn({ data: pageSetting, type: 'moduleSettings', parents })
 }
 
 export default handleModule

@@ -66,9 +66,11 @@ import { usePageSetupStore } from '@/store/pageSetupStore'
 import setItemsMap from '../../Handle/setItemsMap'
 import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 import bus from '@/utils/bus.js'
-import cloneDeepModule from '../../Handle/handleCloneModule'
+import setCopyData from '../../Handle/setCopyData'
+import { inject } from 'vue'
 
 const pageSetupStore = usePageSetupStore()
+const otherConfig = inject('otherConfig', {})
 defineProps(['detail'])
 
 //当前操作的组件
@@ -148,8 +150,14 @@ const paste = (data: { title: any; moduleSettings: any[] }) => {
     ElMessageBox.confirm(`确认粘贴吗到${data.title ?? '页面布局'}`, '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
-    }).then(() => {
-      const pageSetting = cloneDeepModule(copyData, pageSetupStore.itemsMap)
+    }).then(async () => {
+      const pageSetting = await setCopyData({
+        data: copyData,
+        otherConfig: otherConfig,
+        AloneApiList: pageSetupStore.AloneApiList,
+        itemsMap: pageSetupStore.itemsMap,
+      })
+
       if (!data.moduleSettings) {
         data.moduleSettings = []
       }

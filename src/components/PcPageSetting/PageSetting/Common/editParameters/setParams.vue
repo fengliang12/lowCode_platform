@@ -41,14 +41,14 @@
         </template>
       </el-table-column>
       <!-- 校验规则 -->
-      <el-table-column label="校验规则" min-width="400px" v-if="hideRules">
+      <el-table-column label="校验规则" min-width="400px" v-if="showRules">
         <template v-slot="scope">
           <SetRules v-model="scope.row.rules"></SetRules>
         </template>
       </el-table-column>
       <!-- 操作 -->
       <el-table-column
-        label="操作"
+        label="操作(rules)"
         :min-width="type === 'multiLevel' ? '190px' : '100px'"
       >
         <template v-slot="scope">
@@ -86,7 +86,7 @@ import SetData from '../setData/index.vue'
 import SetRules from '../setRules/index.vue'
 import { pageValueData } from '../setData/data'
 
-const props = defineProps(['modelValue', 'type', 'hideRules'])
+const props = defineProps(['modelValue', 'type', 'showRules'])
 
 /**
  * 设置id对应的Map

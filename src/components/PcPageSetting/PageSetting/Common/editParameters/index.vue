@@ -7,11 +7,11 @@
   >
     <!-- 显示apiNameslot -->
     <slot name="name"></slot>
-    <div class="flex">{{ handleApiUrl }}</div>
+    <div v-if="handleApiUrl" class="flex">{{ handleApiUrl }}</div>
     <SetParams
       v-model="_data.paramList"
       :type="_data.type"
-      :hideRules="_data.hideRules"
+      :showRules="_data.showRules"
     ></SetParams>
     <template #footer>
       <div class="dialog-footer">
@@ -40,18 +40,18 @@ const _data = reactive({
   type: '',
   paramList: [],
   apiInfo: null,
-  hideRules: true,
+  showRules: true,
 })
 
 /**
  * 对外提供的方法
  * @param {*} param0
  */
-const show = ({ params, api, type, ruleStatus = false }) => {
+const show = ({ params, api, type, ruleStatus = true }) => {
   _data.paramList = cloneDeep(params)
   _data.apiInfo = api
   _data.type = type
-  _data.hideRules = ruleStatus
+  _data.showRules = ruleStatus
   _data.dialog = true
 }
 

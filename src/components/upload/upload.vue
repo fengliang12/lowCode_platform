@@ -100,7 +100,7 @@ import { fileInfo } from './handle.js'
 import { ElMessage } from 'element-plus'
 import { floor } from 'lodash-es'
 import { checkFile } from '@/utils'
-const emit = defineEmits(['update:url', 'editBack'])
+const emit = defineEmits(['update:url', 'editBack', ''])
 const props = defineProps({
   url: {
     default: '',
@@ -318,7 +318,13 @@ const MonError = () => {}
 const MonChange = () => {}
 const MonRemove = () => {}
 
-const handleRemove = (url) => {}
+/**
+ * 删除图片
+ * @param {*}
+ */
+const handleRemove = () => {
+  emit('update:url', '')
+}
 
 const handlePictureCardPreview = (url) => {
   data.dialogImageUrl = url

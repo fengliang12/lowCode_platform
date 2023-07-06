@@ -215,11 +215,11 @@
             </template>
 
             <!-- 添加 -->
-            <el-icon class="ml10 pointer" @click.stop="handleAddEvent()"
+            <el-icon class="ml10 pointer" @click.stop="handleAddEvent(node)"
               ><CirclePlus
             /></el-icon>
             <!-- 删除 -->
-            <el-icon class="ml10 pointer" @click.stop="handleDeleteEvent(index)"
+            <el-icon class="ml10 pointer" @click.stop="handleDeleteEvent(node)"
               ><Delete
             /></el-icon>
             <!-- 添加子集 -->
@@ -338,7 +338,6 @@
 <script setup>
 import { computed, ref, reactive, nextTick } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
-import Draggable from 'vuedraggable'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { handleCopyEvents } from '../../Handle/handleCopyEvents.js'
 
@@ -394,19 +393,34 @@ const hotOperations = computed({
 /**
  * 添加事件
  */
-const handleAddEvent = () => {
-  if (
-    !hotOperations.value?.every(
-      (elem) =>
-        !!elem.operationUrl ||
-        elem.subscribeNotices.length ||
-        elem?.imageSetting?.imgUrl,
+const judgeEvent = (list) => {
+  return list.every((item) => {
+    let temp = false
+    if (item.child) {
+      temp = judgeEvent(item.child)
+    }
+    return (
+      temp &&
+      (!!item.operationUrl ||
+        item.subscribeNotices.length ||
+        item?.imageSetting?.imgUrl)
     )
-  ) {
+  })
+}
+const handleAddEvent = (node) => {
+  if (!judgeEvent(hotOperations.value)) {
     ElMessage.error('请先输入内容')
     return
   }
-  hotOperations.value.push(new PageHotOperation())
+  if (node.parent.data?.child) {
+    node.parent.data.child.push(new PageHotOperation())
+  } else {
+    node.parent.data.push(new PageHotOperation())
+  }
+  eventTreeRef.value = false
+  nextTick(() => {
+    eventTreeRef.value = true
+  })
 }
 
 /**
@@ -414,15 +428,7 @@ const handleAddEvent = () => {
  */
 const eventTreeRef = ref(true)
 const handleAddChildEvent = (item) => {
-  if (
-    item?.child &&
-    !item?.child?.every(
-      (elem) =>
-        !!elem.operationUrl ||
-        elem.subscribeNotices.length ||
-        elem?.imageSetting?.imgUrl,
-    )
-  ) {
+  if (!judgeEvent(hotOperations.value)) {
     ElMessage.error('请先输入内容')
     return
   }
@@ -430,7 +436,6 @@ const handleAddChildEvent = (item) => {
     set(item, 'child', [])
   }
   item.child.push(new PageHotOperation())
-  console.log('item', item)
   eventTreeRef.value = false
   nextTick(() => {
     eventTreeRef.value = true
@@ -564,10 +569,12 @@ const visibleChange = (e, element) => {
 const setAssociatedModule = () => {
   let { itemsMap, items } = pageSetupStore
   if (!itemsMap?.values) return []
-  let _arr = Array.from(itemsMap.values()).map((elem) => ({
-    value: elem.code,
-    label: `${elem.title ?? elem.code}`,
-  }))
+  let _arr = Array.from(itemsMap.values())
+    .map((elem) => ({
+      value: elem.code,
+      label: `${elem.title ?? elem.code}`,
+    }))
+    .filter((item) => item.value)
 
   if (items?.value) {
     let index = Array.from(itemsMap.values()).findIndex(
@@ -618,7 +625,6 @@ const animateCascader = (el) => {
 
 //初始化params
 const animateCascaderChange = (e, element) => {
-  console.log('e', e)
   if (itemRefs?.length) {
     const itemRef = itemRefs.find((item) => {
       return item.getCheckedNodes()[0].data.value === e
@@ -635,8 +641,17 @@ const animateCascaderChange = (e, element) => {
 /**
  * 删除事件
  */
-const handleDeleteEvent = (index) => {
-  hotOperations.value.splice(index, 1)
+const handleDeleteEvent = (node) => {
+  let list = node.parent.data?.child
+    ? node.parent.data?.child
+    : node.parent.data
+
+  let index = list.findIndex((item) => item.code === node.data.code)
+  list.splice(index, 1)
+  eventTreeRef.value = false
+  nextTick(() => {
+    eventTreeRef.value = true
+  })
 }
 
 /**
@@ -710,7 +725,7 @@ const showEditParameters = (element, index) => {
   } else {
     editParametersRef.value.show({
       params: element.params || [],
-      type: 'singleLayerLevel',
+      type: 'multiLevel',
     })
   }
 }

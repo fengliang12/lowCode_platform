@@ -25,7 +25,7 @@ import FormCreate from '@/components/FormCreate/index.vue'
 import { set } from 'lodash'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { formListFn } from './data'
-const itemValue = ref({})
+const itemValue = ref<any>({})
 const dialogVisible = ref(false)
 const emit = defineEmits(['confirm'])
 const pageSetupStore = usePageSetupStore()

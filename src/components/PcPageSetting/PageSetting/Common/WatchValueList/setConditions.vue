@@ -1,5 +1,4 @@
 <template>
-  <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
   <div class="flex mb10" v-for="(_item, index) in modelValue" :key="index">
     <GetPageData
       :props="{ checkStrictly: true }"
@@ -12,8 +11,8 @@
       circle
       @click.stop="handleDelete(index)"
     />
+    <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
   </div>
-  <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
 </template>
 
 <script setup lang="ts">

@@ -28,6 +28,7 @@ const cloneDeepModule = (pageSetting, itemsMap) => {
       showClose: true,
       duration: 2000,
     })
+    pageSetupStore.setModuleCode(moduleCode)
   }
   return new_pageSetting
 }
