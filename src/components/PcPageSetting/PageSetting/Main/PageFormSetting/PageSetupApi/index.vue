@@ -28,7 +28,7 @@
             @confirm="delOnceFromList(scope.row)"
           >
             <template #reference>
-              <el-button type="primary">删除</el-button>
+              <el-button type="primary" size="small">删除</el-button>
             </template>
           </el-popconfirm>
           <el-button
@@ -41,17 +41,25 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 参数编辑 -->
     <EditParameters
       ref="editParametersRef"
       @confirmParameters="editParametersChange"
     >
       <template #name>
-        <el-input v-model="formData.apiKey">
-          <template #prepend>&nbsp;apiKey:</template>
-        </el-input>
-        <el-input v-model="formData.apiName">
-          <template #prepend>&nbsp;apiName:</template>
-        </el-input>
+        <el-row :gutter="24">
+          <el-col :span="8"
+            ><el-input v-model="formData.apiKey">
+              <template #prepend>&nbsp;apiKey:</template>
+            </el-input></el-col
+          >
+          <el-col :span="8"
+            ><el-input v-model="formData.apiName">
+              <template #prepend>&nbsp;apiName:</template>
+            </el-input></el-col
+          >
+        </el-row>
       </template>
     </EditParameters>
   </div>
@@ -63,12 +71,15 @@ import { usePageSetupStore } from '@/store/pageSetupStore'
 import EditParameters from '../../../Common/editParameters/index.vue'
 import api from '@/api/axios.ts'
 
+import { ElMessage } from 'element-plus'
+
 const pageSetupStore = usePageSetupStore()
 const formData = ref({})
 
 const pageSetupId = computed(() => {
   return pageSetupStore.id
 })
+
 /**
  * apiList
  */
@@ -90,11 +101,11 @@ const cascaderRef = ref(null)
 const pageApiId = ref('')
 const addOrChange = ref('add')
 const addApiToList = () => {
-  if (!pageSetupId?.value?.id) {
+  if (!pageSetupId?.value) {
     ElMessage.error('请先保存当前编辑内容')
     return
   }
-  if (!pageApiId.value?.id) {
+  if (!pageApiId.value) {
     ElMessage.error('请先选择需要的接口')
     return
   }
@@ -147,17 +158,17 @@ const editParametersChange = (list) => {
  */
 const changeDataAndAdd = async () => {
   if (addOrChange.value === 'add') {
-    await api.pageSetupApi.setupOperationApi({
-      ...formData.value,
-      pageSetupId: pageSetupId.value,
-      apiInfoId: formData.value.id,
-    })
+    // await api.pageSetupApi.setupOperationApi({
+    //   ...formData.value,
+    //   pageSetupId: pageSetupId.value,
+    //   apiInfoId: formData.value.id,
+    // })
   } else if (addOrChange.value === 'change') {
-    await api.pageSetupApi.changeOperationApiMes({
-      ...formData.value,
-      pageSetupId: pageSetupId.value,
-      apiInfoId: formData.value.id,
-    })
+    // await api.pageSetupApi.changeOperationApiMes({
+    //   ...formData.value,
+    //   pageSetupId: pageSetupId.value,
+    //   apiInfoId: formData.value.id,
+    // })
   }
   pageSetupStore.changeAloneAPIList()
 }

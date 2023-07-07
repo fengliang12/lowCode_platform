@@ -4,7 +4,7 @@
 
 <script setup>
 import { reactive, computed } from 'vue'
-import FormCreate from '@/components/formCreate/index.vue'
+import FormCreate from '@/components/FormCreate/index.vue'
 import NavigationBar, { componentsList } from './data'
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])

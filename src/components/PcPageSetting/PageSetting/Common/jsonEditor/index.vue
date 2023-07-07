@@ -25,7 +25,7 @@ import {
   updatePageSetup,
   createPageSetup,
   delOperationApi,
-  setupOperationApi,
+  createOperationApi,
 } from '@/api/pageSetup'
 import updateApiList from '../../Handle/updateApiList'
 import { cloneDeep } from 'lodash'
@@ -41,13 +41,13 @@ const route = useRoute()
  */
 const settingDialogVisible = ref(false)
 const jsonData = ref({})
-const oldApiList = ref(null)
+let oldApiList = null
 
 const show = async (details) => {
   let pageSetting = cloneDeep(details)
   jsonData.value.pageSetting = pageSetting
   jsonData.value.apiList = pageSetupStore.AloneApiList
-  oldApiList.value = cloneDeep(pageSetupStore.AloneApiList)
+  oldApiList = cloneDeep(pageSetupStore.AloneApiList)
   settingDialogVisible.value = true
 }
 
@@ -73,14 +73,18 @@ const importPageSetting = () => {
  */
 const createPageSetting = async () => {
   const { pageSetting, apiList } = jsonData.value
-  const request = route.query.id ? updatePageSetup : createPageSetup
-
+  let request = createPageSetup
+  if (route.query.id) {
+    pageSetting.id = route.query.id
+    request = updatePageSetup
+  }
   const data = await request(pageSetting)
   const pageId = data.id
 
   // 更新时需要删除原先的api
-  if (route.query.id) {
-    const deleteReqList = oldApiList.value.map((ele) => {
+  console.log('oldApiList', oldApiList)
+  if (route.query.id && oldApiList?.length) {
+    const deleteReqList = oldApiList.map((ele) => {
       return delOperationApi(ele.id)
     })
     await Promise.all(deleteReqList)
@@ -89,13 +93,13 @@ const createPageSetting = async () => {
 
   const reqList = apiList.map((elem) => {
     elem.pageSetupId = pageId
-    return setupOperationApi(elem)
+    return createOperationApi(elem)
   })
 
   await Promise.all(reqList).then(
     async (res) => {
       ElMessage.success('导入成功')
-      await afterUpdateApi(res, data)
+      await afterUpdateApi(res, data, apiList)
       getPageDetail()
     },
     () => {
@@ -110,14 +114,13 @@ const createPageSetting = async () => {
  * @param {*} data
  * @param {*} mapApiList
  */
-const afterUpdateApi = async (res, data) => {
-  // 事件中的下拉框的取值是从store中取的所以要更新
+const afterUpdateApi = async (res, data, apiList) => {
   //不更新会导致对应不上，显示api的id
   pageSetupStore.AloneApiList = res
   const apiMapId = {}
-  if (unref(oldApiList).length) {
+  if (apiList.length) {
     res.forEach((elem, index) => {
-      apiMapId[oldApiList?.value?.[index].id] = elem.id
+      apiMapId[apiList?.[index].id] = elem.id
     })
     const newPageData = await updateApiList(data, apiMapId)
     jsonData.value.pageSetting = await updatePageSetup(newPageData)

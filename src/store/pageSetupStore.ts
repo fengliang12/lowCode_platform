@@ -46,7 +46,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       pageLimitInclude: false,
       brandList: [], //品牌列表
       timerNameList: [],
-      moduleCode:{}
+      moduleCode: {},
     }
   },
   getters,
@@ -62,7 +62,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     /**
      * 设置modeulCode
      */
-    setModuleCode(obj:any){
+    setModuleCode(obj: any) {
       this.moduleCode = obj
     },
 

@@ -40,7 +40,12 @@ import { usePageSetupStore } from '@/store/pageSetupStore'
 import { computed, ref } from 'vue'
 import PageModuleLimit from '../../../Common/pageModuleLimit/index.vue'
 const pageSetupStore = usePageSetupStore()
-const timeList = ref([])
+const timeList = computed({
+  get() {
+    return []
+  },
+  set(val) {},
+})
 
 const usePageLimit = computed({
   get() {

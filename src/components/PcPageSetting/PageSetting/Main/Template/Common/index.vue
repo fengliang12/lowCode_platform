@@ -9,7 +9,7 @@
     } ${_data.animateValue ? `${_data.animateValue}` : ''}`"
     :style="`${style};display:${data.hide ? 'none' : ''}`"
     ref="buttonRef"
-    @click="click"
+    @click="clickFn"
     @contextmenu.prevent="rightClick"
   >
     <!--复制和删除的操作弹窗 -->
@@ -198,7 +198,7 @@ const style = computed(() => {
 const self = computed(() => {
   return pageSetupStore?.items?.value?.code === props.data?.code
 })
-const click = (e) => {
+const clickFn = (e) => {
   if (!self.value) {
     pageSetupStore.setItems({
       value: props.data,

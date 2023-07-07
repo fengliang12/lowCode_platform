@@ -94,6 +94,7 @@ const pageSettingRef = ref<InstanceType<typeof PageSetting> | null>(null)
 const save = async () => {
   if (!pageSettingRef?.value) return
   const res = await pageSettingRef.value.save()
+
   if (!res) return
 
   //更新还是创建

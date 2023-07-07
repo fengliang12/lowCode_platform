@@ -341,7 +341,7 @@ const setPageData = ({
     opt: 'add',
   })
 
-  // props.detail.moduleSettings = _data.formData
+  props.detail.moduleSettings = moduleSettings
 
   // 刷新el-tree
   bus.emit('refreshElTree')
@@ -389,7 +389,7 @@ const save = async () => {
     return false
   }
 
-  // pageForm.moduleSettings = _data.formData
+  pageForm.moduleSettings = _data.formData
   const req = cloneDeep(pageForm)
   return cloneDeep(req)
 }
