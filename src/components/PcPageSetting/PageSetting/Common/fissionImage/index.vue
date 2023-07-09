@@ -47,8 +47,13 @@
     <!-- 图片配置 -->
     <el-form-item
       :label-width="formLabelWidth"
-      label="显示图片配置"
-      v-if="['img'].includes(modelValue.multimediaType) || showPageBoxSetting"
+      :label="
+        modelValue.multimediaType === 'img' ? '显示图片配置' : '显示视频配置'
+      "
+      v-if="
+        ['img', 'video'].includes(modelValue.multimediaType) ||
+        showPageBoxSetting
+      "
     >
       <el-switch
         v-model="showImageConfig"
@@ -56,18 +61,9 @@
       ></el-switch>
     </el-form-item>
 
-    <el-form-item
-      :label-width="formLabelWidth"
-      label="显示视频配置"
-      v-if="['video'].includes(modelValue.multimediaType)"
-    >
-      <el-switch v-model="showImageConfig" @change="showImageConfigChange">
-      </el-switch>
-    </el-form-item>
-
     <!-- 表单 -->
     <FormCreate
-      v-if="showImageConfig"
+      v-if="showImageConfig && modelValue.multimediaType === 'img'"
       v-model="modelValue.imageConfig"
       :formList="imageConfigFormList"
     ></FormCreate>
@@ -84,7 +80,7 @@
       v-if="showPageBoxSetting"
       v-model="modelValue.borderDistance"
       :position="modelValue.position"
-      :showSettingList="$attrs.showSettingList"
+      :showSettingList="showSettingList"
       :ratio="modelValue.ratio"
       :range="{
         width: 750,
@@ -102,7 +98,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // 还欠缺图片配置，视频配置，播放配置等功能
 import { inject, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -116,15 +112,20 @@ import {
   videoConfigFormList,
 } from './data'
 
-const emit = defineEmits(['success'])
-const props = defineProps(['modelValue', 'showPageBoxSetting'])
 const formLabelWidth = inject('formLabelWidth', 110)
+
+const emit = defineEmits(['success'])
+const props = defineProps([
+  'modelValue',
+  'showPageBoxSetting',
+  'showSettingList',
+])
 
 /**
  * 文件上传成功后的回调
  * @param {*} e
  */
-const uploadSuccessCallback = (e) => {
+const uploadSuccessCallback = (e: any) => {
   handleUploadSuccessInfo(props.modelValue, e, props.showPageBoxSetting)
   emit('success', e)
 }
@@ -154,7 +155,7 @@ watch(
     immediate: true,
   },
 )
-const showImageConfigChange = (val) => {
+const showImageConfigChange = (val: any) => {
   props.modelValue.imageConfig = val ? imageConfigData : null
 }
 </script>

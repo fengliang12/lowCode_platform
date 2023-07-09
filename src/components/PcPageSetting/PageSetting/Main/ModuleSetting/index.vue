@@ -1,10 +1,5 @@
 <template>
-  <el-tabs
-    v-if="selectedItem"
-    v-model="activeName"
-    class="demo-tabs"
-    @tab-click="handleClick"
-  >
+  <el-tabs v-if="selectedItem" v-model="activeName" class="demo-tabs">
     <!-- 属性 -->
     <el-tab-pane label="属性" name="attribute">
       <Attribute v-model="selectedItem"></Attribute>
@@ -291,7 +286,7 @@ const styleSettingProps = computed(() => {
       selectedItem.value.moduleType === 'common' ||
       selectedItem.value.moduleType === 'qrCode',
     bg:
-      selectedItem.value.moduleType !== 'progress' ||
+      selectedItem.value.moduleType !== 'progress' &&
       selectedItem.value.moduleType !== 'scrollView',
     flex: selectedItem.value.modelValue !== 'progress',
     ratio: selectedItem.value?.imageSetting?.ratio || 0,
@@ -376,8 +371,6 @@ const handleCarouselChild = () => {
 const setOptionUploadImage = () => {
   optionUploadImage.value = !optionUploadImage.value
 }
-
-const handleClick = () => {}
 </script>
 <style scoped>
 :deep(.el-tabs__content) {

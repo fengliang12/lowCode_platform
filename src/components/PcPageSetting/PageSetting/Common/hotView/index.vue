@@ -225,12 +225,14 @@ const imageLoaded = () => {
       var x2 = e.clientX - domRect.value.left + scrollLeft
       var y2 = e.clientY - domRect.value.top + scrollTop
       let left = ~~(x2 > x1 ? x1 : x2)
-      oDiv.style.left = left + 'px'
       let top = ~~(y2 > y1 ? y1 : y2)
-      oDiv.style.top = top + 'px'
       let width = Math.abs(x2 - x1)
-      oDiv.style.width = width + 'px'
       let height = Math.abs(y2 - y1)
+      if (!check({ top, left, width, height })) return
+
+      oDiv.style.left = left + 'px'
+      oDiv.style.top = top + 'px'
+      oDiv.style.width = width + 'px'
       oDiv.style.height = height + 'px'
       oDiv.className = 'hotViewDiv'
       pos = {

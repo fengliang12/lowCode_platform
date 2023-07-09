@@ -44,7 +44,7 @@ import EditParameters from '../../../Common/editParameters/index.vue'
 import PageModuleLimit from '../../../Common/pageModuleLimit/index.vue'
 import { reactive, ref } from 'vue'
 import { computed } from 'vue'
-import ConditionsForExecution from '../../../Common/conditionsForExecution/index.vue'
+import ConditionsForExecution from '../../../Common/ConditionsForExecution/index.vue'
 
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps(['modelValue'])
@@ -115,6 +115,13 @@ const showEditParameters = () => {
 }
 
 /**
+ * 页面参数回调
+ */
+const editParametersChange = (paramList) => {
+  props.modelValue.params = paramList
+}
+
+/**
  * 点击显示条件编辑
  */
 const conditionsForExecutionRef = ref(null)
@@ -127,13 +134,6 @@ const showConditionsForExecution = () => {
  */
 const conditionsForExecutionChange = (conditions) => {
   valueData.value.conditionsForExecution = conditions
-}
-
-/**
- * 页面参数回调
- */
-const editParametersChange = (paramList) => {
-  props.modelValue.params = paramList
 }
 </script>
 

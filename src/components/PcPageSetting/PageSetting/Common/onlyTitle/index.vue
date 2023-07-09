@@ -1,6 +1,6 @@
 <template>
   <div class="title_box">
-    <!-- <component style="width: 20px" :is="icon"></component> -->
+    <component style="width: 20px" :is="icon"></component>
     <span class="title"> {{ title }}</span>
   </div>
 </template>
