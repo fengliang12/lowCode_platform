@@ -2,8 +2,9 @@ import IndexDBWrapper from 'indexdbwrapper'
 
 const dbName = 'db'
 const version = 1
-export const storeName = 'pageHistory'
-export default new IndexDBWrapper(dbName, version, {
+const storeName = 'pageHistory'
+
+const indexedDB = new IndexDBWrapper(dbName, version, {
   onupgradeneeded: (event: any) => {
     const db = event.target.result // 数据库对象
     if (!db.objectStoreNames.contains(storeName)) {
@@ -12,3 +13,42 @@ export default new IndexDBWrapper(dbName, version, {
     }
   },
 })
+
+/**
+ * 将每一次操作成功的数据备份到indexDB中
+ */
+const saveIndexedDB = async (pageList: any) => {
+  const id = `syncBrandComponentHistory_${pageList[0].id}`
+  const history = await indexedDB.get(storeName, id)
+  if (!history) {
+    indexedDB.add(storeName, {
+      id: id,
+      value: [
+        {
+          time: new Date(),
+          data: pageList,
+        },
+      ],
+    })
+  } else {
+    const pageString = JSON.stringify(pageList)
+    const saveTemp = history.value
+    if (
+      pageString != JSON.stringify(saveTemp[saveTemp.length - 1].data || {})
+    ) {
+      saveTemp.push({
+        time: new Date(),
+        data: pageList,
+      })
+      if (saveTemp.length > 10) {
+        saveTemp.shift()
+      }
+      indexedDB.put(storeName, {
+        id: id,
+        value: saveTemp,
+      })
+    }
+  }
+}
+
+export default saveIndexedDB

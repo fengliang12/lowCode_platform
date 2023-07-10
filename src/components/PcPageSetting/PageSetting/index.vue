@@ -1,6 +1,6 @@
 <template>
   <div class="draggable">
-    <!-- 左边移动区域 -->
+    <!-- 左边移动区域 ---------------------------------------------->
     <div class="left">
       <el-tabs tab-position="left">
         <el-tab-pane label="组件">
@@ -26,11 +26,10 @@
         <el-tab-pane label="已选组件">
           <TreeModule ref="treeModuleRef" :detail="[detail]"></TreeModule>
         </el-tab-pane>
-        <el-tab-pane label="全局组件"> 暂无数据 </el-tab-pane>
       </el-tabs>
     </div>
 
-    <!-- 右边移动区域 -->
+    <!-- 右边移动区域 ---------------------------------------------->
     <div class="right">
       <Draggable
         :list="_data.formData"
@@ -55,7 +54,7 @@
       </Draggable>
     </div>
 
-    <!-- 编辑区 -->
+    <!-- 编辑区 --------------------------------------------------->
     <div class="tab_box">
       <el-button
         v-show="_data.tabBoxSetting === 'mode'"
@@ -248,7 +247,7 @@ const leftEnd = (e: { newIndex: string | number }) => {
   if (moveCheck.value) return
   const data = _data.formData[e.newIndex]
   if (!data) return
-  setPageData({
+  handlePageData({
     index: e.newIndex,
     moduleSettings: _data.formData,
     moduleType: data.moduleType,
@@ -268,7 +267,7 @@ const clickLeft = (moduleType: string | number) => {
     !componentsMapping[pageSetupStore.items?.value?.moduleType]?.isParent
   ) {
     // 没有选中的组件或者当前选中组件不是父类组件
-    setPageData({
+    handlePageData({
       index: _data.formData.length,
       moduleSettings: _data.formData,
       moduleType: moduleType,
@@ -290,7 +289,7 @@ const clickLeft = (moduleType: string | number) => {
           set(pageSetupStore.items?.value, 'moduleSettings', [])
         }
         const { width, height } = pageSetupStore?.items?.value?.pageStyle || {}
-        setPageData({
+        handlePageData({
           index: pageSetupStore.items?.value?.moduleSettings?.length,
           moduleSettings: pageSetupStore.items?.value.moduleSettings,
           moduleType: moduleType,
@@ -300,7 +299,7 @@ const clickLeft = (moduleType: string | number) => {
         })
       })
       .catch(() => {
-        setPageData({
+        handlePageData({
           index: _data.formData.length,
           moduleSettings: _data.formData,
           moduleType: moduleType,
@@ -315,7 +314,7 @@ const clickLeft = (moduleType: string | number) => {
  * 设置页面上显示的值
  */
 const treeModuleRef = ref(null)
-const setPageData = ({
+const handlePageData = ({
   index,
   moduleSettings,
   moduleType,

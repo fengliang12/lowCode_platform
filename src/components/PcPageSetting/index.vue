@@ -13,7 +13,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import bus from '@/utils/bus'
-import indexedDB, { storeName } from './utils/indexedDB'
+import saveIndexedDB from './utils/indexedDB'
 import {
   createPageSetup,
   updatePageSetup,
@@ -93,8 +93,8 @@ const savePageSetting = () => {
 const pageSettingRef = ref<InstanceType<typeof PageSetting> | null>(null)
 const save = async () => {
   if (!pageSettingRef?.value) return
-  const res = await pageSettingRef.value.save()
 
+  const res = await pageSettingRef.value.save()
   if (!res) return
 
   //更新还是创建
@@ -104,8 +104,7 @@ const save = async () => {
   loading.value = false
   let pageSetup = result.data.data
 
-  const msg = res.id ? '修改成功' : '创建成功'
-  ElMessage.success(msg)
+  ElMessage.success(res.id ? '修改成功' : '创建成功')
 
   if (!res.id) {
     //将当前新增加的页面添加到pageList中
@@ -114,6 +113,7 @@ const save = async () => {
       title: pageSetup.title,
     })
     pageSetupStore.id = pageSetup.id
+    res.id = pageSetup.id
   }
 
   // //刷新当前编辑页面
@@ -127,43 +127,6 @@ const save = async () => {
 }
 
 /**
- * 将每一次操作成功的数据备份到indexDB中
- */
-const saveIndexedDB = async (pageList: any) => {
-  let id = `syncBrandComponentHistory_${pageSetupStore.id}`
-  let history = await indexedDB.get(storeName, id)
-  if (!history) {
-    indexedDB.add(storeName, {
-      id: id,
-      value: [
-        {
-          time: new Date(),
-          data: pageList,
-        },
-      ],
-    })
-  } else {
-    const pageString = JSON.stringify(pageList)
-    const saveTemp = history.value
-    if (
-      pageString != JSON.stringify(saveTemp[saveTemp.length - 1].data || {})
-    ) {
-      saveTemp.push({
-        time: new Date(),
-        data: pageList,
-      })
-      if (saveTemp.length > 10) {
-        saveTemp.shift()
-      }
-      indexedDB.put(storeName, {
-        id: id,
-        value: saveTemp,
-      })
-    }
-  }
-}
-
-/**
  * 返回上一层
  */
 const back = () => {
@@ -172,6 +135,7 @@ const back = () => {
 
 provide('getPageDetail', getPageDetail)
 </script>
+
 <style lang="scss" scoped>
 .content {
   height: calc(100vh - 180px);
