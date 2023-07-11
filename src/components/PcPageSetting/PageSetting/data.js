@@ -97,3 +97,34 @@ export const setModule = ({ moduleType, width = 750, height = 200 } = {}) => {
   })
   return data
 }
+
+/**
+ * 数据初始化，如果数据是为null则赋初始数据，如果数据是object进行递归
+ * @param {*} data
+ */
+export const initResData = (initList, data) => {
+  data.forEach((elem) => {
+    const module = initList.find((item) => item.moduleType === elem.moduleType)
+    if (module) {
+      const setKey = (elem, module) => {
+        Object.keys(elem).forEach((item) => {
+          if (
+            elem[item] === null &&
+            module[item] !== null &&
+            module[item] !== undefined
+          ) {
+            elem[item] = cloneDeep(module[item])
+          } else if (
+            typeof elem[item] === 'object' &&
+            elem[item] !== null &&
+            module[item]
+          ) {
+            setKey(elem[item], module[item])
+          }
+        })
+      }
+      setKey(elem, module)
+    }
+  })
+  return data
+}

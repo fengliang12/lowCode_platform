@@ -75,6 +75,11 @@ defineProps(['detail'])
 
 //当前操作的组件
 const currentNodeKey = computed(() => {
+  console.log(
+    'pageSetupStore.items?.value?.code',
+    pageSetupStore.items?.value?.code,
+  )
+
   return pageSetupStore.items?.value?.code || ''
 })
 
