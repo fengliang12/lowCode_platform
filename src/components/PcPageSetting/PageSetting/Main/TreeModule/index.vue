@@ -59,28 +59,33 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, computed } from 'vue'
+import { nextTick, ref, computed, watch } from 'vue'
 import componentsMapping from '../../CommonData/componentsMapping'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElTree } from 'element-plus'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import setItemsMap from '../../Handle/setItemsMap'
 import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 import bus from '@/utils/bus.js'
 import setCopyData from '../../Handle/setCopyData'
 import { inject } from 'vue'
+import { onUpdated } from 'vue'
 
 const pageSetupStore = usePageSetupStore()
 const otherConfig = inject('otherConfig', {})
 defineProps(['detail'])
+const refresh = ref(true)
+const treeModuleRef = ref<InstanceType<typeof ElTree>>()
 
-//当前操作的组件
+//当前操作的组件的key
 const currentNodeKey = computed(() => {
-  console.log(
-    'pageSetupStore.items?.value?.code',
-    pageSetupStore.items?.value?.code,
-  )
+  return pageSetupStore.items?.value?.code || null
+})
 
-  return pageSetupStore.items?.value?.code || ''
+onUpdated(() => {
+  nextTick(() => {
+    if (!treeModuleRef.value) return
+    treeModuleRef.value.setCurrentKey(currentNodeKey.value)
+  })
 })
 
 /**
@@ -127,7 +132,6 @@ const nodeDrop = (
 /**
  * 刷新el-tree
  */
-const refresh = ref(true)
 const refreshElTree = () => {
   refresh.value = false
   nextTick(() => {
@@ -146,12 +150,14 @@ const setItemStatus = (data: { hide: boolean }) => {
  * 黏贴
  */
 const paste = (data: { title: any; moduleSettings: any[] }) => {
+  //黏贴板
   const Promise = navigator.clipboard.readText()
   Promise.then((res) => {
     const copyData = JSON.parse(res)
     if (!copyData.code || !copyData.moduleType) {
       return ElMessage.error('格式化数据失败')
     }
+
     ElMessageBox.confirm(`确认粘贴吗到${data.title ?? '页面布局'}`, '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
