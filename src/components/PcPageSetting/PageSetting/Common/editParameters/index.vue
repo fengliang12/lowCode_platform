@@ -22,7 +22,7 @@
   </el-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, reactive } from 'vue'
 import SetParams from './setParams.vue'
 import { cloneDeep } from 'lodash'
@@ -35,7 +35,7 @@ const pageSetupStore = usePageSetupStore()
 /**
  * 初始化数据
  */
-const _data = reactive({
+const _data = reactive<any>({
   dialog: false,
   type: '',
   paramList: [],
@@ -47,7 +47,7 @@ const _data = reactive({
  * 对外提供的方法
  * @param {*} param0
  */
-const show = ({ params, api, type, ruleStatus = true }) => {
+const show = ({ params, api, type, ruleStatus = true }: any) => {
   _data.paramList = cloneDeep(params)
   _data.apiInfo = api
   _data.type = type
@@ -71,7 +71,7 @@ const handleApiUrl = computed(() => {
  */
 const confirm = () => {
   let check = true
-  _data.paramList.forEach((param) => {
+  _data.paramList.forEach((param: any) => {
     if (!checkFn(param)) {
       check = false
     }
@@ -87,7 +87,7 @@ const confirm = () => {
 /**
  * 检查参数是否符合规范
  */
-const checkFn = (param) => {
+const checkFn = (param: any) => {
   const { key, pageValue, child } = param
   if (!String(key) || (!pageValue && !child)) {
     return false
@@ -96,7 +96,7 @@ const checkFn = (param) => {
     return false
   }
   if (child && child.length) {
-    return child.every((elem) => checkFn(elem))
+    return child.every((elem: any) => checkFn(elem))
   }
   return true
 }

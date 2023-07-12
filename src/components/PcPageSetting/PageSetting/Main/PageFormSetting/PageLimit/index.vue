@@ -9,7 +9,7 @@
           inactive-text="否"
         ></el-switch>
       </el-form-item>
-      <template>
+      <template v-if="usePageLimit">
         <el-form-item label="筛选关系">
           <el-switch
             v-model="pageLimitInclude"
@@ -19,16 +19,8 @@
         </el-form-item>
         <el-button>重置条件</el-button>
       </template>
+
       <el-divider>限制条件</el-divider>
-      <el-form-item>
-        <el-date-picker
-          v-model="timeList"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始时间"
-          end-placeholder="结束时间"
-        ></el-date-picker>
-      </el-form-item>
       <PageModuleLimit v-model="pageLimit"></PageModuleLimit>
       <el-button type="primary">筛选</el-button>
     </el-form>
@@ -40,13 +32,10 @@ import { usePageSetupStore } from '@/store/pageSetupStore'
 import { computed, ref } from 'vue'
 import PageModuleLimit from '../../../Common/pageModuleLimit/index.vue'
 const pageSetupStore = usePageSetupStore()
-const timeList = computed({
-  get() {
-    return []
-  },
-  set(val) {},
-})
 
+/**
+ * 使用条件限制
+ */
 const usePageLimit = computed({
   get() {
     return pageSetupStore.usePageLimit
@@ -56,6 +45,9 @@ const usePageLimit = computed({
   },
 })
 
+/**
+ * 筛选关系
+ */
 const pageLimitInclude = computed({
   get() {
     return pageSetupStore.pageLimitInclude
@@ -65,6 +57,9 @@ const pageLimitInclude = computed({
   },
 })
 
+/**
+ * 限制条件
+ */
 const pageLimit = computed({
   get() {
     return pageSetupStore.pageLimit

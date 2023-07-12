@@ -41,6 +41,11 @@ export const componentsList = () => {
       field: 'title',
       type: 'el-input',
       title: '标题',
+      props: {
+        'input-style': {
+          width: '200px',
+        },
+      },
     },
     {
       field: 'titleColor',
@@ -99,7 +104,7 @@ export const componentsList = () => {
     },
     {
       field: 'backgroundColorOpacityDistance',
-      type: 'el-input',
+      type: 'el-input-number',
       title: '滚动渐变距离',
     },
   ]

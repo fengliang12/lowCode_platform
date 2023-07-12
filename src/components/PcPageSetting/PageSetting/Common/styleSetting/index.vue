@@ -58,7 +58,6 @@ const styleData = computed({
 /**
  * 获取动态表单配置列表
  */
-
 const formItemList = computed(() => {
   let arr: any[] = []
   let componentsList = formList({ ratio: props.ratio, value: props.modelValue })

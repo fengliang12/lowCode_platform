@@ -162,7 +162,7 @@ const paste = (data: { title: any; moduleSettings: any[] }) => {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
     }).then(async () => {
-      const pageSetting = await setCopyData({
+      const moduleSetting = await setCopyData({
         data: copyData,
         otherConfig: otherConfig,
         AloneApiList: pageSetupStore.AloneApiList,
@@ -172,7 +172,7 @@ const paste = (data: { title: any; moduleSettings: any[] }) => {
       if (!data.moduleSettings) {
         data.moduleSettings = []
       }
-      data.moduleSettings.push(pageSetting)
+      data.moduleSettings.push(moduleSetting)
       refreshElTree()
     })
   }).catch((error) => {

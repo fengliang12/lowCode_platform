@@ -2,11 +2,11 @@
   <div>
     <div class="flex">
       <el-cascader
-        v-model="pageApiId"
+        ref="cascaderRef"
+        v-model="_data.pageApiId"
         :options="apiList"
         :props="{ label: 'apiName', value: 'id' }"
         clearable
-        ref="cascaderRef"
         :show-all-levels="false"
       ></el-cascader>
       <!-- 新增按钮  -->
@@ -50,12 +50,12 @@
       <template #name>
         <el-row :gutter="24">
           <el-col :span="8"
-            ><el-input v-model="formData.apiKey">
+            ><el-input v-model="_data.formData.apiKey">
               <template #prepend>&nbsp;apiKey:</template>
             </el-input></el-col
           >
           <el-col :span="8"
-            ><el-input v-model="formData.apiName">
+            ><el-input v-model="_data.formData.apiName">
               <template #prepend>&nbsp;apiName:</template>
             </el-input></el-col
           >
@@ -65,19 +65,19 @@
   </div>
 </template>
 
-<script setup>
-import { computed, ref } from 'vue'
+<script setup lang="ts">
+import { computed, ref, reactive } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import EditParameters from '../../../Common/editParameters/index.vue'
-import api from '@/api/axios.ts'
-
 import { ElMessage } from 'element-plus'
 
-const pageSetupStore = usePageSetupStore()
-const formData = ref({})
+import {} from 'vue'
 
-const pageSetupId = computed(() => {
-  return pageSetupStore.id
+const pageSetupStore = usePageSetupStore()
+const _data = reactive<any>({
+  pageApiId: '',
+  formData: null,
+  type: 'add',
 })
 
 /**
@@ -97,37 +97,38 @@ const AloneApiList = computed(() => {
 /**
  * 新增api
  */
-const cascaderRef = ref(null)
-const pageApiId = ref('')
-const addOrChange = ref('add')
+const cascaderRef = ref<any>(null)
 const addApiToList = () => {
-  if (!pageSetupId?.value) {
+  if (!pageSetupStore?.id) {
     ElMessage.error('请先保存当前编辑内容')
     return
   }
-  if (!pageApiId.value) {
+  if (!_data?._data.pageApiId) {
     ElMessage.error('请先选择需要的接口')
     return
   }
-  let data = cascaderRef.value.getCheckedNodes(true)[0]
+  let data = cascaderRef.value?.getCheckedNodes()[0]
+
   clickWriteApi(data, 'add')
 }
 
 /**
  * 编辑api
  */
-const editParametersRef = ref(null)
-const clickWriteApi = (row, type) => {
-  formData.value = row
-  addOrChange.value = type
-  let item = pageSetupStore.AloneApiList.filter((item) => item.id === row.id)[0]
-  let newOnce = {}
+const editParametersRef = ref<InstanceType<typeof EditParameters> | null>(null)
+const clickWriteApi = (row: any, type: string) => {
+  _data.formData = row
+  _data.type = type
+  let item = pageSetupStore.AloneApiList.filter(
+    (item: any) => item.id === row.id,
+  )[0]
+  let newOnce: any = {}
   if (!item) {
-    formData.value = newOnce = { ...row }
+    _data.formData = newOnce = { ...row }
   } else {
-    formData.value = newOnce = { ...item }
+    _data.formData = newOnce = { ...item }
   }
-  editParametersRef.value.show({
+  editParametersRef.value?.show({
     params: newOnce.params ? newOnce.params : [],
     type: 'multiLevel',
     apiInfo: {
@@ -140,34 +141,27 @@ const clickWriteApi = (row, type) => {
 /**
  * 删除api
  */
-const delOnceFromList = async (row) => {
-  await api.pageSetupApi.delOperationApi(row.id)
+const delOnceFromList = async (row: any) => {
+  // await delOperationApi(row.id)
   pageSetupStore.changeAloneAPIList()
 }
 
 /**
- * 回调函数
+ * 参数回调函数
  */
-const editParametersChange = (list) => {
-  formData.value.params = list
-  changeDataAndAdd()
-}
-
-/**
- * 接口调用
- */
-const changeDataAndAdd = async () => {
-  if (addOrChange.value === 'add') {
-    // await api.pageSetupApi.setupOperationApi({
-    //   ...formData.value,
-    //   pageSetupId: pageSetupId.value,
-    //   apiInfoId: formData.value.id,
+const editParametersChange = async (list: any) => {
+  _data.formData.params = list
+  if (_data.type === 'add') {
+    // await setupOperationApi({
+    //   ..._data.formData,
+    //   pageSetupId: pageSetupStore.id,
+    //   apiInfoId: _data.formData.id,
     // })
-  } else if (addOrChange.value === 'change') {
-    // await api.pageSetupApi.changeOperationApiMes({
-    //   ...formData.value,
-    //   pageSetupId: pageSetupId.value,
-    //   apiInfoId: formData.value.id,
+  } else if (_data.type === 'change') {
+    // await changeOperationApiMes({
+    //   ..._data.formData,
+    //   pageSetupId: pageSetupStore.id,
+    //   apiInfoId: _data.formData.id,
     // })
   }
   pageSetupStore.changeAloneAPIList()

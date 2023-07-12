@@ -126,6 +126,8 @@
         />
       </el-form-item>
     </el-form>
+
+    <!-- 参数弹窗 -->
     <EditParameters
       ref="editParameters"
       @confirmParameters="editParametersChange"
@@ -182,7 +184,7 @@ const showEditParameters = (type: string) => {
 }
 
 /**
- * 获取页面参数编辑的结果
+ * 获取页面参数和分享编辑的结果
  */
 const editParametersChange = (paramList: never[]) => {
   if (!paramList) paramList = []
@@ -193,6 +195,9 @@ const editParametersChange = (paramList: never[]) => {
   }
 }
 
+/**
+ * 表单校验
+ */
 const form = ref<FormInstance | null>(null)
 const emit = defineEmits(['update:activeName'])
 const next = async ({ check = false, activeName = 'counter' }) => {

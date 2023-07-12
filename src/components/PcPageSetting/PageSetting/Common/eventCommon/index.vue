@@ -52,6 +52,7 @@
       </el-divider>
       <SelectJumpType v-model="item.hotOperations" />
     </div>
+
     <!-- 添加事件 -->
     <div v-if="addTriggerTypeList" class="flex">
       <el-select v-model="newTriggerType" placeholder="请选择">
@@ -64,6 +65,7 @@
       </el-select>
       <el-button class="ml10" @click="addTriggerType">新增触发类型</el-button>
     </div>
+
     <!-- 编辑数据监听参数 -->
     <WatchValueList @confirm="watchValueListChange" ref="watchValueListRef" />
   </el-form>

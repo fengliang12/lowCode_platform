@@ -82,7 +82,6 @@ const setIdMapParent = (
   parentIndex = 0,
   parent = props.modelValue,
 ) => {
-  list.id = parentIndex
   list.forEach((elem, index) => {
     let id = parentIndex + (index + 1)
     elem.id = id

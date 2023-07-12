@@ -10,10 +10,9 @@ const setCopyData = async ({
   otherConfig,
   itemsMap,
 }: any) => {
-  const pageSetupStore = usePageSetupStore()
   // api列表数据处理
-  const apiList = data?.customApiList?.filter(Boolean) || []
   const mapApi = {}
+  const apiList = data?.customApiList?.filter(Boolean) || []
   const reqList: any = []
   apiList.forEach((item: any) => {
     let has = false
@@ -47,14 +46,15 @@ const setCopyData = async ({
       mapApi[old.id] = reqListRes[index].id
     })
   }
+
   //copy组件
-  const cloneData = await cloneDeepModule(data, itemsMap)
+  const {new_pageSetting,codeMap} = await cloneDeepModule(data, itemsMap)
 
   return updateModuleCode(
     //clone数据
-    cloneData,
+    new_pageSetting,
     //新老code映射
-    pageSetupStore.moduleCode,
+    codeMap,
     //新老api映射
     mapApi,
   )

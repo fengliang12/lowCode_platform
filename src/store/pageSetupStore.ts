@@ -46,7 +46,6 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
       pageLimitInclude: false,
       brandList: [], //品牌列表
       timerNameList: [],
-      moduleCode: {},
     }
   },
   getters,
@@ -57,13 +56,6 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      */
     setPageId(id: string) {
       this.id = id
-    },
-
-    /**
-     * 设置modeulCode
-     */
-    setModuleCode(obj: any) {
-      this.moduleCode = obj
     },
 
     /**
@@ -94,7 +86,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     },
 
     /**
-     * 获取页面类型
+     * 获取页面类型,这里发送请求
      */
     async getPageSettingConstant() {
       this.pageSettingConstant = {

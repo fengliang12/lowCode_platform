@@ -29,16 +29,14 @@ export const initPageData = () => {
     id: null, // 前端输入编号
     title: null, //标题
     active: true, //是否启用
-    backgroundColor: null, //背景颜色
-    backgroundImg: null, //背景图片URL
-    childPageIds: [], //子页面配置主键集合
-    customizeImages: [], // 自定义图片
     desc: null, // 备注 ,
     from: null, // 起始时间
-    homePage: false, //是否是首页
-    moduleSettings: [], //页面组件配置
     to: null, // 截至时间
+    homePage: false, //是否是首页
     type: null, //页面设置类型 会员中心 member_center; 互动礼遇 interactive; 种草社区 community; 积分商城 points_mall
+    priority: 0, //页面优先级越大约再上
+    params: [], //页面额外参数
+
     shareCopy: null, // 分享文案
     shareFlag: false, //是否分享
     shareImag: null, //分享图片
@@ -48,12 +46,19 @@ export const initPageData = () => {
       title: null, //分享标题
       shareParams: null, //分享链接后面携带的参数
     },
-    customHeader: false, //是否为自定义顶部导航 ,
-    events: [new EventsData({ triggerType: 'onLoad' })], //操作事件
-    pageStyle: new styleSettingData({ box: false, flex: false }), //页面样式配置
+
     pageHeight: null, //页面高度
-    priority: 0, //页面优先级越大约再上
-    navigationBar: new NavigationBar(),
-    params: [], //页面额外参数
+    customHeader: false, //是否为自定义顶部导航 ,
+    navigationBar: new NavigationBar(), //导航栏
+
+    pageStyle: new styleSettingData({ box: false, flex: false }), //页面样式配置
+    events: [new EventsData({ triggerType: 'onLoad' })], //操作事件
+    moduleSettings: [], //页面组件集合
+
+    childPageIds: [], //子页面配置主键集合
+
+    // backgroundColor: null, //背景颜色
+    // backgroundImg: null, //背景图片URL
+    // customizeImages: [], // 自定义图片
   }
 }

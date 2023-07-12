@@ -4,8 +4,8 @@ export class styleSettingData {
     width = 750,
     height = 200,
     position = 'relative',
-    left = 0,
-    top = 0,
+    left,
+    top,
     background = true,
     font = true,
     flex = true,
@@ -37,7 +37,7 @@ export class styleSettingData {
       this.position = position
       this.left = left
       this.top = top
-      this.zIndex = 0
+      this.zIndex = null
       this.right = null
       this.bottom = null
       this.width = width
@@ -102,7 +102,7 @@ export const formList = ({ ratio = 1, value }) => {
       },
       {
         field: 'left',
-        type: 'el-input',
+        type: 'el-input-number',
         title: '左距',
         props: {
           clearable: true,
@@ -112,7 +112,7 @@ export const formList = ({ ratio = 1, value }) => {
       },
       {
         field: 'top',
-        type: 'el-input',
+        type: 'el-input-number',
         title: '上距',
         props: {
           clearable: true,
@@ -122,7 +122,7 @@ export const formList = ({ ratio = 1, value }) => {
       },
       {
         field: 'right',
-        type: 'el-input',
+        type: 'el-input-number',
         title: '右距',
         props: {
           clearable: true,
@@ -131,7 +131,7 @@ export const formList = ({ ratio = 1, value }) => {
       },
       {
         field: 'bottom',
-        type: 'el-input',
+        type: 'el-input-number',
         title: '底距',
         props: {
           clearable: true,
@@ -178,7 +178,7 @@ export const formList = ({ ratio = 1, value }) => {
         type: 'el-color-picker',
         title: '背景颜色',
         props: {
-          'show-alpha': true,
+          'show-alpha': true, //是否支持透明度选择
         },
       },
       {
@@ -215,6 +215,11 @@ export const formList = ({ ratio = 1, value }) => {
         field: 'backgroundSize',
         type: 'el-input',
         title: '背景大小',
+        props: {
+          'input-style': {
+            width: '200px',
+          },
+        },
       },
     ],
     //文字配置
@@ -353,7 +358,7 @@ export const formList = ({ ratio = 1, value }) => {
     ],
     customList: [
       {
-        divider: '自定义',
+        divider: '自定义样式--HH为顶部Bar高度',
         field: 'custom',
         type: 'el-input',
         title: '自定义',
@@ -361,7 +366,7 @@ export const formList = ({ ratio = 1, value }) => {
         props: {
           type: 'textarea',
           resize: 'both',
-          rows: 1,
+          rows: 2,
         },
       },
     ],

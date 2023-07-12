@@ -1,6 +1,6 @@
 import { random } from 'lodash-es'
 
-export const getModuleCode = (type, codeMap = new Set()) => {
+export const getModuleCode = (type, codeMap = new Map()) => {
   let code = `${type}_${random(10000, false)}`
   //存在重新生成
   if (codeMap.has(code)) {

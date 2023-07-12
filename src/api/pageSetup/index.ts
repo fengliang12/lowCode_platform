@@ -105,7 +105,7 @@ export const getOperationApi: Api.PageSetup.getAllPage.Func = () => {
 }
 
 /**
- *获取总的api
+ *获取api详情
  * @returns
  */
 export const getOperationApiDetail = (id: any) => {

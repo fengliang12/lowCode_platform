@@ -61,7 +61,7 @@ import NavigationBar from './NavigationBar/index.vue'
 import PageList from './PageList/index.vue'
 import PageLimit from './PageLimit/index.vue'
 import PageSetupApi from './PageSetupApi/index.vue'
-import { handlePageData } from '../../Handle/handlePageData'
+import { handleInitPageData } from '../../Handle/handleInitPageData'
 
 const pageSetupStore = usePageSetupStore()
 const props = defineProps(['detail'])
@@ -70,7 +70,7 @@ const pageFormData = ref()
 watch(
   () => props.detail,
   (val) => {
-    pageFormData.value = handlePageData(val, initPageData())
+    pageFormData.value = handleInitPageData(val, initPageData())
     pageSetupStore.setPageNewParams(val?.params || [])
   },
   {

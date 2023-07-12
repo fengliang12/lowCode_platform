@@ -1,9 +1,15 @@
 import handleModule from './handleModule'
 import { replace } from 'lodash-es'
 
-//更新页面组件code列表
-const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
-  //处理组件code
+/**
+ * 更新页面组件code列表
+ * @param {*} moduleSetting
+ * @param {*} codeMap
+ * @param {*} mapApi
+ * @returns
+ */
+const updateModuleCode = (moduleSetting, codeMap, mapApi) => {
+  //处理组件中事件的code
   const setModuleCode = (hotOperations) => {
     if (!hotOperations?.length) return hotOperations
     return hotOperations.map((elem) => {
@@ -14,9 +20,9 @@ const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
       //处理组件code
       if (
         elem.operationType === 'associated_module' &&
-        moduleCode[elem.operationUrl]
+        codeMap[elem.operationUrl]
       ) {
-        elem.operationUrl = moduleCode[elem.operationUrl]
+        elem.operationUrl = codeMap[elem.operationUrl]
       }
       //处理事件参数
       if (elem?.params?.length) {
@@ -34,7 +40,8 @@ const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
       return elem
     })
   }
-  //处理数据
+
+  //处理动态数据中组件的code
   const handlePageValue = (pageValue) => {
     if (
       pageValue?.valueType !== 'pageData' ||
@@ -43,13 +50,14 @@ const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
     ) {
       return pageValue
     }
-    Object.keys(moduleCode).forEach((elem) => {
+    Object.keys(codeMap).forEach((elem) => {
       if (pageValue.value.includes(elem)) {
-        pageValue.value = replace(pageValue.value, elem, moduleCode[elem])
+        pageValue.value = replace(pageValue.value, elem, codeMap[elem])
       }
     })
     return pageValue
   }
+
   //条件数据处理
   const handleConditionsForExecution = (conditionsForExecution) => {
     if (!conditionsForExecution?.value) return conditionsForExecution
@@ -67,7 +75,7 @@ const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
     return conditionsForExecution
   }
 
-  handleModule(pageSetting, ({ data, type }) => {
+  handleModule(moduleSetting, ({ data, type }) => {
     if (type === 'hotModule') {
       data.hotOperations = setModuleCode(data.hotOperations)
       data.pageShowData.pageValue = handlePageValue(data.pageShowData.pageValue)
@@ -81,7 +89,7 @@ const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
           })
           .filter(Boolean)
       }
-      //处理组件数据
+      //处理组件参数
       if (data?.params?.length) {
         data.params.map((elem) => {
           elem.pageValue = handlePageValue(elem.pageValue)
@@ -109,7 +117,7 @@ const updateModuleCode = (pageSetting, moduleCode, mapApi) => {
       }
     }
   })
-  return pageSetting
+  return moduleSetting
 }
 
 export default updateModuleCode
