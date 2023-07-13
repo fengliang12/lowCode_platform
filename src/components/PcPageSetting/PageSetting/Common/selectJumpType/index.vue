@@ -13,207 +13,10 @@
       >
         <template #default="{ node, data: element }">
           <div class="eventItem">
-            <!-- operationType 事件类型 -->
-            <el-cascader
-              v-model="element.operationType"
-              :options="eventTypeList"
-              :show-all-levels="false"
-              clearable
-              filterable
-              :props="{ emitPath: false }"
-              placeholder="请选择"
-              @change="changeEvent(element)"
-            ></el-cascader>
-
-            <!--imageSetting  弹窗 -->
-            <upload-file
-              v-if="element.operationType === 'pop_ups'"
-              v-model:url="element.imageSetting.imgUrl"
-              class="ml10"
-              :hasEditBack="true"
-              :on-success="(e) => uploadSuccessCallback(e, element)"
-              @editBack="popEdit(element)"
-            ></upload-file>
-
-            <!--operationUrl： 跳转小程序内部页面 -->
-            <PagepathCascader
-              v-if="element.operationType === 'page_jump'"
-              v-model="element.operationUrl"
-              @changeInfo="pagePathCascaderChange($event, element)"
-            ></PagepathCascader>
-
-            <!--operationUrl： 自定义事件 -->
-            <el-cascader
-              v-if="element.operationType == 'custom_event'"
-              v-model="element.operationUrl"
-              :options="customEventList"
-              class="ml10"
-              clearable
-              filterable
-              :props="{
-                emitPath: false,
-              }"
-            ></el-cascader>
-
-            <!--operationUrl：跳转配置页面\api访问\操作组件\授权 -->
-            <el-select
-              v-if="selectTypeKeys.includes(element.operationType)"
-              v-model="element.operationUrl"
-              clearable
-              filterable
-              @change="selectTypeChange($event, element)"
-              @visible-change="visibleChange($event, element)"
-              placeholder="请选择"
-              class="ml10"
-            >
-              <el-option
-                v-for="(option, index) in selectType[element.operationType]
-                  .optionList"
-                :key="index"
-                :label="
-                  option[selectType[element.operationType].label || 'label']
-                "
-                :value="
-                  option[selectType[element.operationType].value || 'value']
-                "
-              ></el-option>
-            </el-select>
-
-            <!--operationUrl： h5路径、其他小程序跳转路径 -->
-            <el-input
-              v-if="
-                element.operationType === 'jump_h5' ||
-                element.operationType === 'jump_relevance_mini'
-              "
-              class="ml10"
-              v-model="element.operationUrl"
-              placeholder="请输入路径"
-            ></el-input>
-
-            <!--linkMiniAppId： 其他小程序小程序appId -->
-            <el-input
-              v-if="element.operationType == 'jump_relevance_mini'"
-              class="ml10 flex-1"
-              v-model="element.linkMiniAppId"
-              placeholder="小程序appId"
-            ></el-input>
-
-            <!-- content：自定义事件中需要额外的添加内容：提示、调用电话 -->
-            <el-input
-              v-if="
-                customEvenKey[element.operationUrl] &&
-                customEvenKey[element.operationUrl].showContent
-              "
-              v-model="element.content"
-              placeholder="输入内容"
-              class="ml10"
-            ></el-input>
-
-            <!--subscribeNotices: 订阅消息 -->
-            <SubscribeNoticesSelect
-              v-if="element.operationType == 'subscribe_notice'"
-              v-model="element.subscribeNotices"
-            ></SubscribeNoticesSelect>
-
-            <!--moduleOperation: 组件的操作 -->
-            <el-cascader
-              v-if="element.operationType === 'associated_module'"
-              v-model="element.moduleOperation"
-              :options="getModuleOperationList(element.operationUrl)"
-              clearable
-              filterable
-              :show-all-levels="false"
-              :props="{
-                emitPath: false,
-              }"
-              class="ml10"
-            ></el-cascader>
-
-            <!--moduleOperation: 跳转类型 navigateTo\redirectTo\reLaunch -->
-            <el-select
-              v-if="moduleOperationListSelect[element.operationType]"
-              v-model="element.moduleOperation"
-              placeholder="请选择"
-              class="ml10"
-              clearable
-              filterable
-            >
-              <el-option
-                v-for="option in moduleOperationListSelect[
-                  element.operationType
-                ]"
-                :key="option.value"
-                :label="option.label"
-                :value="option.value"
-              ></el-option>
-            </el-select>
-
-            <!--content: 操作额外的输入框 -->
-            <el-input
-              v-if="
-                moduleOperationListKey[element.moduleOperation] &&
-                moduleOperationListKey[element.moduleOperation].props
-              "
-              v-model="element.content"
-              v-bind="
-                (moduleOperationListKey[element.moduleOperation] &&
-                  moduleOperationListKey[element.moduleOperation].props) ||
-                {}
-              "
-              class="ml10"
-            ></el-input>
-
-            <!--content: 操作动画 -->
-            <el-cascader
-              v-if="element.moduleOperation === 'animate'"
-              v-model="element.content"
-              :ref="animateCascader"
-              :options="animateList"
-              :props="{
-                children: 'child',
-                emitPath: false,
-              }"
-              clearable
-              :show-all-levels="false"
-              class="ml10"
-              @change="($event) => animateCascaderChange($event, element)"
-            ></el-cascader>
-
-            <!--operationUrl: 新增页面参数 -->
-            <template v-if="element.operationType === 'set_params'">
-              <el-cascader
-                :modelValue="pageShowDataValue(element?.operationUrl)"
-                :options="pageSetupStore.pageNewParams"
-                separator="."
-                placeholder="请选择"
-                :props="{
-                  value: 'key',
-                  label: 'key',
-                  children: 'child',
-                  checkStrictly: true,
-                }"
-                clearable
-                class="ml10"
-                @change="pageNewParamsCascaderChange(element, $event)"
-              ></el-cascader>
-
-              <!--moduleOperation: 操作赋值 -->
-              <el-select
-                v-model="element.moduleOperation"
-                @change="changeParams($event, element)"
-                class="ml10"
-              >
-                <el-option
-                  v-for="option in assignmentOption"
-                  :key="option.value"
-                  :label="option.label"
-                  :value="option.value"
-                ></el-option>
-              </el-select>
-              <!-- pageValue -->
-              <SetData v-model="element.pageValue" />
-            </template>
-
+            <EventItem
+              :model-value="element"
+              @update:model-value="updateValue"
+            ></EventItem>
             <!-- 添加 -->
             <el-icon class="ml10 pointer" @click.stop="handleAddEvent(node)"
               ><CirclePlus
@@ -350,6 +153,7 @@ import {
 import paramsObj from './common/paramsObj'
 import { animateList } from './common/animate'
 import { setParams, getParams } from '../../Handle/handleParams'
+import EventItem from './eventItem.vue'
 import SetData from '../setData/index.vue'
 import PagepathCascader from '../pagePathCascader/index.vue'
 import SubscribeNoticesSelect from '../subscribeNoticesSelect/index.vue'
@@ -360,11 +164,13 @@ import OtherParameters from './otherParameters.vue'
 import EditTimerModal from '../editTimerModal/index.vue'
 
 import { cloneDeep, set, assignIn } from 'lodash'
+import bus from '@/utils/bus'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
 const pageSetupStore = usePageSetupStore()
 
+const updateValue = () => {}
 /**
  * hotOperations
  */
@@ -780,48 +586,6 @@ const conditionsForExecutionCallback = (list) => {
 }
 
 /**
- * 图片上传成功
- * @param {*} e
- * @param {*} element
- */
-const uploadSuccessCallback = (e, element) => {
-  //设置宽高比
-  if (e.ratio) {
-    element.imageSetting.ratio = e.ratio
-  }
-  if (e.firstFrameVideo && element.imageSetting.firstFrameVideo) {
-    ElMessageBox.confirm('是否替换首针图', {
-      title: '提示',
-      type: 'warning',
-    }).then(() => {
-      element.imageSetting.firstFrameVideo = e.firstFrameVideo
-    })
-  } else {
-    element.imageSetting.firstFrameVideo = e.firstFrameVideo
-  }
-  element.imageSetting.multimediaType =
-    e.fileType === 'image' ? 'img' : e.fileType
-  UploadSuccessSetBoxInfo(element.imageSetting, e)
-}
-
-const UploadSuccessSetBoxInfo = (
-  imageSetting,
-  e,
-  showPageBoxSetting = null,
-) => {
-  const { height, width = 0 } = e.el
-  if (width) {
-    const { width: newWidth } = imageSetting.borderDistance
-    let ratio = width / height
-    // value.borderDistance.width = 750;
-    imageSetting.borderDistance.height = newWidth / ratio
-  } else if (!showPageBoxSetting) {
-    imageSetting.borderDistance.width = 0
-    imageSetting.borderDistance.height = 0
-  }
-}
-
-/**
  * 弹窗编辑
  */
 const currentItem = ref(null)
@@ -830,6 +594,8 @@ const popEdit = (element) => {
   currentItem.value = element
   dialogVisible1.value = true
 }
+
+bus.on('popEdit', popEdit)
 
 /**
  * 定时器

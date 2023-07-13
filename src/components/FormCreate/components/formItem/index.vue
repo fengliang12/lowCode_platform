@@ -19,6 +19,17 @@
     >
       <template
         v-if="
+          formItem.type === 'el-cascader' &&
+          formItem.options &&
+          formItem.options.length
+        "
+        #default="{ node, data }"
+      >
+        <span>{{ data.label }}</span>
+      </template>
+
+      <template
+        v-if="
           formItem.type !== 'el-cascader' &&
           formItem.options &&
           formItem.options.length

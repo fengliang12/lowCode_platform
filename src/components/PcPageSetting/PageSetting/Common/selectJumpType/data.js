@@ -100,8 +100,7 @@ export class PageHotOperation {
     // 微信订阅消息列表
     this.subscribeNotices = []
     // 弹窗配置
-    this.imageSetting =
-      operationType === 'pop_ups' ? new ImageSettingData({ width: 680 }) : null
+    this.imageSetting = new ImageSettingData({ width: 680 })
     // 执行条件
     this.conditionsForExecution = null
     // 组件
