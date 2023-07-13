@@ -7,15 +7,19 @@ export default {
     value: animationDefault,
     componentsList: animationComponentsList,
   },
+  transition: {
+    value: transitionDefault,
+    componentsList: transitionComponentsList,
+  },
   pop_ups: {
     value: {
       maskClose: true,
     },
     componentsList: [
       {
-        key: 'maskClose',
-        component: 'el-switch',
-        label: '点击遮罩层关闭弹窗',
+        field: 'maskClose',
+        type: 'el-switch',
+        title: '点击遮罩层关闭弹窗',
       },
     ],
   },
@@ -26,14 +30,14 @@ export default {
     },
     componentsList: [
       {
-        key: 'title',
-        component: 'el-input',
-        label: '提示文字',
+        field: 'title',
+        type: 'el-input',
+        title: '提示文字',
       },
       {
-        key: 'maskClose',
-        component: 'el-switch',
-        label: '防止触摸穿透',
+        field: 'maskClose',
+        type: 'el-switch',
+        title: '防止触摸穿透',
       },
     ],
   },
@@ -43,9 +47,9 @@ export default {
     },
     componentsList: [
       {
-        key: 'noConflict',
-        component: 'el-switch',
-        label: '只隐藏loading',
+        field: 'noConflict',
+        type: 'el-switch',
+        title: '只隐藏loading',
       },
     ],
   },
@@ -59,38 +63,34 @@ export default {
     },
     componentsList: [
       {
-        key: 'latitude',
-        component: 'el-input',
-        label: '纬度',
+        field: 'latitude',
+        type: 'el-input',
+        title: '纬度',
       },
       {
-        key: 'longitude',
-        component: 'el-input',
-        label: '经度',
+        field: 'longitude',
+        type: 'el-input',
+        title: '经度',
       },
       {
-        key: 'scale',
-        component: 'el-input-number',
-        label: '缩放比例',
+        field: 'scale',
+        type: 'el-input-number',
+        title: '缩放比例',
         props: {
           min: 5,
           max: 18,
         },
       },
       {
-        key: 'name',
-        component: 'el-input',
-        label: '位置名',
+        field: 'name',
+        type: 'el-input',
+        title: '位置名',
       },
       {
-        key: 'address',
-        component: 'el-input',
-        label: '地址的详细说明',
+        field: 'address',
+        type: 'el-input',
+        title: '地址的详细说明',
       },
     ],
-  },
-  transition: {
-    value: transitionDefault,
-    componentsList: transitionComponentsList,
   },
 }

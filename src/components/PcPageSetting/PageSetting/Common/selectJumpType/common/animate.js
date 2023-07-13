@@ -325,91 +325,81 @@ export const animateList = [
 //动画选项表达
 export const animationComponentsList = [
   {
-    key: 'animationDelay',
-    component: 'el-input-number',
-    label: '延迟(s)',
+    field: 'animationDelay',
+    type: 'el-input-number',
+    title: '延迟(s)',
   },
   {
-    key: 'animationDuration',
-    component: 'el-input-number',
-    label: '持续时间(s)',
+    field: 'animationDuration',
+    type: 'el-input-number',
+    title: '持续时间(s)',
   },
   {
-    key: 'animationIterationCount',
-    component: 'el-input',
-    label: '重复次数',
+    field: 'animationIterationCount',
+    type: 'el-input-number',
+    title: '重复次数',
     props: {
       placeholder: '定义动画播放次数的数值',
     },
     tips: '(infinite) 表示无限播放',
   },
   {
-    key: 'repeatedPromotion',
-    component: 'el-switch',
-    label: '重复触发',
+    field: 'repeatedPromotion',
+    type: 'el-switch',
+    title: '重复触发',
     tips: '动画可触发多次',
   },
   {
-    key: 'animationDirection',
-    component: 'el-select',
-    label: '播放方向',
-    child: [
+    field: 'animationDirection',
+    type: 'el-select',
+    title: '播放方向',
+    options: [
       {
-        component: 'el-option',
-        optionList: [
-          {
-            value: 'normal',
-            label: '正常',
-          },
-          {
-            value: 'alternate',
-            label: '反向',
-          },
-        ],
+        value: 'normal',
+        label: '正常',
+      },
+      {
+        value: 'alternate',
+        label: '反向',
       },
     ],
   },
   {
-    key: 'animationTimingFunction',
-    component: 'el-select',
-    label: '速度曲线',
-    child: [
+    field: 'animationTimingFunction',
+    type: 'el-select',
+    title: '速度曲线',
+    options: [
       {
-        component: 'el-option',
-        optionList: [
-          {
-            value: 'ease',
-            label: '动画以低速开始，然后加快，在结束前变慢(默认)',
-          },
-          {
-            value: 'linear',
-            label: '从头到尾的速度是相同的',
-          },
-          {
-            value: 'ease-in',
-            label: '以低速开始',
-          },
-          {
-            value: 'ease-out',
-            label: '以低速结束',
-          },
-          {
-            value: 'ease-in-out',
-            label: '以低速开始和结束',
-          },
-        ],
+        value: 'ease',
+        label: '动画以低速开始，然后加快，在结束前变慢(默认)',
+      },
+      {
+        value: 'linear',
+        label: '从头到尾的速度是相同的',
+      },
+      {
+        value: 'ease-in',
+        label: '以低速开始',
+      },
+      {
+        value: 'ease-out',
+        label: '以低速结束',
+      },
+      {
+        value: 'ease-in-out',
+        label: '以低速开始和结束',
       },
     ],
   },
   {
-    key: 'width',
-    component: 'el-input',
-    label: '宽度',
+    field: 'width',
+    type: 'el-input-number',
+    title: '宽度',
   },
   {
-    key: 'height',
-    component: 'el-input',
-    label: '高度',
+    field: 'height',
+    type: 'el-input-number',
+    title: '高度',
   },
 ]
 //动画选项默认值

@@ -153,7 +153,6 @@ export const assignmentOption = [
 /**
  * 自定义事件
  */
-//自定义事件列表
 export const customEventList = [
   {
     value: 'register',

@@ -48,7 +48,7 @@ const setCopyData = async ({
   }
 
   //copy组件
-  const {new_pageSetting,codeMap} = await cloneDeepModule(data, itemsMap)
+  const { new_pageSetting, codeMap } = await cloneDeepModule(data, itemsMap)
 
   return updateModuleCode(
     //clone数据

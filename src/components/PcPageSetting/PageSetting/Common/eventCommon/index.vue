@@ -190,7 +190,7 @@ const showWatchValueList = (item, index) => {
 }
 
 /**
- * 数据监听参数修改
+ * 数据监听参数修改回调
  * @param {*} e
  */
 const watchValueListChange = (list) => {

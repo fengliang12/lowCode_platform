@@ -1,0 +1,19 @@
+:deep(.el-input) {
+  width: auto;
+}
+
+:deep(.el-tree-node__content) {
+  height: auto;
+}
+.el-form-item {
+  display: block;
+}
+.eventItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+.draggable-move-icon {
+  height: 32px;
+}
