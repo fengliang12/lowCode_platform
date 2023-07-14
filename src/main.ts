@@ -18,7 +18,7 @@ import 'default-passive-events'
 
 const app = createApp(App)
 
-app.provide('app', app);
+app.provide('app', app)
 
 //将图标转为全局组件
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

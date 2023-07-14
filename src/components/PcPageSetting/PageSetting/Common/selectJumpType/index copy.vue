@@ -347,7 +347,7 @@ import {
   moduleOperationListSelect,
 } from './data'
 
-import paramsObj from './common/paramsObj'
+import { specialParamsObject } from './common/paramsObj'
 import { animateList } from './common/animate'
 import { setParams, getParams } from '../../Handle/handleParams'
 import SetData from '../setData/index.vue'
@@ -674,7 +674,7 @@ const otherParametersRef = ref(null)
 const showEditParameters = (element) => {
   currentItem.value = element
   //判断是否为自定义的弹窗
-  const res = Object.keys(paramsObj).some((key) => {
+  const res = Object.keys(specialParamsObject).some((key) => {
     if (
       key === element.operationType ||
       key === element.moduleOperation ||

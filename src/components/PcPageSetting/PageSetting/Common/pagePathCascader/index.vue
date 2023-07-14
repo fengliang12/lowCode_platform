@@ -10,7 +10,6 @@
     v-else
     ref="cascaderRef"
     v-model="operationUrl"
-    class="ml10"
     :options="pagePathList"
     :show-all-levels="false"
     placeholder="请选择"

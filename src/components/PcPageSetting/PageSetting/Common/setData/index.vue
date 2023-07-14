@@ -7,7 +7,6 @@
     <slot name="table"></slot>
     <el-select
       v-model="pageValue.valueType"
-      class="mr10"
       placeholder="请选择类型"
       @change="valueTypeChange"
     >

@@ -15,10 +15,10 @@
           <div class="eventItem">
             <EventItem
               :model-value="element"
-              @update:model-value="updateValue"
+              @update:model-value="(e) => updateValueCallback(e, node)"
             ></EventItem>
             <!-- 添加 -->
-            <el-icon class="ml10 pointer" @click.stop="handleAddEvent(node)"
+            <el-icon class="pointer" @click.stop="handleAddEvent(node)"
               ><CirclePlus
             /></el-icon>
             <!-- 删除 -->
@@ -78,10 +78,13 @@
               content="按住拖动组件布局"
               placement="right"
             >
-              <img
-                src="@/assets/images/draggable_box.png"
-                class="draggable-move-icon ml10"
-              />
+              <el-icon
+                class="ml10 pointer"
+                color="#409eff"
+                :size="20"
+                @click="showEditTimerModal(element)"
+                ><Sort
+              /></el-icon>
             </el-tooltip>
           </div>
         </template>
@@ -133,30 +136,11 @@
 <script setup>
 import { computed, ref, reactive, nextTick } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { handleCopyEvents } from '../../Handle/handleCopyEvents.js'
-
-import {
-  EventList,
-  PageHotOperation,
-  assignmentOption,
-  customEventList,
-  authEventList,
-  moduleOperationList,
-  moduleCarouselOperationList,
-  moduleVideoOperationList,
-  gridLotteryOperationList,
-  moduleOperationListKey,
-  moduleOperationListSelect,
-} from './data'
-
-import paramsObj from './common/paramsObj'
-import { animateList } from './common/animate'
-import { setParams, getParams } from '../../Handle/handleParams'
+import { PageHotOperation } from './data'
+import { needEditParamsList, specialParamsObject } from './common/paramsObj'
 import EventItem from './eventItem.vue'
-import SetData from '../setData/index.vue'
-import PagepathCascader from '../pagePathCascader/index.vue'
-import SubscribeNoticesSelect from '../subscribeNoticesSelect/index.vue'
 import FissionImage from '../fissionImage/index.vue'
 import EditParameters from '../editParameters/index.vue'
 import ConditionsForExecution from '../ConditionsForExecution/index.vue'
@@ -165,12 +149,10 @@ import EditTimerModal from '../editTimerModal/index.vue'
 
 import { cloneDeep, set, assignIn } from 'lodash'
 import bus from '@/utils/bus'
-
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
 const pageSetupStore = usePageSetupStore()
 
-const updateValue = () => {}
 /**
  * hotOperations
  */
@@ -187,8 +169,14 @@ const hotOperations = computed({
 })
 
 /**
- * 添加事件
+ * 值的更新
+ * @param {*} val
+ * @param {*} element
  */
+const updateValueCallback = (val, node) => {
+  Object.assign(element, val)
+}
+
 const judgeEvent = (list) => {
   return list.every((item) => {
     let temp = false
@@ -203,7 +191,12 @@ const judgeEvent = (list) => {
     )
   })
 }
+
+/**
+ * 添加事件
+ */
 const handleAddEvent = (node) => {
+  console.log('hotOperations.value', hotOperations.value)
   if (!judgeEvent(hotOperations.value)) {
     ElMessage.error('请先输入内容')
     return
@@ -213,10 +206,7 @@ const handleAddEvent = (node) => {
   } else {
     node.parent.data.push(new PageHotOperation())
   }
-  eventTreeRef.value = false
-  nextTick(() => {
-    eventTreeRef.value = true
-  })
+  refreshTree()
 }
 
 /**
@@ -232,206 +222,7 @@ const handleAddChildEvent = (item) => {
     set(item, 'child', [])
   }
   item.child.push(new PageHotOperation())
-  eventTreeRef.value = false
-  nextTick(() => {
-    eventTreeRef.value = true
-  })
-}
-
-/**
- * el-cascader的options属性
- */
-const eventTypeList = computed(() => {
-  return new EventList().filter((elem) => {
-    if (elem.value !== 'set_params') {
-      return true
-    }
-    //如果有页面数据返回true
-    return !!pageSetupStore?.pageNewParams?.length
-  })
-})
-
-/**
- * el-cascader选择事件
- */
-const changeEvent = (item) => {
-  const data = new PageHotOperation({
-    operationType: item.operationType,
-  })
-  Object.keys(data).forEach((key) => {
-    item[key] = data[key]
-  })
-}
-
-/**
- * 小程序路径选择后
- */
-const pagePathCascaderChange = (event, element) => {
-  element.params = event?.params?.length > 0 ? event.params : []
-}
-
-/**
- * 页面赋值选择
- */
-const pageNewParamsCascaderChange = (item, data) => {
-  item.operationUrl = data.join('.')
-}
-
-/**
- * 操作赋值&处理倒计时
- */
-const changeParams = (e, item) => {
-  const setParamsType = assignmentOption.find((elem) => elem.value === e)
-  if (setParamsType?.params) {
-    item.params = setParamsType.params
-  }
-}
-
-/**
- * 处理自定以事件\api访问事件\联动组l件\授权---------------------------------
- */
-
-const selectType = computed(() => {
-  return {
-    // 跳转配置页面
-    page_setting: {
-      optionList: pageSetupStore.pageList,
-      label: 'title',
-      value: 'id',
-    },
-    // api访问
-    api: {
-      optionList: pageSetupStore.AloneApiList,
-      label: 'apiName',
-      value: 'id',
-    },
-    // 操作组件
-    associated_module: {
-      optionList: [],
-      label: 'label',
-      value: 'value',
-      on: {
-        'visible-change': (value) => {
-          if (value) {
-            setAssociatedModule()
-          }
-        },
-      },
-    },
-    // 授权
-    auth: {
-      optionList: authEventList,
-      label: 'label',
-      value: 'value',
-      on: {
-        change: (value, element) => {
-          element.params = authEventList.find((item) => {
-            return item.value === value
-          })?.params
-        },
-      },
-    },
-  }
-})
-
-/**
- * selectTypeKeys
- */
-const selectTypeKeys = computed(() => {
-  return Object.keys(selectType.value)
-})
-
-/**
- * 选择类型
- */
-const selectTypeChange = (e, element) => {
-  if (selectType.value[element.operationType]?.on?.change) {
-    selectType.value[element.operationType].on.change(e, element)
-  }
-}
-
-/**
- * 下拉框出现/隐藏时触发
- */
-const visibleChange = (e, element) => {
-  if (selectType.value[element.operationType]?.on?.['visible-change']) {
-    selectType.value[element.operationType].on['visible-change'](e, element)
-  }
-}
-
-/**
- * 获取可操作组件
- */
-const setAssociatedModule = () => {
-  let { itemsMap, items } = pageSetupStore
-  if (!itemsMap?.values) return []
-  let _arr = Array.from(itemsMap.values())
-    .map((elem) => ({
-      value: elem.code,
-      label: `${elem.title ?? elem.code}`,
-    }))
-    .filter((item) => item.value)
-
-  if (items?.value) {
-    let index = Array.from(itemsMap.values()).findIndex(
-      (i) => i.code == items.value.code,
-    )
-    if (index != -1) {
-      _arr.splice(index, 1)
-      _arr.unshift({
-        value: items.value.code,
-        label: `当前组件`,
-      })
-    }
-  }
-  selectType.value.associated_module.optionList = _arr
-}
-
-/**
- * 获取操作组件的方法类别,这里会根据选择的组件的类型，添加操作组件的方法
- */
-const getModuleOperationList = (operationUrl) => {
-  if (operationUrl.includes('carousel')) {
-    return [...moduleOperationList, ...moduleCarouselOperationList]
-  } else if (operationUrl.includes('hot')) {
-    return [...moduleOperationList, ...moduleVideoOperationList]
-  } else if (operationUrl.includes('gridLottery')) {
-    return [...moduleOperationList, ...gridLotteryOperationList]
-  } else {
-    return moduleOperationList
-  }
-}
-
-/**
- * 自定义事件
- */
-const customEvenKey = computed(() => {
-  return Object.fromEntries(customEventList.map((elem) => [elem.value, elem]))
-})
-
-/**
- * 动画选择
- */
-const itemRefs = []
-const animateCascader = (el) => {
-  if (el) {
-    itemRefs.push(el)
-  }
-}
-
-//初始化params
-const animateCascaderChange = (e, element) => {
-  if (itemRefs?.length) {
-    const itemRef = itemRefs.find((item) => {
-      return item.getCheckedNodes()[0].data.value === e
-    })
-    if (itemRef) {
-      const params = itemRef.getCheckedNodes()[0]?.data?.params
-      if (params) {
-        element.params = setParams(params)
-      }
-    }
-  }
+  refreshTree()
 }
 
 /**
@@ -441,9 +232,12 @@ const handleDeleteEvent = (node) => {
   let list = node.parent.data?.child
     ? node.parent.data?.child
     : node.parent.data
-
-  let index = list.findIndex((item) => item.code === node.data.code)
+  let index = list.findIndex((item) => item.id === node.data.id)
   list.splice(index, 1)
+  refreshTree()
+}
+
+const refreshTree = () => {
   eventTreeRef.value = false
   nextTick(() => {
     eventTreeRef.value = true
@@ -451,45 +245,34 @@ const handleDeleteEvent = (node) => {
 }
 
 /**
- * 显示编辑参数弹窗
+ * 显示编辑参数弹窗-------------------------
  * @param {*} element
  * @param {*} index
  */
-//是否需要编辑参数
+//是否需要编辑参数按钮
 const editParametersShow = (elem) => {
-  const needEditParamsList = [
-    'api',
-    'page_jump',
-    'jump_relevance_mini',
-    'page_setting',
-    'auth',
-    'set_params',
-    'associated_module',
-    'pop_ups',
-    'custom_event',
-  ]
   return needEditParamsList.includes(elem.operationType)
 }
 
 /**
- * 这里开始处理不同事件的参数-------------------------
+ * 这里开始处理不同事件的参数
  */
-
 const editParametersRef = ref(null)
 const otherParametersRef = ref(null)
 const showEditParameters = (element) => {
   currentItem.value = element
-  //判断是否为自定义的弹窗
-  const res = Object.keys(paramsObj).some((key) => {
+  //判断是否为特殊的参数编辑
+  const res = Object.keys(specialParamsObject).some((key) => {
     if (
       key === element.operationType ||
       key === element.moduleOperation ||
       key === element.operationUrl
     ) {
-      otherParametersRef.value.show({
-        key,
-        params: element.params,
-      })
+      element?.params &&
+        otherParametersRef.value.show({
+          key,
+          params: element?.params,
+        })
       return true
     }
   })
@@ -536,8 +319,9 @@ const editParametersCallback = async (list, type) => {
       //   params: list,
       // })
       pageSetupStore.changeAloneAPIList()
-    } else {
       currentItem.value.apiInfo.params = list
+    } else {
+      currentItem.value.params = list
     }
   } else {
     currentItem.value.params = list
@@ -594,7 +378,6 @@ const popEdit = (element) => {
   currentItem.value = element
   dialogVisible1.value = true
 }
-
 bus.on('popEdit', popEdit)
 
 /**
@@ -612,15 +395,6 @@ const showEditTimerModal = (elem) => {
  */
 const editTimerModalCallback = (value) => {
   assignIn(currentItem.value, value)
-}
-
-/**
- * 处理页面参数的显示问题
- * @param {*} value
- */
-const pageShowDataValue = (value) => {
-  if (!value) return []
-  return value.split('.')
 }
 </script>
 <style lang="scss" scoped>

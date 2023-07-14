@@ -1,4 +1,5 @@
 import { ImageSettingData } from '../fissionImage/data'
+import { getId } from '../../Handle/util'
 
 // PageSetupHotOperation {
 //   apiInfo (PageApiInfo, optional): API请求 ,
@@ -89,6 +90,7 @@ export class EventList extends Array {
 
 export class PageHotOperation {
   constructor({ operationType = '', params = null } = {}) {
+    this.id = getId()
     // 操作类型
     this.operationType = operationType
     // 关联小程序的appID

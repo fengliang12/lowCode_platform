@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash'
 import { reactive } from 'vue'
-import paramsObj from './common/paramsObj'
+import { specialParamsObject } from './common/paramsObj'
 import FormCreate from '@/components/FormCreate/index.vue'
 import { ElMessageBox } from 'element-plus'
 const emits = defineEmits(['confirmParameters'])
@@ -34,8 +34,10 @@ const _data = reactive({
 const show = ({ key, params }: any) => {
   _data.show = true
   _data.key = key
-  _data.selectParams = params ? cloneDeep(params) : paramsObj[key].value
-  _data.formComponentsList = paramsObj[key].componentsList
+  _data.selectParams = params
+    ? cloneDeep(params)
+    : specialParamsObject[key].value
+  _data.formComponentsList = specialParamsObject[key].componentsList
 }
 
 /**
@@ -50,7 +52,7 @@ const saveParams = async ({ reset = false }) => {
       type: 'warning',
     }).then(() => {
       _data.show = false
-      emits('confirmParameters', paramsObj[_data.key].value)
+      emits('confirmParameters', specialParamsObject[_data.key].value)
     })
   } else {
     _data.show = false

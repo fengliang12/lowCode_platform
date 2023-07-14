@@ -87,7 +87,7 @@ const rules = computed({
  * 判断当前rule是否有值
  */
 const hasRules = computed(() => {
-  return rules.value.length > 0
+  return rules.value?.length > 0
 })
 
 /**

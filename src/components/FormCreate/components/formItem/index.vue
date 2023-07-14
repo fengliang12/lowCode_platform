@@ -25,7 +25,7 @@
         "
         #default="{ node, data }"
       >
-        <span>{{ data.label }}</span>
+        <span>{{ data[formItem?.props?.props?.label ?? 'label'] }}</span>
       </template>
 
       <template
@@ -38,6 +38,8 @@
         <FOptionList
           :type="formItem.type"
           :options="formItem.options"
+          :label="formItem.props?.label"
+          :value="formItem.props?.value"
         ></FOptionList>
       </template>
     </component>

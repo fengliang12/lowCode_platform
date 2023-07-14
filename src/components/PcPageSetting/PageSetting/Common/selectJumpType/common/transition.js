@@ -1,5 +1,5 @@
 //动画选项表达
-export const transitionComponentsList = [
+const transitionComponentsList = [
   {
     field: 'transitionDelay',
     type: 'el-input-number',
@@ -83,10 +83,13 @@ export const transitionComponentsList = [
     title: '底距',
   },
 ]
+
 //动画选项默认值
-export const transitionDefault = {
+const transitionDefault = {
   transitionDelay: 0,
   transitionDuration: 1,
   transitionDirection: 'normal',
   transitionFunction: 'ease',
 }
+
+export { transitionComponentsList, transitionDefault }

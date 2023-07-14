@@ -2,7 +2,20 @@ import { animationDefault, animationComponentsList } from './animate'
 import { transitionDefault, transitionComponentsList } from './transition'
 
 //有参数的事件的集合
-export default {
+
+const needEditParamsList = [
+  'api',
+  'page_jump',
+  'jump_relevance_mini',
+  'page_setting',
+  'auth',
+  'set_params',
+  'associated_module',
+  'pop_ups',
+  'custom_event',
+]
+
+const specialParamsObject = {
   animate: {
     value: animationDefault,
     componentsList: animationComponentsList,
@@ -94,3 +107,5 @@ export default {
     ],
   },
 }
+
+export { needEditParamsList, specialParamsObject }
