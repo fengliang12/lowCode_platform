@@ -50,7 +50,7 @@
           </el-popconfirm>
         </div>
       </el-divider>
-      <SelectJumpType v-model="item.hotOperations" />
+      <EventList v-model="item.hotOperations" />
     </div>
 
     <!-- 添加事件 -->
@@ -79,7 +79,7 @@
 // }
 import { computed, ref } from 'vue'
 import { EventsData, triggerType } from './data'
-import SelectJumpType from '../selectJumpType/index.vue'
+import EventList from '../eventList/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { handleCopyEvents } from '../../Handle/handleCopyEvents'
 import WatchValueList from '../WatchValueList/index.vue'

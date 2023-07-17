@@ -14,24 +14,18 @@ export const appStore = [
   {
     key: 'useCouponNumber',
     label: '可用优惠券数量',
-    default: '0',
-    defaultValue: 0,
   },
   {
     key: 'InBoxMessageUnreadQuantity',
     label: '未读站内信数量',
-    default: '0',
-    defaultValue: 0,
   },
   {
     key: 'member',
     label: '是否为会员',
-    defaultValue: false,
   },
   {
     key: 'customerId',
     label: '会员编号(customerId)',
-    defaultValue: '',
   },
   {
     key: 'userInfo',
@@ -40,9 +34,6 @@ export const appStore = [
       {
         key: 'avatarUrl',
         label: '用户头像',
-        default:
-          'https://wechatv2.blob.core.chinacloudapi.cn/ysl/morentouxiang.png',
-        type: 'image',
       },
       {
         key: 'nickName',
@@ -55,21 +46,15 @@ export const appStore = [
       {
         key: 'miniUnionId',
         label: '用户unionId',
-        default: '用户unionId',
-        defaultValue: '',
       },
       {
         key: 'miniOpenId',
         label: '用户openId',
-        default: '用户openId',
-        defaultValue: '',
       },
 
       {
         key: 'mobile',
         label: '用户手机（加密）',
-        default: '用户手机（加密）',
-        defaultValue: '',
       },
     ],
   },
@@ -187,7 +172,7 @@ export const pageInfo = [
   },
 ]
 
-// 页面配置数据
+// 小程序配置数据 src/config.ts
 export const appConfig = [
   {
     key: 'appId',

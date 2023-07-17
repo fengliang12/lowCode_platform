@@ -102,7 +102,7 @@
               />
             </el-tab-pane>
             <el-tab-pane label="事件">
-              <SelectJumpType v-model="hotView[currentIndex].hotOperations" />
+              <EventList v-model="hotView[currentIndex].hotOperations" />
             </el-tab-pane>
           </el-tabs>
         </el-form>
@@ -125,7 +125,7 @@ import componentsMapping from '../../CommonData/componentsMapping'
 import { formTypeList } from '../hotForm/common/formTypeList'
 import SetData from '../setData/index.vue'
 import StyleSetting from '../styleSetting/index.vue'
-import SelectJumpType from '../selectJumpType/index.vue'
+import EventList from '../eventList/index.vue'
 import HotForm from '../hotForm/index.vue'
 import { showTypeList } from '../setData/common/pageData'
 import posData, { hotTypeList } from './data'

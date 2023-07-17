@@ -138,11 +138,46 @@ const handleComponentChild = (elem, itemsMap) => {
                   label: `图片url`,
                 },
               ]
-              if (elem?.imageSetting?.multimediaType === 'video')
+              if (elem?.imageSetting?.multimediaType === 'video') {
                 items.push({
                   key: 'firstFrameVideo',
                   label: `视频封面海报`,
                 })
+                if (elem?.imageSetting?.videoConfig) {
+                  items.concat([
+                    {
+                      key: 'videoPlayInfo',
+                      label: '视频播放信息',
+                      child: [
+                        {
+                          key: 'duration',
+                          label: `视频总时长`,
+                        },
+                        {
+                          key: 'buffered',
+                          label: `视频播放进度`,
+                        },
+                        {
+                          key: 'currentTime',
+                          label: `视频播放时长`,
+                        },
+                        {
+                          key: 'fullScreen',
+                          label: `是否全屏播放`,
+                        },
+                        {
+                          key: 'direction',
+                          label: `全屏播放方向(vertical/horizontal)`,
+                        },
+                        {
+                          key: 'playStatus',
+                          label: `视频播放中`,
+                        },
+                      ],
+                    },
+                  ])
+                }
+              }
               return items
             },
           },
@@ -154,6 +189,15 @@ const handleComponentChild = (elem, itemsMap) => {
           {
             key: 'carouselIndex',
             label: '组件所在轮播位置',
+          },
+        ]
+      : []),
+    //设置海报组件数据
+    ...(elem.moduleType === 'painter'
+      ? [
+          {
+            key: 'imgPath',
+            label: '生成的图片路径',
           },
         ]
       : []),

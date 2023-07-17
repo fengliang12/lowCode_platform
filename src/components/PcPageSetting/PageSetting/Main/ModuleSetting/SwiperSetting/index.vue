@@ -75,9 +75,10 @@ const formItemList = reactive([
       to: 'options',
       fetch: () => {
         let { itemsMap } = pageSetupStore
+        console.log(itemsMap)
         if (!itemsMap?.values) return []
         return Array.from(itemsMap.values())
-          .filter((item) => item.code.includes('carousel'))
+          .filter((item) => item?.code?.includes('carousel'))
           .map((item) => ({
             value: item.code,
             label: `${item.title ?? item.code}`,

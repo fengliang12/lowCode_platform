@@ -38,6 +38,7 @@
         v-model="pageValue.value"
         placeholder="输入自定义内容"
         :disabled="disabled"
+        class="ml10"
       ></el-input>
       <div v-if="update">
         <upload-file v-if="switchCustom" v-model:url="pageValue.value" />
