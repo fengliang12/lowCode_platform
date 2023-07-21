@@ -18,7 +18,7 @@ const addAge = () => {
 }
 
 watch(test, (val) => {
-  console.log('监听', val)
+  //console.log('监听', val)
 })
 </script>
 

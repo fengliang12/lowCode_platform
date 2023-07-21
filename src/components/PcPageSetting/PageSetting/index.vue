@@ -197,7 +197,6 @@ onMounted(() => {
   pageSetupStore.getCrowdList()
   pageSetupStore.getPageSettingConstant()
   pageSetupStore.getPageList()
-  pageSetupStore.changeAloneAPIList()
   pageSetupStore.setPageNewParams([])
 })
 

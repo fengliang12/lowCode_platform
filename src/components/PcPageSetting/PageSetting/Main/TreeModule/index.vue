@@ -83,7 +83,10 @@ const currentNodeKey = computed(() => {
 
 onUpdated(() => {
   nextTick(() => {
+    console.log('当前操作的组件的key', currentNodeKey.value)
+
     if (!treeModuleRef.value) return
+
     treeModuleRef.value.setCurrentKey(currentNodeKey.value)
   })
 })

@@ -44,11 +44,11 @@ const show = (item: any) => {
 
 const formCreateRef = ref<InstanceType<typeof FormCreate> | null>(null)
 const confirm = () => {
-  console.log(formCreateRef.value)
+  //console.log(formCreateRef.value)
 
   formCreateRef?.value &&
     formCreateRef?.value?.validate()?.then((valid) => {
-      console.log(valid)
+      //console.log(valid)
 
       if (valid) {
         pageSetupStore.addTimerName(itemValue.value?.syncEvent?.name)

@@ -9,14 +9,14 @@
       <el-table-column
         label="label值"
         prop="label"
-        width="260px"
+        width="200px"
       ></el-table-column>
       <el-table-column
         label="value值"
         prop="value"
-        width="260px"
+        width="200px"
       ></el-table-column>
-      <el-table-column label="操作" width="180">
+      <el-table-column label="操作">
         <template v-slot="$scope">
           <el-button type="primary" @click="handleEditRow($scope.row)"
             >修改</el-button
@@ -174,4 +174,10 @@ const closeDialog = () => {
   }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.toolBar {
+  text-align: right;
+  width: 100%;
+  margin-bottom: 10px;
+}
+</style>

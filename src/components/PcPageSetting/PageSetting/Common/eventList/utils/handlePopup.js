@@ -75,7 +75,7 @@ const UploadSuccessSetBoxInfo = (
  * @param {*} element
  */
 const popEdit = (element) => {
-  console.log('element', element)
+  //console.log('element', element)
   bus.emit('popEdit', element)
 }
 

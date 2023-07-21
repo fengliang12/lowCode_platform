@@ -37,7 +37,7 @@ instance.interceptors.response.use(
     }
   },
   (error) => {
-    console.log('network error', error)
+    //console.log('network error', error)
     if (error.response.status === 401) {
       localStorage.removeItem('token')
       ElMessage({

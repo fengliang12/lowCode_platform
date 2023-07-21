@@ -66,8 +66,11 @@ const initPageSetupApi = async () => {
  */
 const getPageDetail = async () => {
   if (!route.query?.id) return false
-  const res = await getPageSetupInfo(route.query?.id as string)
+  const res: any = await getPageSetupInfo(route.query?.id as string)
   detail.value = res.data.data
+  if (res.data.data?.aloneApiLst) {
+    pageSetupStore.changeAloneAPIList(res.data.data.aloneApiLst, 'init')
+  }
 }
 
 /**
@@ -96,6 +99,8 @@ const save = async () => {
 
   const res = await pageSettingRef.value.save()
   if (!res) return
+
+  res.aloneApiLst = pageSetupStore?.AloneApiList || []
 
   //更新还是创建
   loading.value = true

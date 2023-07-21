@@ -26,18 +26,20 @@ export const formList = (itemsMap) => {
       effect: {
         fetch: () => {
           return new Promise((resolve) => {
-            console.log('itemsMap', itemsMap.values);
+            //console.log('itemsMap', itemsMap.values);
             let tempList = itemsMap?.values
-              ? Array.from(itemsMap.values()).filter((elem) => {
-                if (elem.moduleType === 'carousel') {
-                  return elem
-                }
-              }).map(item => ({
-                label: item.title,
-                value: item.code,
-              }))
+              ? Array.from(itemsMap.values())
+                  .filter((elem) => {
+                    if (elem.moduleType === 'carousel') {
+                      return elem
+                    }
+                  })
+                  .map((item) => ({
+                    label: item.title,
+                    value: item.code,
+                  }))
               : []
-            console.log('tempList', tempList);
+            //console.log('tempList', tempList);
             resolve(tempList)
           })
         },

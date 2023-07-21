@@ -16,6 +16,7 @@ import ShareElementData from './Main/ModuleSetting/ShareElement/data'
 import GridLotteryData from './Main/ModuleSetting/gridLottery/data'
 import PageContainerData from './Main/ModuleSetting/pageContainer/data'
 import CountDownData from './Main/ModuleSetting/countDown/data'
+import PainterData from './Main/ModuleSetting/Painter/data'
 import FormData from './Common/hotForm/common/formTypeList'
 
 /**
@@ -69,6 +70,7 @@ export class moduleData {
       moduleType === 'gridLottery' ? new GridLotteryData() : null //九宫格
     this.countDown = moduleType === 'countDown' ? new CountDownData() : null //倒计时
     this.form = moduleType === 'form' ? new FormData() : null //表单
+    this.painter = moduleType === 'painter' ? new PainterData() : null //海报
     //页面值
     this.pageValue = ['text', 'common', 'slot'].includes(moduleType)
       ? new pageValueData({ valueType: 'custom' })

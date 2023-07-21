@@ -7,7 +7,9 @@
   >
     <!-- 显示apiNameslot -->
     <slot name="name"></slot>
-    <div v-if="handleApiUrl" class="flex">{{ handleApiUrl }}</div>
+    <div v-if="handleApiUrl" class="flex handle-api-url">
+      {{ handleApiUrl }}
+    </div>
     <SetParams
       v-model="_data.paramList"
       :type="_data.type"
@@ -130,4 +132,9 @@ const cancel = () => {
 defineExpose({ show })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.handle-api-url {
+  float: left;
+  margin-top: 10px;
+}
+</style>

@@ -73,11 +73,13 @@
                     ref="setData"
                     v-model="hotView[currentIndex].pageShowData.pageValue"
                     inputType="textarea"
+                    :update="updateStatus"
                     :wrap="true"
                   >
                     <el-select
                       v-model="hotView[currentIndex].pageShowData.showType"
                       placeholder="选择显示类型"
+                      @change="pageValueTypeChange"
                     >
                       <el-option
                         v-for="item in showTypeList"
@@ -129,6 +131,7 @@ import EventList from '../eventList/index.vue'
 import HotForm from '../hotForm/index.vue'
 import { showTypeList } from '../setData/common/pageData'
 import posData, { hotTypeList } from './data'
+import { watch } from 'vue'
 
 const emit = defineEmits(['update:modelValue', 'update:visible'])
 const props = defineProps(['modelValue', 'visible', 'imgUrl'])
@@ -190,7 +193,7 @@ const bgImgRef = ref(null)
 const domRect = ref({})
 const getDomRect = () => {
   if (!hotViewImgBoxRef?.value || !bgImgRef.value) return
-  const clientBox = hotViewImgBoxRef?.value?.getBoundingClientRect()
+  const clientBox = hotViewImgBoxRef?.value?.getBoundingClientRect() //除了 width 和 height 以外的属性是相对于视图窗口的左上角来计算
   let fileRef = bgImgRef.value.fileRef
   clientBox.height = fileRef.offsetHeight
   domRect.value = clientBox
@@ -267,7 +270,7 @@ const imageLoaded = () => {
         flag.value = false
         pos = null
       } catch (e) {
-        console.log('删除辅助div失败', e)
+        //console.log('删除辅助div失败', e)
       }
     }
   }
@@ -442,6 +445,22 @@ const close = () => {
 const save = () => {
   emit('update:modelValue', hotView.value)
   emit('update:visible', false)
+}
+
+const updateStatus = ref()
+watch(
+  currentIndex.value,
+  (val) => {
+    if (val && val !== -1) {
+      let type = hotView[val].showType
+      updateStatus.value = type === 'image' ? true : false
+    }
+  },
+  { immediate: true },
+)
+
+const pageValueTypeChange = (val) => {
+  updateStatus.value = val === 'image' ? true : false
 }
 </script>
 

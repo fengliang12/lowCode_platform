@@ -154,7 +154,7 @@ const apiFormRef = ref(null)
 const handleTabChange = async (activeName, oldActiveName) => {
   if (activeName == oldActiveName) return false
   return await apiFormRef.value.validate((valid, fields) => {
-    console.log(fields)
+    //console.log(fields)
     if (valid) {
       return Promise.resolve()
     } else {
@@ -168,7 +168,7 @@ const handleTabChange = async (activeName, oldActiveName) => {
  */
 const submitLoading = ref(false)
 const handleSave = () => {
-  console.log(apiForm.value)
+  //console.log(apiForm.value)
   submitLoading.value = true
   let tempFn = route.query?.id ? updateOperationApi : createOperationApi
   tempFn(apiForm.value)

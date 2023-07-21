@@ -102,7 +102,7 @@ const formComponentsList: any = reactive([
       },
       {
         handle(val: string) {
-          console.log('val', val)
+          //console.log('val', val)
           return [
             'page_jump',
             'page_setting',

@@ -36,11 +36,11 @@ const emit = defineEmits(['update:modelValue'])
 
 const checkedValue = computed({
   get() {
-    console.log('props.modelValue', props.modelValue)
+    //console.log('props.modelValue', props.modelValue)
     return props.modelValue
   },
   set(val) {
-    console.log(val)
+    //console.log(val)
     emit('update:modelValue', val)
   },
 })

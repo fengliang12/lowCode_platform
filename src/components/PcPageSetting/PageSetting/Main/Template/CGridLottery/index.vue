@@ -94,16 +94,6 @@ const props = defineProps({
   },
 })
 
-watch(
-  () => props.data.blindBoxMode,
-  (val) => {
-    console.log('val', val)
-  },
-  {
-    immediate: true,
-  },
-)
-
 const setting = computed(() => {
   return props.data
 })

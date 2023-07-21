@@ -33,7 +33,7 @@ const data = reactive({
      * @param {*} data
      */
     onSubmit: (data: any) => {
-      console.log(data)
+      //console.log(data)
     },
 
     /**

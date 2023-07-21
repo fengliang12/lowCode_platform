@@ -182,7 +182,6 @@ watch(
  * @param {*} row
  */
 const typeChange = (row) => {
-  console.log(row)
   if (row?.type && !row?.child?.length) {
     const data = cloneDeep(row)
     data.type = null

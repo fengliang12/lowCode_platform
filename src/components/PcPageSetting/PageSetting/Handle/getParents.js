@@ -1,7 +1,7 @@
+import { typeOf } from '../../utils'
 //判断是否有满足函数的父组件 hasCurrent// 是否包含当前值
 const getParents = (code, itemsMap, fn, { hasCurrent = false } = {}) => {
-  console.log(code);
-  const item = itemsMap && itemsMap?.get(code)
+  const item = typeOf(itemsMap) === 'map' && itemsMap?.get(code)
   //是否包含当前值
   if (hasCurrent) {
     const value = fn(item)

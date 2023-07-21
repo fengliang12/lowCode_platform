@@ -1,5 +1,6 @@
 <template>
   <el-form>
+    <!-- 关联组件 -->
     <el-form-item label="关联组件">
       <el-select v-model="indicatorData.relationSwiper" clearable>
         <el-option
@@ -10,6 +11,7 @@
         ></el-option>
       </el-select>
     </el-form-item>
+    <!-- 点击切换轮播 -->
     <el-form-item label="点击切换轮播">
       <el-switch v-model="indicatorData.currentSwitch"></el-switch>
     </el-form-item>
@@ -115,6 +117,7 @@ import { computed, ref, watch } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { styleSettingData } from '../../../Common/styleSetting/data'
 import StyleSetting from '../../../Common/styleSetting/index.vue'
+import { typeOf } from '@/components/PcPageSetting/utils'
 import { cloneDeep } from 'lodash'
 const pageSetupStore = usePageSetupStore()
 const emit = defineEmits(['update:modelValue'])
@@ -133,7 +136,7 @@ const indicatorData = computed({
  * 轮播图list
  */
 const carouselList = computed(() => {
-  return pageSetupStore.itemsMap?.values
+  return typeOf(pageSetupStore.itemsMap) === 'map'
     ? Array.from(pageSetupStore.itemsMap.values()).filter(
         (elem) => elem.moduleType === 'carousel',
       )

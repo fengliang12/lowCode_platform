@@ -56,9 +56,5 @@ export const initPageData = () => {
     moduleSettings: [], //页面组件集合
 
     childPageIds: [], //子页面配置主键集合
-
-    // backgroundColor: null, //背景颜色
-    // backgroundImg: null, //背景图片URL
-    // customizeImages: [], // 自定义图片
   }
 }

@@ -7,7 +7,7 @@
       placeholder="请选择数据"
       :show-all-levels="false"
       @change="cascaderChange"
-      :props="{ value: 'key', children: 'child' }"
+      :props="{ value: 'key', children: 'child', checkStrictly: true }"
       clearable
     >
       <template v-slot="{ data }">
@@ -130,9 +130,10 @@ const handleData = computed({
  * 匹配pageDataList，如果没有匹配成功那么显示手动形式
  */
 const handleSwitchCustom = () => {
-  if (!valueData.value) return
+  if (!valueData.value || !pageSetupStore?.pageDataList?.length) return
   let data = pageSetupStore.pageDataList
   let keys = valueData.value.split('.')
+
   switchCustom.value = !keys.every((key) => {
     let item = data.find((item) => item.key === key)
     if (item) {
@@ -144,6 +145,8 @@ const handleSwitchCustom = () => {
       return false
     }
   })
+
+  //console.log('switchCustom.value', data, keys, switchCustom.value)
 }
 
 /**

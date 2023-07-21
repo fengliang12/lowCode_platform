@@ -6,6 +6,7 @@
 import FormCreate from '@/components/FormCreate/index.vue'
 import { computed, reactive } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
+import { typeOf } from '@/components/PcPageSetting/utils'
 
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
@@ -74,11 +75,14 @@ const formItemList = reactive([
     effect: {
       to: 'options',
       fetch: () => {
-        let { itemsMap } = pageSetupStore
-        console.log(itemsMap)
-        if (!itemsMap?.values) return []
+        let { itemsMap, items } = pageSetupStore
+        if (typeOf(itemsMap) !== 'map' || !items?.value) return []
         return Array.from(itemsMap.values())
-          .filter((item) => item?.code?.includes('carousel'))
+          .filter((item) => {
+            return (
+              item?.code?.includes('carousel') && item.code !== items.value.code
+            )
+          })
           .map((item) => ({
             value: item.code,
             label: `${item.title ?? item.code}`,

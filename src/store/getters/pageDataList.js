@@ -234,7 +234,7 @@ const getCurrentComponent = (state) => {
   return arr
 }
 
-function getData(value) {
+function getData(value, state) {
   const keys = value.split('.')
   let data = null
   // 页面入参动态数据
@@ -255,6 +255,16 @@ function getData(value) {
       key: 'appStore', //全局数据
       child: appStore,
     },
+    ...(state?.pageNewParams
+      ? [
+          {
+            key: 'pageNewParams',
+            get child() {
+              return handlePageNewParams(state.pageNewParams)
+            },
+          },
+        ]
+      : []),
   ]
   keys.map((key) => {
     const list = data || pageDataList
@@ -330,6 +340,7 @@ export default (state) => {
       key: 'parents',
       label: `父级数据(parents)`,
       get child() {
+        //console.log(state.items?.value?.code)
         if (!state.items?.value?.code) {
           return ''
         }
@@ -346,7 +357,7 @@ export default (state) => {
           },
         )
         if (!value) return ''
-        let data = getData(value)
+        let data = getData(value, state)
         return data
       },
     },

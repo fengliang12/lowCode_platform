@@ -28,16 +28,22 @@ export default (obj, ratio = 0.5) => {
       obj[key]?.indexOf('linear-gradient') != -1 &&
       key === 'backgroundColor'
     ) {
+      //background-color
       style = `${style}background:${obj[key]};`
     } else if (key === 'backgroundImage') {
+      //background
       style = `${style}${lowerKey}:url(${obj[key]});`
     } else if (key === 'position' && obj[key] === 'fixed') {
+      //position
       style = `${style}${key}:absolute;`
     } else if (mapping[key] && setMargin) {
+      //margin
       style = `${style}${mapping[key]}:${obj[key] * ratio}px;`
     } else if (isFinite(obj[key]) && key !== 'zIndex') {
+      //z-index、width、height、border-radius、font-size
       style = `${style}${lowerKey}:${obj[key] * ratio}px;`
     } else {
+      //background-size、background-repeat、color、font-weight、display
       style = `${style}${lowerKey}:${obj[key]};`
     }
   }

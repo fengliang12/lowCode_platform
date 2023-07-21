@@ -32,6 +32,6 @@ export default (expArr) => {
     expArr.length = expArr.length - 1
   }
   const expression = expArr.join(' ').trim()
-  expression && console.log(expression)
+  expression && //console.log(expression)
   return expression || null
 }

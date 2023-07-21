@@ -42,11 +42,22 @@
     <el-form-item
       v-if="showSettingList.includes('top')"
       :label-width="formLabelWidth"
-      :label="`${positionBox[position]}：`"
+      label="上距"
     >
       <el-input-number
         :min="0"
         v-model="borderDistance.top"
+        :max="range.height - borderDistance.height"
+      />
+    </el-form-item>
+    <el-form-item
+      v-if="showSettingList.includes('radius')"
+      :label-width="formLabelWidth"
+      label="圆角"
+    >
+      <el-input-number
+        :min="0"
+        v-model="borderDistance.radius"
         :max="range.height - borderDistance.height"
       />
     </el-form-item>
@@ -83,10 +94,6 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:modelValue'])
-const positionBox = {
-  top: '上距',
-  bottom: '下距',
-}
 
 /**
  * 初始borderDistance

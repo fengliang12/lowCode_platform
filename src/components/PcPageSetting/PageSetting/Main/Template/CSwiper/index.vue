@@ -66,19 +66,20 @@ import 'swiper/css/scrollbar' // 轮播图的滚动条
 const modules = [Autoplay, Pagination, Navigation, Scrollbar]
 
 const props = defineProps(['data'])
-const onSwiper = (e) => {
-  // console.log('swiper', e)
-}
+const onSwiper = (e) => {}
 
 const onSlideChange = (e) => {
   bus.emit('relationSwiperIndex', {
     code: props.data.code,
-    index: e.activeIndex,
+    index: e.realIndex,
   })
 }
 </script>
 
 <style lang="scss" scoped>
+.swiper-wrapper {
+  height: 100% !important;
+}
 .swiper-box {
   width: 100%;
   height: 100% !important;

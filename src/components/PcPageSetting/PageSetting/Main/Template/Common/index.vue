@@ -130,10 +130,12 @@ const simpleComponents = [
   'scrollView',
   'movableView',
   'movableArea',
+  'sticky',
   'shareElement',
   'pageContainer',
   'countDown',
   'form',
+  'painter',
 ]
 
 const _data = reactive({

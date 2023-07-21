@@ -48,7 +48,7 @@ const columnCheckedList = computed({
 
 const searchCheckedList = computed({
   get() {
-    console.log('searchCheckedList', props.searchCheckedList)
+    //console.log('searchCheckedList', props.searchCheckedList)
     return props.searchCheckedList
   },
   set(val) {

@@ -34,25 +34,13 @@
     <!-- 自定义数据 -->
     <template v-if="pageValue.valueType === 'custom'">
       <el-input
-        v-if="!switchCustom"
+        v-if="!update"
         v-model="pageValue.value"
         placeholder="输入自定义内容"
         :disabled="disabled"
-        class="ml10"
       ></el-input>
       <div v-if="update">
-        <upload-file v-if="switchCustom" v-model:url="pageValue.value" />
-        <el-tooltip
-          :show-after="1000"
-          class="vhCenter"
-          effect="dark"
-          :content="`切换${switchCustom ? '手动' : '上传'}`"
-          placement="top-start"
-        >
-          <el-icon :size="20" style="margin-left: 10px">
-            <Switch @click="switchCustom = !switchCustom"
-          /></el-icon>
-        </el-tooltip>
+        <upload-file v-model:url="pageValue.value" />
       </div>
     </template>
 
@@ -92,8 +80,6 @@ const props = defineProps({
     default: false,
   },
 })
-
-const switchCustom = ref(false)
 
 /**
  * 初始化pageValue

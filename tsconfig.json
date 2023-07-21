@@ -28,7 +28,8 @@
     "src/**/*.vue",
     "src/store/pageSetupStore.ts",
     "src/components/PcPageSetting/PageSetting/Handle/setIdMapParent.js",
-    "src/components/PcPageSetting/PageSetting/data.js"
+    "src/components/PcPageSetting/PageSetting/data.js",
+    "src/components/PcPageSetting/PageSetting/Main/ModuleSetting/Painter/data.js"
   ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]

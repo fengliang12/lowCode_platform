@@ -35,7 +35,7 @@
             type="primary"
             size="small"
             style="margin-left: 15px"
-            @click="clickWriteApi(scope.row, true)"
+            @click="clickWriteApi(scope.row, 'edit')"
             >编辑</el-button
           >
         </template>
@@ -72,6 +72,7 @@ import EditParameters from '../../../Common/editParameters/index.vue'
 import { ElMessage } from 'element-plus'
 
 import {} from 'vue'
+import { getId } from '../../../Handle/util'
 
 const pageSetupStore = usePageSetupStore()
 const _data = reactive<any>({
@@ -99,16 +100,7 @@ const AloneApiList = computed(() => {
  */
 const cascaderRef = ref<any>(null)
 const addApiToList = () => {
-  if (!pageSetupStore?.id) {
-    ElMessage.error('请先保存当前编辑内容')
-    return
-  }
-  if (!_data?._data.pageApiId) {
-    ElMessage.error('请先选择需要的接口')
-    return
-  }
-  let data = cascaderRef.value?.getCheckedNodes()[0]
-
+  let data = cascaderRef.value?.getCheckedNodes()[0]?.data
   clickWriteApi(data, 'add')
 }
 
@@ -131,7 +123,7 @@ const clickWriteApi = (row: any, type: string) => {
   editParametersRef.value?.show({
     params: newOnce.params ? newOnce.params : [],
     type: 'multiLevel',
-    apiInfo: {
+    api: {
       apiUrl: newOnce.url,
       apiKey: newOnce.apiKey,
     },
@@ -142,8 +134,7 @@ const clickWriteApi = (row: any, type: string) => {
  * 删除api
  */
 const delOnceFromList = async (row: any) => {
-  // await delOperationApi(row.id)
-  pageSetupStore.changeAloneAPIList()
+  pageSetupStore.changeAloneAPIList(row, 'delete')
 }
 
 /**
@@ -151,20 +142,13 @@ const delOnceFromList = async (row: any) => {
  */
 const editParametersChange = async (list: any) => {
   _data.formData.params = list
-  if (_data.type === 'add') {
-    // await setupOperationApi({
-    //   ..._data.formData,
-    //   pageSetupId: pageSetupStore.id,
-    //   apiInfoId: _data.formData.id,
-    // })
-  } else if (_data.type === 'change') {
-    // await changeOperationApiMes({
-    //   ..._data.formData,
-    //   pageSetupId: pageSetupStore.id,
-    //   apiInfoId: _data.formData.id,
-    // })
-  }
-  pageSetupStore.changeAloneAPIList()
+  pageSetupStore.changeAloneAPIList(
+    {
+      ..._data.formData,
+      id: _data.type === 'add' ? getId() : _data.formData.id,
+    },
+    _data.type,
+  )
 }
 </script>
 

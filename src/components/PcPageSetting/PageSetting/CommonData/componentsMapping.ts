@@ -136,4 +136,9 @@ export default {
     icon: 'EditPen',
     isParent: false,
   },
+  painter: {
+    name: '海报',
+    icon: 'EditPen',
+    isParent: true,
+  },
 }

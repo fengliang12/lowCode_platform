@@ -42,7 +42,7 @@ const data = reactive({
           type: 'primary',
         },
         handleFn: (val: any) => {
-          console.log(val)
+          //console.log(val)
           router.push({
             path: '/pageSetting/pageIndex/edit',
             query: {

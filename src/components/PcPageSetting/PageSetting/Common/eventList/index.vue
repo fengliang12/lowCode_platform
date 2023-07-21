@@ -196,7 +196,7 @@ const judgeEvent = (list) => {
  * 添加事件
  */
 const handleAddEvent = (node) => {
-  console.log('hotOperations.value', hotOperations.value)
+  //console.log('hotOperations.value', hotOperations.value)
   if (!judgeEvent(hotOperations.value)) {
     ElMessage.error('请先输入内容')
     return
@@ -314,11 +314,7 @@ const editParametersCallback = async (list, type) => {
       let ApiObj = AloneApiList.value.filter(
         (once) => once.id === currentItem.value.operationUrl,
       )[0]
-      // await api.pageSetupApi.changeOperationApiMes({
-      //   ...ApiObj,
-      //   params: list,
-      // })
-      pageSetupStore.changeAloneAPIList()
+      pageSetupStore.changeAloneAPIList({ ...ApiObj, params: list }, 'edit')
       currentItem.value.apiInfo.params = list
     } else {
       currentItem.value.params = list

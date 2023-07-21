@@ -3,7 +3,7 @@ import getters from './getters'
 import { LocationQueryValue, useRouter } from 'vue-router'
 import bus from '@/utils/bus'
 import PageModuleLimitData from '@/components/PcPageSetting/PageSetting/Common/pageModuleLimit/data'
-import { isEmpty } from 'lodash'
+import { isArray, isEmpty, isObject } from 'lodash'
 import pageSetupTestData from './pageSetupTestData/index'
 import { getOperationApi } from '@/api/pageSetup/index'
 
@@ -123,8 +123,26 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     /**
      * 管理api数组及参数
      */
-    async changeAloneAPIList() {
-      this.AloneApiList = pageSetupTestData.getOperationApi
+    async changeAloneAPIList(data: any, type: string) {
+      if (type === 'init' && isArray(data)) {
+        this.AloneApiList = data
+        return
+      }
+      const index = this.AloneApiList.findIndex(
+        (item: any) => item.id === data.id,
+      )
+
+      if (type === 'add' || type === 'update') {
+        if (index !== -1) {
+          this.AloneApiList[index] = data
+        } else {
+          this.AloneApiList.push(data)
+        }
+        return
+      }
+      if (type === 'delete' && index !== -1) {
+        this.AloneApiList.splice(index, 1)
+      }
     },
 
     /**
@@ -213,7 +231,7 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
     addTimerName(name: string) {
       if (this.timerNameList.find((i: string) => i === name)) return false
       this.timerNameList.push(name)
-      console.log(this.timerNameList)
+      //console.log(this.timerNameList)
     },
   },
   persist: {

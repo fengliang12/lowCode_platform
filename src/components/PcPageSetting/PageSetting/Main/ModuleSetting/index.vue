@@ -185,6 +185,15 @@
       <HotForm v-model="selectedItem.form"></HotForm>
     </el-tab-pane>
 
+    <!-- 海报-->
+    <el-tab-pane
+      v-if="tabNameList.includes('painter')"
+      name="painter"
+      label="海报"
+    >
+      <Painter v-model="selectedItem"></Painter>
+    </el-tab-pane>
+
     <!-- 事件 -->
     <el-tab-pane name="events" label="事件">
       <EventCommon v-model="selectedItem.events"></EventCommon>
@@ -210,6 +219,7 @@ import GridLottery from './GridLottery/index.vue'
 import PageContainer from './PageContainer/index.vue'
 import CountDown from './CountDown/index.vue'
 import HotForm from '../../Common/hotForm/index.vue'
+import Painter from './Painter/index.vue'
 
 import StyleSetting from '../../Common/styleSetting/index.vue'
 import FissionImage from '../../Common/fissionImage/index.vue'
@@ -250,7 +260,7 @@ watch(
  * 根据不同组件显示不同的tab
  */
 const tabNameList = computed(() => {
-  if (!selectedItem.value.moduleType) return []
+  if (!selectedItem.value?.moduleType) return []
   const commonList = ['attribute', 'styleSetting', 'events']
   const tabList = {
     common: ['setData'],
@@ -272,6 +282,7 @@ const tabNameList = computed(() => {
     pageContainer: ['pageContainer'],
     countDown: ['countDown'],
     form: ['form'],
+    painter: ['painter'],
   }
   return [...tabList[selectedItem.value.moduleType], ...commonList]
 })

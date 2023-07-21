@@ -37,7 +37,7 @@ const setCopyData = async ({
     const reqListRes = await Promise.all(
       reqList.map((elem: any) => otherConfig.setupOperationApi(elem)),
     ).catch((err) => {
-      console.log('err', err)
+      //console.log('err', err)
       ElMessage.error('自动添加api失败请手动操作')
     })
     //查询api列表

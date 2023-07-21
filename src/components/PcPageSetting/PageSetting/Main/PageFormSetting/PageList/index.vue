@@ -45,18 +45,23 @@
     <el-row>
       <el-button type="primary" @click="handleExport">JSON格式化预览</el-button>
     </el-row>
-    <JsonEditor ref="jsonEditorRef"></JsonEditor>
+    <JsonEditor ref="jsonEditorRef" @confirm="createPageSetting"></JsonEditor>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, inject } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
+import { useRoute, useRouter } from 'vue-router'
+import { createPageSetup, updatePageSetup } from '@/api/pageSetup'
 
 const props = defineProps(['value'])
 const pageSetupStore = usePageSetupStore()
+const getPageDetail = inject('getPageDetail')
+const route = useRoute()
+const router = useRouter()
 
 const pageKey = computed(() => {
   return Object.fromEntries(
@@ -108,6 +113,26 @@ const refresh = () => {
 const jsonEditorRef = ref(null)
 const handleExport = () => {
   jsonEditorRef.value.show(props.value)
+}
+
+/**
+ * 创建页面配置
+ */
+const createPageSetting = async (pageSetting) => {
+  console.log('value', pageSetting)
+  let request = createPageSetup
+  if (route.query.id) {
+    pageSetting.id = route.query.id
+    request = updatePageSetup
+  }
+  let res = await request(pageSetting)
+  // 更新时需要删除原先的api
+  router.replace({
+    path: '/pageSetting/pageIndex/edit',
+    query: {
+      id: res.data.data.id,
+    },
+  })
 }
 </script>
 

@@ -130,7 +130,7 @@ const table = reactive({
 watch(
   () => table.currentPage,
   (val) => {
-    console.log(val)
+    //console.log(val)
   },
 )
 
@@ -292,7 +292,7 @@ const refreshSearchValue = () => {
  */
 const addData = () => {
   if (props.dialogFormInitValue) {
-    console.log('弹窗')
+    //console.log('弹窗')
   } else {
     let addFn = props.tableOptions?.add
     addFn && addFn()
