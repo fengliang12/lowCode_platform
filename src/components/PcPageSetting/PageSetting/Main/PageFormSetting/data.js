@@ -51,6 +51,7 @@ export const initPageData = () => {
     customHeader: false, //是否为自定义顶部导航 ,
     navigationBar: new NavigationBar(), //导航栏
 
+    executionAndStyles: null,
     pageStyle: new styleSettingData({ box: false, flex: false }), //页面样式配置
     events: [new EventsData({ triggerType: 'onLoad' })], //操作事件
     moduleSettings: [], //页面组件集合

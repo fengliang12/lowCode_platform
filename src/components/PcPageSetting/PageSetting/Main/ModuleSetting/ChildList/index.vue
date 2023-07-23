@@ -42,7 +42,7 @@ import { ref, computed } from 'vue'
 import Draggable from 'vuedraggable'
 import ShowFile from '../../../Common/showFile/index.vue'
 import Common from '../../Template/Common/index.vue'
-import { setModule } from '../../../data'
+import { setModule } from '../../ModuleSetting/data'
 import ModuleSetting from '../index.vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import setItemsMap from '../../../Handle/setItemsMap.js'
@@ -134,3 +134,4 @@ const uploadSuccess = (e) => {
   transform: scale(0.6) !important;
 }
 </style>
+../data

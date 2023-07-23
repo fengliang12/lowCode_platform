@@ -2,7 +2,7 @@ import { reactive, ref } from 'vue'
 import componentsMapping from '../CommonData/componentsMapping'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import bus from '@/utils/bus'
-import { setModule } from '../data'
+import { setModule } from '../Main/ModuleSetting/data'
 import { ElMessageBox } from 'element-plus'
 import { isArray, set } from 'lodash'
 

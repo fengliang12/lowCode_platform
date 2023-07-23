@@ -43,6 +43,15 @@
       {{ pageKey[item] }}
     </el-tag>
     <el-row>
+      <el-button
+        class="mb10"
+        type="primary"
+        @click="handleRollBACK"
+        :icon="RefreshRight"
+        >页面回滚</el-button
+      >
+    </el-row>
+    <el-row>
       <el-button type="primary" @click="handleExport">JSON格式化预览</el-button>
     </el-row>
     <JsonEditor ref="jsonEditorRef" @confirm="createPageSetting"></JsonEditor>
@@ -56,10 +65,11 @@ import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
 import { useRoute, useRouter } from 'vue-router'
 import { createPageSetup, updatePageSetup } from '@/api/pageSetup'
+import { RefreshRight } from '@element-plus/icons-vue'
+import indexedDB from '../../../../utils/indexedDB'
 
 const props = defineProps(['value'])
 const pageSetupStore = usePageSetupStore()
-const getPageDetail = inject('getPageDetail')
 const route = useRoute()
 const router = useRouter()
 
@@ -133,6 +143,13 @@ const createPageSetting = async (pageSetting) => {
       id: res.data.data.id,
     },
   })
+}
+
+/**
+ * 页面回滚
+ */
+const handleRollBACK = () => {
+  indexedDB.getIndexedDB(pageSetupStore.id)
 }
 </script>
 

@@ -1,13 +1,13 @@
 <template>
-  <div style="border: 1px solid #ccc">
+  <div style="border: 1px solid #ccc;">
     <Toolbar
-      style="border-bottom: 1px solid #ccc"
+      style="border-bottom: 1px solid #ccc;"
       :editor="editorRef"
       :defaultConfig="state.toolbarConfig"
       :mode="state.mode"
     />
     <Editor
-      style="overflow-y: hidden; height: 500px"
+      style="overflow-y: hidden; height: 500px;"
       v-model="valueHtml"
       :defaultConfig="state.editorConfig"
       :mode="state.mode"

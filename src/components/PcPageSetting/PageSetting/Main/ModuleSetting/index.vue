@@ -9,6 +9,7 @@
     <el-tab-pane label="样式" name="styleSetting">
       <StyleSetting
         v-model="selectedItem.pageStyle"
+        v-model:execution-and-styles="selectedItem.executionAndStyles"
         v-bind="styleSettingProps"
       ></StyleSetting>
     </el-tab-pane>
@@ -222,6 +223,7 @@ import HotForm from '../../Common/hotForm/index.vue'
 import Painter from './Painter/index.vue'
 
 import StyleSetting from '../../Common/styleSetting/index.vue'
+
 import FissionImage from '../../Common/fissionImage/index.vue'
 import SetData from '../../Common/setData/index.vue'
 import EventCommon from '../../Common/eventCommon/index.vue'
@@ -240,6 +242,7 @@ const activeName = ref('attribute')
  */
 const selectedItem = computed({
   get() {
+    console.log('selectedItem', props.modelValue)
     return props.modelValue
   },
   set(val) {
@@ -256,6 +259,7 @@ watch(
     immediate: true,
   },
 )
+
 /**
  * 根据不同组件显示不同的tab
  */
@@ -349,6 +353,13 @@ watch(
 )
 
 watch(
+  () => selectedItem.value?.executionAndStyles,
+  (val) => {
+    console.log('val2', val)
+  },
+)
+
+watch(
   () => selectedItem.value?.carousel?.previousMargin,
   () => {
     handleCarouselChild()
@@ -393,3 +404,4 @@ const setOptionUploadImage = () => {
   display: none !important;
 }
 </style>
+../../Common/styleConditions/index.vue

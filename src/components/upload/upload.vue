@@ -89,7 +89,7 @@
       ></audio>
     </el-dialog>
 
-    <canvas ref="canvasRef" style="display: none"></canvas>
+    <canvas ref="canvasRef" style="display: none;"></canvas>
   </div>
 </template>
 <script setup>

@@ -46,11 +46,11 @@
     <!-- 提示 -->
     <template v-if="formItem.tips">
       <el-tooltip :content="formItem.tips" placement="top-start">
-        <el-icon style="margin-left: 10px"><WarningFilled /></el-icon>
+        <el-icon style="margin-left: 10px;"><WarningFilled /></el-icon>
       </el-tooltip>
     </template>
     <template v-if="formItem.button">
-      <el-button style="margin-left: 10px" @click="formItem.btnClick">
+      <el-button style="margin-left: 10px;" @click="formItem.btnClick">
         {{ formItem.button }}
       </el-button>
     </template>

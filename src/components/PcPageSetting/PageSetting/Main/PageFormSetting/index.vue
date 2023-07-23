@@ -8,7 +8,12 @@
       ></BasicConfig>
     </el-tab-pane>
     <el-tab-pane label="样式设置">
-      <StyleSetting v-model="pageFormData.pageStyle" :flex="false" :box="false">
+      <StyleSetting
+        v-model="pageFormData.pageStyle"
+        v-model:execution-and-styles="pageFormData.executionAndStyles"
+        :flex="false"
+        :box="false"
+      >
         <el-col>
           <el-form-item label="页面高度">
             <el-select v-model="pageFormData.pageHeight" placeholder="请选择">

@@ -41,7 +41,7 @@
         :content="`切换${switchCustom ? '选择' : '手动'}`"
         placement="top-start"
       >
-        <el-icon :size="16" style="margin-right: 10px">
+        <el-icon :size="16" style="margin-right: 10px;">
           <Switch @click="switchCustom = !switchCustom" />
         </el-icon>
       </el-tooltip>

@@ -88,13 +88,12 @@ import TreeModule from './Main/TreeModule/index.vue'
 import Common from './Main/Template/Common/index.vue'
 import OnlyTitle from './Common/onlyTitle/index.vue'
 
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import Draggable from 'vuedraggable'
-import { initResData, moduleData, setModule } from './data'
+import { initResData, moduleData } from './Main/ModuleSetting/data'
 import setItemsMap from './Handle/setItemsMap'
-import { cloneDeep, isArray, set } from 'lodash'
-import bus from '@/utils/bus.js'
+import { cloneDeep } from 'lodash'
 import handleStyle from './Handle/style'
 import useDraggable from './Hooks/useDraggable'
 
@@ -238,3 +237,4 @@ defineExpose({ save })
 <style lang="scss" scoped>
 @import './index.scss';
 </style>
+./Main/ModuleSetting/data

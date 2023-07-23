@@ -27,7 +27,7 @@
         v-model="modelValue.imgType"
         placeholder="请选择图片类型"
         size="small"
-        style="width: 110px"
+        style="width: 110px;"
       >
         <el-option label="普通图片" value="common" />
         <el-option label="热区" value="hot" />

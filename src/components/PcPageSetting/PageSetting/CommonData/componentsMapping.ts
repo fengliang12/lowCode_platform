@@ -1,9 +1,19 @@
-//组件映射
-export default {
+interface componentData {
+  name: string //名称
+  isParent: boolean //能否为父元素
+  unComponents: boolean //是否是可以拖拽的组件（作用：排除热区）
+  followChildHeight: boolean //跟随子元素高度变化
+  icon: string //图标
+  initData: any //初始值
+}
+interface propsType {
+  [propname: string]: Partial<componentData>
+}
+const componentsMapping: propsType = {
   common: {
-    name: '组', //名称
-    isParent: true, //能否为父元素
-    followChildHeight: true, //跟随子元素高度变化
+    name: '组',
+    isParent: true,
+    followChildHeight: true,
     icon: 'Folder',
   },
   carousel: {
@@ -142,3 +152,5 @@ export default {
     isParent: true,
   },
 }
+
+export default componentsMapping

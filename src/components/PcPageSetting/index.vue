@@ -7,18 +7,19 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref, provide, onMounted, watch } from 'vue'
+import { onUnmounted, ref, watch } from 'vue'
 import PageSetting from './PageSetting/index.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import bus from '@/utils/bus'
-import saveIndexedDB from './utils/indexedDB'
+import indexedDB from './utils/indexedDB'
 import {
   createPageSetup,
   updatePageSetup,
   getPageSetupInfo,
 } from '@/api/pageSetup'
+import { cloneDeep } from 'lodash'
 
 //公共数据
 const pageSetupStore = usePageSetupStore()
@@ -33,45 +34,27 @@ pageSetupStore.id = route.query?.id ?? ''
  */
 const detail = ref({})
 
-onMounted(() => {
-  initPageSetupApi()
-  getPageDetail()
-  bus.on('savePageSetting', savePageSetting)
-  bus.on('getPageDetail', getPageDetail)
-})
-
-onUnmounted(() => {
-  bus.off('savePageSetting')
-  bus.off('getPageDetail')
-})
-
+/**
+ * 获取页面详情信息
+ */
 watch(
   () => route?.query?.id,
-  () => {
-    getPageDetail()
+  async (val) => {
+    if (!val) return
+    const res: any = await getPageSetupInfo(route.query?.id as string)
+    detail.value = res.data.data
+    if (res.data.data?.aloneApiLst) {
+      pageSetupStore.changeAloneAPIList(res.data.data.aloneApiLst, 'init')
+    }
+  },
+  {
+    immediate: true,
   },
 )
 /**
  * 获取公共api列表
  */
 const loading = ref(false)
-const initPageSetupApi = async () => {
-  loading.value = true
-  await pageSetupStore.getPageSetupApi()
-  loading.value = false
-}
-
-/**
- * 获取页面详情信息
- */
-const getPageDetail = async () => {
-  if (!route.query?.id) return false
-  const res: any = await getPageSetupInfo(route.query?.id as string)
-  detail.value = res.data.data
-  if (res.data.data?.aloneApiLst) {
-    pageSetupStore.changeAloneAPIList(res.data.data.aloneApiLst, 'init')
-  }
-}
 
 /**
  * 弹窗提示是否需要保存数据
@@ -90,6 +73,12 @@ const savePageSetting = () => {
     })
 }
 
+bus.on('savePageSetting', savePageSetting)
+
+onUnmounted(() => {
+  bus.off('savePageSetting')
+})
+
 /**
  * 点击保存
  */
@@ -99,9 +88,8 @@ const save = async () => {
 
   const res = await pageSettingRef.value.save()
   if (!res) return
-
-  res.aloneApiLst = pageSetupStore?.AloneApiList || []
-
+  //添加api
+  res.aloneApiLst = cloneDeep(pageSetupStore?.AloneApiList) || []
   //更新还是创建
   loading.value = true
   const request = res.id ? updatePageSetup : createPageSetup
@@ -128,7 +116,7 @@ const save = async () => {
   })
 
   // 将数据保存到浏览器数据库中
-  saveIndexedDB([res])
+  indexedDB.saveIndexedDB([res])
 }
 
 /**
@@ -137,8 +125,6 @@ const save = async () => {
 const back = () => {
   router.back()
 }
-
-provide('getPageDetail', getPageDetail)
 </script>
 
 <style lang="scss" scoped>
