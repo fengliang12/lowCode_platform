@@ -50,16 +50,15 @@
         :icon="RefreshRight"
         >页面回滚</el-button
       >
-    </el-row>
-    <el-row>
       <el-button type="primary" @click="handleExport">JSON格式化预览</el-button>
     </el-row>
     <JsonEditor ref="jsonEditorRef" @confirm="createPageSetting"></JsonEditor>
+    <RollbackDialog ref="rollbackDialogRef" @confirm="onRollbackConfirm" />
   </div>
 </template>
 
 <script setup>
-import { computed, ref, inject } from 'vue'
+import { computed, ref } from 'vue'
 import { usePageSetupStore } from '@/store/pageSetupStore'
 import JsonEditor from '../../../Common/jsonEditor/index.vue'
 import { uniq } from 'lodash'
@@ -67,6 +66,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { createPageSetup, updatePageSetup } from '@/api/pageSetup'
 import { RefreshRight } from '@element-plus/icons-vue'
 import indexedDB from '../../../../utils/indexedDB'
+import bus from '@/utils/bus'
+import { cloneDeep } from 'lodash'
+import RollbackDialog from '../RollbackDialog/index.vue'
 
 const props = defineProps(['value'])
 const pageSetupStore = usePageSetupStore()
@@ -149,7 +151,14 @@ const createPageSetting = async (pageSetting) => {
  * 页面回滚
  */
 const handleRollBACK = () => {
-  indexedDB.getIndexedDB(pageSetupStore.id)
+  indexedDB.getIndexedDB(pageSetupStore.id).then((list) => {
+    rollbackDialogRef.value?.show(list || [])
+  })
+}
+const rollbackDialogRef = ref(null)
+const onRollbackConfirm = (item) => {
+  const res = cloneDeep(item?.data?.[0] || {})
+  bus.emit('rollbackApply', res)
 }
 </script>
 

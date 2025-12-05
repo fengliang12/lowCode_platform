@@ -109,6 +109,8 @@ const addApiToList = () => {
  */
 const editParametersRef = ref<InstanceType<typeof EditParameters> | null>(null)
 const clickWriteApi = (row: any, type: string) => {
+  console.log('row', row)
+
   _data.formData = row
   _data.type = type
   let item = pageSetupStore.AloneApiList.filter(
@@ -116,12 +118,33 @@ const clickWriteApi = (row: any, type: string) => {
   )[0]
   let newOnce: any = {}
   if (!item) {
-    _data.formData = newOnce = { ...row }
+    _data.formData = newOnce = {
+      ...row,
+      params:
+        typeof item?.params === 'string'
+          ? JSON.parse(item.params)
+          : item?.params || [],
+      res:
+        typeof item?.params === 'string'
+          ? JSON.parse(item.res)
+          : item?.res || [],
+    }
   } else {
-    _data.formData = newOnce = { ...item }
+    _data.formData = newOnce = {
+      ...item,
+      params:
+        typeof item?.params === 'string'
+          ? JSON.parse(item.params)
+          : item?.params || [],
+      res:
+        typeof item?.params === 'string'
+          ? JSON.parse(item.res)
+          : item?.res || [],
+    }
   }
+
   editParametersRef.value?.show({
-    params: newOnce.params ? newOnce.params : [],
+    params: newOnce?.params,
     type: 'multiLevel',
     api: {
       apiUrl: newOnce.url,

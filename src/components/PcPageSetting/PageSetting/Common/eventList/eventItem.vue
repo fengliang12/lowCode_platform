@@ -10,11 +10,8 @@
 
 <script setup lang="ts">
 import FormCreate from '@/components/FormCreate/index.vue'
-import { computed, reactive, inject } from 'vue'
+import { computed, reactive } from 'vue'
 import { EventList, PageHotOperation } from './data'
-import SetData from '../setData/index.vue'
-import PagepathCascader from '../pagePathCascader/index.vue'
-import SubscribeNoticesSelect from '../subscribeNoticesSelect/index.vue'
 
 import {
   popupComponentList,
@@ -27,10 +24,6 @@ import {
   setParamsComponentList,
 } from './utils/index.js'
 
-const app: any = inject('app')
-app.component('pagepath-cascader', PagepathCascader)
-app.component('subscribe-notices-select', SubscribeNoticesSelect)
-app.component('set-data', SetData)
 const emits = defineEmits(['update:modelValue'])
 
 const props = defineProps<{

@@ -68,12 +68,12 @@
     <!-- 右边移动区域 -------->
     <div class="right">
       <div class="canvas-tools">
-        <span class="badge">375 × 812 px / 750 × 1624 rpx</span>
+        <span class="badge">375 × 667 px / 750 × 1334 rpx</span>
         <el-switch v-model="showGrid" active-text="网格" />
       </div>
       <div class="phone-canvas glass">
         <Ruler direction="horizontal" :length="750" :scale="0.5" />
-        <Ruler direction="vertical" :length="1624" :scale="0.5" />
+        <Ruler direction="vertical" :length="1334" :scale="0.5" />
         <Draggable
           :list="rightList"
           :scroll="true"
@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch, reactive, computed } from 'vue'
+import { onMounted, onUnmounted, ref, watch, reactive, computed } from 'vue'
 import componentsMapping from './CommonData/componentsMapping'
 import PageFormSetting from './Main/PageFormSetting/index.vue'
 import ModuleSetting from './Main/ModuleSetting/index.vue'
@@ -142,6 +142,7 @@ import setItemsMap from './Handle/setItemsMap'
 import { cloneDeep } from 'lodash'
 import handleStyle from './Handle/style'
 import useDraggable from './Hooks/useDraggable'
+import bus from '@/utils/bus'
 
 const pageSetupStore = usePageSetupStore()
 const props = defineProps({
@@ -288,6 +289,7 @@ onMounted(() => {
   pageSetupStore.getPageSettingConstant()
   pageSetupStore.getPageList()
   pageSetupStore.setPageNewParams([])
+  bus.on('rollbackApply', applyRollback)
 })
 
 /**
@@ -323,6 +325,43 @@ const save = async () => {
 
 // 对外暴露方法
 defineExpose({ save })
+
+const applyRollback = (data: any) => {
+  try {
+    rightList.value = initResData(leftList, data?.moduleSettings || [])
+    pageSetupStore.setPageItemsMap({ itemsMap: setItemsMap(data) })
+    pageSetupStore.setPageNewParams(data?.params || [])
+    if (data?.aloneApiLst) {
+      pageSetupStore.changeAloneAPIList(data.aloneApiLst, 'init')
+    }
+    const {
+      color,
+      fontSize,
+      fontWeight,
+      backgroundColor,
+      backgroundImage,
+      backgroundRepeat,
+      backgroundSize,
+    } = data?.pageStyle || {}
+    pageStyle.value = handleStyle({
+      color,
+      fontSize,
+      fontWeight,
+      backgroundColor,
+      backgroundImage,
+      backgroundRepeat,
+      backgroundSize,
+    })
+    pageFormSettingRef.value?.apply(data)
+    tabBoxType.value = 'page'
+  } catch (e) {
+    ElMessage.error('回滚失败')
+  }
+}
+
+onUnmounted(() => {
+  bus.off('rollbackApply', applyRollback)
+})
 </script>
 
 <style lang="scss" scoped>

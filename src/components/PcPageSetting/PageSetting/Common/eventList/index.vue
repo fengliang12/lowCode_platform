@@ -31,6 +31,7 @@
               @click.stop="handleAddChildEvent(element)"
               ><FolderAdd
             /></el-icon>
+
             <!-- 条件 -->
             <el-icon
               class="ml10 pointer"
@@ -38,6 +39,7 @@
               ><Rank
                 :color="element.conditionsForExecution ? '#409eff' : '#000000'"
             /></el-icon>
+
             <!-- 参数 -->
             <el-icon
               class="ml10 pointer"
@@ -256,6 +258,8 @@ const editParametersShow = (elem) => {
 const editParametersRef = ref(null)
 const otherParametersRef = ref(null)
 const showEditParameters = (element) => {
+  console.log('element', element)
+
   currentItem.value = element
   //判断是否为特殊的参数编辑
   const res = Object.keys(specialParamsObject).some((key) => {
@@ -280,11 +284,11 @@ const showEditParameters = (element) => {
   // 编辑api参数
   if (element.operationType === 'api') {
     editParametersRef.value.show({
-      params: ApiObj.params ? ApiObj.params : [],
+      params: element.params ? element.params : ApiObj?.params || [],
       type: 'multiLevel',
       apiInfo: {
-        apiUrl: ApiObj.url,
-        apiKey: ApiObj.apiKey,
+        apiUrl: element?.apiInfo?.apiUrl || ApiObj?.url || '',
+        apiKey: element?.apiInfo?.apiKey || ApiObj?.apiKey || '',
       },
     })
   } else {

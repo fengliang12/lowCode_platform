@@ -33,6 +33,8 @@
           </el-option>
         </el-select>
       </el-form-item>
+    </div>
+    <div style="width: 100%" class="flex">
       <el-form-item label="客户标签" style="width: 30%">
         <el-select
           v-model="limit.customerTags"
@@ -49,8 +51,6 @@
           </el-option>
         </el-select>
       </el-form-item>
-    </div>
-    <div style="width: 100%" class="flex">
       <el-form-item label="等级状态" style="width: 30%">
         <el-select v-model="limit.gradeStatus" placeholder="请选择" clearable>
           <el-option
@@ -62,10 +62,10 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="关闭会员标签过滤">
-        <el-switch v-model="limit.closeCustomerTag"></el-switch>
-      </el-form-item>
     </div>
+    <el-form-item label="关闭会员标签过滤">
+      <el-switch v-model="limit.closeCustomerTag"></el-switch>
+    </el-form-item>
   </div>
 </template>
 

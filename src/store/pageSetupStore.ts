@@ -5,7 +5,11 @@ import bus from '@/utils/bus'
 import PageModuleLimitData from '@/components/PcPageSetting/PageSetting/Common/pageModuleLimit/data'
 import { isArray, isEmpty, isObject } from 'lodash'
 import pageSetupTestData from './pageSetupTestData/index'
-import { getOperationApi } from '@/api/pageSetup/index'
+import {
+  getOperationApi,
+  getAllPage,
+  getPageSetupList,
+} from '@/api/pageSetup/index'
 
 const router = useRouter()
 
@@ -149,7 +153,8 @@ export const usePageSetupStore = defineStore('pageSetupStore', {
      * 获取配置页面列表
      */
     async getPageList() {
-      this.pageList = pageSetupTestData.getAllPage
+      const res = await getPageSetupList({ page: 0, size: 100 })
+      this.pageList = res?.data?.data || []
     },
 
     /**

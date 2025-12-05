@@ -15,14 +15,7 @@
     >
       <template #default>
         <div v-if="data.onUploading" class="progress">
-          <div class="elProgress">
-            <el-progress
-              type="circle"
-              :width="65"
-              :percentage="data.progressNum"
-            />
-          </div>
-          <div class="abort" @click.stop="abortUploadFn">取消上传</div>
+          <el-icon class="loading-icon"><Loading /></el-icon>
         </div>
         <el-icon v-if="!url" class="el-icon-plus avatar-uploader-icon"
           ><Plus
@@ -89,17 +82,18 @@
       ></audio>
     </el-dialog>
 
-    <canvas ref="canvasRef" style="display: none;"></canvas>
+    <canvas ref="canvasRef" style="display: none"></canvas>
   </div>
 </template>
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue'
+import { Delete, Plus, ZoomIn, Loading } from '@element-plus/icons-vue'
 import { uploadFile } from '@/api/Upload/index'
 import { fileInfo } from './handle.js'
 import { ElMessage } from 'element-plus'
 import { floor } from 'lodash-es'
 import { checkFile } from '@/utils'
+import { onUnmounted } from 'vue'
 const emit = defineEmits(['update:url', 'editBack', ''])
 const props = defineProps({
   url: {
@@ -144,6 +138,14 @@ const props = defineProps({
 })
 
 const dialogVisible = ref(false)
+
+const startLoading = () => {
+  data.onUploading = true
+}
+const stopLoading = () => {
+  data.onUploading = false
+}
+onUnmounted(() => stopLoading())
 
 const data = reactive({
   onUploading: false,
@@ -210,20 +212,30 @@ const beforeUpload = (file) => {
  * 覆盖默认的上传行为，可以自定义上传的实现
  */
 const handleUpload = async ({ file }) => {
-  file = data.currentFile || file
-  const el = await fileInfo(data.selectFileType, file)
-  let form = new FormData()
-  form.append('file', file)
-  const res = await uploadFile(form)
-  if (!res?.data) return
+  try {
+    startLoading()
+    file = data.currentFile || file
+    const el = await fileInfo(data.selectFileType, file)
+    let form = new FormData()
+    form.append('file', file)
+    const res = await uploadFile(form)
+    if (!res?.data) {
+      stopLoading()
+      return
+    }
 
-  let firstFrameVideo = ''
-  if (data.selectFileType === 'video') {
-    firstFrameVideo = await createFirstFrameVideo(el).catch((err) => {
-      console.error('上传首帧图失败', err)
-    })
+    let firstFrameVideo = ''
+    if (data.selectFileType === 'video') {
+      firstFrameVideo = await createFirstFrameVideo(el).catch((err) => {
+        console.error('上传首帧图失败', err)
+      })
+    }
+    emitCallback(res?.data?.data?.url, firstFrameVideo, el)
+    stopLoading()
+  } catch (err) {
+    stopLoading()
+    ElMessage.error('上传失败')
   }
-  emitCallback(res?.data?.data?.url, firstFrameVideo, el)
 }
 
 const canvasRef = ref(null)
@@ -314,7 +326,9 @@ const emitCallback = (url, firstFrameVideo = '', el) => {
 const MonSuccess = (response, file, fileList) => {
   //console.log(response, file, fileList)
 }
-const MonError = () => {}
+const MonError = () => {
+  stopLoading()
+}
 const MonChange = () => {}
 const MonRemove = () => {}
 

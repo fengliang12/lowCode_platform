@@ -745,6 +745,22 @@ declare namespace Api {
         avatar: string
       }
     }
+    namespace getPageSetupList {
+      type Func = ({ page: number, size: number }) => MRP<IResponse>
+      interface IResponse {
+        avatar: string
+        depId: number
+        id: number
+        password: string
+        permissions: Array<string>
+        roleId: number
+        roleName: string
+        status: boolean
+        token: string
+        username: string
+        authorization: string
+      }
+    }
     namespace getPageDetail {
       type Func = (id: string) => MRP<IResponse>
       interface IResponse {

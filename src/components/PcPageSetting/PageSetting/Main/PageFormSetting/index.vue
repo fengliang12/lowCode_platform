@@ -139,7 +139,12 @@ const beforeLeave = (name: string) => {
 }
 
 // 对外暴露方法
-defineExpose({ save })
+const apply = (data: any) => {
+  pageFormData.value = handleInitPageData(data, initPageData())
+  pageSetupStore.setPageNewParams(data?.params || [])
+}
+
+defineExpose({ save, apply })
 </script>
 
 <style lang="scss" scoped>

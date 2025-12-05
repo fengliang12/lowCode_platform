@@ -37,7 +37,7 @@ export const getMemberTagAll: Api.PageSetup.getAllPage.Func = () => {
 /**
  * 根据页面id获取页面配置
  */
-export const getPageSetupList: Api.PageSetup.getPageDetail.Func = (data) => {
+export const getPageSetupList: Api.PageSetup.getPageSetupList.Func = (data) => {
   return instance({
     url: `/pageSetup/getPageSetupList`,
     method: 'get',

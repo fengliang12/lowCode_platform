@@ -306,7 +306,7 @@ const resizeState = reactive({
   lx: 0,
   ty: 0,
 })
-const CANVAS_RPX = { width: 750, height: 1624 }
+const CANVAS_RPX = { width: 750, height: 1334 }
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max)
 const startResize = (dir, e) => {
   e.stopPropagation()
