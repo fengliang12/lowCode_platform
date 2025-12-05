@@ -35,7 +35,7 @@
 
 "@babel/runtime@^7.12.0":
   version "7.21.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b58123"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
   dependencies:
     regenerator-runtime "^0.13.11"
@@ -191,7 +191,7 @@
 
 "@esbuild/linux-s390x@0.16.15":
   version "0.16.15"
-  resolved "https://registry.npmmirror.com/@esbuild/linux-s390x/-/linux-s390x-0.16.15.tgz#69572a26c2120ddd446d8207d30ae8f94a801a72"
+  resolved "https://registry.npmmirror.com/@esbuild/linux-s390x/-/linux-s390x-0.16.15.tgz#81272a26c2120ddd446d8207d30ae8f94a801a72"
   integrity sha512-M0nKLFMdyFGBoitxG42kq6Xap0CPeDC6gfF9lg7ZejzGF6kqYUGT+pQGl2QCQoxJBeat/LzTma1hG8C3dq2ocg==
 
 "@esbuild/linux-x64@0.16.15":
@@ -354,7 +354,7 @@
 
 "@originjs/vite-plugin-commonjs@^1.0.3":
   version "1.0.3"
-  resolved "https://registry.npmmirror.com/@originjs/vite-plugin-commonjs/-/vite-plugin-commonjs-1.0.3.tgz#2e3fb11ec78847da9422b79c103953f94d667f09"
+  resolved "https://registry.npmmirror.com/@originjs/vite-plugin-commonjs/-/vite-plugin-commonjs-1.0.3.tgz#2e3fb11ec78847da9422b79c103953f94d812f09"
   integrity sha512-KuEXeGPptM2lyxdIEJ4R11+5ztipHoE7hy8ClZt3PYaOVQ/pyngd2alaSrPnwyFeOW1UagRBaQ752aA1dTMdOQ==
   dependencies:
     esbuild "^0.14.14"
@@ -1539,7 +1539,7 @@ esbuild-linux-ppc64le@0.14.54:
 
 esbuild-linux-riscv64@0.14.54:
   version "0.14.54"
-  resolved "https://registry.npmmirror.com/esbuild-linux-riscv64/-/esbuild-linux-riscv64-0.14.54.tgz#618853c028178a61837bc799d2013d4695e451c8"
+  resolved "https://registry.npmmirror.com/esbuild-linux-riscv64/-/esbuild-linux-riscv64-0.14.54.tgz#618853c028178a61837bc799d2013d4812e451c8"
   integrity sha512-y7Vt7Wl9dkOGZjxQZnDAqqn+XOqFD7IMWiewY5SPlNlzMX39ocPQlOaoxvT4FllA5viyV26/QzHtvTjVNOxHZg==
 
 esbuild-linux-s390x@0.14.54:
@@ -1564,7 +1564,7 @@ esbuild-sunos-64@0.14.54:
 
 esbuild-windows-32@0.14.54:
   version "0.14.54"
-  resolved "https://registry.npmmirror.com/esbuild-windows-32/-/esbuild-windows-32-0.14.54.tgz#f8aaf9a5667630b40f0fb3aa37bf01bbd340ce31"
+  resolved "https://registry.npmmirror.com/esbuild-windows-32/-/esbuild-windows-32-0.14.54.tgz#f8aaf9a5812630b40f0fb3aa37bf01bbd340ce31"
   integrity sha512-T+rdZW19ql9MjS7pixmZYVObd9G7kcaZo+sETqNH4RCkuuYSuv9AGHUVnPoP9hhuE1WM1ZimHz1CIBHBboLU7w==
 
 esbuild-windows-64@0.14.54:

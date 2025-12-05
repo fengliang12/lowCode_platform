@@ -4,7 +4,7 @@ import NavigationBar from './NavigationBar/data'
 export const pageHeightList = [
   {
     label: '不设置高度',
-    value: '',
+    value: 'auto',
   },
   {
     label: '最小高度一屏',

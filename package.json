@@ -20,6 +20,7 @@
     "@wangeditor/editor-for-vue": "^5.1.12",
     "animate.css": "^4.1.1",
     "axios": "^1.2.5",
+    "dayjs": "^1.11.11",
     "default-passive-events": "^2.0.0",
     "echarts": "^5.4.1",
     "element-plus": "^2.2.28",
@@ -27,6 +28,7 @@
     "json-editor-vue3": "^1.0.8",
     "jsoneditor": "^9.10.0",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.28",
@@ -43,6 +45,7 @@
   },
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@types/lodash": "^4.17.21",
     "@types/node": "^18.11.18",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.48.0",

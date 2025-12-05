@@ -26,14 +26,15 @@
               </el-option>
             </el-select> </el-form-item
         ></el-col>
-        <el-col
-          ><el-form-item label="是否为自定义顶部导航">
+        <el-col>
+          <el-form-item label="是否为自定义顶部导航">
             <el-switch
               v-model="pageFormData.customHeader"
               active-text="是"
               inactive-text="否"
-            /> </el-form-item
-        ></el-col>
+            />
+          </el-form-item>
+        </el-col>
         <NavigationBar
           v-if="pageFormData.customHeader"
           v-model="pageFormData.navigationBar"
@@ -43,7 +44,7 @@
     <el-tab-pane label="事件" name="third">
       <EventCommon isPage v-model="pageFormData.events"></EventCommon>
     </el-tab-pane>
-    <el-tab-pane label="相关配置页" name="fourth">
+    <el-tab-pane label="页面相关配置页" name="fourth">
       <PageList ref="second" :value="pageFormData"></PageList>
     </el-tab-pane>
     <el-tab-pane label="API管理" name="fifth"
@@ -143,10 +144,6 @@ defineExpose({ save })
 
 <style lang="scss" scoped>
 :deep(.el-tabs__content) {
-  padding: 32px;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
   overflow-y: scroll;
   height: calc(100vh - 200px);
 }

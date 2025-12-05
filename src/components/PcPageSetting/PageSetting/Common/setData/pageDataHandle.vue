@@ -8,6 +8,8 @@
     <el-button class="mb10" style="float: right;" @click="addChild">
       新增方法
     </el-button>
+
+    <!-- 处理数据的方法 -->
     <el-table :data="handle" :border="true" style="width: 100%;">
       <el-table-column prop="method" label="方法名" width="200">
         <template v-slot="scope">
@@ -21,11 +23,15 @@
           />
         </template>
       </el-table-column>
+
+      <!-- 获取值 -->
       <el-table-column prop="name" label="值" width="600"
         ><template v-slot="scope">
           <SetData v-model="scope.row.pageValue"></SetData>
         </template>
       </el-table-column>
+
+      <!-- 键值(key) -->
       <el-table-column prop="key" label="key">
         <template v-slot="scope">
           <el-input
@@ -35,6 +41,8 @@
           ></el-input>
         </template>
       </el-table-column>
+
+      <!-- 操作 -->
       <el-table-column label="操作" width="100">
         <template v-slot="scope">
           <el-button @click="deleteChild(scope)">删除</el-button>

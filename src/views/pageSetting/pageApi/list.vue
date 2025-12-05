@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex mb10">
+    <div class="flex mb10 mt10">
       <el-button type="primary" :icon="'Plus'" @click="handleAdd('0')">
         新增
       </el-button>
@@ -119,4 +119,11 @@ const handleDelete = (id) => {
   })
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.box-card {
+  margin-top: 10px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+</style>

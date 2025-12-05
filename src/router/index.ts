@@ -1,5 +1,5 @@
 import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
-import { useUserStore } from '@/store/useUserStore'
+import Layout from '@/Layout/index.vue'
 //导入进度lib
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -21,11 +21,38 @@ NProgress.configure({
  * 固定路径
  */
 const routes: Array<RouteRecordRaw> = [
-  // 首页重定向
-  { path: '/', redirect: '/login' },
+  { path: '/', redirect: '/pageSetting/edit' },
+  { path: '/index', redirect: '/pageSetting/edit' },
   {
-    path: '/login',
-    component: () => import('@/views/login/Login.vue'),
+    path: '/pageSetting',
+    component: Layout,
+    meta: { title: '页面配置' },
+    children: [
+      {
+        path: 'edit',
+        name: 'pageSettingEdit',
+        component: () => import('@/views/pageSetting/pageIndex/edit.vue'),
+        meta: { title: '页面编辑' },
+      },
+      {
+        path: 'list',
+        name: 'pageSettingList',
+        component: () => import('@/views/pageSetting/pageIndex/list.vue'),
+        meta: { title: '页面列表' },
+      },
+      {
+        path: 'pageApi/list',
+        name: 'pageApiList',
+        component: () => import('@/views/pageSetting/pageApi/list.vue'),
+        meta: { title: '接口列表' },
+      },
+      {
+        path: 'pageApi/edit',
+        name: 'pageApiEdit',
+        component: () => import('@/views/pageSetting/pageApi/edit.vue'),
+        meta: { title: '接口编辑', isShow: 1 },
+      },
+    ],
   },
 ]
 
@@ -35,37 +62,6 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes: routes,
-})
-
-/**
- * 路由全局前置守卫
- */
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('authorization')
-  const userStore = useUserStore()
-  NProgress.start()
-  if (!userStore.authorization && !token) {
-    if (to.path.startsWith('/login')) {
-      next()
-    } else {
-      next('/login')
-    }
-  } else if (!userStore.authorization && token) {
-    userStore
-      .loginByToken(token)
-      .then(() => {
-        if (to.path.startsWith('/login')) {
-          next({ path: '/index' })
-        } else {
-          next()
-        }
-      })
-      .catch(() => {
-        next('/login')
-      })
-  } else {
-    next()
-  }
 })
 
 router.afterEach(() => {

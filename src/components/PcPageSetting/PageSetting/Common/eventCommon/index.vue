@@ -10,6 +10,7 @@
           <el-select
             v-model="item.triggerType"
             placeholder="请选择"
+            style="width: 200px"
             size="large"
           >
             <el-option

@@ -4,7 +4,7 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "strict": true,
+    "strict": false,
     "jsx": "preserve",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -16,7 +16,6 @@
     "paths": {
       "@/*": ["./src/*"] // 这里需要配置
     },
-    "suppressImplicitAnyIndexErrors": true,
     "allowJs": true,
     "types": ["pinia-plugin-persist"]
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex content">
+  <div class="flex content mt10">
     <el-tabs
       class="flex-1"
       type="border-card"
@@ -182,9 +182,13 @@ const handleSave = () => {
 </script>
 <style lang="scss" scoped>
 .content {
-  height: 100%;
+  height: 90%;
 }
 .flex-1 {
   flex: 1;
+}
+
+.mt10 {
+  margin-top: 10px;
 }
 </style>

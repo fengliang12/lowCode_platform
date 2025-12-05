@@ -33,6 +33,7 @@ const useDraggable = (rightList: any) => {
       width: data.pageStyle.width,
       height: data.pageStyle.height,
     })
+    bus.emit('refreshElTree')
   }
 
   /**
@@ -69,6 +70,8 @@ const useDraggable = (rightList: any) => {
             set(tempItem, 'moduleSettings', [])
           }
           const { width, height } = tempItem?.pageStyle || {}
+
+          // 点击添加到父类组件中最后一个位置
           handlePageData({
             index: tempItem?.moduleSettings?.length,
             moduleSettings: tempItem.moduleSettings,
@@ -79,6 +82,7 @@ const useDraggable = (rightList: any) => {
           })
         })
         .catch(() => {
+          // 点击添加到页面底部
           handlePageData({
             index: rightList.value.length,
             moduleSettings: rightList.value,

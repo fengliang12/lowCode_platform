@@ -5,10 +5,10 @@
         <el-input v-model="modelValue.id" disabled />
       </el-form-item>
       <el-form-item
-        label="组件标题："
+        label="页面标题："
         prop="title"
         :rules="[
-          { required: true, message: '请输入组件标题', trigger: 'blur' },
+          { required: true, message: '请输入页面标题', trigger: 'blur' },
         ]"
       >
         <el-input v-model="modelValue.title" placeholder="请输入活动名称" />
@@ -22,6 +22,7 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          popper-class="dark-popper"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="是否启用：">
@@ -51,6 +52,7 @@
             clearable
             filterable
             placeholder="请选择页面类型"
+            popper-class="dark-popper"
           >
             <el-option
               v-for="item in pageSetupStore.pageSettingConstant.pageSettingType"
@@ -221,4 +223,33 @@ defineExpose({ next })
 :deep(.el-form-item__content) {
   flex-wrap: nowrap;
 }
+
+/* 输入框禁用与常规暗色背景 */
+:deep(.el-input__wrapper) {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+:deep(.el-input__inner) {
+  color: #e2e8f0;
+}
+:deep(.el-input.is-disabled .el-input__wrapper) {
+  background: rgba(255, 255, 255, 0.06);
+}
+:deep(.el-input.is-disabled .el-input__inner) {
+  color: #94a3b8;
+}
+
+/* 日期选择器暗色样式 */
+:deep(.el-date-editor) {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+:deep(.el-date-editor .el-range-separator) {
+  color: #e2e8f0;
+}
+:deep(.el-date-editor .el-range-input) {
+  color: #e2e8f0;
+}
+
 </style>

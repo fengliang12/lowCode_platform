@@ -78,11 +78,7 @@
               content="按住拖动组件布局"
               placement="right"
             >
-              <el-icon
-                class="ml10 pointer"
-                color="#409eff"
-                :size="20"
-                @click="showEditTimerModal(element)"
+              <el-icon class="ml10 pointer" color="#409eff" :size="20"
                 ><Sort
               /></el-icon>
             </el-tooltip>
@@ -394,5 +390,5 @@ const editTimerModalCallback = (value) => {
 }
 </script>
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss' as *;
 </style>

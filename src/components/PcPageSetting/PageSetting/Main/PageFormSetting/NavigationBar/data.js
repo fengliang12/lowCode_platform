@@ -16,10 +16,9 @@ export default class {
     this.titleImage = null
     //是否填充
     this.fill = true
-    //状态栏颜色
-    this.statusBarColor = null
     //滚动显示背景
     this.backgroundColorOpacity = false
+    //滚动渐变距离
     this.backgroundColorOpacityDistance = null
   }
 }
@@ -50,7 +49,7 @@ export const componentsList = () => {
     {
       field: 'titleColor',
       type: 'el-color-picker',
-      title: '标题颜色',
+      title: '标题字体颜色',
       props: {
         'show-alpha': true,
       },
@@ -77,25 +76,6 @@ export const componentsList = () => {
       field: 'fill',
       type: 'el-switch',
       title: '是否填充',
-    },
-    {
-      field: 'statusBarColor',
-      type: 'el-select',
-      title: '状态栏颜色',
-      props: {
-        clearable: true,
-        placeholder: '请选择',
-      },
-      options: [
-        {
-          value: '#000000',
-          label: '黑色',
-        },
-        {
-          value: '#ffffff',
-          label: '白色',
-        },
-      ],
     },
     {
       field: 'backgroundColorOpacity',

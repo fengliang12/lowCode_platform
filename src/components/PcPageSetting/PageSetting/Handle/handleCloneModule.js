@@ -4,6 +4,7 @@ import { usePageSetupStore } from '@/store/pageSetupStore'
 import { cloneDeep } from 'lodash-es'
 import { ElMessage } from 'element-plus'
 import componentsMapping from '../CommonData/componentsMapping'
+import data from '../Common/hotView/data'
 const pageSetupStore = usePageSetupStore()
 
 /**
@@ -31,6 +32,8 @@ const cloneDeepModule = (pageSetting, itemsMap) => {
     data.code = code
     data.title = `${componentsMapping[moduleType].name}_${code}`
   })
+
+  console.log('new_pageSetting', new_pageSetting, mess)
 
   if (mess) {
     ElMessage.warning({

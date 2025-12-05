@@ -108,7 +108,6 @@ export const formList = ({ ratio = 1, value }) => {
           clearable: true,
           type: 'number',
         },
-        on: {},
       },
       {
         field: 'top',
@@ -118,7 +117,6 @@ export const formList = ({ ratio = 1, value }) => {
           clearable: true,
           type: 'number',
         },
-        on: {},
       },
       {
         field: 'right',

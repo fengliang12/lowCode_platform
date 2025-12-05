@@ -32,7 +32,7 @@ const data = reactive({
     },
     add: () => {
       router.push({
-        path: '/pageSetting/pageIndex/edit',
+        path: '/pageSetting/edit',
       })
     },
     operation: [
@@ -44,7 +44,7 @@ const data = reactive({
         handleFn: (val: any) => {
           //console.log(val)
           router.push({
-            path: '/pageSetting/pageIndex/edit',
+            path: '/pageSetting/edit',
             query: {
               id: val.id,
             },
@@ -68,4 +68,8 @@ const data = reactive({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.box-card {
+  margin-top: 10px;
+}
+</style>

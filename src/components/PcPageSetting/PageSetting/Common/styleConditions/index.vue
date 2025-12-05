@@ -14,7 +14,7 @@
             :key="index"
           >
             <template #title>
-              <div style="width: 100%;">
+              <div style="width: 90%;padding-bottom: 10px;">
                 <el-button
                   type="success"
                   plain
@@ -26,29 +26,32 @@
                   "
                   >条件 {{ index + 1 }}</el-button
                 >
-                <el-select
-                  :model-value="Object.keys(item.pageStyle)"
-                  multiple
-                  collapse-tags
-                  collapse-tags-tooltip
-                  class="m-2 ml10"
-                  placeholder="请选择样式"
-                  @change="(e:any) => onChange(e, item)"
-                >
-                  <el-option
-                    v-for="item in formItemList"
-                    :key="item.field"
-                    :label="item.title"
-                    :value="item.field"
+                <div class="flex">
+                  <el-select
+                    :model-value="Object.keys(item.pageStyle)"
+                    multiple
+                    collapse-tags
+                    collapse-tags-tooltip
+                    class="m-2"
+                    placeholder="请选择样式"
+                    @change="(e:any) => onChange(e, item)"
+                  >
+                    <el-option
+                      v-for="item in formItemList"
+                      :key="item.field"
+                      :label="item.title"
+                      :value="item.field"
+                    />
+                  </el-select>
+                  <el-button
+                    @click.stop="deleteConditions(index)"
+                    class="ml10"
+                    style="float: right; margin-top: 0px; margin-right: 10px"
+                    type="danger"
+                    :icon="Delete"
+                    circle
                   />
-                </el-select>
-                <el-button
-                  @click.stop="deleteConditions(index)"
-                  style="float: right; margin-top: 8px; margin-right: 10px;"
-                  type="danger"
-                  :icon="Delete"
-                  circle
-                />
+                </div>
               </div>
             </template>
             <FormCreate

@@ -22,7 +22,6 @@
 
       <el-divider>限制条件</el-divider>
       <PageModuleLimit v-model="pageLimit"></PageModuleLimit>
-      <el-button type="primary">筛选</el-button>
     </el-form>
   </div>
 </template>

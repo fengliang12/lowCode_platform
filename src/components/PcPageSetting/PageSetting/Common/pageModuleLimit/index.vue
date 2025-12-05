@@ -1,67 +1,71 @@
 <template>
   <div class="flex" v-if="limit">
-    <el-form-item label="线上/线下">
-      <el-select
-        v-model="limit.channelSource"
-        clearable
-        multiple
-        placeholder="请选择"
-      >
-        <el-option
-          v-for="item in lineOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+    <div style="width: 100%" class="flex">
+      <el-form-item label="线上/线下" style="width: 30%">
+        <el-select
+          v-model="limit.channelSource"
+          clearable
+          multiple
+          placeholder="请选择"
         >
-        </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="人群">
-      <el-select
-        v-model="limit.crowdIds"
-        placeholder="请选择"
-        clearable
-        multiple
-      >
-        <el-option
-          v-for="item in crowdList"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
+          <el-option
+            v-for="item in lineOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="人群" style="width: 30%">
+        <el-select
+          v-model="limit.crowdIds"
+          placeholder="请选择"
+          clearable
+          multiple
         >
-        </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="客户标签">
-      <el-select
-        v-model="limit.customerTags"
-        placeholder="请选择"
-        clearable
-        multiple
-      >
-        <el-option
-          v-for="item in tagList"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
+          <el-option
+            v-for="item in crowdList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="客户标签" style="width: 30%">
+        <el-select
+          v-model="limit.customerTags"
+          placeholder="请选择"
+          clearable
+          multiple
         >
-        </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="等级状态">
-      <el-select v-model="limit.gradeStatus" placeholder="请选择" clearable>
-        <el-option
-          v-for="item in gradeStatusList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="关闭会员标签过滤">
-      <el-switch v-model="limit.closeCustomerTag"></el-switch>
-    </el-form-item>
+          <el-option
+            v-for="item in tagList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </div>
+    <div style="width: 100%" class="flex">
+      <el-form-item label="等级状态" style="width: 30%">
+        <el-select v-model="limit.gradeStatus" placeholder="请选择" clearable>
+          <el-option
+            v-for="item in gradeStatusList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="关闭会员标签过滤">
+        <el-switch v-model="limit.closeCustomerTag"></el-switch>
+      </el-form-item>
+    </div>
   </div>
 </template>
 

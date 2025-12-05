@@ -114,4 +114,3 @@ const formItemList = computed(() => {
   padding-bottom: 50px;
 }
 </style>
-../styleConditions/index.vue

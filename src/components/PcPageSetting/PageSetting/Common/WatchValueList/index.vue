@@ -11,6 +11,9 @@
       <template v-slot:footer>
         <div class="dialog-footer">
           <div class="flex alignItems">
+            <el-button type="primary" @click.stop="handleAdd()">
+              添加监听
+            </el-button>
             <el-button type="danger" @click="cancel">取消监听</el-button>
           </div>
           <div>
@@ -35,11 +38,15 @@ const _data = reactive({
   watchValueList: [],
 })
 
+const handleAdd = () => {
+  _data.watchValueList.push('')
+}
+
 /**
  * 取消
  */
 const cancel = () => {
-  ElMessageBox.confirm('确认要删除当前用户吗?')
+  ElMessageBox.confirm('确认要删除当前数据监听吗?')
     .then(() => {
       emit('confirm', null)
       _data.dialogCondition = false

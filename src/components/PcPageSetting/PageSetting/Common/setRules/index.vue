@@ -111,5 +111,5 @@ const delRule = (index: number) => {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss' as *;
 </style>

@@ -129,6 +129,7 @@ const cancel = () => {
   })
 }
 
+// 暴露方法
 defineExpose({ show })
 </script>
 

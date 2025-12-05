@@ -8,7 +8,28 @@ const modules = import.meta.glob('../views/**/*.vue')
 export const useMenuStore = defineStore('menuStore', {
   state: () => {
     return {
-      menuList: [],
+      menuList: [
+        {
+          path: '/pageSetting/edit',
+          name: 'pageSettingEdit',
+          meta: { title: '页面编辑', isShow: 0 },
+        },
+        {
+          path: '/pageSetting/list',
+          name: 'pageSettingList',
+          meta: { title: '页面列表', isShow: 0 },
+        },
+        {
+          path: '/pageSetting/pageApi/list',
+          name: 'pageApiList',
+          meta: { title: '接口列表', isShow: 0 },
+        },
+        {
+          path: '/pageSetting/pageApi/edit',
+          name: 'pageApiEdit',
+          meta: { title: '接口编辑', isShow: 1 },
+        },
+      ],
     }
   },
   getters: {},

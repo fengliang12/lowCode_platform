@@ -242,7 +242,6 @@ const activeName = ref('attribute')
  */
 const selectedItem = computed({
   get() {
-    console.log('selectedItem', props.modelValue)
     return props.modelValue
   },
   set(val) {
@@ -404,4 +403,3 @@ const setOptionUploadImage = () => {
   display: none !important;
 }
 </style>
-../../Common/styleConditions/index.vue

@@ -1,8 +1,12 @@
 <template>
-  <div class="content" v-loading="loading">
-    <PageSetting ref="pageSettingRef" :detail="detail"></PageSetting>
-    <el-button class="footer" type="primary" @click="save">保存</el-button>
-    <el-button class="footer backBtn" @click="back">返回</el-button>
+  <div class="page-setting-container" v-loading="loading">
+    <div class="actions">
+      <el-button type="primary" @click="save">保存</el-button>
+      <el-button @click="back">返回</el-button>
+    </div>
+    <div class="content">
+      <PageSetting ref="pageSettingRef" :detail="detail"></PageSetting>
+    </div>
   </div>
 </template>
 
@@ -90,8 +94,11 @@ const save = async () => {
   if (!res) return
   //添加api
   res.aloneApiLst = cloneDeep(pageSetupStore?.AloneApiList) || []
+  console.log('结果', res)
+
   //更新还是创建
   loading.value = true
+
   const request = res.id ? updatePageSetup : createPageSetup
   const result = await request(res)
   loading.value = false
@@ -111,7 +118,7 @@ const save = async () => {
 
   // //刷新当前编辑页面
   router.replace({
-    path: '/pageSetting/pageIndex/edit',
+    path: '/pageSetting/edit',
     query: { id: pageSetupStore.id },
   })
 
@@ -128,15 +135,106 @@ const back = () => {
 </script>
 
 <style lang="scss" scoped>
+.page-setting-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: #111111;
+}
+
+.topbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 24px;
+  box-sizing: border-box;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111111;
+  margin-right: 24px;
+}
+
+.search {
+  flex: 1;
+  max-width: 540px;
+}
+
+.actions {
+  position: fixed;
+  right: 20px;
+  top: 15px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .content {
-  height: calc(100vh - 180px);
-  .footer {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-  }
-  .backBtn {
-    right: 120px;
-  }
+  height: calc(100vh - 100px);
+}
+
+:deep(.topbar .el-button--primary) {
+  background-image: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-color: transparent;
+}
+
+/* 深色模式输入与选择组件 */
+:deep(.el-input__wrapper) {
+  background: #ffffff;
+  border: 1px solid #dcdfe6;
+  box-shadow: none;
+}
+:deep(.el-input__wrapper.is-focus),
+:deep(.el-input__wrapper.is-active) {
+  border-color: rgba(99, 102, 241, 0.6);
+}
+:deep(.el-input__inner) {
+  color: #111111;
+}
+:deep(.el-input__inner::placeholder) {
+  color: #9ca3af;
+}
+
+:deep(.el-textarea__inner) {
+  background: #ffffff;
+  border: 1px solid #dcdfe6;
+  color: #111111;
+}
+:deep(.el-textarea__inner::placeholder) {
+  color: #9ca3af;
+}
+
+:deep(.el-select__wrapper) {
+  background: #ffffff;
+  border: 1px solid #dcdfe6;
+}
+:deep(.el-select__wrapper.is-focus),
+:deep(.el-select__wrapper.is-hover) {
+  border-color: rgba(99, 102, 241, 0.6);
+}
+
+:deep(.el-input-group__prepend),
+:deep(.el-input-group__append) {
+  background: #f5f7fa;
+  color: #1f2937;
+  border-color: #e5e7eb;
+}
+
+/* 表单与标签文字颜色 */
+:deep(.el-form-item__label),
+:deep(.el-tabs__item),
+:deep(.el-tree-node__label),
+:deep(.el-table),
+:deep(.el-pagination) {
+  color: #111111;
 }
 </style>

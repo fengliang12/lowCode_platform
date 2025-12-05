@@ -11,7 +11,7 @@
       circle
       @click.stop="handleDelete(index)"
     />
-    <el-button type="primary" :icon="Plus" circle @click.stop="handleAdd()" />
+
   </div>
 </template>
 

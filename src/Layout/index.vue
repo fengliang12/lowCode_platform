@@ -1,31 +1,10 @@
 <template>
   <div class="layout">
     <el-container>
-      <el-aside class="left-aside" :style="'width:' + autoWidth"
-        ><LogoBar :is-collapse="collapsed"></LogoBar>
-        <Menu :is-collapse="collapsed"></Menu
-      ></el-aside>
       <el-container>
-        <el-header class="top-header v-center">
-          <el-row
-            :gutter="0"
-            style="display: flex; align-items: center; width: 100%;"
-          >
-            <el-col :xs="4" :sm="4" :md="1" :lg="1" :xl="1">
-              <el-icon
-                class="expand-fold-icon"
-                style="margin-right: 15px; font-size: 26px;"
-                @click="() => (collapsed = !collapsed)"
-              >
-                <component :is="collapsed ? Expand : Fold" />
-              </el-icon>
-            </el-col>
-            <el-col :xs="20" :sm="20" :md="23" :lg="23" :xl="23">
-              <HeaderBar></HeaderBar>
-            </el-col>
-          </el-row>
+        <el-header class="top-header">
+          <Menu :is-collapse="false" mode="horizontal"></Menu>
         </el-header>
-        <TabBar></TabBar>
         <el-main>
           <AppMain></AppMain>
         </el-main>
@@ -42,8 +21,11 @@ import AppMain from './components/AppMain/index.vue'
 import TabBar from './components/TabBar/index.vue'
 import { Expand, Fold } from '@element-plus/icons-vue'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { isMobile } from '@/utils/isMobile'
 const collapsed = ref<boolean>(false)
+const route = useRoute()
+const showAside = computed(() => route.path !== '/pageSetting/edit')
 
 const autoWidth = computed(() => {
   if (collapsed.value && isMobile()) {
@@ -63,7 +45,7 @@ if (isMobile()) {
 <style lang="scss" scoped>
 .layout {
   display: flex;
-  background-color: #fff;
+  background-color: #ffffff;
   height: 100vh;
 
   .left-aside {
@@ -75,7 +57,13 @@ if (isMobile()) {
   }
 
   .top-header {
-    background-color: #f7f4f4;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.04) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    border-bottom: 1px solid #e5e7eb;
+    color: #111111;
   }
 
   .expand-fold-icon {

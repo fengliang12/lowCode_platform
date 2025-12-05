@@ -42,7 +42,7 @@
     >
       {{ pageKey[item] }}
     </el-tag>
-    <el-row>
+    <el-row style="margin-top: 10px">
       <el-button
         class="mb10"
         type="primary"
@@ -138,7 +138,7 @@ const createPageSetting = async (pageSetting) => {
   let res = await request(pageSetting)
   // 更新时需要删除原先的api
   router.replace({
-    path: '/pageSetting/pageIndex/edit',
+    path: '/pageSetting/edit',
     query: {
       id: res.data.data.id,
     },

@@ -8,6 +8,7 @@
     <el-select
       v-model="pageValue.valueType"
       placeholder="请选择类型"
+      style="width: 150px;"
       @change="valueTypeChange"
     >
       <el-option

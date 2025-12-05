@@ -14,6 +14,7 @@
         placeholder="选择条件"
         clearable
         filterable
+        style="width: 150px;"
         class="mr10"
       >
         <el-option
@@ -33,6 +34,7 @@
         v-model="modelValue.type"
         placeholder="选择类型(多条子条件时选择)"
         clearable
+        style="width: 200px;"
         @change="typeChange(modelValue)"
       >
         <el-option

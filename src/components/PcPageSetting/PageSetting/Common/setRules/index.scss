@@ -2,13 +2,16 @@
   display: flex;
   flex-direction: column;
 }
+
 .w200 {
   width: 200px;
 }
+
 .w100 {
-  width: 50px;
+  width: 100px;
   text-align: right;
 }
+
 .vhCenter {
   display: flex;
   justify-content: center;
@@ -23,12 +26,15 @@
   display: flex;
   align-items: center;
 }
-.item-box + .item-box {
+
+.item-box+.item-box {
   padding-top: 10px;
   border-top: 1px solid #ddd;
 }
+
 .icon-box {
   margin-left: 10px;
+
   .icon {
     font-size: 24px;
     cursor: pointer;

@@ -42,7 +42,7 @@
             <div
               v-if="
                 componentsMapping?.[data.moduleType]?.isParent ||
-                data.shareSetting
+                data.code === 'root'
               "
               class="ml10 vhCenter"
             >
@@ -72,7 +72,8 @@ import { onUpdated } from 'vue'
 
 const pageSetupStore = usePageSetupStore()
 const otherConfig = inject('otherConfig', {})
-defineProps(['detail'])
+const props = defineProps(['detail'])
+
 const refresh = ref(true)
 const treeModuleRef = ref<InstanceType<typeof ElTree>>()
 
@@ -83,10 +84,7 @@ const currentNodeKey = computed(() => {
 
 onUpdated(() => {
   nextTick(() => {
-    console.log('当前操作的组件的key', currentNodeKey.value)
-
     if (!treeModuleRef.value) return
-
     treeModuleRef.value.setCurrentKey(currentNodeKey.value)
   })
 })
@@ -94,7 +92,17 @@ onUpdated(() => {
 /**
  * 点击节点，切换选中组件
  */
-const nodeClick = (data: any, node: { parent: { data: any } }) => {
+const nodeClick = (
+  data: any,
+  node: any,
+  nodeInstance: any,
+  evt: MouseEvent,
+) => {
+  // 根节点（页面布局）不进入组件编辑，切回页面编辑
+  if (!data?.moduleType) {
+    pageSetupStore.setItems({ value: null })
+    return
+  }
   pageSetupStore.setItems({
     value: data,
     parents: node?.parent?.data ? node.parent.data : null,
@@ -108,10 +116,13 @@ const nodeClick = (data: any, node: { parent: { data: any } }) => {
  */
 const allowDrop = (
   draggingNode: any,
-  dropNode: { data: { moduleType: string | number } },
-  type: string,
+  dropNode: any,
+  type: any,
+  evt?: DragEvent,
 ) => {
-  return componentsMapping?.[dropNode.data.moduleType]?.isParent
+  // 允许把元素放入根节点（页面布局）
+  if (dropNode?.level === 1) return type === 'inner'
+  return componentsMapping?.[dropNode?.data?.moduleType]?.isParent
     ? true
     : type !== 'inner'
 }
@@ -120,9 +131,10 @@ const allowDrop = (
  * 拖拽成功完成时触发的事件
  */
 const nodeDrop = (
-  draggingNode: { data: { parentsCode: any } },
-  dropNode: { data: { code: any; parentsCode: any } },
-  type: string,
+  draggingNode: any,
+  dropNode: any,
+  type: any,
+  evt?: DragEvent,
 ) => {
   if (type === 'inner') {
     draggingNode.data.parentsCode = dropNode.data.code
@@ -216,5 +228,5 @@ const del = (data: { code: any }, node: { parent: any }) => {
 bus.on('refreshElTree', refreshElTree)
 </script>
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss' as *;
 </style>

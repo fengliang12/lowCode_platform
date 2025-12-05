@@ -2,56 +2,101 @@
   <div class="draggable">
     <!-- 左边移动区域 -------->
     <div class="left">
-      <el-tabs tab-position="left">
+      <el-tabs tab-position="top">
         <el-tab-pane label="组件">
-          <Draggable
-            :list="leftList"
-            :group="{ name: 'itxst', pull: 'clone', put: false }"
-            :sort="true"
-            :move="leftMove"
-            @end="leftEnd"
-            class="left_draggable"
-            item-key="$index"
-          >
-            <template #item="{ element }">
-              <div class="item" @click="clickLeft(element.moduleType)">
-                <OnlyTitle
-                  :title="componentsMapping[element.moduleType].name"
-                  :icon="componentsMapping[element.moduleType].icon"
-                />
-              </div>
-            </template>
-          </Draggable>
+          <el-collapse v-model="collapseActive">
+            <el-collapse-item name="basic">
+              <template #title>
+                <div class="collapse-title">
+                  基础组件
+                  <span class="collapse-badge">{{ basicList.length }}</span>
+                </div>
+              </template>
+              <Draggable
+                :list="basicList"
+                :group="{ name: 'itxst', pull: 'clone', put: false }"
+                :sort="true"
+                :move="leftMove"
+                @end="leftEnd"
+                class="left_draggable grid3"
+                item-key="$index"
+              >
+                <template #item="{ element }">
+                  <div class="item" @click="clickLeft(element.moduleType)">
+                    <OnlyTitle
+                      :title="componentsMapping[element.moduleType].name"
+                      :icon="componentsMapping[element.moduleType].icon"
+                    />
+                  </div>
+                </template>
+              </Draggable>
+            </el-collapse-item>
+            <el-collapse-item name="pro">
+              <template #title>
+                <div class="collapse-title">
+                  专业组件
+                  <span class="collapse-badge">{{ proList.length }}</span>
+                </div>
+              </template>
+              <Draggable
+                :list="proList"
+                :group="{ name: 'itxst', pull: 'clone', put: false }"
+                :sort="true"
+                :move="leftMove"
+                @end="leftEnd"
+                class="left_draggable grid3"
+                item-key="$index"
+              >
+                <template #item="{ element }">
+                  <div class="item" @click="clickLeft(element.moduleType)">
+                    <OnlyTitle
+                      :title="componentsMapping[element.moduleType].name"
+                      :icon="componentsMapping[element.moduleType].icon"
+                    />
+                  </div>
+                </template>
+              </Draggable>
+            </el-collapse-item>
+          </el-collapse>
         </el-tab-pane>
-        <el-tab-pane label="已选组件">
-          <TreeModule :detail="[detail]"></TreeModule>
+        <el-tab-pane label="页面组件树">
+          <TreeModule :detail="treeDetail"></TreeModule>
         </el-tab-pane>
       </el-tabs>
     </div>
 
     <!-- 右边移动区域 -------->
     <div class="right">
-      <Draggable
-        :list="rightList"
-        :scroll="true"
-        :group="{ name: 'itxst', pull: false, put: true }"
-        class="draggable_right_box"
-        :style="pageStyle"
-        item-key="$index"
-        @move="rightMove"
-        @end="rightEnd"
-        :handle="'.handle'"
-      >
-        <template #item="{ element }">
-          <Common
-            :data="element"
-            :showDraggable="true"
-            :parents="{
-              moduleSettings: rightList,
-            }"
-          ></Common>
-        </template>
-      </Draggable>
+      <div class="canvas-tools">
+        <span class="badge">375 × 812 px / 750 × 1624 rpx</span>
+        <el-switch v-model="showGrid" active-text="网格" />
+      </div>
+      <div class="phone-canvas glass">
+        <Ruler direction="horizontal" :length="750" :scale="0.5" />
+        <Ruler direction="vertical" :length="1624" :scale="0.5" />
+        <Draggable
+          :list="rightList"
+          :scroll="true"
+          :group="{ name: 'itxst', pull: false, put: true }"
+          class="draggable_right_box"
+          :class="{ 'no-grid': !showGrid }"
+          :style="pageStyle"
+          item-key="$index"
+          @move="rightMove"
+          @end="rightEnd"
+          :handle="'.handle'"
+        >
+          <template #item="{ element }">
+            <Common
+              :data="element"
+              :showDraggable="true"
+              :parents="{
+                moduleSettings: rightList,
+              }"
+            ></Common>
+          </template>
+        </Draggable>
+      </div>
     </div>
 
     <!-- 编辑区 ------------->
@@ -80,13 +125,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch, reactive } from 'vue'
+import { onMounted, ref, watch, reactive, computed } from 'vue'
 import componentsMapping from './CommonData/componentsMapping'
 import PageFormSetting from './Main/PageFormSetting/index.vue'
 import ModuleSetting from './Main/ModuleSetting/index.vue'
 import TreeModule from './Main/TreeModule/index.vue'
 import Common from './Main/Template/Common/index.vue'
 import OnlyTitle from './Common/onlyTitle/index.vue'
+import Ruler from './Common/Ruler/index.vue'
 
 import { ElMessage } from 'element-plus'
 import { usePageSetupStore } from '@/store/pageSetupStore'
@@ -120,8 +166,53 @@ const leftList = reactive(
     ),
 )
 
+// 分类：基础与专业
+const baseTypes = [
+  'common',
+  'carousel',
+  'indicator',
+  'hot',
+  'scrollView',
+  'progress',
+  'text',
+  'slot',
+  'qrCode',
+  'weChatButton',
+]
+const proTypes = [
+  'gridLottery',
+  'movableArea',
+  'movableView',
+  'richText',
+  'sticky',
+  'shareElement',
+  'pageContainer',
+  'countDown',
+  'form',
+  'painter',
+]
+const basicList = computed(() =>
+  leftList.filter((i: any) => baseTypes.includes(i.moduleType)),
+)
+const proList = computed(() =>
+  leftList.filter((i: any) => proTypes.includes(i.moduleType)),
+)
+
+// 折叠默认同时展开
+const collapseActive = ref(['basic', 'pro'])
+const showGrid = ref(true)
+
 //右边列表数据
 const rightList = ref<any>([])
+
+// 已选组件树数据与右侧画布保持一致
+const treeDetail = computed(() => [
+  {
+    title: props.detail?.title,
+    code: props.detail?.code || 'root',
+    moduleSettings: rightList.value,
+  },
+])
 
 //拖拽
 const { leftMove, leftEnd, clickLeft, rightMove, rightEnd } =
@@ -225,9 +316,9 @@ const save = async () => {
     return false
   }
 
+  // 将所有的组件都添加到moduleSettings中
   pageForm.moduleSettings = rightList.value
-  const req = cloneDeep(pageForm)
-  return cloneDeep(req)
+  return cloneDeep(pageForm)
 }
 
 // 对外暴露方法
@@ -235,6 +326,5 @@ defineExpose({ save })
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss' as *;
 </style>
-./Main/ModuleSetting/data

@@ -48,6 +48,7 @@ export default (obj, ratio = 0.5) => {
     }
   }
 
+  // 处理 flex 布局
   const justifyContentMap = {
     'flex-end': 'right',
     'flex-start': 'left',
