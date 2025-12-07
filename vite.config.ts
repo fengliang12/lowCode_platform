@@ -11,7 +11,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         // target: 'http://106.52.235.252:8101/',
-        target: 'http://127.0.0.1:8101/',
+        target: 'https://low-code-node.vercel.app/',
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ''),
       },

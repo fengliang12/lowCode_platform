@@ -2,8 +2,11 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
 
+const isProdRuntime = import.meta.env.PROD || import.meta.env.MODE === 'prod'
+const baseURL = isProdRuntime ? 'https://low-code-node.vercel.app/api' : '/api'
+
 const instance = axios.create({
-  baseURL: '/api',
+  baseURL,
   timeout: 6000,
 })
 
