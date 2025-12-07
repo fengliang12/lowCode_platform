@@ -182,6 +182,7 @@ const paste = (data: { title: any; moduleSettings: any[] }) => {
         otherConfig: otherConfig,
         AloneApiList: pageSetupStore.AloneApiList,
         itemsMap: pageSetupStore.itemsMap,
+        pageSetupId: pageSetupStore.pageSetupId,
       })
 
       if (!data.moduleSettings) {

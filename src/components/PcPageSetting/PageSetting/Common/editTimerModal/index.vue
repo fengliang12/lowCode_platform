@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import FormCreate from '@/components/FormCreate/index.vue'
 import { set } from 'lodash'
 import { usePageSetupStore } from '@/store/pageSetupStore'
@@ -30,7 +30,10 @@ const dialogVisible = ref(false)
 const emit = defineEmits(['confirm'])
 const pageSetupStore = usePageSetupStore()
 const oldName = ref()
-const formList = reactive(formListFn(pageSetupStore, oldName))
+const formList: FormCreate.FormItemListType = formListFn(
+  pageSetupStore,
+  oldName,
+)
 
 const show = (item: any) => {
   if (!item?.syncEvent) {

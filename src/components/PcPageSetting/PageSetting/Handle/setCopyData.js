@@ -9,19 +9,18 @@ const setCopyData = async ({
   pageSetupId,
   otherConfig,
   itemsMap,
-}: any) => {
+}) => {
   // api列表数据处理
   const mapApi = {}
   const apiList = data?.customApiList?.filter(Boolean) || []
-  const reqList: any = []
-  apiList.forEach((item: any) => {
+  const reqList = []
+  apiList.forEach((item) => {
     let has = false
     //判断apiInfoId和apiKey相同视为同一api不新增
     has =
       AloneApiList.length !== 0 &&
       AloneApiList.find(
-        (val: any) =>
-          item.apiInfoId === val.apiInfoId && item.apiKey === val.apiKey,
+        (val) => item.apiInfoId === val.apiInfoId && item.apiKey === val.apiKey,
       )
     if (has) {
       mapApi[item.id] = has.id
@@ -35,14 +34,14 @@ const setCopyData = async ({
   })
   if (reqList.length) {
     const reqListRes = await Promise.all(
-      reqList.map((elem: any) => otherConfig.setupOperationApi(elem)),
+      reqList.map((elem) => otherConfig.setupOperationApi(elem)),
     ).catch((err) => {
       //console.log('err', err)
       ElMessage.error('自动添加api失败请手动操作')
     })
     //查询api列表
     otherConfig.getPageApiList()
-    reqList.forEach((old: any, index: number) => {
+    reqList.forEach((old, index) => {
       mapApi[old.id] = reqListRes[index].id
     })
   }
