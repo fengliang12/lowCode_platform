@@ -108,7 +108,7 @@ import ExpandDom from './components/expandDom'
 import { formatParams } from '@/utils/index.js'
 import { cloneDeep, isObject } from 'lodash'
 import mapTable from './utils/index'
-import { getControlFormList } from '@/components/formCreate/utils/index'
+import { getControlFormList } from '@/components/FormCreate/utils/index'
 const props = defineProps([
   'tableItemList',
   'tableOptions',
