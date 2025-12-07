@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import handlePageValue from '../../../handle/handlePageValue'
+import handlePageValue from '../../../Handle/handlePageValue'
 defineProps({
   data: {
     type: Object,

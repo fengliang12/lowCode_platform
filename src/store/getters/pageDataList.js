@@ -5,7 +5,7 @@ import {
   authInfo,
 } from '@/components/PcPageSetting/PageSetting/Common/setData/common/pageData'
 
-import { getParents } from '@/components/PcPageSetting/PageSetting/handle/getParents'
+import { getParents } from '@/components/PcPageSetting/PageSetting/Handle/getParents'
 
 const handleChild = (child) => {
   if (!child) return undefined
